@@ -1,12 +1,12 @@
-package com.the_nearly_impossible_game.game.desktop;
+package com.tnig.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.the_nearly_impossible_game.game.TheNearlyImpossibleGame;
+import com.tnig.game.Tnig;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new TheNearlyImpossibleGame(), config);
+		new LwjglApplication(new Tnig(), config);
 	}
 }

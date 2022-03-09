@@ -1,11 +1,11 @@
-package com.the_nearly_impossible_game.game;
+package com.tnig.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class TheNearlyImpossibleGame extends ApplicationAdapter {
+public class Tnig extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	

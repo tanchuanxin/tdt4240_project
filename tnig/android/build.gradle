@@ -17,7 +17,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.the_nearly_impossible_game.game"
+        applicationId "com.tnig.game"
         minSdkVersion 14
         targetSdkVersion 31
         versionCode 1
@@ -86,7 +86,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.the_nearly_impossible_game.game/com.the_nearly_impossible_game.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.tnig.game/com.tnig.game.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
