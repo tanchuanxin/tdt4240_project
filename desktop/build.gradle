@@ -6,6 +6,7 @@ project.ext.mainClassName = "com.tnig.game.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets")
 
 task run(dependsOn: classes, type: JavaExec) {
+    jvmArgs = ['-XstartOnFirstThread']
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
