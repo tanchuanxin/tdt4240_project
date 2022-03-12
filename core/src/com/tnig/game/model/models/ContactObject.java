@@ -1,5 +1,5 @@
 package com.tnig.game.model.models;
 
 public interface ContactObject {
-    void handleContact(ContactObject object);
+    void handleBeginContact(ContactObject object);
 }
