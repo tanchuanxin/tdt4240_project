@@ -15,7 +15,7 @@ public class WorldContactListener implements ContactListener {
         ContactObject objectA = (ContactObject) contact.getFixtureA().getUserData();
         ContactObject objectB = (ContactObject) contact.getFixtureB().getUserData();
 
-        objectA.handleContact(objectB);
+        objectA.handleBeginContact(objectB);
 
     }
 
