@@ -7,6 +7,7 @@ import com.tnig.game.view.screens.ScreenManager;
 public class ImpossibleGame extends Game {
 	public ImpossibleGame() {
 	}
+
 	@Override
 	public void create () {
 
@@ -14,7 +15,6 @@ public class ImpossibleGame extends Game {
 
 		ScreenManager.getInstance().setLoadingScreen();
 	}
-
 
 	@Override
 	public void dispose() {
