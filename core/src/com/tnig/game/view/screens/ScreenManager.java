@@ -26,7 +26,7 @@ public class ScreenManager {
     // EXAMPLE
     public void setLoadingScreen(){game.setScreen(new LoadingScreen(camera));}
 
-    public void setMenuScreen(){ }
+    public void setMenuScreen(){}
 
     public void setGameScreen(){}
 
