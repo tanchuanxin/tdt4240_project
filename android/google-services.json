@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1060368645256",
+    "project_id": "nearly-impossible-game",
+    "storage_bucket": "nearly-impossible-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060368645256:android:0579dbf27138f91574333d",
+        "android_client_info": {
+          "package_name": "com.tnig.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060368645256-qta122lptg41acnvd0fhu73l622kpvq7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjU2VjUpcaq2bhyd7_Ke5FmWEvrTGPD4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060368645256-qta122lptg41acnvd0fhu73l622kpvq7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
