@@ -2,15 +2,17 @@ package com.tnig.game.view.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.tnig.game.utillities.AssetLoader;
 import com.tnig.game.utillities.Constants;
 
 public class ScreenManager {
 
     private Game game;
     private final OrthographicCamera camera = new OrthographicCamera();
+    private final AssetLoader assetLoader = new AssetLoader();
     private static final ScreenManager INSTANCE = new ScreenManager();
 
-    public static ScreenManager getInstance(){
+    public static ScreenManager getInstance() {
         return INSTANCE;
     }
 
@@ -18,17 +20,21 @@ public class ScreenManager {
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
     }
 
-    //This is called by Game from inside the "create()" method.
+    // This is called by Game from inside the "create()" method.
     public void initialize(Game game) {
         this.game = game;
     }
 
-    // EXAMPLE
-    public void setLoadingScreen(){game.setScreen(new LoadingScreen(camera));}
+    // Switch screens
+    public void setLoadingScreen() {
+        game.setScreen(new LoadingScreen(camera, assetLoader));
+    }
 
-    public void setMenuScreen(){}
+    public void setMainMenuScreen() {
+        game.setScreen(new MainMenuScreen(camera, assetLoader));
+    }
 
-    public void setGameScreen(){}
-
-
+    public void setGameScreen() {
+        game.setScreen(new GameScreen(camera, assetLoader));
+    }
 }

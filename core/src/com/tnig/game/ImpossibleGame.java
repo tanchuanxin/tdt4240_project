@@ -10,9 +10,8 @@ public class ImpossibleGame extends Game {
 
 	@Override
 	public void create () {
-
+		// Initialize screen manager and set it to loading screen while we load assets
 		ScreenManager.getInstance().initialize(this);
-
 		ScreenManager.getInstance().setLoadingScreen();
 	}
 
