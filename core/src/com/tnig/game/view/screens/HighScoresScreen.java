@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.utillities.AssetLoader;
 
-public class GameScreen extends AbstractScreen {
-    public GameScreen(OrthographicCamera camera, AssetLoader assetLoader) {
+public class HighScoresScreen extends AbstractScreen {
+    public HighScoresScreen(OrthographicCamera camera, AssetLoader assetLoader) {
         super(camera, assetLoader);
     }
 
