@@ -3,10 +3,12 @@ package com.tnig.game.view.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tnig.game.utillities.AssetLoader;
@@ -27,10 +29,26 @@ public class MainMenuScreen extends AbstractScreen {
         titleLabel.setAlignment(Align.center);
 
         Label playBtnLabel = new Label("Play", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        Button playBtn = new Button(playBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        final Button playBtn = new Button(playBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        playBtn.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                // Change screen to game screen
+                ScreenManager.getInstance().setScreen(Screen.GAME);
+                return true;
+            };
+        });
 
         Label highScoresBtnLabel = new Label("High Scores", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        Button highScoresBtn = new Button(highScoresBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        final Button highScoresBtn = new Button(highScoresBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        highScoresBtn.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                // Change screen to high scores screen
+                ScreenManager.getInstance().setScreen(Screen.HIGH_SCORES);
+                return true;
+            };
+        });
 
         // Add actors to table layout
         table.pad(50f);
@@ -53,6 +71,11 @@ public class MainMenuScreen extends AbstractScreen {
 
         stage.act();
         stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

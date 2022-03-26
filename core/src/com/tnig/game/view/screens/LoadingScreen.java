@@ -122,8 +122,6 @@ public class LoadingScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        Gdx.input.setInputProcessor(null);
-
         // Unload splash screen assets as we won't use them again
         stage.dispose();
         assetLoader.getManager().unload(assetLoader.IMG_SPLASH_SCREEN_BG.fileName);
