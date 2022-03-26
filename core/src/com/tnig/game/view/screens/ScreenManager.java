@@ -26,15 +26,17 @@ public class ScreenManager {
     }
 
     // Switch screens
-    public void setLoadingScreen() {
-        game.setScreen(new LoadingScreen(camera, assetLoader));
-    }
-
-    public void setMainMenuScreen() {
-        game.setScreen(new MainMenuScreen(camera, assetLoader));
-    }
-
-    public void setGameScreen() {
-        game.setScreen(new GameScreen(camera, assetLoader));
+    public void setScreen(Screen screen) {
+        switch (screen) {
+            case LOADING:
+                game.setScreen(new LoadingScreen(camera, assetLoader));
+                break;
+            case MAIN_MENU:
+                game.setScreen(new MainMenuScreen(camera, assetLoader));
+                break;
+            case GAME:
+                game.setScreen(new GameScreen(camera, assetLoader));
+                break;
+        }
     }
 }

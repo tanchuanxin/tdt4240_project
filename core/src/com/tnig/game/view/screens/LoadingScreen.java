@@ -92,7 +92,7 @@ public class LoadingScreen extends AbstractScreen {
         // If we are done loading, go to main menu screen.
         if (assetLoader.getManager().update()) {
             // Go to main menu screen
-            ScreenManager.getInstance().setMainMenuScreen();
+            ScreenManager.getInstance().setScreen(Screen.MAIN_MENU);
         }
 
         // Get loading progress
