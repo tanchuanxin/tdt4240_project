@@ -38,7 +38,9 @@ public class AssetLoader {
     public static final AssetDescriptor<FreeTypeFontGenerator> FONT_SOURCE_SANS_PRO_BOLD = new AssetDescriptor<FreeTypeFontGenerator>("fonts/source_sans_pro_bold.ttf", FreeTypeFontGenerator.class);
     public static final AssetDescriptor<FreeTypeFontGenerator> FONT_SOURCE_SANS_PRO_BOLD_ITALIC = new AssetDescriptor<FreeTypeFontGenerator>("fonts/source_sans_pro_bold_italic.ttf", FreeTypeFontGenerator.class);
 
-    public AssetManager getManager() { return manager; }
+    public AssetManager getManager() {
+        return manager;
+    }
 
     // Loads all assets
     public void loadAll() {
@@ -55,8 +57,7 @@ public class AssetLoader {
         manager.load(FONT_SOURCE_SANS_PRO_BOLD_ITALIC);
     }
 
-    public void dispose()
-    {
+    public void dispose() {
         manager.dispose();
     }
 }
