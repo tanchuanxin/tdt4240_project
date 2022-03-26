@@ -33,7 +33,7 @@ public class MapSelectScreen extends AbstractScreen {
         Label titleLabel = new Label("Select your map", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
         titleLabel.setAlignment(Align.center);
 
-        for (Integer map = 1; map < 11; map++) {
+        for (Integer map = 1; map < 14; map++) {
             Button mapBtn = new Button(new Label(map.toString(), assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI)), assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
             final Integer finalMap = map;
             mapBtn.addListener(new ClickListener() {
@@ -46,10 +46,26 @@ public class MapSelectScreen extends AbstractScreen {
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     // Change screen to game screen
                     System.out.println("Map selected: " + finalMap.toString());
+                    ScreenManager.getInstance().setScreen(Screen.GAME);
                 };
             });
             mapBtnList.add(mapBtn);
         }
+
+        Label backBtnLabel = new Label("Back", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        final Button backBtn = new Button(backBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        backBtn.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            };
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                // Change screen to map select screen
+                ScreenManager.getInstance().setScreen(Screen.MAIN_MENU);
+            };
+        });
 
         // Add actors to table layout
         table.pad(50f);
@@ -63,6 +79,9 @@ public class MapSelectScreen extends AbstractScreen {
             }
             table.add(mapBtnList.get(i));
         }
+
+        table.row().colspan(5).spaceBottom(20f).expandX().fillX();
+        table.add(backBtn).center().fillX();
 
         // Add actors to stage
         stage.addActor(table);
