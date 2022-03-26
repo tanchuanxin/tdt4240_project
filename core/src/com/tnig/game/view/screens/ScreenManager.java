@@ -37,6 +37,9 @@ public class ScreenManager {
             case GAME:
                 game.setScreen(new GameScreen(camera, assetLoader));
                 break;
+            case MAP_SELECT:
+                game.setScreen(new MapSelectScreen(camera, assetLoader));
+                break;
             case HIGH_SCORES:
                 game.setScreen(new HighScoresScreen(camera, assetLoader));
         }

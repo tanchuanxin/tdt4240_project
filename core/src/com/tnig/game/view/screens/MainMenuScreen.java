@@ -33,9 +33,13 @@ public class MainMenuScreen extends AbstractScreen {
         playBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                // Change screen to game screen
-                ScreenManager.getInstance().setScreen(Screen.GAME);
                 return true;
+            };
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                // Change screen to map select screen
+                ScreenManager.getInstance().setScreen(Screen.MAP_SELECT);
             };
         });
 
@@ -44,9 +48,13 @@ public class MainMenuScreen extends AbstractScreen {
         highScoresBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            };
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to high scores screen
                 ScreenManager.getInstance().setScreen(Screen.HIGH_SCORES);
-                return true;
             };
         });
 
@@ -86,7 +94,6 @@ public class MainMenuScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        Gdx.input.setInputProcessor(null);
         stage.dispose();
     }
 }
