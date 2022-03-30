@@ -3,6 +3,7 @@ package com.tnig.game.view.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -10,27 +11,29 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tnig.game.utillities.AssetLoader;
 
 public class MainMenuScreen extends AbstractScreen {
     private final Stage stage;
+    private final Table table;
 
-    public MainMenuScreen(OrthographicCamera camera, AssetLoader assetLoader) {
+    public MainMenuScreen(OrthographicCamera camera, final AssetLoader assetLoader) {
         super(camera, assetLoader);
 
         // Initialize stage for UI drawing
         stage = new Stage(new ScreenViewport(camera));
-        Table table = new Table();
+        table = new Table();
         Gdx.input.setInputProcessor(stage);
 
         // Create actors
         Label titleLabel = new Label("The Nearly Impossible Game", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
         titleLabel.setAlignment(Align.center);
 
-        Label playBtnLabel = new Label("Play", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        final Button playBtn = new Button(playBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        playBtn.addListener(new ClickListener() {
+        Label onePlayerBtnLabel = new Label("1 Player", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        Button onePlayerBtn = new Button(onePlayerBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        onePlayerBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -43,9 +46,24 @@ public class MainMenuScreen extends AbstractScreen {
             };
         });
 
-        Label highScoresBtnLabel = new Label("High Scores", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        final Button highScoresBtn = new Button(highScoresBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        highScoresBtn.addListener(new ClickListener() {
+        Label twoPlayerBtnLabel = new Label("2 Player", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        Button twoPlayerBtn = new Button(twoPlayerBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        twoPlayerBtn.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            };
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                // Change screen to map select screen
+                ScreenManager.getInstance().setScreen(Screen.MAP_SELECT);
+            };
+        });
+
+        Label leaderboardsBtnLabel = new Label("Leaderboards", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        Button leaderboardsBtn = new Button(leaderboardsBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        leaderboardsBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -58,15 +76,36 @@ public class MainMenuScreen extends AbstractScreen {
             };
         });
 
+        Label exitBtnLabel = new Label("Exit", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        Button exitBtn = new Button(exitBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        exitBtn.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            };
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                // Dispose all assets and exit game
+                assetLoader.dispose();
+                Gdx.app.exit();
+            };
+        });
+
         // Add actors to table layout
         table.pad(50f);
-        table.setFillParent(true);
+        table.setWidth(600f);
+        table.setPosition(stage.getWidth()/2,stage.getHeight()/2, Align.center);
         table.row().spaceBottom(20f);
-        table.add(titleLabel).expandX().center().fillX();
+        table.add(titleLabel).center();
         table.row().spaceBottom(20f);
-        table.add(playBtn).expandX().center().fillX();
+        table.add(onePlayerBtn).center().fillX();
         table.row().spaceBottom(20f);
-        table.add(highScoresBtn).expandX().center().fillX();
+        table.add(twoPlayerBtn).center().fillX();
+        table.row().spaceBottom(20f);
+        table.add(leaderboardsBtn).center().fillX();
+        table.row().spaceBottom(20f);
+        table.add(exitBtn).center().fillX();
 
         // Add actors to stage
         stage.addActor(table);
@@ -84,6 +123,7 @@ public class MainMenuScreen extends AbstractScreen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        table.setPosition(width/2,height/2, Align.center);
     }
 
     @Override
