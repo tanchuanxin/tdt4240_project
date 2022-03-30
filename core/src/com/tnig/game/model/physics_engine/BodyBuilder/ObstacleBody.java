@@ -2,6 +2,7 @@ package com.tnig.game.model.physics_engine.BodyBuilder;
 
 import static com.tnig.game.utillities.Constants.PPM;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -37,7 +38,7 @@ public class ObstacleBody extends BodyBuilder{
 
     }
 
-    public void createBody(Engine engine, Model model){
-        createBody(engine.getWorld(), model);
+    public Body createBody(Engine engine, Model model){
+        return createBody(engine.getWorld(), model);
     }
 }

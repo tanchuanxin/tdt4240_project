@@ -39,10 +39,10 @@ public abstract class BodyBuilder {
     /**
      * Template method for creating a Box2D body
      * @param world The Box2D world
-     * @param model The gameobject which contains the Box2D body
+     * @param model The model which contains the Box2D body
      * @return a Box2D body
      */
-    protected void createBody(World world, Model model) {
+    protected Body createBody(World world, Model model) {
         float x = model.getX();
         float y = model.getY();
         Shape shape = getShape(model);
@@ -74,6 +74,6 @@ public abstract class BodyBuilder {
         body.createFixture(fixtureDef).setUserData(model);
         shape.dispose();
 
-        model.setBody(body);
+        return body;
     }
 }

@@ -2,6 +2,7 @@ package com.tnig.game.view.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.tnig.game.model.Maps.Lvl1;
 import com.tnig.game.utillities.AssetLoader;
 import com.tnig.game.utillities.Constants;
 
@@ -35,7 +36,8 @@ public class ScreenManager {
                 game.setScreen(new MainMenuScreen(camera, assetLoader));
                 break;
             case GAME:
-                game.setScreen(new GameScreen(camera, assetLoader));
+                //TODO: need to fix so that any map can be selected
+                game.setScreen(new GameScreen(camera, assetLoader, new Lvl1()));
                 break;
             case MAP_SELECT:
                 game.setScreen(new MapSelectScreen(camera, assetLoader));

@@ -1,9 +1,13 @@
 package com.tnig.game.model.physics_engine.BodyBuilder;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.tnig.game.model.models.Model;
 import com.tnig.game.model.models.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 
+/**
+ * A factory inspired class which creates and sets the model's body to its type.
+ */
 public class BodyFactory {
 
     // Singleton pattern
@@ -15,14 +19,19 @@ public class BodyFactory {
     private BodyFactory() {
     }
 
-    public void createBody(Engine engine, Model model){
+    /**
+     * Makes a body for the model instance and set it using the model.setBody() method
+     * @param engine The physics engine used
+     * @param model The model which should contain the body
+     */
+    public Body createBody(Engine engine, Model model){
         ModelType type = model.getType();
 
         switch (type){
             case PLAYER:
-                PlayerBody.getInstance().createBody(engine, model);
+                return PlayerBody.getInstance().createBody(engine, model);
             case OBSTACLE:
-                ObstacleBody.getInstance().createBody(engine, model);
+                return ObstacleBody.getInstance().createBody(engine, model);
             default:
                 throw new IllegalArgumentException("Type doesnt exist:" + type);
 

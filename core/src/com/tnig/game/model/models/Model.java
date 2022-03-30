@@ -4,12 +4,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.tnig.game.model.physics_engine.BodyBuilder.BodyFactory;
 import com.tnig.game.model.physics_engine.Engine;
 
-public abstract class Model implements ContactObject {
+public abstract class Model implements ContactObject, GameObject {
 
     private final float width, height;
     private final boolean isStatic, isSensor;
-    private Body body;
+    private final Body body;
     private final ModelType type;
+    private boolean disposable = false;
 
 
     protected Model(Engine engine, float width, float height, boolean isStatic, boolean isSensor, ModelType type) {
@@ -18,7 +19,11 @@ public abstract class Model implements ContactObject {
         this.isStatic = isStatic;
         this.isSensor = isSensor;
         this.type = type;
-        BodyFactory.getInstance().createBody(engine, this);
+        body = BodyFactory.getInstance().createBody(engine, this);
+    }
+
+    protected void dispose(){
+        disposable = true;
     }
 
     public float getX(){
@@ -27,14 +32,6 @@ public abstract class Model implements ContactObject {
 
     public float getY(){
         return body.getPosition().y;
-    }
-
-    public boolean isStatic() {
-        return isStatic;
-    }
-
-    public boolean isSensor() {
-        return isSensor;
     }
 
     public float getHeight() {
@@ -49,7 +46,33 @@ public abstract class Model implements ContactObject {
         return type;
     }
 
-    public void setBody(final Body body){
-        this.body = body;
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public boolean isSensor() {
+        return isSensor;
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    /**
+     * Checks if the instance should be disposed
+     * @return True if disposable, false if not
+     */
+    public boolean isDisposable() {
+        return disposable;
+    }
+
+    /**
+     * Updates the model.
+     * Override the method in concrete classes to implement
+     * @param delta timestep
+     */
+    @Override
+    public void update(float delta) {
+
     }
 }

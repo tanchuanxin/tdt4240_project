@@ -2,6 +2,9 @@ package com.tnig.game.model.physics_engine.BodyBuilder;
 
 import static com.tnig.game.utillities.Constants.PPM;
 
+import androidx.annotation.NonNull;
+
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -38,7 +41,7 @@ public class PlayerBody extends BodyBuilder{
 
     }
 
-    public void createBody(Engine engine, Model model){
-        createBody(engine.getWorld(), model);
+    public Body createBody(@NonNull Engine engine, Model model){
+        return createBody(engine.getWorld(), model);
     }
 }
