@@ -1,5 +1,7 @@
 package com.tnig.game.model.physics_engine;
 
+import com.badlogic.gdx.physics.box2d.World;
+
 public interface Engine {
 
     /**
@@ -18,4 +20,9 @@ public interface Engine {
      * Disposes the engine when it is not needed anymore
      */
     void dispose();
+
+    /**
+     * @return The World of the engine
+     */
+    World getWorld();
 }
