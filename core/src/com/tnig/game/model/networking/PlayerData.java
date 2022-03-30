@@ -3,13 +3,13 @@ package com.tnig.game.model.networking;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FirebasePlayer {
+public class PlayerData {
 
     private String name;
     private int score;
     public static Map<String, Map<String, Integer>> scores = new LinkedHashMap<>();
 
-    public FirebasePlayer() {
+    public PlayerData() {
     }
 
     public String getName() {

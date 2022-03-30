@@ -1,22 +1,17 @@
 package com.tnig.game;
 
 import android.util.Log;
-import androidx.annotation.NonNull;
 
 import com.badlogic.gdx.Gdx;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.tnig.game.model.networking.FirebaseInterface;
-import com.tnig.game.model.networking.FirebasePlayer;
+import com.tnig.game.model.networking.INetworkService;
+import com.tnig.game.model.networking.PlayerData;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-public class AndroidFirebaseInterface implements FirebaseInterface {
+public class AndroidFirebaseInterface implements INetworkService {
     FirebaseDatabase database;
     DatabaseReference levelRef;
     DatabaseReference playerRef;
@@ -27,9 +22,9 @@ public class AndroidFirebaseInterface implements FirebaseInterface {
     }
 
     @Override
-    public void pushHighscore(int levelNum, FirebasePlayer firebasePlayer) {
-        String name = firebasePlayer.getName();
-        int score = firebasePlayer.getScore();
+    public void pushHighscore(int levelNum, PlayerData playerData) {
+        String name = playerData.getName();
+        int score = playerData.getScore();
         levelRef = database.getReference("level" + levelNum); //Peker på level nummer levelNum.
         playerRef = levelRef.push();
         playerRef.setValue("" + name + "," + score);
@@ -37,14 +32,14 @@ public class AndroidFirebaseInterface implements FirebaseInterface {
     }
 
     @Override
-    public void SetOnValueChangedListener(FirebasePlayer firebasePlayer) {
+    public void SetOnValueChangedListener(PlayerData playerData) {
         // Read from the database
         levelRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String value = dataSnapshot.child(firebasePlayer.getName()).getValue(String.class);
+                String value = dataSnapshot.child(playerData.getName()).getValue(String.class);
                 Log.d("TAG", "Value is: " + value);
             }
 

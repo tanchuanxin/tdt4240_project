@@ -1,15 +1,11 @@
 package com.tnig.game;
 
-import static com.tnig.game.utillities.Constants.FPS;
-import static com.tnig.game.utillities.Constants.VIEWPORT_HEIGHT;
-import static com.tnig.game.utillities.Constants.VIEWPORT_WIDTH;
-
 import android.os.Bundle;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.tnig.game.model.networking.FirebasePlayer;
+import com.tnig.game.model.networking.PlayerData;
+import com.tnig.game.model.networking.INetworkService;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -19,12 +15,12 @@ public class AndroidLauncher extends AndroidApplication {
 		initialize(new ImpossibleGame(), config);
 
 		//Koden under er for testing av databasen.
-		AndroidFirebaseInterface fbi = new AndroidFirebaseInterface();
-		FirebasePlayer p1 = new FirebasePlayer();
+		INetworkService fbi = new AndroidFirebaseInterface();
+		PlayerData p1 = new PlayerData();
 		p1.setName("rubbldld");
 		p1.setScore(133000);
 		fbi.pushHighscore(1,p1);
-		FirebasePlayer p2 = new FirebasePlayer();
+		PlayerData p2 = new PlayerData();
 		p2.setName("rubatub");
 		p2.setScore(10030);
 		fbi.pushHighscore(1,p2);

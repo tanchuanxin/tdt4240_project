@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.tnig.game.model.physics_engine.GameObject;
+import com.tnig.game.model.models.Model;
 
 /**
  * A template class for creating different types of bodies in the box2D world
@@ -18,50 +18,35 @@ public abstract class BodyBuilder {
     // Template methods
 
     /**
-     * Checks whether the body is a sensor or not.
-     * A sensor doesnt have a physical body but will engage the contact listener if touched by
-     * another body
-     * @return True if sensor, false if not
-     */
-    protected abstract boolean isSensor();
-
-    /**
-     * Checks whether the body is static or dynamic
-     * @return True if static, false if dynamic
-     */
-    protected abstract boolean isStatic();
-
-    /**
      * Gets the shape of the specific body
+     * @param model The model to create the shape from
      * @return A Box2D shape
      */
-    protected abstract Shape getShape();
+    protected abstract Shape getShape(Model model);
 
     /**
      * Makes the necessary changes to the body definition to that specific body
      * @param bodyDef The body definition
      */
-    protected abstract void setBodyDef(BodyDef bodyDef);
+    protected abstract void addToBodyDef(BodyDef bodyDef);
 
     /**
      * Makes the necessary changes to the fixture definition to that specific body
      * @param fixtureDef The fixture definition
      */
-    protected abstract void setFixtureDef(FixtureDef fixtureDef);
+    protected abstract void addToFixtureDef(FixtureDef fixtureDef);
 
     /**
-     *
+     * Template method for creating a Box2D body
      * @param world The Box2D world
-     * @param gameObject The gameobject which contains the Box2D body
+     * @param model The gameobject which contains the Box2D body
      * @return a Box2D body
      */
-    protected Body createBody(World world, GameObject gameObject) {
-        // TODO: Find out if method should be void and instead use a gameObject.setBody(body) method at the end
-        float x = (float) gameObject.getPosition().getX();
-        float y = (float) gameObject.getPosition().getY();
-        Shape shape = getShape();
-        boolean isStatic = isStatic();
-        boolean isSensor = isSensor();
+    protected void createBody(World world, Model model) {
+        float x = model.getX();
+        float y = model.getY();
+        Shape shape = getShape(model);
+        boolean isStatic = model.isStatic();
 
         // Defines a Box2D body
         BodyDef bodyDef = new BodyDef();
@@ -71,24 +56,24 @@ public abstract class BodyBuilder {
         // World units = meters, from world to screen -> Divide by Pixel Per Meter
         bodyDef.position.set(x / PPM, y / PPM);
 
-        setBodyDef(bodyDef);
+        addToBodyDef(bodyDef);
         //Puts the body in the Box2D world
         Body body = world.createBody(bodyDef);
 
         // A body is composed of fixtures => defines a fixture to put in the body
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = isSensor;
+        fixtureDef.isSensor = model.isSensor();
 
         fixtureDef.density = 1;
         fixtureDef.friction = 0;
         //fixtureDef.restitution = 0.01f;
-        setFixtureDef(fixtureDef);
+        addToFixtureDef(fixtureDef);
 
-        // Sets the gameobjects contactobject as userdata for the contactlistener
-        body.createFixture(fixtureDef).setUserData(gameObject.getContactObject());
+        // Sets the model as userdata for the contactlistener
+        body.createFixture(fixtureDef).setUserData(model);
         shape.dispose();
 
-        return body;
+        model.setBody(body);
     }
 }
