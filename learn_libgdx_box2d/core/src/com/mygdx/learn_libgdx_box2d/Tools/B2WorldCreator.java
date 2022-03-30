@@ -19,18 +19,28 @@ import com.mygdx.learn_libgdx_box2d.models.Flag;
 
 public class B2WorldCreator {
     private Array<Fireball> fireballs;
+    private Rectangle jellyRectangle;
 
     public B2WorldCreator(PlayController playController) {
-        World world = playController.getWorld();
+        // World world = playController.getWorld();
         TiledMap map = playController.getMap();
 
-        BodyDef bodyDef = new BodyDef();
-        PolygonShape polygonShape = new PolygonShape();
-        FixtureDef fixtureDef = new FixtureDef();
-        Body body;
+        // BodyDef bodyDef = new BodyDef();
+        // PolygonShape polygonShape = new PolygonShape();
+        // FixtureDef fixtureDef = new FixtureDef();
+        // Body body;
 
-        // create block layer - layer 2
+        // create jelly layer - layer 2
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+            // grab rectangles corresponding to object
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            // create the tile
+            jellyRectangle = rect;
+        }
+
+        // create block layer - layer 3
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             // grab rectangles corresponding to object
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -38,16 +48,7 @@ public class B2WorldCreator {
             new Block(playController, rect);
         }
 
-        // create coin layer - layer 3
-        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-            // grab rectangles corresponding to object
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            // create the tile
-            new Coin(playController, rect);
-        }
-
-        // create block layer - layer 4
+        // create flag layer - layer 4
         for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             // grab rectangles corresponding to object
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -56,9 +57,18 @@ public class B2WorldCreator {
             new Flag(playController, rect);
         }
 
-        // create fireball layer - layer 5
-        fireballs = new Array<Fireball>();
+        // create coin layer - layer 5
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+            // grab rectangles corresponding to object
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            // create the tile
+            new Coin(playController, rect);
+        }
+
+        // create fireball layer - layer 6
+        fireballs = new Array<Fireball>();
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             // grab rectangles corresponding to object
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -66,6 +76,8 @@ public class B2WorldCreator {
             fireballs.add(new Fireball(playController, JumpJellyJump.scale(rect.getX()), JumpJellyJump.scale(rect.getY())));
         }
     }
+
+    public Rectangle getJellyRectangle() { return jellyRectangle; }
 
     public Array<Fireball> getFireballs() {
         return fireballs;

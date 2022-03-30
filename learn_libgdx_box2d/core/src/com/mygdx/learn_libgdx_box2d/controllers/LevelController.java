@@ -9,18 +9,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.learn_libgdx_box2d.JumpJellyJump;
-import com.mygdx.learn_libgdx_box2d.views.SettingsView;
+import com.mygdx.learn_libgdx_box2d.views.LevelView;
 
-public class SettingsController implements Screen {
+public class LevelController implements Screen {
     private JumpJellyJump game;
     private FitViewport viewport;
     private OrthographicCamera cam;
     private Stage stage;
     private Texture background;
-    private SettingsView settingsView;
+    private LevelView levelView;
     private Music music;
 
-    public SettingsController(JumpJellyJump game) {
+    public LevelController(JumpJellyJump game) {
         background = new Texture("background.png");
 
         this.game = game;
@@ -28,7 +28,7 @@ public class SettingsController implements Screen {
         viewport = new FitViewport(JumpJellyJump.V_WIDTH, JumpJellyJump.V_HEIGHT, cam);
         stage = new Stage(viewport, game.batch);
 
-        settingsView = new SettingsView(game.batch);
+        levelView = new LevelView(game.batch);
 
         // audio
         music = JumpJellyJump.assetManager.get("audio/music/fun.mp3", Music.class);
@@ -44,23 +44,13 @@ public class SettingsController implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
-
-        if (settingsView.isVolumeDownPressed()) {
-            JumpJellyJump.setVolumeLevel(JumpJellyJump.getVolumeLevel() - 0.01f);
-            music.setVolume(JumpJellyJump.getVolumeLevel());
-            dispose();
-        } else if (settingsView.isVolumeUpPressed()) {
-            JumpJellyJump.setVolumeLevel(JumpJellyJump.getVolumeLevel() + 0.01f);
-            music.setVolume(JumpJellyJump.getVolumeLevel());dispose();
-            dispose();
-        } else if (settingsView.isVolumeMutePressed()) {
-            JumpJellyJump.setVolumeLevel(0f);
-            music.setVolume(JumpJellyJump.getVolumeLevel());
-            dispose();
-        } else if (settingsView.isBackPressed()) {
+        if (levelView.isBackPressed()) {
             game.setScreen(new MenuController(game));
             dispose();
+        }
+
+        if (levelView.isLevelPressed()) {
+            game.setScreen(new PlayController(game, levelView.getLevelSelected()));
         }
 
         Gdx.gl.glClearColor(0,0,0,1);
@@ -73,19 +63,14 @@ public class SettingsController implements Screen {
         stage.getBatch().end();
 
         // set batch to draw what the camera sees
-        game.batch.setProjectionMatrix(settingsView.stage.getCamera().combined);
-        settingsView.stage.draw();
+        game.batch.setProjectionMatrix(levelView.stage.getCamera().combined);
+        levelView.stage.draw();
     }
-
-    public void update(float delta) {
-        settingsView.update(delta);
-    }
-
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        settingsView.resize(width, height);
+        levelView.resize(width, height);
     }
 
     @Override

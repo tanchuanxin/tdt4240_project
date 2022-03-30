@@ -30,7 +30,7 @@ public class HudView implements Disposable {
     private Label mapLabel;
     private Label jellyLabel;
 
-    public HudView(SpriteBatch sb) {
+    public HudView(SpriteBatch sb, int level) {
         allowedTime = 30;
         mapTimer = 30;
         timeCount = 0;
@@ -46,10 +46,12 @@ public class HudView implements Disposable {
         table.top();
         table.setFillParent(true);
 
+
+
         countDownLabel = new Label(String.format("%03d", mapTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(String.valueOf(level), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         mapLabel = new Label("MAP", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         jellyLabel = new Label("JELLY", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 

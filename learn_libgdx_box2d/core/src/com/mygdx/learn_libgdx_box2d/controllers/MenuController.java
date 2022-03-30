@@ -17,7 +17,7 @@ public class MenuController implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Texture background;
-    private MenuView menuButtons;
+    private MenuView menuView;
     private Music music;
 
     public MenuController(JumpJellyJump game) {
@@ -28,7 +28,7 @@ public class MenuController implements Screen {
         viewport = new FitViewport(JumpJellyJump.V_WIDTH, JumpJellyJump.V_HEIGHT, cam);
         stage = new Stage(viewport, game.batch);
 
-        menuButtons = new MenuView(game.batch);
+        menuView = new MenuView(game.batch);
 
         // audio
         music = JumpJellyJump.assetManager.get("audio/music/fun.mp3", Music.class);
@@ -44,15 +44,15 @@ public class MenuController implements Screen {
 
     @Override
     public void render(float delta) {
-        if (menuButtons.isMenuScreen1PlayerPressed()) {
+        if (menuView.isMenuScreen1PlayerPressed()) {
 
-        } else if (menuButtons.isMenuScreen2PlayerPressed()) {
-            game.setScreen(new PlayController(game));
+        } else if (menuView.isMenuScreen2PlayerPressed()) {
+            game.setScreen(new LevelController(game));
             dispose();
-        } else if (menuButtons.isMenuScreenLeaderboardPressed()) {
+        } else if (menuView.isMenuScreenLeaderboardPressed()) {
             game.setScreen(new LeaderboardController(game));
             dispose();
-        } else if (menuButtons.isMenuScreenSettingsPressed()) {
+        } else if (menuView.isMenuScreenSettingsPressed()) {
             game.setScreen(new SettingsController(game));
             dispose();
         }
@@ -67,8 +67,8 @@ public class MenuController implements Screen {
         stage.getBatch().end();
 
         // set batch to draw what the camera sees
-        game.batch.setProjectionMatrix(menuButtons.stage.getCamera().combined);
-        menuButtons.stage.draw();
+        game.batch.setProjectionMatrix(menuView.stage.getCamera().combined);
+        menuView.stage.draw();
 
         stage.draw();
     }
@@ -76,7 +76,7 @@ public class MenuController implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        menuButtons.resize(width, height);
+        menuView.resize(width, height);
     }
 
     @Override

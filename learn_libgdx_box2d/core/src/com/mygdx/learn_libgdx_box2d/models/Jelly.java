@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -22,6 +23,7 @@ import com.mygdx.learn_libgdx_box2d.controllers.PlayController;
 
 public class Jelly extends Sprite {
     private int size;
+    private Rectangle bounds;
     public enum State {JUMPING, STANDING, DEAD, WIN};
     public State currentState;
     public State previousState;
@@ -36,8 +38,9 @@ public class Jelly extends Sprite {
     private boolean jellyIsWin;
 
 
-    public Jelly(PlayController playController) {
+    public Jelly(PlayController playController, Rectangle bounds) {
         this.world = playController.getWorld();
+        this.bounds = bounds;
         currentState = State.STANDING;
         previousState = State.STANDING;
         size = 8;
@@ -76,9 +79,15 @@ public class Jelly extends Sprite {
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/3);
         setRegion(getFrame(delta));
 
+        if (jellyIsDead || jellyIsWin ) {
+            b2body.setLinearVelocity(0,b2body.getLinearVelocity().y);
+        }
+
         if (b2body.getPosition().y <= 0) {
             die();
         }
+
+
     }
 
     public TextureRegion getFrame(float delta) {
@@ -131,7 +140,7 @@ public class Jelly extends Sprite {
 
     public void defineJelly() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(JumpJellyJump.scale(256), JumpJellyJump.scale(128));
+        bodyDef.position.set(JumpJellyJump.scale(bounds.getX() + bounds.getWidth()/2), JumpJellyJump.scale(bounds.getY() + bounds.getHeight()/2));
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bodyDef);
 
@@ -174,8 +183,8 @@ public class Jelly extends Sprite {
                 fixture.setFilterData(filter);
             }
 
-            b2body.setLinearVelocity(0f, 0f);
-            b2body.applyLinearImpulse(new Vector2(0, 5f), b2body.getWorldCenter(), true);
+            b2body.setLinearVelocity(new Vector2(0,0));
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
         }
     }
 
@@ -187,8 +196,8 @@ public class Jelly extends Sprite {
 
             jellyIsWin = true;
 
-            b2body.setLinearVelocity(0f, 0f);
-            b2body.applyLinearImpulse(new Vector2(0, 5f), b2body.getWorldCenter(), true);
+            b2body.setLinearVelocity(new Vector2(0,0));
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
         }
     }
 

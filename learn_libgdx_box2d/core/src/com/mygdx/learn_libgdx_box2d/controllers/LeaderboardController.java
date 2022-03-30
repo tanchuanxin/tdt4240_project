@@ -17,7 +17,7 @@ public class LeaderboardController implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Texture background;
-    private LeaderboardView leaderboardButtons;
+    private LeaderboardView leaderboardView;
     private Music music;
 
     public LeaderboardController(JumpJellyJump game) {
@@ -28,7 +28,7 @@ public class LeaderboardController implements Screen {
         viewport = new FitViewport(JumpJellyJump.V_WIDTH, JumpJellyJump.V_HEIGHT, cam);
         stage = new Stage(viewport, game.batch);
 
-        leaderboardButtons = new LeaderboardView(game.batch);
+        leaderboardView = new LeaderboardView(game.batch);
 
         // audio
         music = JumpJellyJump.assetManager.get("audio/music/fun.mp3", Music.class);
@@ -44,7 +44,7 @@ public class LeaderboardController implements Screen {
 
     @Override
     public void render(float delta) {
-        if (leaderboardButtons.isBackPressed()) {
+        if (leaderboardView.isBackPressed()) {
             game.setScreen(new MenuController(game));
             dispose();
         }
@@ -59,14 +59,14 @@ public class LeaderboardController implements Screen {
         stage.getBatch().end();
 
         // set batch to draw what the camera sees
-        game.batch.setProjectionMatrix(leaderboardButtons.stage.getCamera().combined);
-        leaderboardButtons.stage.draw();
+        game.batch.setProjectionMatrix(leaderboardView.stage.getCamera().combined);
+        leaderboardView.stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        leaderboardButtons.resize(width, height);
+        leaderboardView.resize(width, height);
     }
 
     @Override

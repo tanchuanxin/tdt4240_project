@@ -51,7 +51,6 @@ public class JumpJellyJump extends Game {
 		}
 	}
 
-
 	@Override
 	public void create () {
 		// one sprite batch for the whole game because it is memory intensive
@@ -65,6 +64,7 @@ public class JumpJellyJump extends Game {
 		assetManager.load("audio/sounds/coin.wav", Sound.class);
 		assetManager.load("audio/sounds/die.mp3", Sound.class);
 		assetManager.load("audio/sounds/jump.ogg", Sound.class);
+		assetManager.load("audio/sounds/punch.mp3", Sound.class);
 		assetManager.load("audio/sounds/win.mp3", Sound.class);
 
 

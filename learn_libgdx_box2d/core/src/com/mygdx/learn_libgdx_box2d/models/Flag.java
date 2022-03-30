@@ -1,6 +1,5 @@
 package com.mygdx.learn_libgdx_box2d.models;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.learn_libgdx_box2d.JumpJellyJump;
@@ -19,7 +18,6 @@ public class Flag extends InteractiveTileObject {
 
     @Override
     public void onHit() {
-        Gdx.app.log("win", "win");
         HudView.addScore(1000);
         sound = JumpJellyJump.assetManager.get("audio/sounds/win.mp3", Sound.class);
         sound.setVolume(sound.play(), JumpJellyJump.getVolumeLevel());

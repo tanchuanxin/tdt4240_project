@@ -3,9 +3,11 @@ package com.mygdx.learn_libgdx_box2d.controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -16,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.learn_libgdx_box2d.JumpJellyJump;
 import com.mygdx.learn_libgdx_box2d.Tools.B2WorldCreator;
 import com.mygdx.learn_libgdx_box2d.Tools.WorldContactListener;
-import com.mygdx.learn_libgdx_box2d.views.DpadView;
+import com.mygdx.learn_libgdx_box2d.views.PlayView;
 import com.mygdx.learn_libgdx_box2d.views.HudView;
 import com.mygdx.learn_libgdx_box2d.models.Enemy;
 import com.mygdx.learn_libgdx_box2d.models.Jelly;
@@ -29,12 +31,15 @@ public class PlayController implements Screen {
     private OrthographicCamera cam;
     private FitViewport viewport;
     private HudView hudView;
-    private DpadView dpadView;
+    private PlayView playView;
 
     // map
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    private float mapWidth;
+    private float mapHeight;
+    private int levelSelected;
 
     // box2d
     private World world;
@@ -47,7 +52,7 @@ public class PlayController implements Screen {
     // music
     private Music music;
 
-    public PlayController(JumpJellyJump game) {
+    public PlayController(JumpJellyJump game, int levelSelected) {
         atlas = new TextureAtlas("game_textures.pack");
         this.game = game;
 
@@ -58,16 +63,27 @@ public class PlayController implements Screen {
         viewport = new FitViewport(JumpJellyJump.scale(JumpJellyJump.V_WIDTH), JumpJellyJump.scale(JumpJellyJump.V_HEIGHT), cam);
 
         // create our game HUD for scores/level/timer info
-        hudView = new HudView(game.batch);
-        dpadView = new DpadView(game.batch);
+        hudView = new HudView(game.batch, levelSelected);
+        playView = new PlayView(game.batch);
 
         // render our map
+        this.levelSelected = levelSelected;
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("map/level1.tmx");
+        String mapName = "map/level" + String.valueOf(levelSelected) + ".tmx";
+        map = mapLoader.load(mapName);
+
+        MapProperties prop = map.getProperties();
+        int mapWidth = prop.get("width", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        this.mapWidth = JumpJellyJump.scale(mapWidth*tilePixelWidth);
+
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+        this.mapHeight = JumpJellyJump.scale(mapHeight*tilePixelHeight);
+
         renderer = new OrthogonalTiledMapRenderer(map, JumpJellyJump.scale(1));
 
         // set camera position to be correct at the bot left corner of the map
-//        cam.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
         cam.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
 
         // box2d
@@ -78,7 +94,7 @@ public class PlayController implements Screen {
         creator = new B2WorldCreator(this);
 
         // render player
-        jelly = new Jelly(this);
+        jelly = new Jelly(this, creator.getJellyRectangle());
 
         // collisions
         world.setContactListener(new WorldContactListener());
@@ -107,23 +123,35 @@ public class PlayController implements Screen {
     public void handleInput(float delta) {
         if (jelly.currentState != Jelly.State.DEAD || jelly.currentState != Jelly.State.WIN) {
             // jump
-            if (dpadView.isJumpPressed()) {
+            if (playView.isJumpPressed()) {
                 if (jelly.b2body.getLinearVelocity().y == 0) {
                     jelly.b2body.applyLinearImpulse(new Vector2(0,3f), jelly.b2body.getWorldCenter(), true);
                 }
             }
             // move left
-            if (dpadView.isLeftPressed()) {
+            if (playView.isLeftPressed()) {
                 if (jelly.b2body.getLinearVelocity().x >= -2) {
                     jelly.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), jelly.b2body.getWorldCenter(), true);
                 }
             }
 
             // move right
-            if (dpadView.isRightPressed()) {
+            if (playView.isRightPressed()) {
                 if (jelly.b2body.getLinearVelocity().x <= 2) {
                     jelly.b2body.applyLinearImpulse(new Vector2(0.1f, 0), jelly.b2body.getWorldCenter(), true);
                 }
+            }
+
+            // attack
+            if (playView.isAttackPressed()) {
+                Sound sound = JumpJellyJump.assetManager.get("audio/sounds/punch.mp3", Sound.class);
+                sound.setVolume(sound.play(), JumpJellyJump.getVolumeLevel());
+
+                float randomImpulseX = (float) ((float) Math.signum(Math.random()-0.5) *  (0.5 + Math.random() * 0.5));
+                float randomImpulseY = (float) ((float) Math.signum(Math.random()-0.5) *  (1 + Math.random() * 1));
+                jelly.b2body.applyLinearImpulse(new Vector2(randomImpulseX, randomImpulseY), jelly.b2body.getWorldCenter(), true);
+
+                playView.setAttackPressed(false);
             }
         }
     }
@@ -148,6 +176,9 @@ public class PlayController implements Screen {
 
         // update hud
         hudView.update(delta);
+
+        // update controls
+        playView.update(delta);
 
         // stretch gamecam to our player x coordinate
         if (jelly.currentState != Jelly.State.DEAD) {
@@ -192,8 +223,8 @@ public class PlayController implements Screen {
         hudView.stage.draw();
 
         // set batch to draw what the camera sees
-        game.batch.setProjectionMatrix(dpadView.stage.getCamera().combined);
-        dpadView.stage.draw();
+        game.batch.setProjectionMatrix(playView.stage.getCamera().combined);
+        playView.stage.draw();
 
         // timer ran to zero
         if (hudView.isTimeUp()) {
@@ -202,11 +233,11 @@ public class PlayController implements Screen {
 
         switch(gameOver()) {
             case 1:
-                game.setScreen(new GameOverController(game, hudView.getScore(), "You died"));
+                game.setScreen(new GameOverController(game, hudView.getScore(), "You died", levelSelected));
                 dispose();
                 break;
             case 2:
-                game.setScreen(new GameOverController(game, hudView.getScore(), "You won"));
+                game.setScreen(new GameOverController(game, hudView.getScore(), "You won", levelSelected));
                 dispose();
                 break;
         }
@@ -215,6 +246,10 @@ public class PlayController implements Screen {
 
     public int gameOver() {
         // jelly died
+        if (jelly.currentState == Jelly.State.DEAD || jelly.currentState == Jelly.State.WIN) {
+            playView.setDisabled(true);
+        }
+
         if (jelly.currentState == Jelly.State.DEAD && jelly.getStateTimer() > 3) {
             return 1;
         }
@@ -229,54 +264,48 @@ public class PlayController implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        dpadView.resize(width, height);
+        playView.resize(width, height);
     }
 
     private void boundsCheck() {
-        int mapLeft = 0;
+        float mapLeft = 0;
         // The right boundary of the map (x + width)
-        int mapRight = 0 + JumpJellyJump.V_WIDTH;
+        float mapRight = mapWidth;
+
         // The bottom boundary of the map (y)
-        int mapBottom = 0;
+        float mapBottom = 0;
         // The top boundary of the map (y + height)
-        int mapTop = 0 + JumpJellyJump.V_HEIGHT;
+        float mapTop = mapHeight;
         // The camera dimensions, halved
         float cameraHalfWidth = cam.viewportWidth * .5f;
         float cameraHalfHeight = cam.viewportHeight * .5f;
 
         // Move camera after player as normal
-
         float cameraLeft = cam.position.x - cameraHalfWidth;
         float cameraRight = cam.position.x + cameraHalfWidth;
         float cameraBottom = cam.position.y - cameraHalfHeight;
         float cameraTop = cam.position.y + cameraHalfHeight;
 
         // Horizontal axis
-        if(JumpJellyJump.V_WIDTH < cam.viewportWidth)
-        {
+        if (JumpJellyJump.V_WIDTH < cam.viewportWidth) {
             cam.position.x = mapRight / 2;
-        }
-        else if(cameraLeft <= mapLeft)
-        {
-            cam.position.x = mapLeft + cameraHalfWidth;
-        }
-        else if(cameraRight >= mapRight)
-        {
-            cam.position.x = mapRight - cameraHalfWidth;
+        } else {
+            if (cameraLeft <= mapLeft) {
+                cam.position.x = mapLeft + cameraHalfWidth;
+            } else if (cameraRight >= mapRight) {
+                cam.position.x = mapRight - cameraHalfWidth;
+            }
         }
 
         // Vertical axis
-        if(JumpJellyJump.V_HEIGHT < cam.viewportHeight)
-        {
+        if (JumpJellyJump.V_HEIGHT < cam.viewportHeight) {
             cam.position.y = mapTop / 2;
-        }
-        else if(cameraBottom <= mapBottom)
-        {
-            cam.position.y = mapBottom + cameraHalfHeight;
-        }
-        else if(cameraTop >= mapTop)
-        {
-            cam.position.y = mapTop - cameraHalfHeight;
+        } else {
+            if (cameraBottom <= mapBottom) {
+                cam.position.y = mapBottom + cameraHalfHeight;
+            } else if(cameraTop >= mapTop) {
+                cam.position.y = mapTop - cameraHalfHeight;
+            }
         }
     }
 

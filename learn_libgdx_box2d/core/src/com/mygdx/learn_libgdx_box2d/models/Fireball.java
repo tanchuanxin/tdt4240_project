@@ -74,19 +74,6 @@ public class Fireball extends Enemy {
         fixtureDef.shape = hitbox;
         fixtureDef.filter.categoryBits = JumpJellyJump.ENEMY_BIT;
         b2body.createFixture(fixtureDef).setUserData(this);
-
-
-
-//
-//        // define collision
-//        CircleShape enemyBody = new CircleShape();
-//        enemyBody.setRadius(LearnLibgdxBox2d.scale(size));
-//
-//        fixtureDef.shape = enemyBody;
-//        fixtureDef.filter.categoryBits = LearnLibgdxBox2d.ENEMY_BIT;
-//        fixtureDef.isSensor = true;
-//
-//        b2body.createFixture(fixtureDef).setUserData(this);
     }
 
 }

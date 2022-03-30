@@ -22,17 +22,18 @@ public class GameOverController implements Screen {
     private OrthographicCamera cam;
     private Stage stage;
     private Texture background;
-    private GameOverView gameOverButtons;
+    private GameOverView gameOverView;
     private Music music;
+    private int levelSelected;
 
-    public GameOverController(JumpJellyJump game, int score, String message) {
+    public GameOverController(JumpJellyJump game, int score, String message, int levelSelected) {
         background = new Texture("background.png");
-
+        this.levelSelected = levelSelected;
         this.game = game;
         cam = new OrthographicCamera();
         viewport = new FitViewport(JumpJellyJump.V_WIDTH, JumpJellyJump.V_HEIGHT, cam);
         stage = new Stage(viewport, game.batch);
-        gameOverButtons = new GameOverView(game.batch);
+        gameOverView = new GameOverView(game.batch);
 
         // audio
         music = JumpJellyJump.assetManager.get("audio/music/fun.mp3", Music.class);
@@ -90,10 +91,10 @@ public class GameOverController implements Screen {
 
     @Override
     public void render(float delta) {
-        if (gameOverButtons.isGameOverScreenRestartPressed()) {
-            game.setScreen(new PlayController(game));
+        if (gameOverView.isGameOverScreenRestartPressed()) {
+            game.setScreen(new PlayController(game, levelSelected));
             dispose();
-        } else if (gameOverButtons.isGameOverScreenMenuPressed()) {
+        } else if (gameOverView.isGameOverScreenMenuPressed()) {
             game.setScreen(new MenuController(game));
             dispose();
         }
@@ -108,8 +109,8 @@ public class GameOverController implements Screen {
         stage.getBatch().end();
 
         // set batch to draw what the camera sees
-        game.batch.setProjectionMatrix(gameOverButtons.stage.getCamera().combined);
-        gameOverButtons.stage.draw();
+        game.batch.setProjectionMatrix(gameOverView.stage.getCamera().combined);
+        gameOverView.stage.draw();
 
         stage.draw();
     }
@@ -117,7 +118,7 @@ public class GameOverController implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        gameOverButtons.resize(width, height);
+        gameOverView.resize(width, height);
     }
 
     @Override

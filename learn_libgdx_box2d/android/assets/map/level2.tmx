@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="32" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="141">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="32" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="143">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <layer id="1" name="background" width="32" height="13">
   <data encoding="base64" compression="zlib">
@@ -8,21 +8,22 @@
  </layer>
  <layer id="2" name="graphics" width="32" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF9ATfBth+K8ZR+0ftH7V/qNpvRYa8BCMCWzGi8kHOGUgMAOi3BDQ=
+   eJxjYBgF9ATfBth+K8ZR+0ftHx72Ww2w/eSAgbBfghGBrRhR+SDnkIORAblmgDAA91MD9w==
   </data>
  </layer>
  <objectgroup id="9" name="jelly">
-  <object id="137" x="64" y="176" width="16" height="16"/>
+  <object id="142" x="64" y="176" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="blocks">
-  <object id="133" x="0" y="192" width="512" height="16"/>
+  <object id="137" x="0" y="192" width="224" height="16"/>
+  <object id="138" x="272" y="192" width="240" height="16"/>
+  <object id="140" x="510.667" y="-113.333" height="0.666667"/>
  </objectgroup>
  <objectgroup id="8" name="flag">
   <object id="136" x="448" y="32" width="16" height="160"/>
  </objectgroup>
  <objectgroup id="6" name="coins">
-  <object id="134" x="192" y="176" width="16" height="16"/>
-  <object id="135" x="320" y="176" width="16" height="16"/>
+  <object id="139" x="240" y="144" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="fireballs"/>
 </map>
