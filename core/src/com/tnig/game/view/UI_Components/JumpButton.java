@@ -1,4 +1,4 @@
-package com.tnig.game.view.ui;
+package com.tnig.game.view.UI_Components;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.view.View;

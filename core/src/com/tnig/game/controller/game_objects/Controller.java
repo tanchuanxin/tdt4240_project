@@ -10,4 +10,5 @@ import com.tnig.game.view.View;
 public interface Controller {
 
     Model getModel();
+    View getView();
 }

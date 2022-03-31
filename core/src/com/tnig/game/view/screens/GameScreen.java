@@ -12,8 +12,8 @@ import com.tnig.game.utillities.AssetLoader;
 
 public class GameScreen extends AbstractScreen {
     //private final Stage stage;
-    private Engine engine;
-    private SpriteBatch batch;
+    private final Engine engine;
+    private final SpriteBatch batch;
     private GameMap map;
 
     public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, GameMap map) {

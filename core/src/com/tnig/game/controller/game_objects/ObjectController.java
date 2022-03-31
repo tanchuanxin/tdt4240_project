@@ -12,7 +12,7 @@ public abstract class ObjectController implements Controller {
 
     // Factory methods
     protected abstract Model createModel(Engine engine, float width, float height);
-    protected abstract View createView();
+    protected abstract View createView(Model model);
 
     public ObjectController() {
 
@@ -30,5 +30,7 @@ public abstract class ObjectController implements Controller {
         return model;
     }
 
-
+    public View getView() {
+        return view;
+    }
 }

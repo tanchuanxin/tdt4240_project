@@ -36,7 +36,5 @@ public class ObstacleBody extends BodyBuilder{
 
     }
 
-    public Body createBody(Engine engine, GameObject object){
-        return createBody(engine.getWorld(), object);
-    }
+
 }

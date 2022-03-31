@@ -4,7 +4,7 @@ package com.tnig.game.view;
 /**
  * Interface for animated views, providing a reference for drawing animations to the screen. Extends IView.
  */
-public interface IAnimatedView extends View {
+public interface AnimatedView extends View {
     /**
      * Update function to track the frame of animation of a view according to time.
      *

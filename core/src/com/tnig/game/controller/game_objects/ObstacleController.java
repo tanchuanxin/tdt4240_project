@@ -5,6 +5,8 @@ import com.tnig.game.model.models.obstacles.ObstacleFactory;
 import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.view.View;
+import com.tnig.game.view.Views.ModelViewFactory;
+import com.tnig.game.view.Views.obstacles.ObstacleViewFactory;
 
 public class ObstacleController extends ObjectController{
 
@@ -13,7 +15,7 @@ public class ObstacleController extends ObjectController{
     public ObstacleController(Engine engine, float width, float height, ObstacleType type) {
         this.type = type;
         Model model = createModel(engine, width, height);
-        View view = createView();
+        View view = createView(model);
         initController(model, view);
     }
 
@@ -24,9 +26,8 @@ public class ObstacleController extends ObjectController{
     }
 
     @Override
-    public View createView() {
-        //TODO: IMPLEMENT
-        return null;
+    public View createView(Model model) {
+        return ObstacleViewFactory.getInstance().createView(model);
     }
 
 

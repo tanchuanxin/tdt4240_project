@@ -6,4 +6,8 @@ public interface Model {
     void update(float delta);
     boolean isDisposable();
     Body getBody();
+    float getX();
+    float getY();
+    float getWidth();
+    float getHeight();
 }
