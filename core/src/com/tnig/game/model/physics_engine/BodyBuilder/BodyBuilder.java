@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.tnig.game.model.models.GameObject;
+import com.tnig.game.model.physics_engine.Engine;
 
 /**
  * A template class for creating different types of bodies in the box2D world
@@ -38,13 +39,14 @@ public abstract class BodyBuilder {
 
     /**
      * Template method for creating a Box2D body
-     * @param world The Box2D world
+     * @param engine The physics engine which contains the world
+     * @param x The x-coordinate where the body should appear
+     * @param y The y-coordinate where the body should appear
      * @param object The object which will contain the Box2D body
      * @return a Box2D body
      */
-    protected Body createBody(World world, GameObject object) {
-        float x = object.getX();
-        float y = object.getY();
+    protected Body createBody(Engine engine, float x, float y, GameObject object) {
+        World world = engine.getWorld();
         Shape shape = getShape(object);
         boolean isStatic = object.isStatic();
 

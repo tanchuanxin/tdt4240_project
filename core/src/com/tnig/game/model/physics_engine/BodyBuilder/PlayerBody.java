@@ -40,7 +40,5 @@ public class PlayerBody extends BodyBuilder{
 
     }
 
-    public Body createBody(Engine engine, GameObject object){
-        return createBody(engine.getWorld(), object);
-    }
+
 }

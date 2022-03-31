@@ -22,16 +22,18 @@ public class BodyFactory {
     /**
      * Makes a body for the model instance and set it using the model.setBody() method
      * @param engine The physics engine used
+     * @param x The x-coordinate where the body should appear
+     * @param y The y-coordinate where the body should appear
      * @param object The object which should contain the body
      */
-    public Body createBody(Engine engine, GameObject object){
+    public Body createBody(Engine engine, float x, float y, GameObject object){
         ObjectType type = object.getType();
 
         switch (type){
             case PLAYER:
-                return PlayerBody.getInstance().createBody(engine, object);
+                return PlayerBody.getInstance().createBody(engine, x, y, object);
             case OBSTACLE:
-                return ObstacleBody.getInstance().createBody(engine, object);
+                return ObstacleBody.getInstance().createBody(engine, x, y, object);
             default:
                 throw new IllegalArgumentException("Type doesnt exist:" + type);
 

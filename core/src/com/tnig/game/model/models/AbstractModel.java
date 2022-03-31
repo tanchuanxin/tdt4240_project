@@ -13,13 +13,14 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     private boolean disposable = false;
 
 
-    protected AbstractModel(Engine engine, float width, float height, boolean isStatic, boolean isSensor, ObjectType type) {
+    protected AbstractModel(Engine engine, float startX, float startY, float width, float height,
+                            boolean isStatic, boolean isSensor, ObjectType type) {
         this.width = width;
         this.height = height;
         this.isStatic = isStatic;
         this.isSensor = isSensor;
         this.type = type;
-        body = BodyFactory.getInstance().createBody(engine, this);
+        body = BodyFactory.getInstance().createBody(engine, startX, startY, this);
     }
 
     protected void dispose(){
