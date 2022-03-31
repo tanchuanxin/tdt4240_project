@@ -4,14 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.tnig.game.model.Maps.Map;
+import com.tnig.game.controller.GameMaps.GameMap;
+import com.tnig.game.controller.ScreenManager;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utillities.AssetLoader;
@@ -20,9 +14,9 @@ public class GameScreen extends AbstractScreen {
     //private final Stage stage;
     private Engine engine;
     private SpriteBatch batch;
-    private Map map;
+    private GameMap map;
 
-    public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, Map map) {
+    public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, GameMap map) {
         super(camera, assetLoader);
         this.map = map; // TODO: create map classes
         batch = new SpriteBatch();
@@ -63,6 +57,18 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        // TODO: IMPLEMENT
+        batch.end();
+
+        engine.update(delta);
+
+
+        if (engine.gameFinished()){
+            ScreenManager.getInstance().setScreen(Screen.GAME_OVER);
+            engine.dispose();
+        }
 
         //stage.act();
         //stage.draw();

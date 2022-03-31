@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.tnig.game.controller.ScreenManager;
 import com.tnig.game.utillities.AssetLoader;
 
 public class HighScoresScreen extends AbstractScreen {

@@ -2,14 +2,13 @@ package com.tnig.game.model.physics_engine.BodyBuilder;
 
 import static com.tnig.game.utillities.Constants.PPM;
 
-import androidx.annotation.NonNull;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.GameObject;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class PlayerBody extends BodyBuilder{
@@ -24,9 +23,9 @@ public class PlayerBody extends BodyBuilder{
     }
 
     @Override
-    protected Shape getShape(Model model) {
+    protected Shape getShape(GameObject object) {
         final PolygonShape shape = new PolygonShape();
-        shape.setAsBox(model.getWidth() / 2 / PPM, model.getHeight() / 2 / PPM);
+        shape.setAsBox(object.getWidth() / 2 / PPM, object.getHeight() / 2 / PPM);
         return shape;
     }
 
@@ -41,7 +40,7 @@ public class PlayerBody extends BodyBuilder{
 
     }
 
-    public Body createBody(@NonNull Engine engine, Model model){
-        return createBody(engine.getWorld(), model);
+    public Body createBody(Engine engine, GameObject object){
+        return createBody(engine.getWorld(), object);
     }
 }

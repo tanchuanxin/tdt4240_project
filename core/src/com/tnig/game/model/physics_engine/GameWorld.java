@@ -8,15 +8,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.tnig.game.model.models.GameObject;
 import com.tnig.game.model.models.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameWorld implements Engine{
 
-    private final List<GameObject> models = new ArrayList<>();
+    private final List<Model> models = new ArrayList<>();
 
     private final World world;
     private final Box2DDebugRenderer b2dr;
@@ -37,6 +37,29 @@ public class GameWorld implements Engine{
     @Override
     public void update(float delta) {
         world.step(delta, 6, 2);
+
+        updateGameObjects(delta);
+
+    }
+
+    /**
+     * Updates all gameobjects in the world and removes those that are disposable.
+     * @param delta timestep
+     */
+    private void updateGameObjects(float delta){
+        // Uses iterator instead of for loop so it is possible to remove elements from the list
+        // While iterating
+        Iterator<Model> iterator = models.iterator();
+        while(iterator.hasNext()){
+            Model obj = iterator.next();
+            if (obj.isDisposable()){
+                world.destroyBody(obj.getBody());
+                iterator.remove();
+            }
+            else{
+                obj.update(delta);
+            }
+        }
     }
 
     @Override

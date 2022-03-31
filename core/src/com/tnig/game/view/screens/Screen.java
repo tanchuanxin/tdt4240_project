@@ -5,5 +5,6 @@ public enum Screen {
     MAIN_MENU,
     MAP_SELECT,
     GAME,
-    HIGH_SCORES
+    HIGH_SCORES,
+    GAME_OVER
 }
