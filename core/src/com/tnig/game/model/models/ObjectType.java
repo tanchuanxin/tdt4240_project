@@ -1,5 +1,5 @@
 package com.tnig.game.model.models;
 
-public enum ModelType {
+public enum ObjectType {
     PLAYER, OBSTACLE
 }

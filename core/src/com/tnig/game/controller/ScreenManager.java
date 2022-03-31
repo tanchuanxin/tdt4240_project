@@ -1,9 +1,17 @@
-package com.tnig.game.view.screens;
+package com.tnig.game.controller;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.tnig.game.controller.GameMaps.GameMap;
+import com.tnig.game.controller.GameMaps.Level_1;
 import com.tnig.game.utillities.AssetLoader;
 import com.tnig.game.utillities.Constants;
+import com.tnig.game.view.screens.GameScreen;
+import com.tnig.game.view.screens.HighScoresScreen;
+import com.tnig.game.view.screens.LoadingScreen;
+import com.tnig.game.view.screens.MainMenuScreen;
+import com.tnig.game.view.screens.MapSelectScreen;
+import com.tnig.game.view.screens.Screen;
 
 public class ScreenManager {
 
@@ -35,13 +43,19 @@ public class ScreenManager {
                 game.setScreen(new MainMenuScreen(camera, assetLoader));
                 break;
             case GAME:
-                game.setScreen(new GameScreen(camera, assetLoader));
+                //TODO: need to fix so that any map can be selected
+                GameMap map = new Level_1();
+                game.setScreen(new GameScreen(camera, assetLoader, map));
                 break;
             case MAP_SELECT:
                 game.setScreen(new MapSelectScreen(camera, assetLoader));
                 break;
             case HIGH_SCORES:
                 game.setScreen(new HighScoresScreen(camera, assetLoader));
+                break;
+            case GAME_OVER:
+                throw new IllegalArgumentException("Not implemented yet");
+
         }
     }
 }

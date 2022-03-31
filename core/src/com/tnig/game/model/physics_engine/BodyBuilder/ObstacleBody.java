@@ -1,11 +1,10 @@
 package com.tnig.game.model.physics_engine.BodyBuilder;
 
-import static com.tnig.game.utillities.Constants.PPM;
-
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.GameObject;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class ObstacleBody extends BodyBuilder{
@@ -20,7 +19,7 @@ public class ObstacleBody extends BodyBuilder{
     }
 
     @Override
-    protected Shape getShape(Model model) {
+    protected Shape getShape(GameObject object) {
         //
         //TODO: Implement
         throw new IllegalArgumentException("Method not implemented");
@@ -37,7 +36,5 @@ public class ObstacleBody extends BodyBuilder{
 
     }
 
-    public void createBody(Engine engine, Model model){
-        createBody(engine.getWorld(), model);
-    }
+
 }

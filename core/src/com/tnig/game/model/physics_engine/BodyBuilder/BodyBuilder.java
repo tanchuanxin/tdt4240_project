@@ -8,7 +8,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.GameObject;
+import com.tnig.game.model.physics_engine.Engine;
 
 /**
  * A template class for creating different types of bodies in the box2D world
@@ -19,10 +20,10 @@ public abstract class BodyBuilder {
 
     /**
      * Gets the shape of the specific body
-     * @param model The model to create the shape from
+     * @param object The object to create the shape from
      * @return A Box2D shape
      */
-    protected abstract Shape getShape(Model model);
+    protected abstract Shape getShape(GameObject object);
 
     /**
      * Makes the necessary changes to the body definition to that specific body
@@ -38,15 +39,16 @@ public abstract class BodyBuilder {
 
     /**
      * Template method for creating a Box2D body
-     * @param world The Box2D world
-     * @param model The gameobject which contains the Box2D body
+     * @param engine The physics engine which contains the world
+     * @param x The x-coordinate where the body should appear
+     * @param y The y-coordinate where the body should appear
+     * @param object The object which will contain the Box2D body
      * @return a Box2D body
      */
-    protected void createBody(World world, Model model) {
-        float x = model.getX();
-        float y = model.getY();
-        Shape shape = getShape(model);
-        boolean isStatic = model.isStatic();
+    protected Body createBody(Engine engine, float x, float y, GameObject object) {
+        World world = engine.getWorld();
+        Shape shape = getShape(object);
+        boolean isStatic = object.isStatic();
 
         // Defines a Box2D body
         BodyDef bodyDef = new BodyDef();
@@ -63,7 +65,7 @@ public abstract class BodyBuilder {
         // A body is composed of fixtures => defines a fixture to put in the body
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.isSensor = model.isSensor();
+        fixtureDef.isSensor = object.isSensor();
 
         fixtureDef.density = 1;
         fixtureDef.friction = 0;
@@ -71,9 +73,9 @@ public abstract class BodyBuilder {
         addToFixtureDef(fixtureDef);
 
         // Sets the model as userdata for the contactlistener
-        body.createFixture(fixtureDef).setUserData(model);
+        body.createFixture(fixtureDef).setUserData(object);
         shape.dispose();
 
-        model.setBody(body);
+        return body;
     }
 }

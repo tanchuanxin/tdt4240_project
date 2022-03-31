@@ -3,21 +3,26 @@ package com.tnig.game.view.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tnig.game.controller.GameMaps.GameMap;
+import com.tnig.game.controller.ScreenManager;
+import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utillities.AssetLoader;
 
 public class GameScreen extends AbstractScreen {
-    private final Stage stage;
+    //private final Stage stage;
+    private final Engine engine;
+    private final SpriteBatch batch;
+    private GameMap map;
 
-    public GameScreen(OrthographicCamera camera, AssetLoader assetLoader) {
+    public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, GameMap map) {
         super(camera, assetLoader);
+        this.map = map; // TODO: create map classes
+        batch = new SpriteBatch();
+        engine = new GameWorld();
 
+        /*
         // Initialize stage for UI drawing
         stage = new Stage(new ScreenViewport(camera));
         Table table = new Table();
@@ -45,7 +50,7 @@ public class GameScreen extends AbstractScreen {
         table.add(backBtn).expandX().center().fillX();
 
         // Add actors to stage
-        stage.addActor(table);
+        stage.addActor(table); */
     }
 
     @Override
@@ -53,13 +58,25 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act();
-        stage.draw();
+        batch.begin();
+        // TODO: IMPLEMENT
+        batch.end();
+
+        engine.update(delta);
+
+
+        if (engine.gameFinished()){
+            ScreenManager.getInstance().setScreen(Screen.GAME_OVER);
+            engine.dispose();
+        }
+
+        //stage.act();
+        //stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        //stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -70,6 +87,6 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        //stage.dispose();
     }
 }

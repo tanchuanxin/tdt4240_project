@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * Interface for views, providing a base reference for drawing sprites to the screen.
  */
-public interface IView {
+public interface View {
     /**
      * Render function to draw a sprite to the screen.
      *
