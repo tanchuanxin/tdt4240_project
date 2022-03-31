@@ -1,7 +1,7 @@
 package com.tnig.game;
 
 import com.badlogic.gdx.Game;
-import com.tnig.game.controller.ScreenManager;
+import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.view.screens.Screen;
 
 public class ImpossibleGame extends Game {
