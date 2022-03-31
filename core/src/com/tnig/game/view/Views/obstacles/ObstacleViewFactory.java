@@ -8,7 +8,7 @@ import com.tnig.game.view.Views.ModelViewFactory;
 public class ObstacleViewFactory implements ModelViewFactory {
 
     // Singleton pattern
-    private static final ObstacleViewFactory INSTANCE = new ObstacleViewFactory()
+    private static final ObstacleViewFactory INSTANCE = new ObstacleViewFactory();
 
     public static ObstacleViewFactory getInstance() {
         return INSTANCE;
