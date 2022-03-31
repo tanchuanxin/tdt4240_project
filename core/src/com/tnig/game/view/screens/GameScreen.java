@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.controller.GameMaps.GameMap;
-import com.tnig.game.controller.ScreenManager;
+import com.tnig.game.controller.managers.GameManager;
+import com.tnig.game.controller.managers.NormalGame;
+import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utillities.AssetLoader;
@@ -15,12 +17,17 @@ public class GameScreen extends AbstractScreen {
     private final Engine engine;
     private final SpriteBatch batch;
     private GameMap map;
+    private GameManager gameManager;
 
     public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, GameMap map) {
         super(camera, assetLoader);
         this.map = map; // TODO: create map classes
         batch = new SpriteBatch();
         engine = new GameWorld();
+
+        //TODO: Could use strategy pattern here or take in as parameter to change gamemodes at runtime
+        gameManager = new NormalGame();
+        gameManager.initGame(engine);
 
         /*
         // Initialize stage for UI drawing
