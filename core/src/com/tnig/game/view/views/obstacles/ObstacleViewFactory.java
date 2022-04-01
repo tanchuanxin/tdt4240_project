@@ -1,11 +1,11 @@
-package com.tnig.game.view.Views.obstacles;
+package com.tnig.game.view.views.obstacles;
 
 import com.tnig.game.model.models.Model;
 import com.tnig.game.model.models.ObjectType;
 import com.tnig.game.model.models.obstacles.Obstacle;
 import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.view.AnimatedView;
-import com.tnig.game.view.Views.AnimatedViewFactory;
+import com.tnig.game.view.views.AnimatedViewFactory;
 
 public class ObstacleViewFactory implements AnimatedViewFactory {
 

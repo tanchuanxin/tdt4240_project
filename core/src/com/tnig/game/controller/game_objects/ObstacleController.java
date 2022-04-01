@@ -1,12 +1,11 @@
 package com.tnig.game.controller.game_objects;
 
-import com.badlogic.gdx.Gdx;
 import com.tnig.game.model.models.Model;
 import com.tnig.game.model.models.obstacles.ObstacleFactory;
 import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.view.AnimatedView;
-import com.tnig.game.view.Views.obstacles.ObstacleViewFactory;
+import com.tnig.game.view.views.obstacles.ObstacleViewFactory;
 
 public class ObstacleController extends ObjectController{
 

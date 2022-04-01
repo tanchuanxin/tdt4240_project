@@ -1,8 +1,8 @@
-package com.tnig.game.view.Views.obstacles;
+package com.tnig.game.view.views.obstacles;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.model.models.Model;
-import com.tnig.game.view.Views.ModelView;
+import com.tnig.game.view.views.ModelView;
 
 public class StaticTriangleView extends ModelView {
 

@@ -1,9 +1,9 @@
-package com.tnig.game.controller.Managers;
+package com.tnig.game.controller.managers;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.tnig.game.controller.GameMaps.GameMap;
-import com.tnig.game.controller.GameMaps.Level_1;
+import com.tnig.game.controller.game_maps.GameMap;
+import com.tnig.game.controller.game_maps.Level_1;
 import com.tnig.game.utillities.AssetLoader;
 import com.tnig.game.utillities.Constants;
 import com.tnig.game.view.screens.GameScreen;

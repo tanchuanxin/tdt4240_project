@@ -1,4 +1,4 @@
-package com.tnig.game.controller.Managers;
+package com.tnig.game.controller.managers;
 
 import com.tnig.game.controller.game_objects.AnimatedController;
 import com.tnig.game.model.physics_engine.Engine;

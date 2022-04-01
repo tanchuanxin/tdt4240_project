@@ -8,10 +8,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tnig.game.model.networking.INetworkService;
+import com.tnig.game.model.networking.Network;
 import com.tnig.game.model.networking.PlayerData;
 
-public class AndroidFirebaseInterface implements INetworkService {
+public class AndroidFirebaseInterface implements Network {
     FirebaseDatabase database;
     DatabaseReference levelRef;
     DatabaseReference playerRef;
