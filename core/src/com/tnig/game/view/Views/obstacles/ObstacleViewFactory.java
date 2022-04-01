@@ -1,11 +1,13 @@
 package com.tnig.game.view.Views.obstacles;
 
 import com.tnig.game.model.models.Model;
-import com.tnig.game.model.physics_engine.BodyBuilder.ObstacleBody;
-import com.tnig.game.view.View;
-import com.tnig.game.view.Views.ModelViewFactory;
+import com.tnig.game.model.models.ObjectType;
+import com.tnig.game.model.models.obstacles.Obstacle;
+import com.tnig.game.model.models.obstacles.ObstacleType;
+import com.tnig.game.view.AnimatedView;
+import com.tnig.game.view.Views.AnimatedViewFactory;
 
-public class ObstacleViewFactory implements ModelViewFactory {
+public class ObstacleViewFactory implements AnimatedViewFactory {
 
     // Singleton pattern
     private static final ObstacleViewFactory INSTANCE = new ObstacleViewFactory();
@@ -19,7 +21,22 @@ public class ObstacleViewFactory implements ModelViewFactory {
 
 
     @Override
-    public View createView(Model model) {
-        return null;
+    public AnimatedView createView(Model model) {
+        if (model.getType() != ObjectType.OBSTACLE){
+            throw new IllegalArgumentException("Model should be of type OBSTACLE but was: " + model.getType());
+        }
+
+        Obstacle obstacle = (Obstacle) model;
+
+        ObstacleType type = obstacle.getObstacleType();
+        switch (type){
+            case STATIC_TRIANGLE:
+                return new StaticTriangleView(model);
+            case MOCK_TYPE:
+                throw new IllegalArgumentException("Havent implemented type yet");
+            default:
+                throw new IllegalArgumentException("Havent implemented type yet: " + type);
+        }
+
     }
 }

@@ -10,4 +10,5 @@ public interface Model {
     float getY();
     float getWidth();
     float getHeight();
+    ObjectType getType();
 }
