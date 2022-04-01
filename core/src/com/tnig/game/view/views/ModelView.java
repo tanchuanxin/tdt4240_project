@@ -1,4 +1,4 @@
-package com.tnig.game.view.Views;
+package com.tnig.game.view.views;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.model.models.Model;

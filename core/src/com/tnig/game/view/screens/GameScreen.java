@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tnig.game.controller.GameMaps.GameMap;
-import com.tnig.game.controller.GameInitializers.GameInitializer;
-import com.tnig.game.controller.GameInitializers.NormalGame;
-import com.tnig.game.controller.Managers.GameManager;
-import com.tnig.game.controller.Managers.ScreenManager;
+import com.tnig.game.controller.game_maps.GameMap;
+import com.tnig.game.controller.game.Game;
+import com.tnig.game.controller.game.NormalGame;
+import com.tnig.game.controller.managers.GameManager;
+import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utillities.AssetLoader;
@@ -32,7 +32,7 @@ public class GameScreen extends AbstractScreen {
         engine = new GameWorld();
 
         //TODO: Could use strategy pattern here or take in as parameter to change gamemodes at runtime
-        GameInitializer initializer = new NormalGame();
+        Game initializer = new NormalGame();
         gameManager = initializer.initGame(engine, gameRenderer);
 
         /*

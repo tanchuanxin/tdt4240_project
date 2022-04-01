@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.tnig.game.model.networking.PlayerData;
-import com.tnig.game.model.networking.INetworkService;
+import com.tnig.game.model.networking.Network;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -15,7 +15,7 @@ public class AndroidLauncher extends AndroidApplication {
 		initialize(new ImpossibleGame(), config);
 
 		//Koden under er for testing av databasen.
-		INetworkService fbi = new AndroidFirebaseInterface();
+		Network fbi = new AndroidFirebaseInterface();
 		PlayerData p1 = new PlayerData();
 		p1.setName("rubbldld");
 		p1.setScore(133000);
