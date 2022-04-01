@@ -5,29 +5,35 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.controller.GameMaps.GameMap;
-import com.tnig.game.controller.managers.GameManager;
-import com.tnig.game.controller.managers.NormalGame;
-import com.tnig.game.controller.managers.ScreenManager;
+import com.tnig.game.controller.GameInitializers.GameInitializer;
+import com.tnig.game.controller.GameInitializers.NormalGame;
+import com.tnig.game.controller.Managers.GameManager;
+import com.tnig.game.controller.Managers.ScreenManager;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utillities.AssetLoader;
+import com.tnig.game.view.GameRenderer;
 
 public class GameScreen extends AbstractScreen {
     //private final Stage stage;
     private final Engine engine;
     private final SpriteBatch batch;
     private GameMap map;
-    private GameManager gameManager;
+    private final GameManager gameManager;
+    private final GameRenderer gameRenderer;
 
     public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, GameMap map) {
         super(camera, assetLoader);
         this.map = map; // TODO: create map classes
+
         batch = new SpriteBatch();
+        gameRenderer = new GameRenderer(batch);
+
         engine = new GameWorld();
 
         //TODO: Could use strategy pattern here or take in as parameter to change gamemodes at runtime
-        gameManager = new NormalGame();
-        gameManager.initGame(engine);
+        GameInitializer initializer = new NormalGame();
+        gameManager = initializer.initGame(engine, gameRenderer);
 
         /*
         // Initialize stage for UI drawing
@@ -65,16 +71,21 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+        // Render game
         batch.begin();
         // TODO: IMPLEMENT
+        gameManager.renderAnimatedViews();
         batch.end();
 
+        // Update game
         engine.update(delta);
+        gameManager.update(delta);
 
 
-        if (engine.gameFinished()){
+        if (gameManager.gameFinished()){
             ScreenManager.getInstance().setScreen(Screen.GAME_OVER);
-            engine.dispose();
+
         }
 
         //stage.act();
@@ -95,5 +106,8 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         //stage.dispose();
+        engine.dispose();
+        gameManager.dispose();
+        batch.dispose();
     }
 }
