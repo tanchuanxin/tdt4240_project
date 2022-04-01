@@ -1,4 +1,4 @@
-package com.tnig.game.controller.managers;
+package com.tnig.game.controller.Managers;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;

@@ -1,4 +1,4 @@
-package com.tnig.game.model.physics_engine.BodyBuilder;
+package com.tnig.game.model.physics_engine.bodies;
 
 import static com.tnig.game.utillities.Constants.PPM;
 
@@ -68,7 +68,7 @@ public abstract class BodyBuilder {
         fixtureDef.isSensor = object.isSensor();
 
         fixtureDef.density = 1;
-        fixtureDef.friction = 0;
+        fixtureDef.friction = 0.5f;
         //fixtureDef.restitution = 0.01f;
         addToFixtureDef(fixtureDef);
 

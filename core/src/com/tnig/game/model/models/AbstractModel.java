@@ -1,7 +1,7 @@
 package com.tnig.game.model.models;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.tnig.game.model.physics_engine.BodyBuilder.BodyFactory;
+import com.tnig.game.model.physics_engine.bodies.BodyFactory;
 import com.tnig.game.model.physics_engine.Engine;
 
 public abstract class AbstractModel implements ContactObject, Model, GameObject {
@@ -13,14 +13,14 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     private boolean disposable = false;
 
 
-    protected AbstractModel(Engine engine, float startX, float startY, float width, float height,
+    protected AbstractModel(Engine engine, float x, float y, float width, float height,
                             boolean isStatic, boolean isSensor, ObjectType type) {
         this.width = width;
         this.height = height;
         this.isStatic = isStatic;
         this.isSensor = isSensor;
         this.type = type;
-        body = BodyFactory.getInstance().createBody(engine, startX, startY, this);
+        body = BodyFactory.getInstance().createBody(engine, x, y, this);
     }
 
     protected void dispose(){
