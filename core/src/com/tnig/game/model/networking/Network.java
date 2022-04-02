@@ -1,8 +1,12 @@
 package com.tnig.game.model.networking;
 
 
-public interface Network {
-    void pushHighscore(int level, PlayerData playerData);
+import java.util.ArrayList;
 
-    void SetOnValueChangedListener(PlayerData playerData);
+public interface Network {
+    void pushHighscore(int level, PlayerData firebasePlayer);
+
+    void updateHighscore();
+
+    public ArrayList getHighScore(int level);
 }
