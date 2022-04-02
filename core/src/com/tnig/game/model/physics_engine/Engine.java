@@ -1,5 +1,8 @@
 package com.tnig.game.model.physics_engine;
 
+import com.badlogic.gdx.physics.box2d.World;
+import com.tnig.game.model.models.Model;
+
 public interface Engine {
 
     /**
@@ -8,14 +11,16 @@ public interface Engine {
      */
     void update(float delta);
 
-    /**
-     * Checks if the game is finished
-     * @return true if finished, false if not
-     */
-    boolean gameFinished();
 
     /**
      * Disposes the engine when it is not needed anymore
      */
     void dispose();
+
+    void disposeModel(Model model);
+
+    /**
+     * @return The World of the engine
+     */
+    World getWorld();
 }

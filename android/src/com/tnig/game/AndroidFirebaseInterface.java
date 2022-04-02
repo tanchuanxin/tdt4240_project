@@ -2,7 +2,9 @@ package com.tnig.game;
 
 import android.util.Log;
 
+
 import androidx.annotation.NonNull;
+
 
 import com.badlogic.gdx.Gdx;
 import com.google.firebase.database.DataSnapshot;
@@ -13,9 +15,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.model.networking.PlayerData;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class AndroidFirebaseInterface implements Network {
     FirebaseDatabase database;
@@ -53,6 +57,7 @@ public class AndroidFirebaseInterface implements Network {
     public void updateHighscore() {
         // Read from the database.
         myRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -63,7 +68,6 @@ public class AndroidFirebaseInterface implements Network {
                 }
                 else Log.d("onDataChange", "not exist");
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Failed to read value

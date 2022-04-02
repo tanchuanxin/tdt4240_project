@@ -1,0 +1,11 @@
+tiled map editor
+https://www.mapeditor.org/
+
+tileset_gutter
+https://github.com/BrentAureli/SuperMario/blob/master/android/assets/tileset_gutter.png
+
+player
+https://www.spriters-resource.com/ds_dsi/noratotoki/sheet/41668/
+
+libgdx texture packer
+https://code.google.com/archive/p/libgdx-texturepacker-gui/downloads
