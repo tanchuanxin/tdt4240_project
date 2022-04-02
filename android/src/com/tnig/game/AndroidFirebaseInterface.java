@@ -9,22 +9,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.tnig.game.model.networking.FirebaseInterface;
-import com.tnig.game.model.networking.FirebasePlayer;
+import com.tnig.game.model.networking.Network;
+import com.tnig.game.model.networking.PlayerData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AndroidFirebaseInterface implements FirebaseInterface {
+public class AndroidFirebaseInterface implements Network {
     FirebaseDatabase database;
     DatabaseReference myRef;
     DatabaseReference levelRef;
     DatabaseReference playerRef;
-    ArrayList<FirebasePlayer> players;
-    Map<Integer, ArrayList<FirebasePlayer>> playerMap;
+    ArrayList<PlayerData> players;
+    Map<Integer, ArrayList<PlayerData>> playerMap;
 
     public AndroidFirebaseInterface() {
         database = FirebaseDatabase.getInstance("https://nearly-impossible-game-default-rtdb.europe-west1.firebasedatabase.app/"); // Rootnode.
@@ -39,7 +38,7 @@ public class AndroidFirebaseInterface implements FirebaseInterface {
      * @param firebasePlayer The player that one want to post to the database.
      */
     @Override
-    public void pushHighscore(int levelNum, FirebasePlayer firebasePlayer) {
+    public void pushHighscore(int levelNum, PlayerData firebasePlayer) {
         String name = firebasePlayer.getName();
         int score = firebasePlayer.getScore();
         levelRef = myRef.child("level" + levelNum); //Points at numbered levelnode.
@@ -83,9 +82,9 @@ public class AndroidFirebaseInterface implements FirebaseInterface {
 
             // Iterate over the player records in the level.
             for (int i = 1; i <= count; i++) {
-                FirebasePlayer player = new FirebasePlayer();
-                player.setName(ds.child("level" + i).child("name").getValue(FirebasePlayer.class).getName());
-                player.setScore(ds.child("level" + i).child("score").getValue(FirebasePlayer.class).getScore());
+                PlayerData player = new PlayerData();
+                player.setName(ds.child("level" + i).child("name").getValue(PlayerData.class).getName());
+                player.setScore(ds.child("level" + i).child("score").getValue(PlayerData.class).getScore());
 
                 //Display all the information
                 Log.d("player", "showdata: name:" + player.getName());
@@ -100,9 +99,9 @@ public class AndroidFirebaseInterface implements FirebaseInterface {
 
     @Override
     public ArrayList getHighScore(int levelNum) {
-        ArrayList<FirebasePlayer> scores = new ArrayList<>();
+        ArrayList<PlayerData> scores = new ArrayList<>();
         if(playerMap.containsKey(levelNum)) {
-            for (FirebasePlayer player : playerMap.get(levelNum)) {
+            for (PlayerData player : playerMap.get(levelNum)) {
                 scores.add(player);
             }
         }

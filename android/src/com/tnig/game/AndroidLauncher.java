@@ -1,16 +1,11 @@
 package com.tnig.game;
 
-import static com.tnig.game.utillities.Constants.FPS;
-import static com.tnig.game.utillities.Constants.VIEWPORT_HEIGHT;
-import static com.tnig.game.utillities.Constants.VIEWPORT_WIDTH;
-
 import android.os.Bundle;
 import android.util.Log;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.tnig.game.model.networking.FirebasePlayer;
+import com.tnig.game.model.networking.PlayerData;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -21,11 +16,11 @@ public class AndroidLauncher extends AndroidApplication {
 
 		//Koden under er for testing av databasen.
 		AndroidFirebaseInterface fbi = new AndroidFirebaseInterface();
-		FirebasePlayer p1 = new FirebasePlayer();
+		PlayerData p1 = new PlayerData();
 		p1.setName("p1");
 		p1.setScore(133000);
 		fbi.pushHighscore(1,p1);
-		FirebasePlayer p2 = new FirebasePlayer();
+		PlayerData p2 = new PlayerData();
 		p2.setName("p2");
 		p2.setScore(10030);
 		fbi.pushHighscore(2,p2);
