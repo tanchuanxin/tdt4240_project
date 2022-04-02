@@ -1,5 +1,6 @@
 package com.tnig.game.view.guis;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -31,15 +32,11 @@ public class MainMenuScreenGUI extends AbstractGUI {
                 return true;
             }
 
-            ;
-
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to map select screen
                 ScreenManager.getInstance().setScreen(ScreenName.MAP_SELECT);
             }
-
-            ;
         });
 
         Label twoPlayerBtnLabel = new Label("2 Player", assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
@@ -50,15 +47,11 @@ public class MainMenuScreenGUI extends AbstractGUI {
                 return true;
             }
 
-            ;
-
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to map select screen
                 ScreenManager.getInstance().setScreen(ScreenName.MAP_SELECT);
             }
-
-            ;
         });
 
         Label leaderboardsBtnLabel = new Label("Leaderboards", assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
@@ -69,15 +62,11 @@ public class MainMenuScreenGUI extends AbstractGUI {
                 return true;
             }
 
-            ;
-
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to high scores screen
                 ScreenManager.getInstance().setScreen(ScreenName.LEADERBOARDS);
             }
-
-            ;
         });
 
         Label exitBtnLabel = new Label("Exit", assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
@@ -88,16 +77,12 @@ public class MainMenuScreenGUI extends AbstractGUI {
                 return true;
             }
 
-            ;
-
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Dispose all assets and exit game
-                // TODO: Shift this responsibility to a controller class
                 assetLoader.dispose();
+                Gdx.app.exit();
             }
-
-            ;
         });
 
         // Add actors to table layout

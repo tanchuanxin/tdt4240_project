@@ -42,9 +42,12 @@ public class AppLoadingScreenGUI extends AbstractGUI {
         loadingTexts.add("Do you think we will get an 'A' grade for this game project?");
         loadingTexts.add("This game was made with the MVC architecture in mind.");
         loadingTexts.add("Usability and modifiability are the core tenets of our code!");
-        loadingTexts.add("This game never ends. It is only limited by your skill level!");
+        loadingTexts.add("This game never ends. Or does it? Are you good enough to find out?");
         loadingTexts.add("This project was 60% of our course grade. The horror!");
         loadingTexts.add("Click me so I can change! Just don't look while I'm changing!");
+        loadingTexts.add("This game was created with libGDX. Here's a shout-out!");
+        loadingTexts.add("Does anybody even read these loading texts? We are hiring!");
+        loadingTexts.add("Look, I'm running out of ideas for these loading texts. Is the game not loaded yet?");
 
         // Create loading bar
         loadingTextIdx = rand.nextInt(loadingTexts.size());
@@ -76,20 +79,11 @@ public class AppLoadingScreenGUI extends AbstractGUI {
 
         // Add actors to stage
         stage.addActor(table);
-
-        // Load all assets asynchronously
-        assetLoader.loadAll();
     }
 
 
     @Override
     public void render(float delta) {
-        // If we are done loading, go to main menu screen.
-        if (assetLoader.loadingComplete()) {
-            // Go to main menu screen
-            ScreenManager.getInstance().setScreen(ScreenName.MAIN_MENU);
-        }
-
         // Get loading progress
         float progress = assetLoader.getLoadingProgress();
 
@@ -97,14 +91,7 @@ public class AppLoadingScreenGUI extends AbstractGUI {
         loadingProgressBar.updateVisualValue();
         loadingProgressBar.setValue(progress);
 
-        // Clear screen and redraw
+        // Draw GUI to screen
         super.render(delta);
-    }
-
-    @Override
-    public void dispose() {
-        // Unload splash screen assets as we won't use them again
-        assetLoader.unload(assetLoader.IMG_SPLASH_SCREEN_BG);
-        super.dispose();
     }
 }

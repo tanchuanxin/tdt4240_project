@@ -13,92 +13,29 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.view.guis.GUI;
+import com.tnig.game.view.guis.MapSelectScreenGUI;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapSelectScreen extends AbstractScreen {
-    private final Stage stage;
-    private final List<Button> mapBtnList = new ArrayList<>();
+    private GUI mapSelectScreenGUI;
 
-    public MapSelectScreen(OrthographicCamera camera, AssetLoader assetLoader) {
+    public MapSelectScreen(OrthographicCamera camera, AssetLoader assetLoader, GUI mapSelectScreenGUI) {
         super(camera, assetLoader);
-
-        // Initialize stage for UI drawing
-        stage = new Stage(new ScreenViewport(camera));
-        Table table = new Table();
-        Gdx.input.setInputProcessor(stage);
-
-        // Create actors
-        Label titleLabel = new Label("Select your map", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        titleLabel.setAlignment(Align.center);
-
-        for (Integer map = 1; map < 14; map++) {
-            Button mapBtn = new Button(new Label(map.toString(), assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI)), assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-            final Integer finalMap = map;
-            mapBtn.addListener(new ClickListener() {
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-                };
-
-                @Override
-                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    // Change screen to game screen
-                    System.out.println("Map selected: " + finalMap.toString());
-                    ScreenManager.getInstance().setScreen(ScreenName.GAME);
-                };
-            });
-            mapBtnList.add(mapBtn);
-        }
-
-        Label backBtnLabel = new Label("Back", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        final Button backBtn = new Button(backBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        backBtn.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            };
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Change screen to map select screen
-                ScreenManager.getInstance().setScreen(ScreenName.MAIN_MENU);
-            };
-        });
-
-        // Add actors to table layout
-        table.pad(50f);
-        table.setFillParent(true);
-        table.row().colspan(5).spaceBottom(20f).expandX().fillX();
-        table.add(titleLabel).center().fillX();
-
-        for (int i = 0; i < mapBtnList.size(); i++) {
-            if (i % 5 == 0) {
-                table.row().spaceBottom(20f);
-            }
-            table.add(mapBtnList.get(i));
-        }
-
-        table.row().colspan(5).spaceBottom(20f).expandX().fillX();
-        table.add(backBtn).center().fillX();
-
-        // Add actors to stage
-        stage.addActor(table);
+        this.mapSelectScreenGUI = mapSelectScreenGUI;
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.act();
-        stage.draw();
+        super.render(delta);
+        mapSelectScreenGUI.render(delta);
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        mapSelectScreenGUI.resize(width, height);
     }
 
     @Override
@@ -109,6 +46,6 @@ public class MapSelectScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        mapSelectScreenGUI.dispose();
     }
 }

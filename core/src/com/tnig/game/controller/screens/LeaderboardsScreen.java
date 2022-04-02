@@ -12,55 +12,27 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.view.guis.GUI;
+import com.tnig.game.view.guis.LeaderboardsScreenGUI;
 
 public class LeaderboardsScreen extends AbstractScreen {
-    private final Stage stage;
 
-    public LeaderboardsScreen(OrthographicCamera camera, AssetLoader assetLoader) {
+    private GUI leaderboardsScreenGUI;
+
+    public LeaderboardsScreen(OrthographicCamera camera, AssetLoader assetLoader, GUI leaderboardsScreenGUI) {
         super(camera, assetLoader);
-
-        // Initialize stage for UI drawing
-        stage = new Stage(new ScreenViewport(camera));
-        Table table = new Table();
-        Gdx.input.setInputProcessor(stage);
-
-        Label backBtnLabel = new Label("Back", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        final Button backBtn = new Button(backBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        backBtn.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            };
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Change screen to map select screen
-                ScreenManager.getInstance().setScreen(ScreenName.MAIN_MENU);
-            };
-        });
-
-        // Add actors to table layout
-        table.pad(50f);
-        table.setFillParent(true);
-        table.row().spaceBottom(20f);
-        table.add(backBtn).expandX().center().fillX();
-
-        // Add actors to stage
-        stage.addActor(table);
+        this.leaderboardsScreenGUI = leaderboardsScreenGUI;
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.act();
-        stage.draw();
+        super.render(delta);
+        leaderboardsScreenGUI.render(delta);
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        leaderboardsScreenGUI.resize(width, height);
     }
 
     @Override
@@ -71,6 +43,6 @@ public class LeaderboardsScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        leaderboardsScreenGUI.dispose();
     }
 }
