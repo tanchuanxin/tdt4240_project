@@ -1,26 +1,22 @@
-package com.tnig.game.view.screens;
+package com.tnig.game.view.guis;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tnig.game.controller.managers.ScreenManager;
-import com.tnig.game.utillities.AssetLoader;
+import com.tnig.game.controller.screens.ScreenName;
+import com.tnig.game.utilities.AssetLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
-public class LoadingScreen extends AbstractScreen {
-    private final Stage stage;
+public class AppLoadingScreenGUI extends AbstractGUI {
     private final Table table;
     private final List<String> loadingTexts = new ArrayList<>();
     private int loadingTextIdx;
@@ -28,19 +24,17 @@ public class LoadingScreen extends AbstractScreen {
     private final ProgressBar loadingProgressBar;
     private final Random rand = new Random();
 
-    public LoadingScreen(OrthographicCamera camera, AssetLoader assetLoader) {
+    public AppLoadingScreenGUI(OrthographicCamera camera, AssetLoader assetLoader) {
         super(camera, assetLoader);
 
-        // Initialize stage for UI drawing
-        stage = new Stage(new ScreenViewport(camera));
+        // Initialize table for layout
         table = new Table();
-        Gdx.input.setInputProcessor(stage);
 
         // Load loading screen assets synchronously
-        assetLoader.getManager().load(assetLoader.FONT_SOURCE_SANS_PRO_REGULAR);
-        assetLoader.getManager().load(assetLoader.IMG_SPLASH_SCREEN_BG);
-        assetLoader.getManager().load(assetLoader.SKIN_PIXTHULHU_UI);
-        assetLoader.getManager().finishLoading();
+        assetLoader.load(assetLoader.FONT_SOURCE_SANS_PRO_REGULAR);
+        assetLoader.load(assetLoader.IMG_SPLASH_SCREEN_BG);
+        assetLoader.load(assetLoader.SKIN_PIXTHULHU_UI);
+        assetLoader.blockTillLoadingComplete();
 
         // Create loading texts
         loadingTexts.add("Holding down the jump button extends the duration of the jump.");
@@ -54,7 +48,7 @@ public class LoadingScreen extends AbstractScreen {
 
         // Create loading bar
         loadingTextIdx = rand.nextInt(loadingTexts.size());
-        loadingTextLabel = new Label(loadingTexts.get(loadingTextIdx), assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        loadingTextLabel = new Label(loadingTexts.get(loadingTextIdx), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
         loadingTextLabel.setAlignment(Align.center);
         loadingTextLabel.setWrap(true);
         loadingTextLabel.addListener(new ClickListener() {
@@ -70,7 +64,7 @@ public class LoadingScreen extends AbstractScreen {
                 return true;
             };
         });
-        loadingProgressBar = new ProgressBar(0f, 1f, 0.05f, false, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
+        loadingProgressBar = new ProgressBar(0f, 1f, 0.05f, false, assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
 
         // Add actors to table layout
         table.pad(50f);
@@ -91,40 +85,26 @@ public class LoadingScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         // If we are done loading, go to main menu screen.
-        if (assetLoader.getManager().update()) {
+        if (assetLoader.loadingComplete()) {
             // Go to main menu screen
-            ScreenManager.getInstance().setScreen(Screen.MAIN_MENU);
+            ScreenManager.getInstance().setScreen(ScreenName.MAIN_MENU);
         }
 
         // Get loading progress
-        float progress = assetLoader.getManager().getProgress();
+        float progress = assetLoader.getLoadingProgress();
 
         // Update loading bar
         loadingProgressBar.updateVisualValue();
         loadingProgressBar.setValue(progress);
 
         // Clear screen and redraw
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
-        stage.draw();
-    }
-
-    @Override
-    public void hide() {
-        // Dispose this screen and its scenes
-        dispose();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        super.render(delta);
     }
 
     @Override
     public void dispose() {
         // Unload splash screen assets as we won't use them again
-        stage.dispose();
-        assetLoader.getManager().unload(assetLoader.IMG_SPLASH_SCREEN_BG.fileName);
+        assetLoader.unload(assetLoader.IMG_SPLASH_SCREEN_BG);
+        super.dispose();
     }
 }

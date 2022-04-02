@@ -2,7 +2,7 @@ package com.tnig.game.view.views;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.model.models.Model;
-import com.tnig.game.utillities.Constants;
+import com.tnig.game.utilities.Constants;
 import com.tnig.game.view.AnimatedView;
 
 public abstract class ModelView implements AnimatedView {

@@ -1,12 +1,12 @@
-package com.tnig.game.view.screens;
+package com.tnig.game.controller.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.tnig.game.utillities.AssetLoader;
+import com.tnig.game.utilities.AssetLoader;
 
 /**
- * Abstract class that provides a convenient implementation of Screen.
- * Includes generalized dependencies for a Screen.
+ * Abstract class that provides a convenient implementation of ScreenName.
+ * Includes generalized dependencies for a ScreenName.
  */
 public abstract class AbstractScreen implements Screen {
     protected final OrthographicCamera camera;
@@ -15,6 +15,12 @@ public abstract class AbstractScreen implements Screen {
     public AbstractScreen(OrthographicCamera camera, AssetLoader assetLoader) {
         this.camera = camera;
         this.assetLoader = assetLoader;
+        this.init();
+    }
+
+    // Initializes the screen
+    public void init() {
+
     }
 
     @Override
