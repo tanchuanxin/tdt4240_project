@@ -1,8 +1,8 @@
 package com.tnig.game.model.physics_engine;
 
-import static com.tnig.game.utillities.Constants.PPM;
-import static com.tnig.game.utillities.Constants.VIEWPORT_HEIGHT;
-import static com.tnig.game.utillities.Constants.VIEWPORT_WIDTH;
+import static com.tnig.game.utilities.Constants.PPM;
+import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
+import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,10 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.tnig.game.model.models.Model;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * This class encapsulates the Box2D world, decoupling it from the rest of the project

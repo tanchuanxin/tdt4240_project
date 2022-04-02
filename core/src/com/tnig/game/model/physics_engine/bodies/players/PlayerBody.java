@@ -1,6 +1,6 @@
 package com.tnig.game.model.physics_engine.bodies.players;
 
-import static com.tnig.game.utillities.Constants.PPM;
+import static com.tnig.game.utilities.Constants.PPM;
 
 
 import com.badlogic.gdx.physics.box2d.BodyDef;

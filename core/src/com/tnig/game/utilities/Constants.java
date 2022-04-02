@@ -1,4 +1,4 @@
-package com.tnig.game.utillities;
+package com.tnig.game.utilities;
 
 public class Constants {
     public static final float PPM = 100f;

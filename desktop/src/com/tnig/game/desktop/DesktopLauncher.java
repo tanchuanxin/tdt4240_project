@@ -4,9 +4,9 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.tnig.game.ImpossibleGame;
 
-import static com.tnig.game.utillities.Constants.FPS;
-import static com.tnig.game.utillities.Constants.VIEWPORT_HEIGHT;
-import static com.tnig.game.utillities.Constants.VIEWPORT_WIDTH;
+import static com.tnig.game.utilities.Constants.FPS;
+import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
+import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

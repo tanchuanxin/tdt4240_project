@@ -1,20 +1,22 @@
-package com.tnig.game.view.screens;
+package com.tnig.game.view.guis;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tnig.game.controller.game_maps.GameMap;
 import com.tnig.game.controller.game.Game;
 import com.tnig.game.controller.game.NormalGame;
+import com.tnig.game.controller.game_maps.GameMap;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.managers.ScreenManager;
+import com.tnig.game.controller.screens.AbstractScreen;
+import com.tnig.game.controller.screens.ScreenName;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
-import com.tnig.game.utillities.AssetLoader;
+import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.GameRenderer;
 
-public class GameScreen extends AbstractScreen {
+public class GameScreenGUI extends AbstractScreen {
     //private final Stage stage;
     private final Engine engine;
     private final SpriteBatch batch;
@@ -22,7 +24,7 @@ public class GameScreen extends AbstractScreen {
     private final GameManager gameManager;
     private final GameRenderer gameRenderer;
 
-    public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, GameMap map) {
+    public GameScreenGUI(OrthographicCamera camera, AssetLoader assetLoader, GameMap map) {
         super(camera, assetLoader);
         this.map = map; // TODO: create map classes
 
@@ -52,7 +54,7 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to map select screen
-                ScreenManager.getInstance().setScreen(Screen.MAIN_MENU);
+                ScreenManager.getInstance().setScreen(ScreenName.MAIN_MENU);
             };
         });
 
@@ -84,7 +86,7 @@ public class GameScreen extends AbstractScreen {
 
 
         if (gameManager.gameFinished()){
-            ScreenManager.getInstance().setScreen(Screen.GAME_OVER);
+            ScreenManager.getInstance().setScreen(ScreenName.GAME_OVER);
 
         }
 

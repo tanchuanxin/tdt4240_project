@@ -4,14 +4,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.controller.game_maps.GameMap;
 import com.tnig.game.controller.game_maps.Level_1;
-import com.tnig.game.utillities.AssetLoader;
-import com.tnig.game.utillities.Constants;
-import com.tnig.game.view.screens.GameScreen;
-import com.tnig.game.view.screens.HighScoresScreen;
-import com.tnig.game.view.screens.LoadingScreen;
-import com.tnig.game.view.screens.MainMenuScreen;
-import com.tnig.game.view.screens.MapSelectScreen;
-import com.tnig.game.view.screens.Screen;
+import com.tnig.game.controller.screens.ScreenName;
+import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.Constants;
+import com.tnig.game.controller.screens.GameScreen;
+import com.tnig.game.controller.screens.LeaderboardsScreen;
+import com.tnig.game.controller.screens.AppLoadingScreen;
+import com.tnig.game.controller.screens.MainMenuScreen;
+import com.tnig.game.controller.screens.MapSelectScreen;
 
 public class ScreenManager {
 
@@ -34,10 +34,10 @@ public class ScreenManager {
     }
 
     // Switch screens
-    public void setScreen(Screen screen) {
-        switch (screen) {
+    public void setScreen(ScreenName screenName) {
+        switch (screenName) {
             case LOADING:
-                game.setScreen(new LoadingScreen(camera, assetLoader));
+                game.setScreen(new AppLoadingScreen(camera, assetLoader));
                 break;
             case MAIN_MENU:
                 game.setScreen(new MainMenuScreen(camera, assetLoader));
@@ -50,12 +50,11 @@ public class ScreenManager {
             case MAP_SELECT:
                 game.setScreen(new MapSelectScreen(camera, assetLoader));
                 break;
-            case HIGH_SCORES:
-                game.setScreen(new HighScoresScreen(camera, assetLoader));
+            case LEADERBOARDS:
+                game.setScreen(new LeaderboardsScreen(camera, assetLoader));
                 break;
             case GAME_OVER:
                 throw new IllegalArgumentException("Not implemented yet");
-
         }
     }
 }
