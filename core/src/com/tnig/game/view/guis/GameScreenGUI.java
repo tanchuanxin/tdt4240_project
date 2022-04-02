@@ -34,6 +34,7 @@ public class GameScreenGUI extends AbstractScreen {
         engine = new GameWorld();
 
         //TODO: Could use strategy pattern here or take in as parameter to change gamemodes at runtime
+        //TODO: Probably strategy pattern would be more scalable? Interface for GameMode
         Game initializer = new NormalGame();
         gameManager = initializer.initGame(engine, gameRenderer);
 
