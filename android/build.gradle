@@ -39,7 +39,7 @@ android {
     }
     defaultConfig {
         applicationId "com.tnig.game"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
