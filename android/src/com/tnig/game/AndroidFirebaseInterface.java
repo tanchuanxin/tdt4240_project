@@ -22,12 +22,13 @@ import java.util.Map;
 
 
 public class AndroidFirebaseInterface implements Network {
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    DatabaseReference levelRef;
-    DatabaseReference playerRef;
-    ArrayList<PlayerData> players;
-    Map<Integer, ArrayList<PlayerData>> playerMap;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private DatabaseReference levelRef;
+    private DatabaseReference playerRef;
+    private ArrayList<PlayerData> players;
+    private Map<Integer, ArrayList<PlayerData>> playerMap;
+    private ArrayList<PlayerData> scores;
 
     public AndroidFirebaseInterface() {
         database = FirebaseDatabase.getInstance("https://nearly-impossible-game-default-rtdb.europe-west1.firebasedatabase.app/"); // Rootnode.
@@ -50,9 +51,12 @@ public class AndroidFirebaseInterface implements Network {
         playerRef = levelRef.push();
         playerRef.child("name").setValue(name);
         playerRef.child("score").setValue(score);
-        Gdx.app.log("test","kjørt" + levelRef.getKey());
     }
 
+    /**
+     * Updates the local highscorelist (getHighcore()) from the database.
+     * The methods need to be called to update, it does NOT do this automatically.
+     */
     @Override
     public void updateHighscore() {
         // Read from the database.
@@ -64,7 +68,6 @@ public class AndroidFirebaseInterface implements Network {
                 // whenever data at this location is updated.
                 if (dataSnapshot.exists()) {
                     showData(dataSnapshot);
-                    Log.d("onDataChanged", "players: " + players);
                 }
                 else Log.d("onDataChange", "not exist");
             }
@@ -77,33 +80,35 @@ public class AndroidFirebaseInterface implements Network {
     }
 
     private void showData(DataSnapshot dataSnapshot){
-        playerMap = new HashMap<>();
-
         //Iterate over the levels.
+        int count = 0;
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            count++;
             players = new ArrayList<>();
-            int count = (int) ds.getChildrenCount();
-
             // Iterate over the player records in the level.
-            for (int i = 1; i <= count; i++) {
+            for (DataSnapshot user : ds.getChildren()) {
                 PlayerData player = new PlayerData();
-                player.setName(ds.child("level" + i).child("name").getValue(PlayerData.class).getName());
-                player.setScore(ds.child("level" + i).child("score").getValue(PlayerData.class).getScore());
-
-                //Display all the information
-                Log.d("player", "showdata: name:" + player.getName());
-                Log.d("player", "showdata: score:" + player.getScore());
+                player.setName(user.child("name").getValue(String.class));
+                player.setScore(user.child("score").getValue(Integer.class));
 
                 players.add(player);
-                playerMap.put(i, players);
             }
-
+            if (playerMap.containsKey(count)) playerMap.replace(count, players);
+            else playerMap.put(count, players);
         }
     }
 
+    /**
+     * NB! This method will only return a non-empty list, if the updateHighcore method has had enough time to retrieve data from the database.
+     * E.g. this method should not be called immediately after updateHighscore() has been called.
+     * Return the highscorelist.
+     * @param levelNum Specifies for which level it should return the highscores from.
+     * @return scores
+     */
     @Override
-    public ArrayList getHighScore(int levelNum) {
-        ArrayList<PlayerData> scores = new ArrayList<>();
+    public ArrayList getHighScore(Integer levelNum) {
+        scores = new ArrayList<>();
+
         if(playerMap.containsKey(levelNum)) {
             for (PlayerData player : playerMap.get(levelNum)) {
                 scores.add(player);

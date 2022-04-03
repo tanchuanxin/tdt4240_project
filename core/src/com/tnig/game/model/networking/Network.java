@@ -8,5 +8,5 @@ public interface Network {
 
     void updateHighscore();
 
-    public ArrayList getHighScore(int level);
+    public ArrayList getHighScore(Integer level);
 }

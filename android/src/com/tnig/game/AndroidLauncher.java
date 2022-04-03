@@ -27,6 +27,6 @@ public class AndroidLauncher extends AndroidApplication {
 		p2.setScore(10030);
 		fbi.pushHighscore(2,p2);
 		fbi.updateHighscore();
-		Log.d("run", "hello " + fbi.getHighScore(2));
+		fbi.getHighScore(1);
 	}
 }
