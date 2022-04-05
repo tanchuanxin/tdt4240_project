@@ -48,8 +48,14 @@ public class AppLoadingScreenGUI extends AbstractGUI {
         loadingTexts.add("This game was created with libGDX. Here's a shout-out!");
         loadingTexts.add("Does anybody even read these loading texts? We are hiring!");
         loadingTexts.add("Look, I'm running out of ideas for these loading texts. Is the game not loaded yet?");
+        loadingTexts.add("Work in dark mode, it attracts less bugs.");
+        loadingTexts.add("Do you say ice cream, or gelato?");
+        loadingTexts.add("What is the airspeed velocity of an unladen swallow?");
+        loadingTexts.add("To win or not to lose, that is the question.");
 
         // Create loading bar
+        Label loadingLabel = new Label("Loading...", assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI), "subtitle");
+
         loadingTextIdx = rand.nextInt(loadingTexts.size());
         loadingTextLabel = new Label(loadingTexts.get(loadingTextIdx), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
         loadingTextLabel.setAlignment(Align.center);
@@ -72,6 +78,8 @@ public class AppLoadingScreenGUI extends AbstractGUI {
         // Add actors to table layout
         table.pad(50f);
         table.setFillParent(true);
+        table.row().spaceBottom(50f).center();
+        table.add(loadingLabel).center();
         table.row().spaceBottom(20f);
         table.add(loadingTextLabel).expandX().center().fillX();
         table.row();
