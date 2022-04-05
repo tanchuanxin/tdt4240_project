@@ -10,15 +10,20 @@ import com.badlogic.gdx.utils.Align;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.controller.screens.ScreenName;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.events.EventManager;
+import com.tnig.game.utilities.events.MapSelectedEvent;
+import com.tnig.game.utilities.events.ViewMainMenuEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapSelectScreenGUI extends AbstractGUI {
+    private final EventManager eventManager;
     private final List<Button> mapBtnList = new ArrayList<>();
 
-    public MapSelectScreenGUI(OrthographicCamera camera, AssetLoader assetLoader) {
+    public MapSelectScreenGUI(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager) {
         super(camera, assetLoader);
+        this.eventManager = eventManager;
 
         Table table = new Table();
 
@@ -28,7 +33,7 @@ public class MapSelectScreenGUI extends AbstractGUI {
 
         for (Integer map = 1; map < 14; map++) {
             Button mapBtn = new Button(new Label(map.toString(), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI)), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
-            final Integer finalMap = map;
+            final Integer mapNum = map;
             mapBtn.addListener(new ClickListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -38,8 +43,9 @@ public class MapSelectScreenGUI extends AbstractGUI {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     // Change screen to game screen
-                    System.out.println("Map selected: " + finalMap.toString());
-                    ScreenManager.getInstance().setScreen(ScreenName.GAME);
+                    System.out.println("Map selected: " + mapNum.toString());
+                    // TODO: Implement as event with map selected
+                    eventManager.pushEvent(new MapSelectedEvent(mapNum));
                 };
             });
             mapBtnList.add(mapBtn);
@@ -56,7 +62,7 @@ public class MapSelectScreenGUI extends AbstractGUI {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to map select screen
-                ScreenManager.getInstance().setScreen(ScreenName.MAIN_MENU);
+                eventManager.pushEvent(new ViewMainMenuEvent());
             };
         });
 

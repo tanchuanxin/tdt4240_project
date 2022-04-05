@@ -6,5 +6,6 @@ public enum ScreenName {
     MAP_SELECT,
     GAME,
     LEADERBOARDS,
-    GAME_OVER
+    GAME_OVER,
+    SETTINGS
 }

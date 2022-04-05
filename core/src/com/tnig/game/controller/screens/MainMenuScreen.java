@@ -17,9 +17,9 @@ import com.tnig.game.view.guis.GUI;
 import com.tnig.game.view.guis.MainMenuScreenGUI;
 
 public class MainMenuScreen extends AbstractScreen {
-    private GUI mainMenuScreenGUI;
+    private MainMenuScreenGUI mainMenuScreenGUI;
 
-    public MainMenuScreen(OrthographicCamera camera, final AssetLoader assetLoader, GUI mainMenuScreenGUI) {
+    public MainMenuScreen(OrthographicCamera camera, final AssetLoader assetLoader, MainMenuScreenGUI mainMenuScreenGUI) {
         super(camera, assetLoader);
         this.mainMenuScreenGUI = mainMenuScreenGUI;
     }

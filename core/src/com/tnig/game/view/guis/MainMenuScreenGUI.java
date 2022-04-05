@@ -11,12 +11,19 @@ import com.badlogic.gdx.utils.Align;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.controller.screens.ScreenName;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.events.Event;
+import com.tnig.game.utilities.events.EventManager;
+import com.tnig.game.utilities.events.NewGameEvent;
+import com.tnig.game.utilities.events.QuitGameEvent;
+import com.tnig.game.utilities.events.ViewLeaderboardsEvent;
 
 public class MainMenuScreenGUI extends AbstractGUI {
     private final Table table;
+    private final EventManager eventManager;
 
-    public MainMenuScreenGUI(OrthographicCamera camera, final AssetLoader assetLoader) {
+    public MainMenuScreenGUI(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager) {
         super(camera, assetLoader);
+        this.eventManager = eventManager;
 
         table = new Table();
 
@@ -34,8 +41,8 @@ public class MainMenuScreenGUI extends AbstractGUI {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Change screen to map select screen
-                ScreenManager.getInstance().setScreen(ScreenName.MAP_SELECT);
+                // Start game as 1 player
+                eventManager.pushEvent(new NewGameEvent(1));
             }
         });
 
@@ -49,8 +56,8 @@ public class MainMenuScreenGUI extends AbstractGUI {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Change screen to map select screen
-                ScreenManager.getInstance().setScreen(ScreenName.MAP_SELECT);
+                // Start game as 2 players
+                eventManager.pushEvent(new NewGameEvent(2));
             }
         });
 
@@ -64,8 +71,8 @@ public class MainMenuScreenGUI extends AbstractGUI {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Change screen to high scores screen
-                ScreenManager.getInstance().setScreen(ScreenName.LEADERBOARDS);
+                // Go to leaderboards screen
+                eventManager.pushEvent(new ViewLeaderboardsEvent());
             }
         });
 
@@ -79,9 +86,8 @@ public class MainMenuScreenGUI extends AbstractGUI {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Dispose all assets and exit game
-                assetLoader.dispose();
-                Gdx.app.exit();
+                // Quit game event
+                eventManager.pushEvent(new QuitGameEvent());
             }
         });
 

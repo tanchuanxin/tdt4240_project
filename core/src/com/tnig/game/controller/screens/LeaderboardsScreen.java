@@ -17,9 +17,9 @@ import com.tnig.game.view.guis.LeaderboardsScreenGUI;
 
 public class LeaderboardsScreen extends AbstractScreen {
 
-    private GUI leaderboardsScreenGUI;
+    private LeaderboardsScreenGUI leaderboardsScreenGUI;
 
-    public LeaderboardsScreen(OrthographicCamera camera, AssetLoader assetLoader, GUI leaderboardsScreenGUI) {
+    public LeaderboardsScreen(OrthographicCamera camera, AssetLoader assetLoader, LeaderboardsScreenGUI leaderboardsScreenGUI) {
         super(camera, assetLoader);
         this.leaderboardsScreenGUI = leaderboardsScreenGUI;
     }

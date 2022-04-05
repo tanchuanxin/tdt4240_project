@@ -84,8 +84,7 @@ public class GameScreen extends AbstractScreen {
 
 
         if (gameManager.gameFinished()){
-            ScreenManager.getInstance().setScreen(ScreenName.GAME_OVER);
-
+            // TODO: Push event game finished
         }
 
         //stage.act();
