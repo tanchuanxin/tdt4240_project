@@ -85,9 +85,9 @@ public class GameScreenGUI extends AbstractScreen {
         engine.update(delta);
         gameManager.update(delta);
 
-
+        // TODO: Listen to event instead
         if (gameManager.gameFinished()){
-            ScreenManager.getInstance().setScreen(ScreenName.GAME_OVER);
+
 
         }
 

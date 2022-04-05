@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapSelectScreen extends AbstractScreen {
-    private GUI mapSelectScreenGUI;
+    private MapSelectScreenGUI mapSelectScreenGUI;
 
-    public MapSelectScreen(OrthographicCamera camera, AssetLoader assetLoader, GUI mapSelectScreenGUI) {
+    public MapSelectScreen(OrthographicCamera camera, AssetLoader assetLoader, MapSelectScreenGUI mapSelectScreenGUI) {
         super(camera, assetLoader);
         this.mapSelectScreenGUI = mapSelectScreenGUI;
     }
