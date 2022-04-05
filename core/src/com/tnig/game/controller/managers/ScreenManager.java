@@ -75,11 +75,6 @@ public class ScreenManager implements EventListener {
                 setScreen(ScreenName.LEADERBOARDSELECTION);
                 break;
             case QUIT_GAME:
-                // TODO: Show quit game dialog for confirmation
-                // For now we just quit
-                quitGame();
-                break;
-            case QUIT_GAME_CONFIRMED:
                 quitGame();
         }
     }
