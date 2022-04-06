@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.utilities.events.LeaderBoardSelectedEvent;
@@ -15,21 +16,25 @@ import com.tnig.game.utilities.events.ViewMainMenuEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeaderBoardSelectScreenGUI extends AbstractGUI{
+public class SelectLeaderBoardScreenGUI extends AbstractGUI{
     private final EventManager eventManager;
     private final List<Button> mapBtnList = new ArrayList<>();
+    private Network network;
+    private ArrayList<Integer> levelNums;
 
-    public LeaderBoardSelectScreenGUI(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager) {
+    public SelectLeaderBoardScreenGUI(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager, Network network) {
         super(camera, assetLoader);
         this.eventManager = eventManager;
+        this.network = network;
 
+        levelNums = new ArrayList<>(network.getLevels());
         Table table = new Table();
 
         // Create actors
         Label titleLabel = new Label("Select map leaderboard", assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
         titleLabel.setAlignment(Align.center);
 
-        for (Integer map = 1; map < 14; map++) {
+        for (Integer map = 1; map <= levelNums.size(); map++) {
             Button mapBtn = new Button(new Label(map.toString(), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI)), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
             final Integer mapNum = map;
             mapBtn.addListener(new ClickListener() {
@@ -42,7 +47,6 @@ public class LeaderBoardSelectScreenGUI extends AbstractGUI{
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     // Change screen to game screen
                     System.out.println("Map selected: " + mapNum.toString());
-                    // TODO: Implement as event with map selected
                     eventManager.pushEvent(new LeaderBoardSelectedEvent(mapNum));
                 };
             });

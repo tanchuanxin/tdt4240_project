@@ -20,6 +20,11 @@ public class CoreFirebaseInterface  implements Network{
     }
 
     @Override
+    public ArrayList<Integer> getLevels() {
+        return null;
+    }
+
+    @Override
     public ArrayList<ArrayList<String>> getHighScore(Integer level) {
         return null;
     }

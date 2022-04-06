@@ -19,15 +19,18 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new ImpossibleGame(network), config);
 
-		/*    Code to create database content for testing.
+		//    Code to create database content for testing.
+/*
 		AndroidFirebaseInterface f = new AndroidFirebaseInterface();
 		PlayerData p = new PlayerData();
+		int c = 9;
 		for (int i = 1; i < 4; i++){
-			p.setName("p" + i);
-			p.setScore((i+1)*12);
+			int x = c + i;
+			p.setName("p" + x);
+			p.setScore((x+1)*12);
 			f.pushHighscore(i,p);
 		}
-		 */
+*/
 
 	}
 }
