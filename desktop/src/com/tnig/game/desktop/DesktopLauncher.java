@@ -3,6 +3,7 @@ package com.tnig.game.desktop;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.tnig.game.ImpossibleGame;
+import com.tnig.game.model.networking.Network;
 
 import static com.tnig.game.utilities.Constants.FPS;
 import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
@@ -15,7 +16,6 @@ public class DesktopLauncher {
 		config.setWindowedMode((int) VIEWPORT_WIDTH, (int) VIEWPORT_HEIGHT);
 		config.setForegroundFPS(FPS);
 
-
-		new Lwjgl3Application(new ImpossibleGame(), config);
+		new Lwjgl3Application(new ImpossibleGame(new DesktopFirebaseInterface()), config);
 	}
 }

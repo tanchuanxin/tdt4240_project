@@ -10,23 +10,14 @@ import com.tnig.game.model.networking.Network;
 
 
 public class AndroidLauncher extends AndroidApplication {
+
+	AndroidFirebaseInterface network;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
+		network = new AndroidFirebaseInterface();
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new ImpossibleGame(), config);
+		initialize(new ImpossibleGame(network), config);
 
-		//Koden under er for testing av databasen.
-		AndroidFirebaseInterface fbi = new AndroidFirebaseInterface();
-		PlayerData p1 = new PlayerData();
-		p1.setName("p1");
-		p1.setScore(133000);
-		fbi.pushHighscore(1,p1);
-		PlayerData p2 = new PlayerData();
-		p2.setName("p2");
-		p2.setScore(10030);
-		fbi.pushHighscore(2,p2);
-		fbi.updateHighscore();
-		fbi.getHighScore(1);
 	}
 }
