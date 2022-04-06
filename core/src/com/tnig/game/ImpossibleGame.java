@@ -27,8 +27,10 @@ public class ImpossibleGame extends Game {
     public void create() {
         // Initialize screen manager and set it to loading screen while we load assets
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        ScreenManager screenManager = new ScreenManager(this, eventManager, camera, assetLoader);
+        ScreenManager screenManager = new ScreenManager(this, eventManager, camera, assetLoader, network);
 
+        network.someFunction();
+        network.updateHighscore();
         // Fire off event to load assets and display loading screen
         eventManager.pushEvent(new InitAppEvent());
     }
