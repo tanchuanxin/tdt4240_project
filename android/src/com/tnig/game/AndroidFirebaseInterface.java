@@ -112,7 +112,7 @@ public class AndroidFirebaseInterface implements Network {
      * @return scores
      */
     @Override
-    public ArrayList getHighScore(Integer levelNum) {
+    public ArrayList<ArrayList<String>> getHighScore(Integer levelNum) {
         scores = new ArrayList<>();
         ArrayList<String> internalScores;
         if(playerMap.containsKey(levelNum)) {
