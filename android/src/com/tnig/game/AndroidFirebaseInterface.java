@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 
-import com.badlogic.gdx.Gdx;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,12 +27,18 @@ public class AndroidFirebaseInterface implements Network {
     private DatabaseReference playerRef;
     private ArrayList<PlayerData> players;
     private Map<Integer, ArrayList<PlayerData>> playerMap;
-    private ArrayList<PlayerData> scores;
+    private ArrayList<ArrayList<String>> scores;
 
     public AndroidFirebaseInterface() {
         database = FirebaseDatabase.getInstance("https://nearly-impossible-game-default-rtdb.europe-west1.firebasedatabase.app/"); // Rootnode.
         myRef = database.getReference("highscore");
         playerMap = new HashMap<>();
+        updateHighscore();
+    }
+
+    @Override
+    public void someFunction() {
+        System.out.println("Just som android function.");
     }
 
     /**
@@ -51,6 +56,7 @@ public class AndroidFirebaseInterface implements Network {
         playerRef = levelRef.push();
         playerRef.child("name").setValue(name);
         playerRef.child("score").setValue(score);
+        updateHighscore();
     }
 
     /**
@@ -99,19 +105,22 @@ public class AndroidFirebaseInterface implements Network {
     }
 
     /**
-     * NB! This method will only return a non-empty list, if the updateHighcore method has had enough time to retrieve data from the database.
+     * NB! This method will only return a non-empty table, if the updateHighcore method has had enough time to retrieve data from the database.
      * E.g. this method should not be called immediately after updateHighscore() has been called.
-     * Return the highscorelist.
+     * Return the highscorelist as a table with String values: [(name1,score1),(name2,score2),...,(nameN, scoreN)].
      * @param levelNum Specifies for which level it should return the highscores from.
      * @return scores
      */
     @Override
     public ArrayList getHighScore(Integer levelNum) {
         scores = new ArrayList<>();
-
+        ArrayList<String> internalScores;
         if(playerMap.containsKey(levelNum)) {
             for (PlayerData player : playerMap.get(levelNum)) {
-                scores.add(player);
+                internalScores = new ArrayList<>();
+                internalScores.add(player.getName());
+                internalScores.add("" + player.getScore());
+                scores.add(internalScores);
             }
         }
         return scores;

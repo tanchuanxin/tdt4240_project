@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.controller.screens.ScreenName;
+import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
 import com.tnig.game.utilities.events.EventManager;
@@ -13,11 +14,13 @@ public class ImpossibleGame extends Game {
     private final EventManager eventManager;
     private final OrthographicCamera camera;
     private final AssetLoader assetLoader;
+    private Network network;
 
-    public ImpossibleGame() {
+    public ImpossibleGame(Network network) {
         this.eventManager = new EventManager();
         this.camera = new OrthographicCamera();
         this.assetLoader = new AssetLoader();
+        this.network = network;
     }
 
     @Override
