@@ -71,12 +71,9 @@ public class ScreenManager implements EventListener {
             case VIEW_LEADERBOARDS:
                 setScreen(ScreenName.LEADERBOARDS);
                 break;
-<<<<<<< HEAD
             case LEADERBOARD_SELECTED:
                 setScreen(ScreenName.LEADERBOARDSELECTION);
                 break;
-=======
->>>>>>> views
             case QUIT_GAME:
                 quitGame();
         }
