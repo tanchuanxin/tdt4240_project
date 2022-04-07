@@ -10,5 +10,7 @@ public interface Network {
 
     void updateHighscore();
 
+    public ArrayList<Integer> getLevels();
+
     public ArrayList<ArrayList<String>> getHighScore(Integer level);
 }

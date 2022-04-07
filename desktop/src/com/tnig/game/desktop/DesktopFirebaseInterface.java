@@ -22,6 +22,11 @@ public class DesktopFirebaseInterface implements Network {
     }
 
     @Override
+    public ArrayList<Integer> getLevels() {
+        return null;
+    }
+
+    @Override
     public ArrayList getHighScore(Integer level) {
         return null;
     }

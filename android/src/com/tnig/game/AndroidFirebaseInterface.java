@@ -28,6 +28,7 @@ public class AndroidFirebaseInterface implements Network {
     private ArrayList<PlayerData> players;
     private Map<Integer, ArrayList<PlayerData>> playerMap;
     private ArrayList<ArrayList<String>> scores;
+    private ArrayList<Integer> levels;
 
     public AndroidFirebaseInterface() {
         database = FirebaseDatabase.getInstance("https://nearly-impossible-game-default-rtdb.europe-west1.firebasedatabase.app/"); // Rootnode.
@@ -83,6 +84,15 @@ public class AndroidFirebaseInterface implements Network {
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
         });
+    }
+
+    @Override
+    public ArrayList<Integer> getLevels() {
+        levels = new ArrayList<>();
+        for (int key : playerMap.keySet()) {
+            levels.add(key);
+        }
+        return levels;
     }
 
     private void showData(DataSnapshot dataSnapshot){

@@ -2,14 +2,13 @@ package com.tnig.game.controller.screens;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.guis.LeaderBoardSelectScreenGUI;
-import com.tnig.game.view.guis.LeaderboardsScreenGUI;
+import com.tnig.game.view.guis.SelectLeaderBoardScreenGUI;
 
 public class LeaderboardSelectScreen extends AbstractScreen {
 
-    private LeaderBoardSelectScreenGUI leaderboardsScreenGUI;
+    private SelectLeaderBoardScreenGUI leaderboardsScreenGUI;
 
-    public LeaderboardSelectScreen(OrthographicCamera camera, AssetLoader assetLoader, LeaderBoardSelectScreenGUI leaderboardSelectScreenGUI) {
+    public LeaderboardSelectScreen(OrthographicCamera camera, AssetLoader assetLoader, SelectLeaderBoardScreenGUI leaderboardSelectScreenGUI) {
         super(camera, assetLoader);
         this.leaderboardsScreenGUI = leaderboardSelectScreenGUI;
     }

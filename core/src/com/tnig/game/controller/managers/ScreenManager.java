@@ -19,7 +19,7 @@ import com.tnig.game.utilities.events.EventListener;
 import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.utilities.events.EventName;
 import com.tnig.game.view.guis.AppLoadingScreenGUI;
-import com.tnig.game.view.guis.LeaderBoardSelectScreenGUI;
+import com.tnig.game.view.guis.SelectLeaderBoardScreenGUI;
 import com.tnig.game.view.guis.LeaderboardsScreenGUI;
 import com.tnig.game.view.guis.MainMenuScreenGUI;
 import com.tnig.game.view.guis.MapSelectScreenGUI;
@@ -102,10 +102,10 @@ public class ScreenManager implements EventListener {
                 game.setScreen(new MapSelectScreen(camera, assetLoader, new MapSelectScreenGUI(camera, assetLoader, eventManager)));
                 break;
             case LEADERBOARDSELECTION:
-                game.setScreen(new LeaderboardSelectScreen(camera, assetLoader, new LeaderBoardSelectScreenGUI(camera, assetLoader, eventManager)));
+                game.setScreen(new LeaderboardSelectScreen(camera, assetLoader, new SelectLeaderBoardScreenGUI(camera, assetLoader, eventManager, network)));
                 break;
             case LEADERBOARDS:
-                game.setScreen(new LeaderboardsScreen(camera, assetLoader, new LeaderboardsScreenGUI(camera, assetLoader, eventManager, network, 1)));
+                game.setScreen(new LeaderboardsScreen(camera, assetLoader, new LeaderboardsScreenGUI(camera, assetLoader, eventManager, network)));
                 break;
             case GAME_OVER:
                 throw new IllegalArgumentException("Not implemented yet");

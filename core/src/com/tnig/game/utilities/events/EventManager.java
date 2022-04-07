@@ -58,9 +58,11 @@ public class EventManager {
      */
     public void pushEvent(Event event) {
         if (events.containsKey(event.name)) {
+
             for (EventListener subscriber : events.get(event.name)) {
                 subscriber.receiveEvent(event);
             }
+            System.out.println("Push Event: " + event);
         }
     }
 

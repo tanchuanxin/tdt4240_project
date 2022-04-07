@@ -6,7 +6,7 @@ public class LeaderBoardSelectedEvent extends Event{
 
     public LeaderBoardSelectedEvent(int mapNum) {
         this.name = EventName.VIEW_LEADERBOARDS;
-        this.data = new HashMap<String, Object>();
+        this.data = new HashMap<>();
         this.data.put("mapNum", mapNum);
     }
 }
