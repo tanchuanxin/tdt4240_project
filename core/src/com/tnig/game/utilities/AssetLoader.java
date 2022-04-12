@@ -25,6 +25,7 @@ public class AssetLoader {
 
     // Images (Splash screen, etc)
     public static final AssetDescriptor<Texture> IMG_SPLASH_SCREEN_BG = new AssetDescriptor<>("images/badlogic.jpg", Texture.class);
+    public static final AssetDescriptor<Texture> IMG_PLAYER_SPRITE = new AssetDescriptor<>("images/playerSprite.jpg", Texture.class);
 
     // Music
     // Sounds
