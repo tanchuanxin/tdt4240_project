@@ -5,17 +5,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.controller.game_maps.GameMap;
-import com.tnig.game.controller.game.Game;
+import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
 import com.tnig.game.controller.managers.GameManager;
-import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.GameRenderer;
 
 public class GameScreen extends AbstractScreen {
-    //private final Stage stage;
     private final Engine engine;
     private final SpriteBatch batch;
     private GameMap map;
@@ -26,44 +24,19 @@ public class GameScreen extends AbstractScreen {
         super(camera, assetLoader);
         this.map = map; // TODO: create map classes
 
-        batch = new SpriteBatch();
-        gameRenderer = new GameRenderer(batch);
 
         engine = new GameWorld();
 
+
         //TODO: Could use strategy pattern here or take in as parameter to change gamemodes at runtime
-        Game initializer = new NormalGame();
-        gameManager = initializer.initGame(engine, gameRenderer);
+        //TODO: Probably strategy pattern would be more scalable? Interface for GameMode
+        GameInitializer initializer = new NormalGame();
+        gameManager = initializer.initGame(engine);
 
-        /*
-        // Initialize stage for UI drawing
-        stage = new Stage(new ScreenViewport(camera));
-        Table table = new Table();
-        Gdx.input.setInputProcessor(stage);
+        batch = new SpriteBatch();
+        gameRenderer = new GameRenderer(batch, gameManager);
 
-        Label backBtnLabel = new Label("Back", assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        final Button backBtn = new Button(backBtnLabel, assetLoader.getManager().get(assetLoader.SKIN_PIXTHULHU_UI));
-        backBtn.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            };
 
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Change screen to map select screen
-                ScreenManager.getInstance().setScreen(ScreenName.MAIN_MENU);
-            };
-        });
-
-        // Add actors to table layout
-        table.pad(50f);
-        table.setFillParent(true);
-        table.row().spaceBottom(20f);
-        table.add(backBtn).expandX().center().fillX();
-
-        // Add actors to stage
-        stage.addActor(table); */
     }
 
     @Override
@@ -75,7 +48,7 @@ public class GameScreen extends AbstractScreen {
         // Render game
         batch.begin();
         // TODO: IMPLEMENT
-        gameManager.renderAnimatedViews();
+        gameRenderer.renderAnimatedViews();
         batch.end();
 
         // Update game
@@ -87,8 +60,7 @@ public class GameScreen extends AbstractScreen {
             // TODO: Push event game finished
         }
 
-        //stage.act();
-        //stage.draw();
+
     }
 
     @Override
@@ -104,7 +76,6 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        //stage.dispose();
         engine.dispose();
         gameManager.dispose();
         batch.dispose();

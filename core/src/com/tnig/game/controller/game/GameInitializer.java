@@ -7,8 +7,8 @@ import com.tnig.game.view.GameRenderer;
 /**
  * Initializes the game and returns a GameManager for that game
  */
-public interface Game {
+public interface GameInitializer {
 
-    GameManager initGame(Engine engine, GameRenderer gameRenderer);
+    GameManager initGame(Engine engine);
 
 }

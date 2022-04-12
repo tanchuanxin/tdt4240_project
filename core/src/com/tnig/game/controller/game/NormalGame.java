@@ -15,16 +15,16 @@ import java.util.List;
  * This class initializes all the objects in the game and stores them in a list
  */
 //TODO: FINISH CLASS
-public class NormalGame implements Game {
+public class NormalGame implements GameInitializer {
     private final List<AnimatedController> controllers = new ArrayList<>();
 
     @Override
-    public GameManager initGame(final Engine engine, GameRenderer gameRenderer) {
+    public GameManager initGame(final Engine engine) {
         Gdx.app.log("GameManager", "init Game");
         initObstacleControllers(engine);
         initBlockControllers(engine);
         initPlayerControllers(engine);
-        return new GameManager(engine, controllers, gameRenderer);
+        return new GameManager(engine, controllers);
 
     }
 
