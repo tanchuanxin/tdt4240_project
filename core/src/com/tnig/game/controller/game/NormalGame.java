@@ -19,12 +19,12 @@ public class NormalGame implements GameInitializer {
     private final List<AnimatedController> controllers = new ArrayList<>();
 
     @Override
-    public GameManager initGame(final Engine engine, GameRenderer gameRenderer) {
+    public GameManager initGame(final Engine engine) {
         Gdx.app.log("GameManager", "init Game");
         initObstacleControllers(engine);
         initBlockControllers(engine);
         initPlayerControllers(engine);
-        return new GameManager(engine, controllers, gameRenderer);
+        return new GameManager(engine, controllers);
 
     }
 

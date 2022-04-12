@@ -9,6 +9,6 @@ import com.tnig.game.view.GameRenderer;
  */
 public interface GameInitializer {
 
-    GameManager initGame(Engine engine, GameRenderer gameRenderer);
+    GameManager initGame(Engine engine);
 
 }

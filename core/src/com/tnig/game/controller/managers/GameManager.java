@@ -15,12 +15,10 @@ public class GameManager {
 
     private List<AnimatedController> controllers;
     private Engine engine;
-    private GameRenderer gameRenderer;
 
-    public GameManager(final Engine engine, final List<AnimatedController> controllers, GameRenderer gameRenderer) {
+    public GameManager(final Engine engine, final List<AnimatedController> controllers) {
         this.engine = engine;
         this.controllers = controllers;
-        this.gameRenderer = gameRenderer;
     }
 
     /**
@@ -44,14 +42,7 @@ public class GameManager {
         }
     }
 
-    /**
-     * Renders all the Animated views in the game
-     */
-    public void renderAnimatedViews() {
-        for (AnimatedController controller: controllers) {
-            gameRenderer.render(controller.getView());
-        }
-    }
+
 
     /**
      * Checks if the game is finished
@@ -67,4 +58,7 @@ public class GameManager {
         engine = null;
     }
 
+    public List<AnimatedController> getControllers() {
+        return controllers;
+    }
 }
