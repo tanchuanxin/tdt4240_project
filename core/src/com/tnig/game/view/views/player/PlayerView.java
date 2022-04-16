@@ -20,6 +20,10 @@ public class PlayerView extends ModelView {
 
     private Model player; // SKAL DENNE KANSKJE VÆRE EN PLAYER MODEL???
 
+    /**
+     * constructor
+     * @param model the model this view is supposed to visualize
+     */
     public PlayerView(Model model) {
         super(model);
         this.player = model; // må nok castes når vi har en model FOR PLAYER
@@ -36,6 +40,10 @@ public class PlayerView extends ModelView {
         return texture;
     }
 
+    /**
+     * method inherited from ModelView
+     * renders/draws the player on the screen
+      */
     @Override
     protected void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time) {
         final Texture current_frame = animation.getKeyFrame(time, true);
