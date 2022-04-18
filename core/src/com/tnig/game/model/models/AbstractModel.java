@@ -9,12 +9,12 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     private final float width, height;
     private final boolean isStatic, isSensor;
     private final Body body;
-    private final ObjectType type;
+    private final ModelType type;
     private boolean disposable = false;
 
 
     protected AbstractModel(Engine engine, float x, float y, float width, float height,
-                            boolean isStatic, boolean isSensor, ObjectType type) {
+                            boolean isStatic, boolean isSensor, ModelType type) {
         this.width = width;
         this.height = height;
         this.isStatic = isStatic;
@@ -43,7 +43,8 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
         return width;
     }
 
-    public ObjectType getType() {
+    @Override
+    public ModelType getType() {
         return type;
     }
 

@@ -1,22 +1,21 @@
 package com.tnig.game.controller.game_objects.dynamic_objects;
 
 import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.ModelFactory;
+import com.tnig.game.model.models.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.view.AnimatedView;
+import com.tnig.game.view.model_views.ViewFactory;
 
-public abstract class AnimatedObjectController implements AnimatedController {
+public class AnimatedObjectController implements AnimatedController {
 
-    protected Model model;
-    private AnimatedView view;
+    private final Model model;
+    private final AnimatedView view;
 
 
-    // Factory methods
-    protected abstract Model createModel(Engine engine, float x, float y, float width, float height);
-    protected abstract AnimatedView createView(Model model);
-
-    protected void initController(Model model, AnimatedView view){
-        this.model = model;
-        this.view = view;
+    public AnimatedObjectController(Engine engine, float x, float y, float width, float height, ModelType type) {
+        model = ModelFactory.createModel(engine, x, y, width, height, type);
+        view = ViewFactory.createView(model);
     }
 
 

@@ -1,13 +1,13 @@
-package com.tnig.game.model.models.obstacles;
+package com.tnig.game.model.models.blocks;
 
 import com.tnig.game.model.models.ModelType;
 import com.tnig.game.model.models.ObjectType;
 
-public enum ObstacleType implements ModelType {
-    SPIKE, MOCK_TYPE;
+public enum BlockType implements ModelType {
+    NORMAL_BLOCK;
 
     @Override
     public ObjectType getObjectType() {
-        return ObjectType.OBSTACLE;
+        return ObjectType.BLOCK;
     }
 }

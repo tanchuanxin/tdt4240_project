@@ -29,7 +29,7 @@ public class BodyFactory {
      * @param object The object which should contain the body
      */
     public Body createBody(Engine engine, float x, float y, GameObject object){
-        ObjectType type = object.getType();
+        ObjectType type = object.getType().getObjectType();
 
         switch (type){
             case PLAYER:

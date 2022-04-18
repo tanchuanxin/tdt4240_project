@@ -1,5 +1,4 @@
-package com.tnig.game.view.views.player;
-
+package com.tnig.game.view.model_views.player;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;

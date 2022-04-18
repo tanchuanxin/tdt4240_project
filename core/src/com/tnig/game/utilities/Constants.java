@@ -9,7 +9,7 @@ public class Constants {
 
     // Layers on the map
     public static final int blockLayer = 0;
-    public static final int obstacleLayer = 1;
+    public static final int spikeLayer = 1;
     public static final int playerLayer = 2;
 
 }

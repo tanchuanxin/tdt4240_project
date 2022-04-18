@@ -5,5 +5,5 @@ public interface GameObject {
     float getHeight();
     boolean isStatic();
     boolean isSensor();
-    ObjectType getType();
+    ModelType getType();
 }
