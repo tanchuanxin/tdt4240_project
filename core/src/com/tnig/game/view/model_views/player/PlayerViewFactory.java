@@ -10,8 +10,8 @@ import com.tnig.game.view.views.ModelView;
 public class PlayerViewFactory {
 
     public static AnimatedView createView(Model model){
-        NormalPlayer player = (NormalPlayer) model;
-        PlayerType type = player.getPlayerType();
+
+        PlayerType type = (PlayerType) model.getType();
         switch (type){
             case NORMALPLAYER:
                 return new PlayerView(model);
