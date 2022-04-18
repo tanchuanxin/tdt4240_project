@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.tnig.game.controller.game_maps.GameMap;
-import com.tnig.game.controller.game_maps.Level_1;
 import com.tnig.game.controller.screens.LeaderboardSelectScreen;
 import com.tnig.game.controller.screens.ScreenName;
 import com.tnig.game.model.networking.Network;

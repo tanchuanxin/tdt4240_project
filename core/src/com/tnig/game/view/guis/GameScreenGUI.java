@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
-import com.tnig.game.controller.game_maps.GameMap;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.screens.AbstractScreen;
 import com.tnig.game.model.physics_engine.Engine;
