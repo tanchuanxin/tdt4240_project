@@ -1,56 +1,77 @@
 package com.tnig.game.controller.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
+import com.tnig.game.controller.game_objects.Controller;
+import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedObjectController;
+import com.tnig.game.controller.game_objects.static_objects.StaticObjectController;
 import com.tnig.game.controller.managers.GameManager;
-import com.tnig.game.controller.game_objects.AnimatedController;
-import com.tnig.game.controller.game_objects.ObstacleController;
+import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
+import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.blocks.BlockType;
 import com.tnig.game.model.models.obstacles.ObstacleType;
+import com.tnig.game.model.models.players.PlayerType;
 import com.tnig.game.model.physics_engine.Engine;
-import com.tnig.game.view.GameRenderer;
+import com.tnig.game.utilities.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class initializes all the objects in the game and stores them in a list
+ * This class initializes all the objects in the game and stores them in a list to pass to the
+ * GameManager
  */
 //TODO: FINISH CLASS
 public class NormalGame implements GameInitializer {
-    private final List<AnimatedController> controllers = new ArrayList<>();
+    private final List<AnimatedController> animatedControllers = new ArrayList<>();
+    private final List<Controller> controllers = new ArrayList<>();
+
 
     @Override
-    public GameManager initGame(final Engine engine) {
+    public GameManager initGame(final Engine engine, TiledMap map, int players) {
         Gdx.app.log("GameManager", "init Game");
-        initObstacleControllers(engine);
-        initBlockControllers(engine);
-        initPlayerControllers(engine);
-        return new GameManager(engine, controllers);
+
+        // Static objects
+        initStaticControllers(map, engine, Constants.spikeLayer, ObstacleType.SPIKE);
+        initStaticControllers(map, engine, Constants.blockLayer, BlockType.NORMAL_BLOCK);
+
+        // Animated objects
+        initAnimatedControllers(map, engine, Constants.playerLayer, PlayerType.NORMALPLAYER);
+        // TODO: ADD OTHER ANIMATED OBJECTS HERE
+        return new GameManager(engine, animatedControllers, controllers, map, players);
 
     }
 
+    private void initStaticControllers(TiledMap map, Engine engine, int layer, ModelType modelType){
+        for (RectangleMapObject object : map.getLayers()
+                .get(layer).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = object.getRectangle();
+            Controller controller = new StaticObjectController(
+                    engine, rect.x, rect.y, rect.width, rect.height, modelType);
 
-    private void initObstacleControllers(Engine engine){
-        // TODO: IMPLEMENT
-        // Mockobject
-        Gdx.app.log("GameManager", "init obstacles");
-        AnimatedController obstacle =
-                new ObstacleController(engine, 100f, 100f, 30f, 30f, ObstacleType.STATIC_TRIANGLE);
+            controllers.add(controller);
+        }
+    }
 
-        controllers.add(obstacle);
+    private void initAnimatedControllers(TiledMap map, Engine engine, int layer, ModelType modelType){
+        for (RectangleMapObject object : map.getLayers()
+                .get(layer).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = object.getRectangle();
+            Controller controller = new AnimatedObjectController(
+                    engine, rect.x, rect.y, rect.width, rect.height, modelType);
 
+            controllers.add(controller);
+        }
     }
 
 
-    private void initPlayerControllers(Engine engine){
-        // TODO: IMPLEMENT
-    }
 
 
-    private void initBlockControllers(Engine engine){
-        // TODO: IMPLEMENT
-    }
 
 
 
 
 }
+

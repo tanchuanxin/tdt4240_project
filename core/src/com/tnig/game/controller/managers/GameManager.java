@@ -1,8 +1,9 @@
 package com.tnig.game.controller.managers;
 
-import com.tnig.game.controller.game_objects.AnimatedController;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.tnig.game.controller.game_objects.Controller;
+import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.model.physics_engine.Engine;
-import com.tnig.game.view.GameRenderer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,12 +14,22 @@ import java.util.List;
  */
 public class GameManager {
 
-    private List<AnimatedController> controllers;
+    private List<AnimatedController> animatedControllers;
+    private List<Controller> controllers;
     private Engine engine;
+    private TiledMap map;
+    private final int numberOfPlayers;
 
-    public GameManager(final Engine engine, final List<AnimatedController> controllers) {
+    public GameManager(Engine engine,
+                       List<AnimatedController> animatedControllers,
+                       List<Controller> controllers,
+                       TiledMap map,
+                       int numberOfPlayers) {
         this.engine = engine;
+        this.animatedControllers = animatedControllers;
         this.controllers = controllers;
+        this.map = map;
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     /**
@@ -28,7 +39,7 @@ public class GameManager {
     public void update(float delta){
         // Uses iterator instead of for loop so it is possible to remove elements from the list
         // While iterating
-        Iterator<AnimatedController> iterator = controllers.iterator();
+        Iterator<AnimatedController> iterator = animatedControllers.iterator();
         while(iterator.hasNext()){
             AnimatedController controller = iterator.next();
             if (controller.isDisposable()){
@@ -54,11 +65,22 @@ public class GameManager {
     }
 
     public void dispose(){
+        animatedControllers = null;
         controllers = null;
         engine = null;
+        map = null;
+
     }
 
-    public List<AnimatedController> getControllers() {
+    public List<AnimatedController> getAnimatedControllers() {
+        return animatedControllers;
+    }
+
+    public List<Controller> getControllers() {
         return controllers;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 }
