@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tnig.game.controller.game_maps.GameMap;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
 import com.tnig.game.controller.managers.GameManager;
@@ -16,25 +16,20 @@ import com.tnig.game.view.GameRenderer;
 public class GameScreen extends AbstractScreen {
     private final Engine engine;
     private final SpriteBatch batch;
-    private GameMap map;
     private final GameManager gameManager;
     private final GameRenderer gameRenderer;
 
-    public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, GameMap map) {
+    public GameScreen(OrthographicCamera camera, AssetLoader assetLoader, TiledMap map, int players) {
         super(camera, assetLoader);
-        this.map = map; // TODO: create map classes
-
-
         engine = new GameWorld();
-
 
         //TODO: Could use strategy pattern here or take in as parameter to change gamemodes at runtime
         //TODO: Probably strategy pattern would be more scalable? Interface for GameMode
         GameInitializer initializer = new NormalGame();
-        gameManager = initializer.initGame(engine);
+        gameManager = initializer.initGame(engine, map, players);
 
         batch = new SpriteBatch();
-        gameRenderer = new GameRenderer(batch, gameManager);
+        gameRenderer = new GameRenderer(batch, gameManager, map);
 
 
     }
@@ -48,7 +43,7 @@ public class GameScreen extends AbstractScreen {
         // Render game
         batch.begin();
         // TODO: IMPLEMENT
-        gameRenderer.renderAnimatedViews();
+        gameRenderer.render();
         batch.end();
 
         // Update game
