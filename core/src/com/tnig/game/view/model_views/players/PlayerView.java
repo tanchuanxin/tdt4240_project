@@ -1,31 +1,25 @@
-package com.tnig.game.view.model_views.player;
-import com.badlogic.gdx.assets.AssetManager;
+package com.tnig.game.view.model_views.players;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.model.models.Model;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.AnimatedView;
-import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.views.ModelView;
+import com.tnig.game.view.model_views.ModelView;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class PlayerView extends ModelView {
 
     private final Animation<Texture> animation;
 
 
-
     /**
      * constructor
      * @param model the model this view is supposed to visualize
      */
-    public PlayerView(Model model) {
+    public PlayerView(Model model, AssetLoader assetLoader) {
         super(model);
-        Texture texture = getTexture();
-        this.animation = new Animation<Texture>(FRAME_DURATION, texture);
+        Texture texture = new Texture("images/playerSprite.png");
+        this.animation = new Animation<>(FRAME_DURATION, texture);
     }
 
     /**

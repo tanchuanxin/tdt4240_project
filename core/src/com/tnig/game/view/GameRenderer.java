@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.managers.GameManager;
+import com.tnig.game.utilities.AssetLoader;
 
 import java.util.List;
 
@@ -17,11 +18,13 @@ public class GameRenderer {
     private final SpriteBatch batch;
     private final GameManager gameManager;
     private final TiledMapRenderer mapRenderer;
+    private final AssetLoader assetLoader;
 
-    public GameRenderer(SpriteBatch batch, GameManager gameManager, TiledMap map) {
+    public GameRenderer(SpriteBatch batch, GameManager gameManager, TiledMap map, AssetLoader assetLoader) {
         this.batch = batch;
         this.gameManager = gameManager;
         mapRenderer = new OrthogonalTiledMapRenderer(map);
+        this.assetLoader = assetLoader;
     }
 
 
@@ -38,7 +41,7 @@ public class GameRenderer {
         List<AnimatedController> controllers = gameManager.getAnimatedControllers();
 
         for (AnimatedController controller: controllers) {
-            controller.getView().render(batch);
+            controller.getView().render(batch, assetLoader);
         }
     }
 
