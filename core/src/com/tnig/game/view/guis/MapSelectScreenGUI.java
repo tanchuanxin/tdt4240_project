@@ -43,7 +43,7 @@ public class MapSelectScreenGUI extends AbstractGUI {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     // Change screen to game screen
-                    System.out.println("Map selected: " + mapNum.toString());
+                    System.out.println("Map selected: " + mapNum);
                     // TODO: Implement as event with map selected
                     eventManager.pushEvent(new MapSelectedEvent(mapNum));
                 };

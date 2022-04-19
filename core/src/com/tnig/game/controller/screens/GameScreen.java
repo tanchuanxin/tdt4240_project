@@ -26,10 +26,11 @@ public class GameScreen extends AbstractScreen {
         //TODO: Could use strategy pattern here or take in as parameter to change gamemodes at runtime
         //TODO: Probably strategy pattern would be more scalable? Interface for GameMode
         GameInitializer initializer = new NormalGame();
-        gameManager = initializer.initGame(engine, map, players);
+        gameManager = initializer.initGame(engine, assetLoader, map, players);
+        System.out.println("KGDSLGDLSLJDGLG");
 
         batch = new SpriteBatch();
-        gameRenderer = new GameRenderer(batch, gameManager, map);
+        gameRenderer = new GameRenderer(batch, gameManager, map, assetLoader);
 
 
     }
@@ -42,7 +43,6 @@ public class GameScreen extends AbstractScreen {
 
         // Render game
         batch.begin();
-        // TODO: IMPLEMENT
         gameRenderer.render();
         batch.end();
 

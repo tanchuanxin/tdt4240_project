@@ -47,6 +47,7 @@ public class ScreenManager implements EventListener {
         eventManager.subscribe(EventName.VIEW_LEADERBOARDS, this);
         eventManager.subscribe(EventName.LEADERBOARD_SELECTED, this);
         eventManager.subscribe(EventName.QUIT_GAME, this);
+        eventManager.subscribe(EventName.MAP_SELECTED, this);
     }
 
     /**
@@ -61,6 +62,8 @@ public class ScreenManager implements EventListener {
             case NEW_GAME:
                 setScreen(ScreenName.MAP_SELECT);
                 break;
+            case MAP_SELECTED:
+                setScreen(ScreenName.GAME);
             case APP_LOADING_COMPLETE:
             case VIEW_MAIN_MENU:
                 setScreen(ScreenName.MAIN_MENU);
@@ -76,6 +79,7 @@ public class ScreenManager implements EventListener {
                 break;
             case QUIT_GAME:
                 quitGame();
+
         }
     }
 
@@ -90,7 +94,7 @@ public class ScreenManager implements EventListener {
                 break;
             case GAME:
                 //TODO: need to fix so that any map can be selected
-                TiledMap map = new TmxMapLoader().load("/map/level1.tmx");
+                TiledMap map = new TmxMapLoader().load("map/level1.tmx");
                 // TODO: fix so any amount of players can be used
                 int players = 2;
                 game.setScreen(new GameScreen(camera, assetLoader, map, players));
