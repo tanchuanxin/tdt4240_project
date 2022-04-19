@@ -17,7 +17,6 @@ import com.tnig.game.view.ui_components.ButtonFactory;
 
 public class MainMenuScreen extends AbstractScreen {
     private final Table table;
-    private final EventManager eventManager;
 
     public MainMenuScreen(final ScreenManager screenManager,
                           OrthographicCamera camera,
@@ -25,7 +24,6 @@ public class MainMenuScreen extends AbstractScreen {
                           final EventManager eventManager) {
 
         super(camera, assetLoader);
-        this.eventManager = eventManager;
 
         Skin skin = assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI);
 
@@ -38,17 +36,18 @@ public class MainMenuScreen extends AbstractScreen {
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
         Button onePlayerBtn = buttonFactory.createSwitchScreenEventButton(
-                ScreenName.MAP_SELECT, new NewGameEvent(1), "1 Player");
+                ScreenName.MAP_SELECT, new NewGameEvent(1), "1 Player", true);
 
         Button twoPlayerBtn = buttonFactory.createSwitchScreenEventButton(
-                ScreenName.MAP_SELECT, new NewGameEvent(2), "2 Player");
+                ScreenName.MAP_SELECT, new NewGameEvent(2), "2 Player", true);
 
 
 
         Button leaderboardsBtn = buttonFactory
-                .createSwitchingScreenButton(ScreenName.LEADERBOARDS, "Leaderboards");
+                .createSwitchingScreenButton(ScreenName.LEADERBOARDS, "Leaderboards", true);
 
-        Button exitBtn = buttonFactory.createEventButton(new QuitGameEvent(), "Exit");
+        Button exitBtn = buttonFactory
+                .createEventButton(new QuitGameEvent(), "Exit", true);
 
 
         // Add actors to table layout

@@ -24,13 +24,14 @@ public class ButtonFactory {
 
     public Button createSwitchScreenEventButton(final ScreenName screenName,
                                                 final Event event,
-                                                final String labelString){
+                                                final String labelString,
+                                                final boolean touchDown){
         Label label = new Label(labelString, skin);
         Button button = new Button(label, skin);
         button.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
+                return touchDown;
             }
 
             @Override
@@ -43,13 +44,15 @@ public class ButtonFactory {
         return button;
     }
 
-    public Button createSwitchingScreenButton(final ScreenName screenName, final String labelString){
+    public Button createSwitchingScreenButton(final ScreenName screenName,
+                                              final String labelString,
+                                              final boolean touchDown){
         Label label = new Label(labelString, skin);
         Button button = new Button(label, skin);
         button.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
+                return touchDown;
             }
 
             @Override
@@ -61,13 +64,15 @@ public class ButtonFactory {
         return button;
     }
 
-    public Button createEventButton(final Event event, final String labelString){
+    public Button createEventButton(final Event event,
+                                    final String labelString,
+                                    final boolean touchDown){
         Label label = new Label(labelString, skin);
         Button button = new Button(label, skin);
         button.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
+                return touchDown;
             }
 
             @Override

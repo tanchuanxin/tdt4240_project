@@ -11,6 +11,7 @@ import com.tnig.game.controller.events.screen_events.MapSelectedEvent;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.view.ui_components.ButtonFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,42 +30,19 @@ public class MapSelectScreen extends AbstractScreen {
         Label titleLabel = new Label("Select your map", assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
         titleLabel.setAlignment(Align.center);
 
-        List<Button> mapBtnList = new ArrayList<>();
-        for (Integer map = 1; map < 14; map++) {
-            Button mapBtn = new Button(new Label(map.toString(), assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI)), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
-            final Integer mapNum = map;
-            mapBtn.addListener(new ClickListener() {
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-                };
+        ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
-                @Override
-                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    // Change screen to game screen
-                    System.out.println("Map selected: " + mapNum);
-                    // TODO: Implement as event with map selected
-                    eventManager.pushEvent(new MapSelectedEvent(mapNum));
-                    screenManager.setScreen(ScreenName.GAME);
-                };
-            });
+        List<Button> mapBtnList = new ArrayList<>();
+        for (int map = 1; map < 14; map++) {
+            Button mapBtn = buttonFactory.createSwitchScreenEventButton(
+                    ScreenName.GAME, new MapSelectedEvent(map), String.valueOf(map), true);
+
             mapBtnList.add(mapBtn);
         }
 
-        Label backBtnLabel = new Label("Back", assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
-        final Button backBtn = new Button(backBtnLabel, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
-        backBtn.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            };
+        Button backBtn = buttonFactory.createSwitchingScreenButton(
+                ScreenName.MAIN_MENU, "Back", true);
 
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Change screen to main menu screen
-                screenManager.setScreen(ScreenName.MAIN_MENU);
-            };
-        });
 
         // Add actors to table layout
         table.pad(50f);
