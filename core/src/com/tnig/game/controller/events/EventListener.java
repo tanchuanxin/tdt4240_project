@@ -1,4 +1,6 @@
-package com.tnig.game.utilities.events;
+package com.tnig.game.controller.events;
+
+import com.tnig.game.controller.events.Event;
 
 /**
  * Defines an interface for an object that is able to receive events.

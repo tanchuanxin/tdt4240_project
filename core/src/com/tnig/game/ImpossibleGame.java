@@ -6,8 +6,6 @@ import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
-import com.tnig.game.utilities.events.EventManager;
-import com.tnig.game.utilities.events.InitAppEvent;
 import com.tnig.game.view.screens.ScreenName;
 
 public class ImpossibleGame extends Game {

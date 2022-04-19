@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.tnig.game.controller.managers.EventManager;
+import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.utilities.events.EventManager;
-import com.tnig.game.utilities.events.ViewMainMenuEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,10 @@ public class SettingsScreen extends AbstractScreen {
     private final List<Button> mapBtnList = new ArrayList<>();
     private final EventManager eventManager;
 
-    public SettingsScreen(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager) {
+    public SettingsScreen(final ScreenManager screenManager,
+                          OrthographicCamera camera,
+                          AssetLoader assetLoader,
+                          final EventManager eventManager) {
         super(camera, assetLoader);
         this.eventManager = eventManager;
 
@@ -39,7 +42,7 @@ public class SettingsScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Back to main menu
-                eventManager.pushEvent(new ViewMainMenuEvent());
+                screenManager.setScreen(ScreenName.MAIN_MENU);
             };
         });
 

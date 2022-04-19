@@ -1,4 +1,6 @@
-package com.tnig.game.utilities.events;
+package com.tnig.game.controller.events.screen_events;
+import com.tnig.game.controller.events.Event;
+import com.tnig.game.controller.events.EventName;
 
 import java.util.HashMap;
 
