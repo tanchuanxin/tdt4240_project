@@ -14,6 +14,7 @@ import com.tnig.game.model.models.blocks.BlockType;
 import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.model.models.players.PlayerType;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class NormalGame implements GameInitializer {
 
 
     @Override
-    public GameManager initGame(final Engine engine, TiledMap map, int players) {
+    public GameManager initGame(Engine engine, AssetLoader assetLoader, TiledMap map, int players) {
         Gdx.app.log("GameManager", "init Game");
 
         // Static objects
@@ -38,7 +39,7 @@ public class NormalGame implements GameInitializer {
         initStaticControllers(map, engine, Constants.blockLayer, BlockType.NORMAL_BLOCK);
 
         // Animated objects
-        initAnimatedControllers(map, engine, Constants.playerLayer, PlayerType.NORMALPLAYER);
+        initAnimatedControllers(map, engine, assetLoader, Constants.playerLayer, PlayerType.NORMALPLAYER);
         // TODO: ADD OTHER ANIMATED OBJECTS HERE
         return new GameManager(engine, animatedControllers, controllers, map, players);
 
@@ -55,12 +56,14 @@ public class NormalGame implements GameInitializer {
         }
     }
 
-    private void initAnimatedControllers(TiledMap map, Engine engine, int layer, ModelType modelType){
+    private void initAnimatedControllers(
+            TiledMap map, Engine engine, AssetLoader assetLoader, int layer, ModelType modelType){
+
         for (RectangleMapObject object : map.getLayers()
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
             Controller controller = new AnimatedObjectController(
-                    engine, rect.x, rect.y, rect.width, rect.height, modelType);
+                    engine, assetLoader, rect.x, rect.y, rect.width, rect.height, modelType);
 
             controllers.add(controller);
         }

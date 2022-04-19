@@ -1,6 +1,7 @@
 package com.tnig.game.view.ui_components;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.View;
 
 /**
@@ -8,7 +9,7 @@ import com.tnig.game.view.View;
  */
 public class JumpButton implements View {
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, AssetLoader assetLoader) {
 
     }
 }
