@@ -98,16 +98,17 @@ public class ScreenManager implements EventListener {
     }
 
     private String getMapLocation(int mapNumber){
-        switch (mapNumber){
-            case 1:
-                return Constants.map1;
-            case 2:
-                return Constants.map2;
-            case 3:
-                return Constants.map3;
-            default:
-                throw new IllegalArgumentException("Havent implemented map number:" + mapNumber);
-
-        }
+        return(Constants.MAP_ASSET_LOCATION + "map" + String.valueOf(mapNumber) + ".tmx");
+//        switch (mapNumber){
+//            case 1:
+//                return Constants.map1;
+//            case 2:
+//                return Constants.map2;
+//            case 3:
+//                return Constants.map3;
+//            default:
+//                throw new IllegalArgumentException("Havent implemented map number:" + mapNumber);
+//
+//        }
     }
 }

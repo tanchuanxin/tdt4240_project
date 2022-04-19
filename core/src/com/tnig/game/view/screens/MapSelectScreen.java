@@ -1,5 +1,7 @@
 package com.tnig.game.view.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -11,18 +13,37 @@ import com.tnig.game.controller.events.screen_events.MapSelectedEvent;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.Constants;
 import com.tnig.game.view.ui_components.ButtonFactory;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FilenameFilter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class MapSelectScreen extends AbstractScreen {
+    private int numMaps = 0;
 
     public MapSelectScreen(final ScreenManager screenManager,
                            OrthographicCamera camera,
                            AssetLoader assetLoader,
                            final EventManager eventManager) {
         super(camera, assetLoader);
+
+        // Check number of maps we have and load them
+        FileHandle dirHandle = Gdx.files.internal(Constants.MAP_ASSET_LOCATION);
+        FilenameFilter mapFileFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return(name.matches("map[0-9]+.tmx"));
+            }
+        };
+        numMaps = dirHandle.list(mapFileFilter).length;
 
         Table table = new Table();
 
@@ -33,7 +54,7 @@ public class MapSelectScreen extends AbstractScreen {
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
         List<Button> mapBtnList = new ArrayList<>();
-        for (int map = 1; map < 14; map++) {
+        for (int map = 1; map <= numMaps; map++) {
             Button mapBtn = buttonFactory.createSwitchScreenEventButton(
                     ScreenName.GAME, new MapSelectedEvent(map), String.valueOf(map), true);
 
