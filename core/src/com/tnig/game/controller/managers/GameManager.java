@@ -4,7 +4,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.model.physics_engine.Engine;
-import com.tnig.game.utilities.events.EventManager;
 
 import java.util.Iterator;
 import java.util.List;

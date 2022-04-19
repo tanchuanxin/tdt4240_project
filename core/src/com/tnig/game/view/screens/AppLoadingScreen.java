@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.utilities.events.AppLoadingCompleteEvent;
-import com.tnig.game.utilities.events.EventManager;
-import com.tnig.game.view.screens.AbstractScreen;
 
 import java.util.ArrayList;
 import java.util.List;

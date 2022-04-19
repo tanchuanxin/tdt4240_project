@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedObjectController;
 import com.tnig.game.controller.game_objects.static_objects.StaticObjectController;
+import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.model.models.ModelType;
@@ -16,7 +17,6 @@ import com.tnig.game.model.models.players.PlayerType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
-import com.tnig.game.utilities.events.EventManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,14 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.tnig.game.controller.events.Event;
+import com.tnig.game.controller.events.EventListener;
+import com.tnig.game.controller.managers.EventManager;
+import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.utilities.events.Event;
-import com.tnig.game.utilities.events.EventListener;
-import com.tnig.game.utilities.events.EventManager;
-import com.tnig.game.utilities.events.EventName;
-import com.tnig.game.utilities.events.ViewLeaderboardsEvent;
-import com.tnig.game.view.screens.AbstractScreen;
+import com.tnig.game.controller.events.EventName;
 
 import java.util.ArrayList;
 
@@ -21,7 +20,8 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
 
     private int mapNum = 1;
 
-    public LeaderboardsScreen(OrthographicCamera camera,
+    public LeaderboardsScreen(final ScreenManager screenManager,
+                              OrthographicCamera camera,
                               AssetLoader assetLoader,
                               final EventManager eventManager,
                               Network network) {
@@ -42,7 +42,7 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to map select screen
-                eventManager.pushEvent(new ViewLeaderboardsEvent());
+                screenManager.setScreen(ScreenName.MAP_SELECT);
             }
         });
 

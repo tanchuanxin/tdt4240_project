@@ -7,14 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
+import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.view.GameRenderer;
-import com.tnig.game.view.screens.AbstractScreen;
 
 public class GameScreen extends AbstractScreen {
     private final ScreenManager screenManager;

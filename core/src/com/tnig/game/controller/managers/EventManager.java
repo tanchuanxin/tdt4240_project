@@ -1,4 +1,8 @@
-package com.tnig.game.utilities.events;
+package com.tnig.game.controller.managers;
+
+import com.tnig.game.controller.events.Event;
+import com.tnig.game.controller.events.EventListener;
+import com.tnig.game.controller.events.EventName;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -8,10 +8,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
-import com.tnig.game.utilities.events.Event;
-import com.tnig.game.utilities.events.EventListener;
-import com.tnig.game.utilities.events.EventManager;
-import com.tnig.game.utilities.events.EventName;
+import com.tnig.game.controller.events.EventListener;
+import com.tnig.game.controller.events.Event;
+import com.tnig.game.controller.events.EventName;
 import com.tnig.game.view.screens.AppLoadingScreen;
 import com.tnig.game.view.screens.GameScreen;
 import com.tnig.game.view.screens.LeaderboardSelectScreen;
@@ -72,8 +71,10 @@ public class ScreenManager implements EventListener {
                 if (mapNumber == -1){
                     throw new IllegalStateException("Map hasnt been updated");
                 }
-                String mapLocation = getMap(mapNumber);
+                String mapLocation = getMapLocation(mapNumber);
                 TiledMap map = new TmxMapLoader().load(mapLocation);
+                Gdx.app.log("Map", mapLocation);
+                Gdx.app.log("Number of Players", String.valueOf(numberOfPlayers));
                 game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, map, numberOfPlayers));
                 break;
             case MAP_SELECT:
@@ -83,7 +84,7 @@ public class ScreenManager implements EventListener {
                 game.setScreen(new LeaderboardSelectScreen(this, camera, assetLoader, eventManager, network));
                 break;
             case LEADERBOARDS:
-                game.setScreen(new LeaderboardsScreen(camera, assetLoader, eventManager, network));
+                game.setScreen(new LeaderboardsScreen(this, camera, assetLoader, eventManager, network));
                 break;
             case GAME_OVER:
                 throw new IllegalArgumentException("Not implemented yet");
@@ -95,7 +96,7 @@ public class ScreenManager implements EventListener {
         Gdx.app.exit();
     }
 
-    private String getMap(int mapNumber){
+    private String getMapLocation(int mapNumber){
         switch (mapNumber){
             case 1:
                 return Constants.map1;

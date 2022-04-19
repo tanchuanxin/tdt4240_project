@@ -7,13 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.utilities.events.EventManager;
-import com.tnig.game.utilities.events.LeaderBoardSelectedEvent;
-import com.tnig.game.utilities.events.ViewMainMenuEvent;
-import com.tnig.game.view.screens.AbstractScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +44,7 @@ public class LeaderboardSelectScreen extends AbstractScreen {
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     // Change screen to game screen
                     System.out.println("Map selected: " + mapNum);
-                    eventManager.pushEvent(new LeaderBoardSelectedEvent(mapNum));
-                    screenManager.setScreen(ScreenName.LEADERBOARDSELECTION);
+                    // TODO: finish
                 }
             });
             mapBtnList.add(mapBtn);
@@ -65,7 +61,7 @@ public class LeaderboardSelectScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to map select screen
-                eventManager.pushEvent(new ViewMainMenuEvent());
+                screenManager.setScreen(ScreenName.MAP_SELECT);
             }
         });
 

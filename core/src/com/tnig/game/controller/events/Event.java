@@ -1,4 +1,4 @@
-package com.tnig.game.utilities.events;
+package com.tnig.game.controller.events;
 
 import java.util.Map;
 
