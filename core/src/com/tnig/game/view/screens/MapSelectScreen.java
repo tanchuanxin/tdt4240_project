@@ -3,11 +3,9 @@ package com.tnig.game.view.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.tnig.game.controller.events.screen_events.MapSelectedEvent;
 import com.tnig.game.controller.managers.EventManager;
@@ -17,14 +15,9 @@ import com.tnig.game.utilities.Constants;
 import com.tnig.game.view.ui_components.ButtonFactory;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class MapSelectScreen extends AbstractScreen {
     private int numMaps = 0;
