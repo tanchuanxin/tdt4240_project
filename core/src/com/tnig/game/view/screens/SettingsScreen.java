@@ -1,4 +1,4 @@
-package com.tnig.game.view.guis;
+package com.tnig.game.view.screens;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -7,8 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.tnig.game.controller.managers.ScreenManager;
-import com.tnig.game.controller.screens.ScreenName;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.utilities.events.ViewMainMenuEvent;
@@ -16,11 +14,11 @@ import com.tnig.game.utilities.events.ViewMainMenuEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingsScreenGUI extends AbstractGUI {
+public class SettingsScreen extends AbstractScreen {
     private final List<Button> mapBtnList = new ArrayList<>();
     private final EventManager eventManager;
 
-    public SettingsScreenGUI(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager) {
+    public SettingsScreen(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager) {
         super(camera, assetLoader);
         this.eventManager = eventManager;
 
