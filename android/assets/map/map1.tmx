@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="145">
+ <tileset firstgid="1" source="tileset_gutter.tsx"/>
+ <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
+  <image source="../../../../../Downloads/16-bit-spike-Sheet.png" width="64" height="16"/>
+ </tileset>
+ <layer id="1" name="background" width="128" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6Dx/oXWbj2Ogr2kqqqqqqqqvjmqmr+9
+  </data>
+ </layer>
+ <layer id="2" name="graphics" width="128" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztl1kOwjAMRBu4BGfpXTlNDwFIbJU4AwLE5nwgFqXBcSvbafykkdKPKq7HE6VVZRjGmLlOpCvQxxp6sgFthXuzg/33oJapjiPPNuq5Qb/voEdh2aiddAXj5ZDBLHH7v4CeLEGrDHozBPOpdAVxuP0/ge9n0KUA/11AUnV0Yec/ndf5rjnj/+bO/KcTyreWdvrZxNRUkv/U+5jPt+aMh8DOZEn+p6I53zFSapb2n5qrofL4m+2G+V4aO1s+zyvM2oOZ2Zl7q3bfz13v5y5Mj1Lz3ef/HrM/Zd33+58UViH4
+  </data>
+ </layer>
+ <objectgroup id="9" name="player">
+  <object id="129" x="64" y="176" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="4" name="blocks" visible="0">
+  <object id="58" x="448" y="192" width="416" height="16"/>
+  <object id="59" x="912" y="192" width="128" height="16"/>
+  <object id="60" x="1072.5" y="159" width="96" height="16"/>
+  <object id="61" x="1200" y="128" width="96" height="16"/>
+  <object id="62" x="1328" y="96" width="80" height="16"/>
+  <object id="63" x="1440" y="192" width="112" height="16"/>
+  <object id="64" x="1584" y="192" width="16" height="16"/>
+  <object id="65" x="1632" y="192" width="16" height="16"/>
+  <object id="66" x="1680" y="192" width="16" height="16"/>
+  <object id="67" x="1728" y="192" width="16" height="16"/>
+  <object id="68" x="1776" y="192" width="112" height="16"/>
+  <object id="69" x="1792" y="176" width="96" height="16"/>
+  <object id="70" x="1808" y="160" width="80" height="16"/>
+  <object id="71" x="1824" y="144" width="64" height="16"/>
+  <object id="72" x="1840" y="128" width="48" height="16"/>
+  <object id="73" x="1856" y="112" width="32" height="16"/>
+  <object id="74" x="1872" y="96" width="16" height="16"/>
+  <object id="75" x="1936" y="192" width="112" height="16"/>
+  <object id="98" x="0" y="192" width="448" height="16"/>
+ </objectgroup>
+ <objectgroup id="11" name="spikes" visible="0">
+  <object id="131" x="671.985" y="178.512" width="15.5033" height="13.5" rotation="359.907"/>
+  <object id="137" x="960.248" y="178.75" width="15.5033" height="13.5" rotation="359.907"/>
+  <object id="138" x="975.748" y="177.75" width="15.5033" height="13.5" rotation="359.907"/>
+  <object id="139" x="1105.25" y="145.75" width="30.0057" height="13.5" rotation="359.907"/>
+  <object id="140" x="1231.75" y="114.25" width="15.5033" height="13.5" rotation="359.907"/>
+  <object id="141" x="1343.75" y="82.75" width="15.5033" height="13.5" rotation="359.907"/>
+  <object id="143" x="448.248" y="179.25" width="15.5033" height="13.5" rotation="359.907"/>
+  <object id="144" x="1472.75" y="178.75" width="30.5025" height="13.5" rotation="359.907"/>
+ </objectgroup>
+ <objectgroup id="8" name="finnishline" visible="0">
+  <object id="93" x="1984" y="0" width="16" height="192"/>
+ </objectgroup>
+</map>
