@@ -21,17 +21,16 @@ import com.tnig.game.view.screens.MapSelectScreen;
 import com.tnig.game.view.screens.ScreenName;
 
 public class ScreenManager implements EventListener {
+    private final EventManager eventManager = new EventManager();
     private final Game game;
     private final OrthographicCamera camera;
     private final AssetLoader assetLoader;
-    private final EventManager eventManager;
     private final Network network;
     private int mapNumber = -1;
     private int numberOfPlayers = -1;
 
-    public ScreenManager(Game game, EventManager eventManager, OrthographicCamera camera, AssetLoader assetLoader, Network network) {
+    public ScreenManager(Game game, OrthographicCamera camera, AssetLoader assetLoader, Network network) {
         this.game = game;
-        this.eventManager = eventManager;
         this.camera = camera;
         this.assetLoader = assetLoader;
         this.network = network;
@@ -53,7 +52,11 @@ public class ScreenManager implements EventListener {
                 break;
             case NEW_GAME:
                 numberOfPlayers = (int) event.data.get("numOfPlayers");
+                break;
+            case QUIT_GAME:
+                quitGame();
         }
+
     }
 
     // Switch screens
@@ -74,10 +77,10 @@ public class ScreenManager implements EventListener {
                 game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, map, numberOfPlayers));
                 break;
             case MAP_SELECT:
-                game.setScreen(new MapSelectScreen(camera, assetLoader, eventManager));
+                game.setScreen(new MapSelectScreen(this, camera, assetLoader, eventManager));
                 break;
             case LEADERBOARDSELECTION:
-                game.setScreen(new LeaderboardSelectScreen(camera, assetLoader, eventManager, network));
+                game.setScreen(new LeaderboardSelectScreen(this, camera, assetLoader, eventManager, network));
                 break;
             case LEADERBOARDS:
                 game.setScreen(new LeaderboardsScreen(camera, assetLoader, eventManager, network));

@@ -8,15 +8,14 @@ import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
 import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.utilities.events.InitAppEvent;
+import com.tnig.game.view.screens.ScreenName;
 
 public class ImpossibleGame extends Game {
-    private final EventManager eventManager;
     private final OrthographicCamera camera;
     private final AssetLoader assetLoader;
     private Network network;
 
     public ImpossibleGame(Network network) {
-        this.eventManager = new EventManager();
         this.camera = new OrthographicCamera();
         this.assetLoader = new AssetLoader();
         this.network = network;
@@ -26,12 +25,12 @@ public class ImpossibleGame extends Game {
     public void create() {
         // Initialize screen manager and set it to loading screen while we load assets
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
-        ScreenManager screenManager = new ScreenManager(this, eventManager, camera, assetLoader, network);
+        ScreenManager screenManager = new ScreenManager(this, camera, assetLoader, network);
 
         network.someFunction();
         network.updateHighscore();
         // Fire off event to load assets and display loading screen
-        eventManager.pushEvent(new InitAppEvent());
+        screenManager.setScreen(ScreenName.LOADING);
     }
 
     @Override

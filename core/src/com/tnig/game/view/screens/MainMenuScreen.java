@@ -45,6 +45,7 @@ public class MainMenuScreen extends AbstractScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Start game as 1 player
                 eventManager.pushEvent(new NewGameEvent(1));
+                screenManager.setScreen(ScreenName.MAP_SELECT);
             }
         });
 
@@ -76,6 +77,7 @@ public class MainMenuScreen extends AbstractScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Go to leaderboards screen
                 eventManager.pushEvent(new ViewLeaderboardsEvent());
+                screenManager.setScreen(ScreenName.LEADERBOARDS);
             }
         });
 

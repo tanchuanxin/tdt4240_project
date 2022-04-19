@@ -20,7 +20,7 @@ import java.util.List;
 
 public class LeaderboardSelectScreen extends AbstractScreen {
 
-    public LeaderboardSelectScreen(ScreenManager screenManager,
+    public LeaderboardSelectScreen(final ScreenManager screenManager,
                                    OrthographicCamera camera,
                                    AssetLoader assetLoader,
                                    final EventManager eventManager,
@@ -48,6 +48,7 @@ public class LeaderboardSelectScreen extends AbstractScreen {
                     // Change screen to game screen
                     System.out.println("Map selected: " + mapNum);
                     eventManager.pushEvent(new LeaderBoardSelectedEvent(mapNum));
+                    screenManager.setScreen(ScreenName.LEADERBOARDSELECTION);
                 }
             });
             mapBtnList.add(mapBtn);

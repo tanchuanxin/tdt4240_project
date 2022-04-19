@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.utilities.events.MapSelectedEvent;
@@ -20,7 +21,10 @@ public class MapSelectScreen extends AbstractScreen {
     private final EventManager eventManager;
     private final List<Button> mapBtnList = new ArrayList<>();
 
-    public MapSelectScreen(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager) {
+    public MapSelectScreen(final ScreenManager screenManager,
+                           OrthographicCamera camera,
+                           AssetLoader assetLoader,
+                           final EventManager eventManager) {
         super(camera, assetLoader);
         this.eventManager = eventManager;
 
@@ -45,6 +49,7 @@ public class MapSelectScreen extends AbstractScreen {
                     System.out.println("Map selected: " + mapNum);
                     // TODO: Implement as event with map selected
                     eventManager.pushEvent(new MapSelectedEvent(mapNum));
+                    screenManager.setScreen(ScreenName.GAME);
                 };
             });
             mapBtnList.add(mapBtn);

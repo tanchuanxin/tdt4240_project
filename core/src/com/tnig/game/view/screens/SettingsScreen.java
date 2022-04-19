@@ -10,12 +10,11 @@ import com.badlogic.gdx.utils.Align;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.utilities.events.ViewMainMenuEvent;
-import com.tnig.game.view.guis.AbstractGUI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingsScreen extends AbstractGUI {
+public class SettingsScreen extends AbstractScreen {
     private final List<Button> mapBtnList = new ArrayList<>();
     private final EventManager eventManager;
 
