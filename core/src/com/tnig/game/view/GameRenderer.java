@@ -32,12 +32,14 @@ public class GameRenderer {
 
     public GameRenderer(SpriteBatch batch,
                         OrthographicCamera camera,
+                        FitViewport viewport,
                         GameManager gameManager,
                         GameMap map,
                         AssetLoader assetLoader) {
         this.batch = batch;
         this.camera = camera;
-        viewport = new FitViewport(VIEWPORT_WIDTH/PPM, VIEWPORT_HEIGHT/PPM, camera);
+        this.viewport = viewport;
+//      viewport = new FitViewport(VIEWPORT_WIDTH/PPM, VIEWPORT_HEIGHT/PPM, camera);
         this.gameManager = gameManager;
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
         mapRenderer.setView(camera);

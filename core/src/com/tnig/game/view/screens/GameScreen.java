@@ -48,7 +48,23 @@ public class GameScreen extends AbstractScreen {
 
         batch = new SpriteBatch();
 
-        gameRenderer = new GameRenderer(batch, camera, gameManager, map, assetLoader);
+        // Set up camera and viewport
+        TiledMap tiledMap = map.getTiledMap();
+        MapProperties mapProps = tiledMap.getProperties();
+        int mapWidth = mapProps.get("width", Integer.class);
+        int tilePixelWidth = mapProps.get("tilewidth", Integer.class);
+        mapWidth = mapWidth * tilePixelWidth;
+
+        int mapHeight = mapProps.get("height", Integer.class);
+        int tilePixelHeight = mapProps.get("tileheight", Integer.class);
+        mapHeight = mapHeight * tilePixelHeight;
+
+        camera.setToOrtho(false, mapWidth, mapHeight);
+
+        // Create viewport
+        FitViewport viewport = new FitViewport(mapWidth, mapHeight, camera);
+
+        gameRenderer = new GameRenderer(batch, camera, viewport, gameManager, map, assetLoader);
 
 
     }
