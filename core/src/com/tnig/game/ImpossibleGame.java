@@ -3,7 +3,6 @@ package com.tnig.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.controller.managers.ScreenManager;
-import com.tnig.game.controller.screens.ScreenName;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;

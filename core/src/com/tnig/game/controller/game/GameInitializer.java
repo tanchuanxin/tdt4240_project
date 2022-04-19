@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.view.GameRenderer;
 
 /**
@@ -11,6 +12,6 @@ import com.tnig.game.view.GameRenderer;
  */
 public interface GameInitializer {
 
-    GameManager initGame(Engine engine, AssetLoader assetLoader, TiledMap map, int players);
+    GameManager initGame(EventManager eventManager, Engine engine, AssetLoader assetLoader, TiledMap map, int players);
 
 }

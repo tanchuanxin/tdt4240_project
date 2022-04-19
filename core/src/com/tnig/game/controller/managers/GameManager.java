@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.events.EventManager;
 
 import java.util.Iterator;
 import java.util.List;
@@ -18,13 +19,16 @@ public class GameManager {
     private List<Controller> controllers;
     private Engine engine;
     private TiledMap map;
+    private final EventManager eventManager;
     private final int numberOfPlayers;
 
-    public GameManager(Engine engine,
+    public GameManager(EventManager eventManager,
+                       Engine engine,
                        List<AnimatedController> animatedControllers,
                        List<Controller> controllers,
                        TiledMap map,
                        int numberOfPlayers) {
+        this.eventManager = eventManager;
         this.engine = engine;
         this.animatedControllers = animatedControllers;
         this.controllers = controllers;

@@ -1,4 +1,4 @@
-package com.tnig.game.view.guis;
+package com.tnig.game.view.screens;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -8,62 +8,64 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.tnig.game.controller.managers.ScreenManager;
-import com.tnig.game.controller.screens.ScreenName;
+import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.events.EventManager;
-import com.tnig.game.utilities.events.MapSelectedEvent;
+import com.tnig.game.utilities.events.LeaderBoardSelectedEvent;
 import com.tnig.game.utilities.events.ViewMainMenuEvent;
+import com.tnig.game.view.screens.AbstractScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapSelectScreenGUI extends AbstractGUI {
-    private final EventManager eventManager;
-    private final List<Button> mapBtnList = new ArrayList<>();
+public class LeaderboardSelectScreen extends AbstractScreen {
 
-    public MapSelectScreenGUI(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager) {
+    public LeaderboardSelectScreen(ScreenManager screenManager,
+                                   OrthographicCamera camera,
+                                   AssetLoader assetLoader,
+                                   final EventManager eventManager,
+                                   Network network) {
         super(camera, assetLoader);
-        this.eventManager = eventManager;
-
+        ArrayList<Integer> levelNum = new ArrayList<>(network.getLevels());
         Table table = new Table();
 
         // Create actors
-        Label titleLabel = new Label("Select your map", assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
+        Label titleLabel = new Label("Select map leaderboard", assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
         titleLabel.setAlignment(Align.center);
 
-        for (Integer map = 1; map < 14; map++) {
-            Button mapBtn = new Button(new Label(map.toString(), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI)), assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
+        List<Button> mapBtnList = new ArrayList<>();
+        for (int map = 1; map <= levelNum.size(); map++) {
+            Button mapBtn = new Button(new Label(Integer.toString(map), assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI)), assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
             final Integer mapNum = map;
             mapBtn.addListener(new ClickListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
-                };
+                }
 
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     // Change screen to game screen
                     System.out.println("Map selected: " + mapNum);
-                    // TODO: Implement as event with map selected
-                    eventManager.pushEvent(new MapSelectedEvent(mapNum));
-                };
+                    eventManager.pushEvent(new LeaderBoardSelectedEvent(mapNum));
+                }
             });
             mapBtnList.add(mapBtn);
         }
 
-        Label backBtnLabel = new Label("Back", assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
-        final Button backBtn = new Button(backBtnLabel, assetLoader.get(assetLoader.SKIN_PIXTHULHU_UI));
+        Label backBtnLabel = new Label("Back", assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
+        final Button backBtn = new Button(backBtnLabel, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
         backBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
-            };
+            }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 // Change screen to map select screen
                 eventManager.pushEvent(new ViewMainMenuEvent());
-            };
+            }
         });
 
         // Add actors to table layout
@@ -85,4 +87,12 @@ public class MapSelectScreenGUI extends AbstractGUI {
         // Add actors to stage
         stage.addActor(table);
     }
+
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+    }
+
+
 }

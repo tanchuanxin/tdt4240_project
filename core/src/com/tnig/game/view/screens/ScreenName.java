@@ -1,4 +1,4 @@
-package com.tnig.game.controller.screens;
+package com.tnig.game.view.screens;
 
 public enum ScreenName {
     LOADING,

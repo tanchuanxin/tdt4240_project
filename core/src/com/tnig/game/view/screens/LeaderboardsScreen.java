@@ -1,4 +1,4 @@
-package com.tnig.game.view.guis;
+package com.tnig.game.view.screens;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,14 +13,18 @@ import com.tnig.game.utilities.events.EventListener;
 import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.utilities.events.EventName;
 import com.tnig.game.utilities.events.ViewLeaderboardsEvent;
+import com.tnig.game.view.screens.AbstractScreen;
 
 import java.util.ArrayList;
 
-public class LeaderboardsScreenGUI extends AbstractGUI implements EventListener {
+public class LeaderboardsScreen extends AbstractScreen implements EventListener {
 
     private int mapNum = 1;
 
-    public LeaderboardsScreenGUI(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager, Network network) {
+    public LeaderboardsScreen(OrthographicCamera camera,
+                              AssetLoader assetLoader,
+                              final EventManager eventManager,
+                              Network network) {
         super(camera, assetLoader);
         eventManager.subscribe(EventName.VIEW_LEADERBOARDS, this);
         Table table = new Table();
@@ -66,6 +70,14 @@ public class LeaderboardsScreenGUI extends AbstractGUI implements EventListener 
         // Add actors to stage
         stage.addActor(table);
     }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+    }
+
+
+
 
     @Override
     public void receiveEvent(Event event) {

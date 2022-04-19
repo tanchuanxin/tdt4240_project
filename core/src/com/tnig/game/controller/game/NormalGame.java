@@ -16,6 +16,7 @@ import com.tnig.game.model.models.players.PlayerType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
+import com.tnig.game.utilities.events.EventManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class NormalGame implements GameInitializer {
 
 
     @Override
-    public GameManager initGame(Engine engine, AssetLoader assetLoader, TiledMap map, int players) {
+    public GameManager initGame(EventManager eventManager, Engine engine, AssetLoader assetLoader, TiledMap map, int players) {
         Gdx.app.log("GameManager", "init Game");
 
         // Static objects
@@ -41,7 +42,7 @@ public class NormalGame implements GameInitializer {
         // Animated objects
         initAnimatedControllers(map, engine, assetLoader, Constants.playerLayer, PlayerType.NORMALPLAYER);
         // TODO: ADD OTHER ANIMATED OBJECTS HERE
-        return new GameManager(engine, animatedControllers, controllers, map, players);
+        return new GameManager(eventManager, engine, animatedControllers, controllers, map, players);
 
     }
 

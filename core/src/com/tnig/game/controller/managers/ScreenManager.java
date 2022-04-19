@@ -5,31 +5,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.tnig.game.controller.screens.LeaderboardSelectScreen;
-import com.tnig.game.controller.screens.ScreenName;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.controller.screens.GameScreen;
-import com.tnig.game.controller.screens.LeaderboardsScreen;
-import com.tnig.game.controller.screens.AppLoadingScreen;
-import com.tnig.game.controller.screens.MainMenuScreen;
-import com.tnig.game.controller.screens.MapSelectScreen;
+import com.tnig.game.utilities.Constants;
 import com.tnig.game.utilities.events.Event;
 import com.tnig.game.utilities.events.EventListener;
 import com.tnig.game.utilities.events.EventManager;
 import com.tnig.game.utilities.events.EventName;
-import com.tnig.game.view.guis.AppLoadingScreenGUI;
-import com.tnig.game.view.guis.SelectLeaderBoardScreenGUI;
-import com.tnig.game.view.guis.LeaderboardsScreenGUI;
-import com.tnig.game.view.guis.MainMenuScreenGUI;
-import com.tnig.game.view.guis.MapSelectScreenGUI;
+import com.tnig.game.view.screens.AppLoadingScreen;
+import com.tnig.game.view.screens.GameScreen;
+import com.tnig.game.view.screens.LeaderboardSelectScreen;
+import com.tnig.game.view.screens.LeaderboardsScreen;
+import com.tnig.game.view.screens.MainMenuScreen;
+import com.tnig.game.view.screens.MapSelectScreen;
+import com.tnig.game.view.screens.ScreenName;
 
 public class ScreenManager implements EventListener {
-    private Game game;
+    private final Game game;
     private final OrthographicCamera camera;
     private final AssetLoader assetLoader;
     private final EventManager eventManager;
-    private Network network;
+    private final Network network;
+    private int mapNumber = -1;
+    private int numberOfPlayers = -1;
 
     public ScreenManager(Game game, EventManager eventManager, OrthographicCamera camera, AssetLoader assetLoader, Network network) {
         this.game = game;
@@ -39,15 +37,9 @@ public class ScreenManager implements EventListener {
         this.network = network;
 
         // Subscribe to events
-        eventManager.subscribe(EventName.INIT_APP, this);
-        eventManager.subscribe(EventName.NEW_GAME, this);
-        eventManager.subscribe(EventName.APP_LOADING_COMPLETE, this);
-        eventManager.subscribe(EventName.VIEW_MAIN_MENU, this);
-        eventManager.subscribe(EventName.VIEW_SETTINGS, this);
-        eventManager.subscribe(EventName.VIEW_LEADERBOARDS, this);
-        eventManager.subscribe(EventName.LEADERBOARD_SELECTED, this);
-        eventManager.subscribe(EventName.QUIT_GAME, this);
+
         eventManager.subscribe(EventName.MAP_SELECTED, this);
+        eventManager.subscribe(EventName.NEW_GAME, this);
     }
 
     /**
@@ -56,57 +48,39 @@ public class ScreenManager implements EventListener {
      */
     public void receiveEvent(Event event) {
         switch (event.name) {
-            case INIT_APP:
-                setScreen(ScreenName.LOADING);
+            case MAP_SELECTED:
+                mapNumber = (int) event.data.get("mapNum");
                 break;
             case NEW_GAME:
-                setScreen(ScreenName.MAP_SELECT);
-                break;
-            case MAP_SELECTED:
-                setScreen(ScreenName.GAME);
-            case APP_LOADING_COMPLETE:
-            case VIEW_MAIN_MENU:
-                setScreen(ScreenName.MAIN_MENU);
-                break;
-            case VIEW_SETTINGS:
-                setScreen(ScreenName.SETTINGS);
-                break;
-            case VIEW_LEADERBOARDS:
-                setScreen(ScreenName.LEADERBOARDS);
-                break;
-            case LEADERBOARD_SELECTED:
-                setScreen(ScreenName.LEADERBOARDSELECTION);
-                break;
-            case QUIT_GAME:
-                quitGame();
-
+                numberOfPlayers = (int) event.data.get("numOfPlayers");
         }
     }
 
     // Switch screens
-    private void setScreen(ScreenName screenName) {
+    public void setScreen(ScreenName screenName) {
         switch (screenName) {
             case LOADING:
-                game.setScreen(new AppLoadingScreen(camera, assetLoader, new AppLoadingScreenGUI(camera, assetLoader), eventManager));
+                game.setScreen(new AppLoadingScreen(this, camera, assetLoader, eventManager));
                 break;
             case MAIN_MENU:
-                game.setScreen(new MainMenuScreen(camera, assetLoader, new MainMenuScreenGUI(camera, assetLoader, eventManager)));
+                game.setScreen(new MainMenuScreen(this, camera, assetLoader, eventManager));
                 break;
             case GAME:
-                //TODO: need to fix so that any map can be selected
-                TiledMap map = new TmxMapLoader().load("map/level1.tmx");
-                // TODO: fix so any amount of players can be used
-                int players = 2;
-                game.setScreen(new GameScreen(camera, assetLoader, map, players));
+                if (mapNumber == -1){
+                    throw new IllegalStateException("Map hasnt been updated");
+                }
+                String mapLocation = getMap(mapNumber);
+                TiledMap map = new TmxMapLoader().load(mapLocation);
+                game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, map, numberOfPlayers));
                 break;
             case MAP_SELECT:
-                game.setScreen(new MapSelectScreen(camera, assetLoader, new MapSelectScreenGUI(camera, assetLoader, eventManager)));
+                game.setScreen(new MapSelectScreen(camera, assetLoader, eventManager));
                 break;
             case LEADERBOARDSELECTION:
-                game.setScreen(new LeaderboardSelectScreen(camera, assetLoader, new SelectLeaderBoardScreenGUI(camera, assetLoader, eventManager, network)));
+                game.setScreen(new LeaderboardSelectScreen(camera, assetLoader, eventManager, network));
                 break;
             case LEADERBOARDS:
-                game.setScreen(new LeaderboardsScreen(camera, assetLoader, new LeaderboardsScreenGUI(camera, assetLoader, eventManager, network)));
+                game.setScreen(new LeaderboardsScreen(camera, assetLoader, eventManager, network));
                 break;
             case GAME_OVER:
                 throw new IllegalArgumentException("Not implemented yet");
@@ -116,5 +90,19 @@ public class ScreenManager implements EventListener {
     private void quitGame() {
         assetLoader.dispose();
         Gdx.app.exit();
+    }
+
+    private String getMap(int mapNumber){
+        switch (mapNumber){
+            case 1:
+                return Constants.map1;
+            case 2:
+                return Constants.map2;
+            case 3:
+                return Constants.map3;
+            default:
+                throw new IllegalArgumentException("Havent implemented map number:" + mapNumber);
+
+        }
     }
 }
