@@ -4,7 +4,7 @@ import com.tnig.game.model.models.ModelType;
 import com.tnig.game.model.models.ObjectType;
 
 public enum BlockType implements ModelType {
-    NORMAL_BLOCK;
+    NORMAL_BLOCK, MOCK;
 
     @Override
     public ObjectType getObjectType() {

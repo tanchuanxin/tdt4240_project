@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
 import com.tnig.game.controller.managers.EventManager;
@@ -14,6 +16,7 @@ import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.Constants;
 import com.tnig.game.view.GameRenderer;
 
 public class GameScreen extends AbstractScreen {
@@ -22,6 +25,7 @@ public class GameScreen extends AbstractScreen {
     private final SpriteBatch batch;
     private final GameManager gameManager;
     private final GameRenderer gameRenderer;
+    private final Viewport viewport;
 
 
     public GameScreen(ScreenManager screenManager,
@@ -31,10 +35,10 @@ public class GameScreen extends AbstractScreen {
                       TiledMap map,
                       int numberOfPlayers) {
         super(camera, assetLoader);
-        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.camera.position.set(Gdx.graphics.getWidth() / 2f, getMapHeight(map) / 2f, 0);
-        this.camera.update();
+        this.camera = new OrthographicCamera();
+        viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
         this.screenManager = screenManager;
+
         engine = new GameWorld();
 
         GameInitializer initializer = new NormalGame();
@@ -42,6 +46,7 @@ public class GameScreen extends AbstractScreen {
 
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
+
         gameRenderer = new GameRenderer(batch, camera, gameManager, map, assetLoader);
 
 
@@ -51,7 +56,6 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         // Render game
         batch.begin();
@@ -72,7 +76,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        //stage.getViewport().update(width, height, true);
+        viewport.update(width, height);
     }
 
     @Override

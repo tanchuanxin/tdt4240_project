@@ -29,7 +29,7 @@ public class GameWorld implements Engine{
         // Use this camera for debugging in the desktop version
         b2drCam = new OrthographicCamera(VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
         // TODO: Find out where to put b2dr cam
-        b2drCam.position.set(Gdx.graphics.getWidth()/ 2f / PPM, Gdx.graphics.getHeight() / 2f / PPM, 0);
+        b2drCam.position.set(100/ 2f / PPM, 100 / 2f / PPM, 0);
         b2drCam.update();
     }
 

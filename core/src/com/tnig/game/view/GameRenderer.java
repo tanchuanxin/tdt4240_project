@@ -20,6 +20,7 @@ public class GameRenderer {
     private final GameManager gameManager;
     private final TiledMapRenderer mapRenderer;
     private final AssetLoader assetLoader;
+    private final OrthographicCamera camera;
 
     public GameRenderer(SpriteBatch batch,
                         OrthographicCamera camera,
@@ -27,6 +28,7 @@ public class GameRenderer {
                         TiledMap map,
                         AssetLoader assetLoader) {
         this.batch = batch;
+        this.camera = camera;
         this.gameManager = gameManager;
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         mapRenderer.setView(camera);
@@ -35,9 +37,14 @@ public class GameRenderer {
 
 
     public void render(){
+        camera.update(); //update our camera every frame
+        batch.setProjectionMatrix(camera.combined); //say the batch to only draw what we see in our camera
+
         renderAnimatedViews();
         renderMap();
     }
+
+
 
     /**
      * Gets all the animated controllers from the gamemanager and renders all the

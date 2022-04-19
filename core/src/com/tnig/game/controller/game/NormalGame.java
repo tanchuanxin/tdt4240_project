@@ -46,7 +46,7 @@ public class NormalGame implements GameInitializer {
 
     }
 
-    private void initStaticControllers(TiledMap map, Engine engine, int layer, ModelType modelType){
+    private void initStaticControllers(TiledMap map, Engine engine, String layer, ModelType modelType){
         for (RectangleMapObject object : map.getLayers()
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
@@ -58,7 +58,7 @@ public class NormalGame implements GameInitializer {
     }
 
     private void initAnimatedControllers(
-            TiledMap map, Engine engine, AssetLoader assetLoader, int layer, ModelType modelType){
+            TiledMap map, Engine engine, AssetLoader assetLoader, String layer, ModelType modelType){
 
         for (RectangleMapObject object : map.getLayers()
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
