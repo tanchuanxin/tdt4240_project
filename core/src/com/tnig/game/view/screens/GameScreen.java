@@ -25,23 +25,26 @@ import com.tnig.game.view.GameRenderer;
 
 
 public class GameScreen extends AbstractScreen {
-    private final ScreenManager screenManager;
     private final Engine engine;
     private final SpriteBatch batch;
     private final GameManager gameManager;
     private final GameRenderer gameRenderer;
+    private final Viewport viewport;
 
 
     public GameScreen(ScreenManager screenManager,
                       EventManager eventManager,
-                      OrthographicCamera camera,
+                      OrthographicCamera HUDcamera,
                       AssetLoader assetLoader,
                       GameMap map,
                       int numberOfPlayers) {
-        super(camera, assetLoader);
-        this.screenManager = screenManager;
+        super(HUDcamera, assetLoader);
 
-        engine = new GameWorld(map);
+        OrthographicCamera gameCam = new OrthographicCamera();
+        viewport = new FitViewport(VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM, gameCam);
+        gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
+
+        engine = new GameWorld(gameCam);
 
         GameInitializer initializer = new NormalGame();
         gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
@@ -77,7 +80,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        gameRenderer.resize(width, height);
+        viewport.update(width, height);
     }
 
     @Override

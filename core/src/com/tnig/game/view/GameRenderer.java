@@ -6,7 +6,6 @@ import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -27,34 +26,28 @@ public class GameRenderer {
     private final GameManager gameManager;
     private final TiledMapRenderer mapRenderer;
     private final AssetLoader assetLoader;
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
+    private final OrthographicCamera gameCam;
 
     public GameRenderer(SpriteBatch batch,
-                        OrthographicCamera camera,
+                        OrthographicCamera gameCam,
                         GameManager gameManager,
                         GameMap map,
                         AssetLoader assetLoader) {
         this.batch = batch;
-        this.camera = camera;
-        viewport = new FitViewport(VIEWPORT_WIDTH/PPM, VIEWPORT_HEIGHT/PPM, camera);
+        this.gameCam = gameCam;
         this.gameManager = gameManager;
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
-        mapRenderer.setView(camera);
+        mapRenderer.setView(gameCam);
         this.assetLoader = assetLoader;
     }
 
 
     public void render(){
-        camera.update(); //update our camera every frame
-        batch.setProjectionMatrix(camera.combined); //say the batch to only draw what we see in our camera
+        gameCam.update(); //update our camera every frame
+        batch.setProjectionMatrix(gameCam.combined); //say the batch to only draw what we see in our camera
 
         renderAnimatedViews();
         renderMap();
-    }
-
-    public void resize(int width, int height){
-        viewport.update(width, height);
     }
 
 

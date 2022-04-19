@@ -21,19 +21,15 @@ public class GameWorld implements Engine{
     private final Box2DDebugRenderer b2dr;
     private final OrthographicCamera b2drCam;
 
-    public GameWorld(GameMap map) {
+    public GameWorld(OrthographicCamera gameCam) {
         // Initialize Box2D World
         world = new World(new Vector2(0,-10), true);
         world.setContactListener(new WorldContactListener());
         b2dr = new Box2DDebugRenderer();
 
         // Use this camera for debugging in the desktop version
-        b2drCam = new OrthographicCamera(VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
-        // TODO: Find out where to put b2dr cam
-        System.out.println(map.getMapWidthInPixels());
-        System.out.println(map.getMapWidthInPixels());
-        b2drCam.position.set(VIEWPORT_WIDTH/ 2f / PPM, VIEWPORT_HEIGHT/ 2f / PPM, 0);
-        b2drCam.update();
+        b2drCam = gameCam;
+
     }
 
     @Override
