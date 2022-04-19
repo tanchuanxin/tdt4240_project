@@ -36,7 +36,6 @@ public class ButtonFactory {
 
             @Override
             public void touchUp(InputEvent inputEvent, float x, float y, int pointer, int button) {
-                // Start game as 2 players
                 eventManager.pushEvent(event);
                 screenManager.setScreen(screenName);
             }
@@ -57,7 +56,6 @@ public class ButtonFactory {
 
             @Override
             public void touchUp(InputEvent inputEvent, float x, float y, int pointer, int button) {
-                // Start game as 2 players
                 screenManager.setScreen(screenName);
             }
         });
@@ -77,7 +75,6 @@ public class ButtonFactory {
 
             @Override
             public void touchUp(InputEvent inputEvent, float x, float y, int pointer, int button) {
-                // Start game as 2 players
                 eventManager.pushEvent(event);
             }
         });
