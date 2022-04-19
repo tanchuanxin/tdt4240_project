@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
@@ -72,7 +73,7 @@ public class ScreenManager implements EventListener {
                     throw new IllegalStateException("Map hasnt been updated");
                 }
                 String mapLocation = getMapLocation(mapNumber);
-                TiledMap map = new TmxMapLoader().load(mapLocation);
+                GameMap map = new GameMap(mapLocation);
                 Gdx.app.log("Map", mapLocation);
                 Gdx.app.log("Number of Players", String.valueOf(numberOfPlayers));
                 game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, map, numberOfPlayers));

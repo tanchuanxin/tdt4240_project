@@ -1,5 +1,9 @@
 package com.tnig.game.view.screens;
 
+import static com.tnig.game.utilities.Constants.PPM;
+import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
+import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,11 +17,12 @@ import com.tnig.game.controller.game.NormalGame;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.managers.ScreenManager;
+import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.utilities.Constants;
 import com.tnig.game.view.GameRenderer;
+
 
 public class GameScreen extends AbstractScreen {
     private final ScreenManager screenManager;
@@ -25,27 +30,23 @@ public class GameScreen extends AbstractScreen {
     private final SpriteBatch batch;
     private final GameManager gameManager;
     private final GameRenderer gameRenderer;
-    private final Viewport viewport;
 
 
     public GameScreen(ScreenManager screenManager,
                       EventManager eventManager,
                       OrthographicCamera camera,
                       AssetLoader assetLoader,
-                      TiledMap map,
+                      GameMap map,
                       int numberOfPlayers) {
         super(camera, assetLoader);
-        this.camera = new OrthographicCamera();
-        viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
         this.screenManager = screenManager;
 
-        engine = new GameWorld();
+        engine = new GameWorld(map);
 
         GameInitializer initializer = new NormalGame();
         gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
 
         batch = new SpriteBatch();
-        batch.setProjectionMatrix(camera.combined);
 
         gameRenderer = new GameRenderer(batch, camera, gameManager, map, assetLoader);
 
@@ -76,7 +77,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        gameRenderer.resize(width, height);
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.tnig.game.controller.game_objects.static_objects.StaticObjectControll
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
+import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.models.ModelType;
 import com.tnig.game.model.models.blocks.BlockType;
 import com.tnig.game.model.models.obstacles.ObstacleType;
@@ -32,17 +33,17 @@ public class NormalGame implements GameInitializer {
 
 
     @Override
-    public GameManager initGame(EventManager eventManager, Engine engine, AssetLoader assetLoader, TiledMap map, int players) {
+    public GameManager initGame(EventManager eventManager, Engine engine, AssetLoader assetLoader, GameMap map, int players) {
         Gdx.app.log("GameManager", "init Game");
-
+        TiledMap tiledMap = map.getTiledMap();
         // Static objects
-        initStaticControllers(map, engine, Constants.spikeLayer, ObstacleType.SPIKE);
-        initStaticControllers(map, engine, Constants.blockLayer, BlockType.NORMAL_BLOCK);
+        initStaticControllers(tiledMap, engine, Constants.spikeLayer, ObstacleType.SPIKE);
+        initStaticControllers(tiledMap, engine, Constants.blockLayer, BlockType.NORMAL_BLOCK);
 
         // Animated objects
-        initAnimatedControllers(map, engine, assetLoader, Constants.playerLayer, PlayerType.NORMALPLAYER);
+        initAnimatedControllers(tiledMap, engine, assetLoader, Constants.playerLayer, PlayerType.NORMALPLAYER);
         // TODO: ADD OTHER ANIMATED OBJECTS HERE
-        return new GameManager(eventManager, engine, animatedControllers, controllers, map, players);
+        return new GameManager(eventManager, engine, animatedControllers, controllers, tiledMap, players);
 
     }
 
@@ -51,7 +52,7 @@ public class NormalGame implements GameInitializer {
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
             Controller controller = new StaticObjectController(
-                    engine, rect.x, rect.y, rect.width, rect.height, modelType);
+                    engine, rect.x + rect.width / 2, rect.y + rect.height / 2, rect.width, rect.height, modelType);
 
             controllers.add(controller);
         }
