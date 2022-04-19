@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
@@ -28,18 +29,20 @@ public class GameScreen extends AbstractScreen {
                       OrthographicCamera camera,
                       AssetLoader assetLoader,
                       TiledMap map,
-                      int players) {
+                      int numberOfPlayers) {
         super(camera, assetLoader);
+        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.camera.position.set(Gdx.graphics.getWidth() / 2f, getMapHeight(map) / 2f, 0);
+        this.camera.update();
         this.screenManager = screenManager;
         engine = new GameWorld();
 
-        //TODO: Could use strategy pattern here or take in as parameter to change gamemodes at runtime
-        //TODO: Probably strategy pattern would be more scalable? Interface for GameMode
         GameInitializer initializer = new NormalGame();
-        gameManager = initializer.initGame(eventManager, engine, assetLoader, map, players);
+        gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
 
         batch = new SpriteBatch();
-        gameRenderer = new GameRenderer(batch, gameManager, map, assetLoader);
+        batch.setProjectionMatrix(camera.combined);
+        gameRenderer = new GameRenderer(batch, camera, gameManager, map, assetLoader);
 
 
     }
@@ -83,5 +86,35 @@ public class GameScreen extends AbstractScreen {
         engine.dispose();
         gameManager.dispose();
         batch.dispose();
+    }
+
+    /**
+     * Calculates the width of the map in pixels
+     * @param map The map
+     * @return The width of the map
+     */
+    private int getMapWidth(TiledMap map){
+        int tileWidth, mapWidthInTiles, mapWidthInPixels;
+
+        MapProperties properties = map.getProperties();
+        tileWidth         = properties.get("tilewidth", Integer.class);
+        mapWidthInTiles   = properties.get("width", Integer.class);
+        mapWidthInPixels  = mapWidthInTiles  * tileWidth;
+        return mapWidthInPixels;
+    }
+
+    /**
+     * Calculates the height of the map in pixels
+     * @param map The map
+     * @return The height of the map
+     */
+    private int getMapHeight(TiledMap map){
+        int tileHeight, mapHeightInTiles, mapHeightInPixels;
+
+        MapProperties properties = map.getProperties();
+        tileHeight        = properties.get("tileheight", Integer.class);
+        mapHeightInTiles  = properties.get("height", Integer.class);
+        mapHeightInPixels = mapHeightInTiles * tileHeight;
+        return mapHeightInPixels;
     }
 }

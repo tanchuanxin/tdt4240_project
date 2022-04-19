@@ -13,7 +13,7 @@ import com.tnig.game.utilities.AssetLoader;
  * Includes generalized dependencies for a Screen.
  */
 public abstract class AbstractScreen extends ScreenAdapter {
-    protected final OrthographicCamera camera;
+    protected OrthographicCamera camera;
     protected final AssetLoader assetLoader;
     protected final Stage stage;
 

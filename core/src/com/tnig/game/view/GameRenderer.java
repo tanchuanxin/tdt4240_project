@@ -1,5 +1,6 @@
 package com.tnig.game.view;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -20,10 +21,15 @@ public class GameRenderer {
     private final TiledMapRenderer mapRenderer;
     private final AssetLoader assetLoader;
 
-    public GameRenderer(SpriteBatch batch, GameManager gameManager, TiledMap map, AssetLoader assetLoader) {
+    public GameRenderer(SpriteBatch batch,
+                        OrthographicCamera camera,
+                        GameManager gameManager,
+                        TiledMap map,
+                        AssetLoader assetLoader) {
         this.batch = batch;
         this.gameManager = gameManager;
         mapRenderer = new OrthogonalTiledMapRenderer(map);
+        mapRenderer.setView(camera);
         this.assetLoader = assetLoader;
     }
 
