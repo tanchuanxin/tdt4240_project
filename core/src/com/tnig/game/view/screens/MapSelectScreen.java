@@ -61,17 +61,17 @@ public class MapSelectScreen extends AbstractScreen {
         // Add actors to table layout
         table.pad(50f);
         table.setFillParent(true);
-        table.row().colspan(5).spaceBottom(20f).expandX().fillX();
+        table.row().colspan(6).spaceBottom(20f).expandX().fillX();
         table.add(titleLabel).center().fillX();
 
         for (int i = 0; i < mapBtnList.size(); i++) {
-            if (i % 5 == 0) {
-                table.row().spaceBottom(20f);
+            if (i % 6 == 0) {
+                table.row().left().spaceBottom(20f);
             }
             table.add(mapBtnList.get(i));
         }
 
-        table.row().colspan(5).spaceBottom(20f).expandX().fillX();
+        table.row().left().colspan(6).spaceBottom(20f).expandX().fillX();
         table.add(backBtn).center().fillX();
 
         // Add actors to stage
