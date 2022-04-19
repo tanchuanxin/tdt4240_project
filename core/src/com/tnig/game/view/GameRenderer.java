@@ -1,12 +1,19 @@
 package com.tnig.game.view;
 
+import static com.tnig.game.utilities.Constants.PPM;
+import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
+import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.managers.GameManager;
+import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.utilities.AssetLoader;
 
 import java.util.List;
@@ -21,16 +28,18 @@ public class GameRenderer {
     private final TiledMapRenderer mapRenderer;
     private final AssetLoader assetLoader;
     private final OrthographicCamera camera;
+    private final Viewport viewport;
 
     public GameRenderer(SpriteBatch batch,
                         OrthographicCamera camera,
                         GameManager gameManager,
-                        TiledMap map,
+                        GameMap map,
                         AssetLoader assetLoader) {
         this.batch = batch;
         this.camera = camera;
+        viewport = new FitViewport(VIEWPORT_WIDTH/PPM, VIEWPORT_HEIGHT/PPM, camera);
         this.gameManager = gameManager;
-        mapRenderer = new OrthogonalTiledMapRenderer(map);
+        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
         mapRenderer.setView(camera);
         this.assetLoader = assetLoader;
     }
@@ -42,6 +51,10 @@ public class GameRenderer {
 
         renderAnimatedViews();
         renderMap();
+    }
+
+    public void resize(int width, int height){
+        viewport.update(width, height);
     }
 
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.models.Model;
 
 /**
@@ -20,7 +21,7 @@ public class GameWorld implements Engine{
     private final Box2DDebugRenderer b2dr;
     private final OrthographicCamera b2drCam;
 
-    public GameWorld() {
+    public GameWorld(GameMap map) {
         // Initialize Box2D World
         world = new World(new Vector2(0,-10), true);
         world.setContactListener(new WorldContactListener());
@@ -29,7 +30,9 @@ public class GameWorld implements Engine{
         // Use this camera for debugging in the desktop version
         b2drCam = new OrthographicCamera(VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
         // TODO: Find out where to put b2dr cam
-        b2drCam.position.set(100/ 2f / PPM, 100 / 2f / PPM, 0);
+        System.out.println(map.getMapWidthInPixels());
+        System.out.println(map.getMapWidthInPixels());
+        b2drCam.position.set(VIEWPORT_WIDTH/ 2f / PPM, VIEWPORT_HEIGHT/ 2f / PPM, 0);
         b2drCam.update();
     }
 
