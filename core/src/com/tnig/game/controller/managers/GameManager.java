@@ -1,5 +1,6 @@
 package com.tnig.game.controller.managers;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
@@ -20,6 +21,7 @@ public class GameManager {
     private TiledMap map;
     private final EventManager eventManager;
     private final int numberOfPlayers;
+    private OrthographicCamera camera;
 
     public GameManager(EventManager eventManager,
                        Engine engine,

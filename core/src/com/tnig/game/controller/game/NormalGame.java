@@ -1,6 +1,8 @@
 package com.tnig.game.controller.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,6 +45,7 @@ public class NormalGame implements GameInitializer {
         // Animated objects
         initAnimatedControllers(tiledMap, engine, assetLoader, Constants.playerLayer, PlayerType.NORMALPLAYER);
         // TODO: ADD OTHER ANIMATED OBJECTS HERE
+
         return new GameManager(eventManager, engine, animatedControllers, controllers, tiledMap, players);
 
     }
