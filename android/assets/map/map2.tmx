@@ -2,7 +2,7 @@
 <map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="201">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
-  <image source="../../../../../Downloads/16-bit-spike-Sheet.png" width="64" height="16"/>
+  <image source="spikes.png" width="64" height="16"/>
  </tileset>
  <layer id="1" name="background" width="128" height="13">
   <data encoding="base64" compression="zlib">
