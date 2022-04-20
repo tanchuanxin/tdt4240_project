@@ -19,7 +19,11 @@ public class NormalPlayer extends AbstractModel {
 
     @Override
     public void handleBeginContact(ContactObject object) {
+        if (object.getType().getObjectType() == ObjectType.OBSTACLE){
+            dispose();
+        }
 
+        System.out.println("CONTACT");
     }
 
     public ModelType getPlayerType() {
