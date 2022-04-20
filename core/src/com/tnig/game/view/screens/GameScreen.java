@@ -1,17 +1,10 @@
 package com.tnig.game.view.screens;
 
-import static com.tnig.game.utilities.Constants.PPM;
-import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
-import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
 import com.tnig.game.controller.managers.EventManager;
@@ -31,6 +24,8 @@ public class GameScreen extends AbstractScreen {
     private final GameManager gameManager;
     private final GameRenderer gameRenderer;
     private final OrthographicCamera gameCamera;
+    private final OrthogonalTiledMapRenderer mapRenderer;
+    //private final  FitViewport viewport;
 
 
     public GameScreen(ScreenManager screenManager,
@@ -41,6 +36,14 @@ public class GameScreen extends AbstractScreen {
                       int numberOfPlayers) {
         super(camera, assetLoader);
         this.screenManager = screenManager;
+        // Set up game camera and viewport
+        this.gameCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        int mapWidth = map.getMapWidth();
+        int mapHeight = map.getMapHeight();
+
+        camera.position.set(mapWidth/20f, mapHeight/2f, 0);
+        camera.update();
 
         engine = new GameWorld(map);
 
@@ -49,25 +52,13 @@ public class GameScreen extends AbstractScreen {
 
         this.batch = new SpriteBatch();
 
-        // Set up game camera and viewport
-        this.gameCamera = new OrthographicCamera();
 
-        TiledMap tiledMap = map.getTiledMap();
-        MapProperties mapProps = tiledMap.getProperties();
-        int mapWidth = mapProps.get("width", Integer.class);
-        int tilePixelWidth = mapProps.get("tilewidth", Integer.class);
-        mapWidth = mapWidth * tilePixelWidth;
-
-        int mapHeight = mapProps.get("height", Integer.class);
-        int tilePixelHeight = mapProps.get("tileheight", Integer.class);
-        mapHeight = mapHeight * tilePixelHeight;
-
-        gameCamera.setToOrtho(false, mapWidth, mapHeight);
+        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
 
         // Create viewport
-        FitViewport viewport = new FitViewport(mapWidth, mapHeight, this.gameCamera);
+        //viewport = new FitViewport(mapWidth, mapHeight, this.gameCamera);
 
-        this.gameRenderer = new GameRenderer(batch, gameCamera, viewport, gameManager, map, assetLoader);
+        this.gameRenderer = new GameRenderer(batch, gameManager);
 
 
     }
@@ -77,6 +68,11 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        mapRenderer.setView(camera);
+        camera.update(); //update our camera every frame
+        batch.setProjectionMatrix(camera.combined); //say the batch to only draw what we see in our camera
+
+
         // Update game
         engine.update(delta);
         gameManager.update(delta);
@@ -84,6 +80,7 @@ public class GameScreen extends AbstractScreen {
         // Render game
         batch.begin();
         gameRenderer.render();
+        mapRenderer.render();
         batch.end();
 
         if (gameManager.gameFinished()){
@@ -95,7 +92,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        gameRenderer.resize(width, height);
+        //viewport.update(width, height);
     }
 
     @Override
@@ -111,33 +108,5 @@ public class GameScreen extends AbstractScreen {
         batch.dispose();
     }
 
-    /**
-     * Calculates the width of the map in pixels
-     * @param map The map
-     * @return The width of the map
-     */
-    private int getMapWidth(TiledMap map){
-        int tileWidth, mapWidthInTiles, mapWidthInPixels;
 
-        MapProperties properties = map.getProperties();
-        tileWidth         = properties.get("tilewidth", Integer.class);
-        mapWidthInTiles   = properties.get("width", Integer.class);
-        mapWidthInPixels  = mapWidthInTiles  * tileWidth;
-        return mapWidthInPixels;
-    }
-
-    /**
-     * Calculates the height of the map in pixels
-     * @param map The map
-     * @return The height of the map
-     */
-    private int getMapHeight(TiledMap map){
-        int tileHeight, mapHeightInTiles, mapHeightInPixels;
-
-        MapProperties properties = map.getProperties();
-        tileHeight        = properties.get("tileheight", Integer.class);
-        mapHeightInTiles  = properties.get("height", Integer.class);
-        mapHeightInPixels = mapHeightInTiles * tileHeight;
-        return mapHeightInPixels;
-    }
 }

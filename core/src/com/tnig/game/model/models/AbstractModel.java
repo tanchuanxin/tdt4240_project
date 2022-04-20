@@ -1,5 +1,7 @@
 package com.tnig.game.model.models;
 
+import static com.tnig.game.utilities.Constants.PPM;
+
 import com.badlogic.gdx.physics.box2d.Body;
 import com.tnig.game.model.physics_engine.bodies.BodyFactory;
 import com.tnig.game.model.physics_engine.Engine;
@@ -28,11 +30,11 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     }
 
     public float getX(){
-        return body.getPosition().x;
+        return body.getPosition().x * PPM;
     }
 
     public float getY(){
-        return body.getPosition().y;
+        return body.getPosition().y * PPM;
     }
 
     public float getHeight() {
