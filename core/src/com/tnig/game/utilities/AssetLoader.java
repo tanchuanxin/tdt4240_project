@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
@@ -22,10 +23,11 @@ public class AssetLoader {
     }
 
     // Textures (Assets)
+//    public static final AssetDescriptor<Texture> TEX_PLAYER_SPRITE = new AssetDescriptor<>("images/playerSprite.png", Texture.class);
+    public static final AssetDescriptor<TextureAtlas> TEXTURE_ATLAS = new AssetDescriptor<TextureAtlas>("textures/game_textures.pack", TextureAtlas.class);
 
     // Images (Splash screen, etc)
     public static final AssetDescriptor<Texture> IMG_SPLASH_SCREEN_BG = new AssetDescriptor<>("images/badlogic.jpg", Texture.class);
-    public static final AssetDescriptor<Texture> IMG_PLAYER_SPRITE = new AssetDescriptor<>("images/playerSprite.jpg", Texture.class);
 
     // Music
     // Sounds
@@ -41,6 +43,10 @@ public class AssetLoader {
 
     // Loads all assets
     public void loadAll() {
+        // Load textures
+//        manager.load(TEX_PLAYER_SPRITE);
+        manager.load(TEXTURE_ATLAS);
+
         // Load images
         manager.load(IMG_SPLASH_SCREEN_BG);
 

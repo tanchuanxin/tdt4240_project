@@ -5,7 +5,6 @@ import com.tnig.game.model.models.Model;
 import com.tnig.game.model.models.ModelFactory;
 import com.tnig.game.model.models.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
-import com.tnig.game.view.AnimatedView;
 
 public class StaticObjectController implements Controller {
 

@@ -4,37 +4,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.model.models.Model;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
-import com.tnig.game.view.AnimatedView;
 
-public abstract class ModelView implements AnimatedView {
-
-    protected final float FRAME_DURATION = 1f / Constants.FPS;
-    private float time = 0;
+public abstract class AbstractView implements View {
     private final Model model;
 
+    protected abstract void renderModel(SpriteBatch batch, float x, float y, float width, float height);
 
-    protected abstract void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time);
-
-    public ModelView(Model model) {
+    public AbstractView(Model model) {
         this.model = model;
     }
 
-
-
-
-    @Override
-    public void update(float deltaTime) {
-
-    }
-
-    // A template method could be used her
+    // A template method could be used here
     @Override
     public void render(SpriteBatch batch, AssetLoader assetLoader) {
         float width = model.getWidth();
         float height = model.getHeight();
         float x = model.getX();
         float y = model.getY();
-        renderModel(batch, x, y, width, height, time);
-
+        renderModel(batch, x, y, width, height);
     }
 }

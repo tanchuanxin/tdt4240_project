@@ -30,6 +30,7 @@ public class GameScreen extends AbstractScreen {
     private final SpriteBatch batch;
     private final GameManager gameManager;
     private final GameRenderer gameRenderer;
+    private final OrthographicCamera gameCamera;
 
 
     public GameScreen(ScreenManager screenManager,
@@ -44,11 +45,13 @@ public class GameScreen extends AbstractScreen {
         engine = new GameWorld(map);
 
         GameInitializer initializer = new NormalGame();
-        gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
+        this.gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
 
-        batch = new SpriteBatch();
+        this.batch = new SpriteBatch();
 
-        // Set up camera and viewport
+        // Set up game camera and viewport
+        this.gameCamera = new OrthographicCamera();
+
         TiledMap tiledMap = map.getTiledMap();
         MapProperties mapProps = tiledMap.getProperties();
         int mapWidth = mapProps.get("width", Integer.class);
@@ -59,12 +62,12 @@ public class GameScreen extends AbstractScreen {
         int tilePixelHeight = mapProps.get("tileheight", Integer.class);
         mapHeight = mapHeight * tilePixelHeight;
 
-        camera.setToOrtho(false, mapWidth, mapHeight);
+        gameCamera.setToOrtho(false, mapWidth, mapHeight);
 
         // Create viewport
-        FitViewport viewport = new FitViewport(mapWidth, mapHeight, camera);
+        FitViewport viewport = new FitViewport(mapWidth, mapHeight, this.gameCamera);
 
-        gameRenderer = new GameRenderer(batch, camera, viewport, gameManager, map, assetLoader);
+        this.gameRenderer = new GameRenderer(batch, gameCamera, viewport, gameManager, map, assetLoader);
 
 
     }
@@ -74,15 +77,14 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Render game
-        batch.begin();
-        gameRenderer.render();
-        batch.end();
-
         // Update game
         engine.update(delta);
         gameManager.update(delta);
 
+        // Render game
+        batch.begin();
+        gameRenderer.render();
+        batch.end();
 
         if (gameManager.gameFinished()){
             // TODO: Push event game finished
