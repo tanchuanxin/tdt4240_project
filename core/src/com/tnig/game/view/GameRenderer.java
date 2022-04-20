@@ -70,7 +70,6 @@ public class GameRenderer {
         List<AnimatedController> controllers = gameManager.getAnimatedControllers();
 
         for (AnimatedController controller: controllers) {
-            Gdx.app.log("AnimatedController:", String.valueOf(controller));
             controller.getView().render(batch, assetLoader);
         }
     }
