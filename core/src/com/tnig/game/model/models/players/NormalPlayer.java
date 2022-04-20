@@ -20,7 +20,12 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
     private final EventManager eventManager;
     private int speed = 4;
-    private int jumpingForce = 200;
+    private int jumpingForce = 100;
+    private State STATE = State.RUNNING;
+
+    public enum State{
+        JUMPING, RUNNING
+    }
 
     public NormalPlayer(EventManager eventManager, Engine engine, float x, float y, float width, float height) {
         super(engine, x, y, width, height, isStatic, isSensor, type);
@@ -33,10 +38,21 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     @Override
     public void handleBeginContact(ContactObject object) {
         if (object.getType().getObjectType() == ObjectType.OBSTACLE){
-            dispose();
             eventManager.pushEvent(new PlayerDead(this));
+            //dispose();
         }
 
+    }
+
+    @Override
+    public void update(float delta){
+        float velocity_y = getLinearVelocity()[1];
+        if (velocity_y == 0){
+            STATE = State.RUNNING;
+        }
+        else {
+            STATE = State.JUMPING;
+        }
     }
 
 
@@ -51,7 +67,9 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                 setLinearVelocity(speed, 0);
                 break;
             case JUMP:
-                applyForceToCenter(0, jumpingForce);
+                if (STATE == State.RUNNING){
+                    applyForceToCenter(0, jumpingForce);
+                }
                 break;
         }
     }
