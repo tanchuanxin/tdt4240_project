@@ -64,13 +64,14 @@ public class NormalGame implements GameInitializer {
     private void initAnimatedControllers(
             TiledMap map, Engine engine, AssetLoader assetLoader, String layer, ModelType modelType){
 
+        // Initialize map animated objects
         for (RectangleMapObject object : map.getLayers()
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
-            Controller controller = new AnimatedObjectController(
+            AnimatedController animatedController = new AnimatedObjectController(
                     engine, assetLoader, rect.x, rect.y, rect.width, rect.height, modelType);
 
-            controllers.add(controller);
+            animatedControllers.add(animatedController);
         }
     }
 

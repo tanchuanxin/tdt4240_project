@@ -21,7 +21,6 @@ public class GameManager {
     private TiledMap map;
     private final EventManager eventManager;
     private final int numberOfPlayers;
-    private OrthographicCamera camera;
 
     public GameManager(EventManager eventManager,
                        Engine engine,
@@ -50,9 +49,8 @@ public class GameManager {
             if (controller.isDisposable()){
                 iterator.remove();
                 engine.disposeModel(controller.getModel());
-
             }
-            else{
+            else {
                 controller.update(delta);
             }
         }

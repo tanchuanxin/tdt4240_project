@@ -3,7 +3,7 @@ package com.tnig.game.view.model_views.players;
 import com.tnig.game.model.models.Model;
 import com.tnig.game.model.models.players.PlayerType;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.AnimatedView;
+import com.tnig.game.view.model_views.AnimatedView;
 
 public class PlayerViewFactory {
 
