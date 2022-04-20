@@ -20,7 +20,7 @@ import com.tnig.game.utilities.AssetLoader;
 import java.util.List;
 
 /**
- * TODO: Maybe move class into gamescreen
+ * This class encapsulates the LibGDX Spritebatch module
  */
 public class GameRenderer {
 
@@ -38,6 +38,8 @@ public class GameRenderer {
     public void render(){
         renderAnimatedViews();
     }
+
+
 
 
 

@@ -2,6 +2,7 @@ package com.tnig.game.model.models;
 
 import static com.tnig.game.utilities.Constants.PPM;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.tnig.game.model.physics_engine.bodies.BodyFactory;
 import com.tnig.game.model.physics_engine.Engine;
@@ -78,5 +79,12 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     @Override
     public void update(float delta) {
 
+    }
+    protected void setVelocity(int velocity){
+        body.setLinearVelocity(new Vector2(velocity, 0));
+    }
+
+    protected void setImpulse(float impulse){
+        body.applyForceToCenter(0, impulse, true);
     }
 }

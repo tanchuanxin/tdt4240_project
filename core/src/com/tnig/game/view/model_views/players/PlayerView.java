@@ -54,6 +54,6 @@ public class PlayerView extends AbstractAnimatedView {
     protected void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time) {
         final TextureRegion currentFrame = playerStanding;
 
-        batch.draw(currentFrame, x, y, width, height);
+        batch.draw(currentFrame, x-width/2, y-height/2, width, height);
     }
 }
