@@ -6,4 +6,5 @@ public interface GameObject {
     boolean isStatic();
     boolean isSensor();
     ModelType getType();
+
 }

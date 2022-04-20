@@ -39,30 +39,31 @@ public class NormalGame implements GameInitializer {
         Gdx.app.log("GameManager", "init Game");
         TiledMap tiledMap = map.getTiledMap();
         // Static objects
-        initStaticControllers(tiledMap, engine, Constants.spikeLayer, ObstacleType.SPIKE);
-        initStaticControllers(tiledMap, engine, Constants.blockLayer, BlockType.NORMAL_BLOCK);
+        initStaticControllers(eventManager, tiledMap, engine, Constants.spikeLayer, ObstacleType.SPIKE);
+        initStaticControllers(eventManager, tiledMap, engine, Constants.blockLayer, BlockType.NORMAL_BLOCK);
 
         // Animated objects
-        initAnimatedControllers(tiledMap, engine, assetLoader, Constants.playerLayer, PlayerType.NORMALPLAYER);
+        initAnimatedControllers(eventManager, tiledMap, engine, assetLoader, Constants.playerLayer, PlayerType.NORMALPLAYER);
         // TODO: ADD OTHER ANIMATED OBJECTS HERE
 
         return new GameManager(eventManager, engine, animatedControllers, controllers, player, tiledMap, players);
 
     }
 
-    private void initStaticControllers(TiledMap map, Engine engine, String layer, ModelType modelType){
+    private void initStaticControllers(EventManager eventManager, TiledMap map, Engine engine, String layer, ModelType modelType){
         for (RectangleMapObject object : map.getLayers()
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
             Controller controller = new StaticObjectController(
-                    engine, rect.x + rect.width / 2, rect.y + rect.height / 2, rect.width, rect.height, modelType);
+                    eventManager, engine, rect.x + rect.width / 2, rect.y + rect.height / 2,
+                    rect.width, rect.height, modelType);
 
             controllers.add(controller);
         }
     }
 
     private void initAnimatedControllers(
-            TiledMap map, Engine engine, AssetLoader assetLoader, String layer, ModelType modelType){
+            EventManager eventManager, TiledMap map, Engine engine, AssetLoader assetLoader, String layer, ModelType modelType){
 
         // Initialize map animated objects
         for (RectangleMapObject object : map.getLayers()
@@ -72,7 +73,7 @@ public class NormalGame implements GameInitializer {
             Rectangle rect = object.getRectangle();
 
             animatedController = new AnimatedObjectController(
-                    engine, assetLoader, rect.x - rect.width / 2, rect.y,
+                   eventManager, engine, assetLoader, rect.x - rect.width / 2, rect.y,
                     rect.width, rect.height, modelType);
 
             animatedControllers.add(animatedController);
