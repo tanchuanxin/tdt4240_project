@@ -11,7 +11,6 @@ public interface View {
      * Render function to draw a sprite to the screen.
      *
      * @param batch a SpriteBatch object that batches sprites to draw to the screen.
-     * @param assetLoader
      */
-    void render(SpriteBatch batch, AssetLoader assetLoader);
+    void render(SpriteBatch batch);
 }

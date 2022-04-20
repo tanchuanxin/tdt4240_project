@@ -16,7 +16,7 @@ public abstract class AbstractView implements View {
 
     // A template method could be used here
     @Override
-    public void render(SpriteBatch batch, AssetLoader assetLoader) {
+    public void render(SpriteBatch batch) {
         float width = model.getWidth();
         float height = model.getHeight();
         float x = model.getX();

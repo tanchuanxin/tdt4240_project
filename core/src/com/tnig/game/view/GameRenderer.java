@@ -20,44 +20,23 @@ import com.tnig.game.utilities.AssetLoader;
 import java.util.List;
 
 /**
- * This class encapsulates the LibGDX Spritebatch module
+ * TODO: Maybe move class into gamescreen
  */
 public class GameRenderer {
 
     private final SpriteBatch batch;
     private final GameManager gameManager;
-    private final TiledMapRenderer mapRenderer;
-    private final AssetLoader assetLoader;
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
 
     public GameRenderer(SpriteBatch batch,
-                        OrthographicCamera camera,
-                        FitViewport viewport,
-                        GameManager gameManager,
-                        GameMap map,
-                        AssetLoader assetLoader) {
+                        GameManager gameManager) {
         this.batch = batch;
-        this.camera = camera;
-        this.viewport = viewport;
-//      viewport = new FitViewport(VIEWPORT_WIDTH/PPM, VIEWPORT_HEIGHT/PPM, camera);
         this.gameManager = gameManager;
-        this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
-        mapRenderer.setView(camera);
-        this.assetLoader = assetLoader;
+
     }
 
 
     public void render(){
-        camera.update(); //update our camera every frame
-        batch.setProjectionMatrix(camera.combined); //say the batch to only draw what we see in our camera
-
-        renderMap();
         renderAnimatedViews();
-    }
-
-    public void resize(int width, int height){
-        viewport.update(width, height);
     }
 
 
@@ -70,11 +49,8 @@ public class GameRenderer {
         List<AnimatedController> controllers = gameManager.getAnimatedControllers();
 
         for (AnimatedController controller: controllers) {
-            controller.getView().render(batch, assetLoader);
+            controller.getView().render(batch);
         }
     }
 
-    private void renderMap(){
-        mapRenderer.render();
-    }
 }

@@ -25,11 +25,11 @@ public class GameMap {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
     }
 
-    public int getMapHeightInPixels() {
+    public int getMapHeight() {
         return mapHeightInPixels;
     }
 
-    public int getMapWidthInPixels() {
+    public int getMapWidth() {
         return mapWidthInPixels;
     }
 
