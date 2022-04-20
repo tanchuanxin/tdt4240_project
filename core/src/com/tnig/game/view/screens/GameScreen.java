@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.tnig.game.controller.InputController;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
 import com.tnig.game.controller.managers.EventManager;
@@ -45,29 +47,25 @@ public class GameScreen extends AbstractScreen {
         this.batch = new SpriteBatch();
         // Set up game camera and viewport
         // TODO: Fix the hardcoding
-        this.gameCamera = new OrthographicCamera(VIEWPORT_WIDTH/2.7f, VIEWPORT_HEIGHT/2.7f);
-        System.out.println(map.getMapHeight());
-        System.out.println(map.getMapWidth());
+        this.gameCamera = new OrthographicCamera(VIEWPORT_WIDTH/2f, VIEWPORT_HEIGHT/2f);
         gameCamera.translate(0, map.getMapHeight() / 2f);
         //viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCamera);
         engine = new GameWorld(gameCamera);
-
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
-
-
-
         GameInitializer initializer = new NormalGame();
         this.gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
-
         this.gameRenderer = new GameRenderer(batch, gameManager);
 
-
-        // Create viewport
-        //viewport = new FitViewport(mapWidth, mapHeight, this.gameCamera);
-
+        Gdx.input.setInputProcessor(new InputController(eventManager));
 
 
     }
+
+    @Override
+    public void show () {
+
+    }
+
 
     private void update(float delta){
         gameCamera.position.x = gameManager.getPlayerPosX();
@@ -118,6 +116,8 @@ public class GameScreen extends AbstractScreen {
         gameManager.dispose();
         batch.dispose();
     }
+
+
 
 
 }

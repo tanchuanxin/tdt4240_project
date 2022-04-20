@@ -26,6 +26,7 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
         body = BodyFactory.getInstance().createBody(engine, x, y, this);
     }
 
+    //TODO: Maybe use events instead?
     protected void dispose(){
         disposable = true;
     }
@@ -80,11 +81,12 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     public void update(float delta) {
 
     }
-    protected void setVelocity(int velocity){
-        body.setLinearVelocity(new Vector2(velocity, 0));
+
+    protected void setLinearVelocity(int xDir, int yDir){
+        body.setLinearVelocity(new Vector2(xDir, yDir));
     }
 
-    protected void setImpulse(float impulse){
-        body.applyForceToCenter(0, impulse, true);
+    protected void applyForceToCenter(float forceX, float forceY){
+        body.applyForceToCenter(forceX, forceY, true);
     }
 }
