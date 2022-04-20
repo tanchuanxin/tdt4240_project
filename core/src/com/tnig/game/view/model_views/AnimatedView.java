@@ -1,4 +1,4 @@
-package com.tnig.game.view;
+package com.tnig.game.view.model_views;
 
 
 /**

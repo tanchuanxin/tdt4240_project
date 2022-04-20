@@ -1,7 +1,7 @@
 package com.tnig.game.controller.game_objects.dynamic_objects;
 
 import com.tnig.game.controller.game_objects.Controller;
-import com.tnig.game.view.AnimatedView;
+import com.tnig.game.view.model_views.AnimatedView;
 
 /**
  * Interface for the controllers which contains animated views

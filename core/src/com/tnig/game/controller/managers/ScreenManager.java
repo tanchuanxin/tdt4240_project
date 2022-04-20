@@ -77,10 +77,7 @@ public class ScreenManager implements EventListener {
                 Gdx.app.log("Map", mapLocation);
                 Gdx.app.log("Number of Players", String.valueOf(numberOfPlayers));
 
-                // Create new camera for rendering map
-                OrthographicCamera gameCamera = new OrthographicCamera();
-
-                game.setScreen(new GameScreen(this, eventManager, gameCamera, assetLoader, map, numberOfPlayers));
+                game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, map, numberOfPlayers));
                 break;
             case MAP_SELECT:
                 game.setScreen(new MapSelectScreen(this, camera, assetLoader, eventManager));

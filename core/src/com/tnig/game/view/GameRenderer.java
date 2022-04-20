@@ -4,6 +4,7 @@ import static com.tnig.game.utilities.Constants.PPM;
 import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
 import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -41,7 +42,7 @@ public class GameRenderer {
         this.viewport = viewport;
 //      viewport = new FitViewport(VIEWPORT_WIDTH/PPM, VIEWPORT_HEIGHT/PPM, camera);
         this.gameManager = gameManager;
-        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
+        this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap());
         mapRenderer.setView(camera);
         this.assetLoader = assetLoader;
     }
@@ -51,8 +52,8 @@ public class GameRenderer {
         camera.update(); //update our camera every frame
         batch.setProjectionMatrix(camera.combined); //say the batch to only draw what we see in our camera
 
-        renderAnimatedViews();
         renderMap();
+        renderAnimatedViews();
     }
 
     public void resize(int width, int height){
@@ -69,6 +70,7 @@ public class GameRenderer {
         List<AnimatedController> controllers = gameManager.getAnimatedControllers();
 
         for (AnimatedController controller: controllers) {
+            Gdx.app.log("AnimatedController:", String.valueOf(controller));
             controller.getView().render(batch, assetLoader);
         }
     }

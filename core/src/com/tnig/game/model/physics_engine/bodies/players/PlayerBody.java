@@ -31,6 +31,7 @@ public class PlayerBody extends BodyBuilder {
     @Override
     protected void addToBodyDef(BodyDef bodyDef) {
         // TODO: set bodydef
+
     }
 
     @Override
