@@ -11,7 +11,7 @@
  </layer>
  <layer id="2" name="graphics" width="64" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYKA9aGGmgyU0BIpA9ysBsTKV/CEHNEceiBVoGC6SQLOlgFh6AMJ+LgE77YHyDkDsSEO3WQHNtgZiGzQ7vtHOSgZnLJgcQO30hgysGKlvJjGAWmFDKaCG/0HpG4QH2i/4AMyN6HmRGv7HFpe4wgKXO6gFsJmLz030Sv/0SO/kmD1Q+Z+agJT0hw6o6X9y7Kd1fiAEqB3/85kRmBAgNqwoiV9CgBr+NybgV1zxS2mc+5CZbiQYEdiKEZVPKKyHOwYAffA1Bw==
+   eJzdk0sKwjAURRO6CT/gdwnOoqDitjp0G+IuHXszKG1D0pe091nwwB20gfe9zxh9ntUPkiiyR/0H6JjZRy28bxBnC+0U57JE7BW0nmH2LyHnFe836K5Ym0PsM3QJcnz0UppHRGMo9VsJzvJiST7vwprNlBo8jP69v73YvTBpagxvkdF/bJepWaTqYBGLO1QT0/9DaPk9lSOXue6fSYn/Qpj9l+b389K+Bwm2/99VK4ncWU3ZrwSj/5PQa2q/zb/Su6k7GuObhW3lbP9bmvW/6wu5wzkU
   </data>
  </layer>
  <objectgroup id="9" name="player">
@@ -49,11 +49,6 @@
  <objectgroup id="11" name="deathSensor" visible="0">
   <object id="187" x="336.667" y="197.333" width="26" height="6.66667"/>
  </objectgroup>
- <layer id="12" name="coins" width="64" height="13">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgF1AY1A+2AUTAK6AAGQzofDG4YBaNgJILRvEcaGA2vUQACpKaDGiQ8CqgLALG8BF0=
-  </data>
- </layer>
  <objectgroup id="13" name="coin">
   <object id="188" x="434.875" y="146" width="10.0625" height="13.875"/>
   <object id="189" x="466.906" y="178.063" width="10.0625" height="13.875"/>

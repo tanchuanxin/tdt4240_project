@@ -11,7 +11,7 @@
  </layer>
  <layer id="2" name="graphics" width="128" height="13">
   <data encoding="base64" compression="zlib">
-   eJztWAsKwjAM7dwldhbvKngrFfyCZxAV/GSMQgjtlrTZmsEeBIaky+e9NKpzCxZMg8vKuSvYbVU6kwVzQ4Wed6CfPdiBqSMt3VXErOMI9Z7AzqjuR7l0soD7/YR6XmDvGd0jUs22kOgs5PuBWF+wH4q5noFw76RH23q4D9plac+6RLPSuBJfLv9T7+q+fpfgvwRS9Cb1tzr/Ofxy9CHJg9tTzVam8i7NwQr/m7q75/1db4V/CTRiTjHzGBb4D9VcKi3unm/16g2f1Yibcm7IJwYL/IdA06K91gL9bsmFpmZT51eyl2J+Jfnv6z2dQ26tEj5L/35Pid3Wp7kjUvmPzSP9nPIxds+t/RcT6hHmUIqc+vw5z1FTdfw3yGJzl2uakLx/7Fy4MemeyOVQMy9sf6GTL1s=
+   eJztWAsKwjAM3ecSO8vuKngrFfyCZxAV/KSMQgjtlrRZ28EePBBtzee9GLWqVqxIg0tTVVfgrcmdyYqloUaPd+CfPfDA9JGW72rC0nGEek/AM6r7kS+dKOB+P6GeF/C9oM8RqWcNJD5znf1ArC/wh2L2CzDunfRo2073wbzeK+agPesSz0rjSs5y9U+9q8f6nUL/kLuafjMI8Zv0fKnzz9HXB44/JHlwe6rZylDdXXfGfFmK/pt2yNN+1peivwQaMVPMPEYJ+rtqzpUWd88bv1riuxpxQ+5NnfFBQ3/tvWdg97cl7bUW6HdLLjQ9Gzq/kr3kO5dz/sd6T+eQW6tEz9y/30Nim/o0d0So/r55pM9TPebueWn/xbh6hDWUIqY+e89q1NWD/h2ib+5iqQnJ+8+dCzcm3ROxGmrmhfkHjk0wuQ==
   </data>
  </layer>
  <objectgroup id="11" name="deathSensor">
@@ -81,11 +81,6 @@
  <objectgroup id="8" name="finishLine">
   <object id="182" x="1984" y="4" width="16" height="188"/>
  </objectgroup>
- <layer id="12" name="coins" width="128" height="13">
-  <data encoding="base64" compression="zlib">
-   eJzt07EJADAIBEDncv/BUiZ1ghjhDiyFB98IAIC5sjsArV7uf7Orb/xoSi+n5AS2qr/NYwCAOgtf5gJF
-  </data>
- </layer>
  <objectgroup id="13" name="coin">
   <object id="207" x="211.094" y="146.063" width="10.0625" height="13.875"/>
   <object id="208" x="562.969" y="145.938" width="10.0625" height="13.875"/>
