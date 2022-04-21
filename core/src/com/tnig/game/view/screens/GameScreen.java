@@ -65,7 +65,7 @@ public class GameScreen extends AbstractScreen {
         this.mapHeight = (tiledMap.getProperties().get("height", Integer.class) * mapTileHeight) / PPM;
 
         // Set camera to starting position
-        gameCamera.position.set(0, 0, 0);
+        gameCamera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
 
         engine = new GameWorld(gameCamera);
         GameInitializer initializer = new NormalGame();
@@ -88,6 +88,8 @@ public class GameScreen extends AbstractScreen {
         // Update camera
         gameCamera.update(); // Update our camera every frame
         gameCamera.position.x = gameManager.getPlayerPosX();
+        gameCamera.position.x = 0;
+
         checkCameraBounds(); // Make sure camera doesn't leave the screen
 
         // Make map and spritebatch only draw what the camera can see

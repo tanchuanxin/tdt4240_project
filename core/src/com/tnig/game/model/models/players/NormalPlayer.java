@@ -1,5 +1,6 @@
 package com.tnig.game.model.models.players;
 
+import com.badlogic.gdx.math.Vector2;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
@@ -20,10 +21,11 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
     private final EventManager eventManager;
     private int speed = 4;
-    private int jumpingForce = 100;
+    private int jumpingForce = 5;
+    private int maxJumpVelocity = 2;
     private State STATE = State.RUNNING;
 
-    public enum State{
+    public enum State {
         JUMPING, RUNNING
     }
 
@@ -33,11 +35,14 @@ public class NormalPlayer extends AbstractModel implements EventListener {
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);
         eventManager.subscribe(EventName.MOVE_RIGHT, this);
+        eventManager.subscribe(EventName.STOP_MOVE_LEFT, this);
+        eventManager.subscribe(EventName.STOP_MOVE_RIGHT, this);
+        eventManager.subscribe(EventName.STOP_JUMP, this);
     }
 
     @Override
     public void handleBeginContact(ContactObject object) {
-        if (object.getType().getObjectType() == ObjectType.OBSTACLE){
+        if (object.getType().getObjectType() == ObjectType.OBSTACLE) {
             eventManager.pushEvent(new PlayerDead(this));
             //dispose();
         }
@@ -45,32 +50,37 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     }
 
     @Override
-    public void update(float delta){
-        float velocity_y = getLinearVelocity()[1];
-        if (velocity_y == 0){
+    public void update(float delta) {
+        float velocityY = getLinearVelocity().y;
+        if (velocityY == 0) {
             STATE = State.RUNNING;
-        }
-        else {
+        } else {
             STATE = State.JUMPING;
         }
     }
 
-
-
     @Override
     public void receiveEvent(Event event) {
-        switch (event.name){
+        switch (event.name) {
             case MOVE_LEFT:
-                setLinearVelocity(-speed, 0);
+                setLinearVelocity(new Vector2(-speed, getLinearVelocity().y));
                 break;
             case MOVE_RIGHT:
-                setLinearVelocity(speed, 0);
+                setLinearVelocity(new Vector2(speed, getLinearVelocity().y));
+                break;
+            case STOP_MOVE_LEFT:
+            case STOP_MOVE_RIGHT:
+                setLinearVelocity(new Vector2(0, getLinearVelocity().y));
                 break;
             case JUMP:
-                if (STATE == State.RUNNING){
-                    applyForceToCenter(0, jumpingForce);
+                if (STATE == State.RUNNING) {
+                    applyImpulseToCenter(new Vector2(0, jumpingForce));
                 }
                 break;
+            case STOP_JUMP:
+                if (STATE == State.JUMPING) {
+                    applyImpulseToCenter(new Vector2(0, -jumpingForce));
+                }
         }
     }
 
