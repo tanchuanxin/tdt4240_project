@@ -16,8 +16,10 @@ public class Constants {
     public static final String blockLayer = "blocks";
     public static final String spikeLayer = "spikes";
     public static final String playerLayer = "player";
-    public static final String coinLayer = "coin";
+    public static final String coinLayer = "coins";
+    public static final String deathSensorLayer = "deathSensor";
     public static final String finishLineLayer = "finishLine";
+    public static final String graphicsLayer = "graphics";
 
 
 }

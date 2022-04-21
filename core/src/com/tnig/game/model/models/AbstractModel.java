@@ -14,13 +14,11 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     private final Body body;
     private final ModelType type;
     private boolean disposable = false;
-    private String layer;
 
 
-    protected AbstractModel(Engine engine, String layer,
+    protected AbstractModel(Engine engine,
                             float x, float y, float width, float height,
                             boolean isStatic, boolean isSensor, ModelType type) {
-        this.layer = layer;
         this.width = width;
         this.height = height;
         this.isStatic = isStatic;
@@ -83,11 +81,6 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     @Override
     public void update(float delta) {
 
-    }
-
-    @Override
-    public String getLayer() {
-        return layer;
     }
 
     protected float[] getLinearVelocity(){

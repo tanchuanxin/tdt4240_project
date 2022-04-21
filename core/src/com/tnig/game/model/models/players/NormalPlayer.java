@@ -17,7 +17,6 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
     private static final boolean isStatic = false;
     private static final boolean isSensor = false;
-    private static final ModelType type = PlayerType.NORMALPLAYER;
     private static final ObjectShape shape = ObjectShape.BOX;
     private int score = 1000000;
 
@@ -32,9 +31,10 @@ public class NormalPlayer extends AbstractModel implements EventListener {
         JUMPING, RUNNING
     }
 
-    public NormalPlayer(EventManager eventManager, Engine engine, String layer,
-                        float x, float y, float width, float height) {
-        super(engine, layer, x, y, width, height, isStatic, isSensor, type);
+    public NormalPlayer(EventManager eventManager, Engine engine,
+                        float x, float y, float width, float height,
+                        ModelType type) {
+        super(engine, x, y, width, height, isStatic, isSensor, type);
         this.eventManager = eventManager;
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);
@@ -46,12 +46,17 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
         switch (object.getType().getObjectType()){
             case OBSTACLE:
-                eventManager.pushEvent(new PlayerDead(this));
                 dispose();
                 break;
             case COIN:
                 Coin coin = (Coin) object;
                 score += coin.getValue();
+                break;
+            case SENSOR:
+                dispose();
+                break;
+
+
         }
 
 

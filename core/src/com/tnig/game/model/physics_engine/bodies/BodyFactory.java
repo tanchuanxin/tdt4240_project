@@ -41,6 +41,8 @@ public class BodyFactory {
                 return NormalBlockBody.getInstance().createBody(engine, x, y, object);
             case COIN:
                 return NormalBlockBody.getInstance().createBody(engine, x, y, object);
+            case SENSOR:
+                return NormalBlockBody.getInstance().createBody(engine, x, y, object);
             default:
                 throw new IllegalArgumentException("Type doesnt exist: " + type);
 

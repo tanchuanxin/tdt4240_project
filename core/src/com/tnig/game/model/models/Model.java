@@ -11,6 +11,5 @@ public interface Model {
     float getWidth();
     float getHeight();
     ModelType getType();
-    String getLayer();
 
 }

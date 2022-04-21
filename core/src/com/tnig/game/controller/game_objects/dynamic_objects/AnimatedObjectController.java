@@ -17,11 +17,10 @@ public class AnimatedObjectController implements AnimatedController {
 
     public AnimatedObjectController(EventManager eventManager,
                                     Engine engine,
-                                    String layer,
                                     AssetLoader assetLoader,
                                     float x, float y, float width, float height,
                                     ModelType type) {
-        model = ModelFactory.createModel(eventManager, engine, layer, x, y, width, height, type);
+        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, type);
         view = ViewFactory.createView(model, assetLoader);
     }
 

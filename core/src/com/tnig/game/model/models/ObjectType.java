@@ -5,5 +5,5 @@ public enum ObjectType {
     OBSTACLE,
     BLOCK,
     COIN,
-    FINISHLINE
+    SENSOR
 }

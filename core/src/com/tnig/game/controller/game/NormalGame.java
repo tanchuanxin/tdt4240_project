@@ -17,6 +17,7 @@ import com.tnig.game.model.models.blocks.BlockType;
 import com.tnig.game.model.models.coins.CoinType;
 import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.model.models.players.PlayerType;
+import com.tnig.game.model.models.sensors.SensorType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
@@ -49,9 +50,14 @@ public class NormalGame implements GameInitializer {
         Gdx.app.log("GameManager", "init Game");
         TiledMap tiledMap = map.getTiledMap();
         // Static objects
+        // Obstacles
         initStaticControllers(tiledMap, Constants.spikeLayer, ObstacleType.SPIKE);
+        // Blocks
         initStaticControllers(tiledMap, Constants.blockLayer, BlockType.NORMAL_BLOCK);
+        // Coins
         initStaticControllers(tiledMap, Constants.coinLayer, CoinType.NORMAL_COIN);
+        // Death sensor
+        initStaticControllers(tiledMap, Constants.deathSensorLayer, SensorType.DEATH_SENSOR);
 
         // Animated objects
         initAnimatedControllers(tiledMap, Constants.playerLayer, PlayerType.NORMALPLAYER);
@@ -80,7 +86,7 @@ public class NormalGame implements GameInitializer {
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
             Controller controller = new StaticObjectController(
-                    eventManager, engine, layer,rect.x + rect.width / 2, rect.y + rect.height / 2,
+                    eventManager, engine,rect.x + rect.width / 2, rect.y + rect.height / 2,
                     rect.width, rect.height, modelType);
 
             controllers.add(controller);
@@ -97,7 +103,7 @@ public class NormalGame implements GameInitializer {
             Rectangle rect = object.getRectangle();
 
             animatedController = new AnimatedObjectController(
-                   eventManager, engine, layer, assetLoader, rect.x - rect.width / 2, rect.y,
+                   eventManager, engine, assetLoader, rect.x - rect.width / 2, rect.y,
                     rect.width, rect.height, modelType);
 
             animatedControllers.add(animatedController);

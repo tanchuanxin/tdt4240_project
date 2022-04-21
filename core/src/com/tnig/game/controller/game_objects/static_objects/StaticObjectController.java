@@ -11,9 +11,9 @@ public class StaticObjectController implements Controller {
 
     private final Model model;
 
-    public StaticObjectController(EventManager eventManager, Engine engine, String layer,
+    public StaticObjectController(EventManager eventManager, Engine engine,
                                   float x, float y, float width, float height, ModelType type) {
-        model = ModelFactory.createModel(eventManager, engine, layer, x, y, width, height, type);
+        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, type);
     }
 
 

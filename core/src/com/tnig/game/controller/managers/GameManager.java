@@ -127,7 +127,7 @@ public class GameManager implements EventListener {
                 break;
             case DISPOSE_OBJECT:
                 Model model = (Model) event.data.get("object");
-                map.disposeTile((int) model.getX(),(int) model.getY(), model.getLayer());
+                map.disposeTile((int) model.getX(),(int) model.getY());
         }
     }
 }

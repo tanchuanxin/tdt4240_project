@@ -50,9 +50,8 @@ public class GameMap {
         return tiledMap;
     }
 
-    public void disposeTile(int x, int y, String layerString){
-        System.out.println(layerString);
-        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("coins");
+    public void disposeTile(int x, int y){
+        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(Constants.graphicsLayer);
         // Tilesize is 16
         TiledMapTileLayer.Cell cell = layer.getCell(x / 16, y / 16);
         cell.setTile(null);

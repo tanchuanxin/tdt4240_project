@@ -13,8 +13,8 @@ public class NormalBlock extends AbstractModel {
     private static final ModelType type = BlockType.NORMAL_BLOCK;
     private static final ObjectShape shape = ObjectShape.BOX;
 
-    protected NormalBlock(Engine engine, String layer, float x, float y, float width, float height) {
-        super(engine, layer, x, y, width, height, isStatic, isSensor, type);
+    protected NormalBlock(Engine engine, float x, float y, float width, float height) {
+        super(engine, x, y, width, height, isStatic, isSensor, type);
     }
 
     @Override

@@ -11,7 +11,7 @@
  </layer>
  <layer id="2" name="graphics" width="128" height="13">
   <data encoding="base64" compression="zlib">
-   eJztl1kOwjAMRBu4BGfpXTlNDwFIbJU4AwLE5nwgFqXBcSvbafykkdKPKq7HE6VVZRjGmLlOpCvQxxp6sgFthXuzg/33oJapjiPPNuq5Qb/voEdh2aiddAXj5ZDBLHH7v4CeLEGrDHozBPOpdAVxuP0/ge9n0KUA/11AUnV0Yec/ndf5rjnj/+bO/KcTyreWdvrZxNRUkv/U+5jPt+aMh8DOZEn+p6I53zFSapb2n5qrofL4m+2G+V4aO1s+zyvM2oOZ2Zl7q3bfz13v5y5Mj1Lz3ef/HrM/Zd33+58UViH4
+   eJztV1sKwjAQbPQSnqV39Sr98RAq+KjgGUTF1wYUbWnadLPubtoMDKggmc7sLGmWJSQkDBm3ibQCfdiAJ1vgTtibPZxfAg9MOk48x6jHHfx+AJ8j60ZupBUMF8cIZok7/yV4sgKuI/CGAvOptIJ2cOd/htwvwOsI8jcNlNLhQtr/eHz2u+aOd81dyh+Ppn5j7CzepISdTR9NGvP/hx8WmPuY1WH7ra3jXf74zqTG/LWAqt/c6KOZIv+QrmJ7RdXHercXzPfStt3yu68Kx+/1neYzszPzZW6q313/j50+HvXtd8j7vc/5mM+hz/8CKPwnAg==
   </data>
  </layer>
  <objectgroup id="9" name="player">
@@ -54,12 +54,7 @@
  <objectgroup id="13" name="deathSensor">
   <object id="146" x="514" y="204" width="1432" height="4"/>
  </objectgroup>
- <layer id="14" name="coins" width="128" height="13">
-  <data encoding="base64" compression="zlib">
-   eJzt0rEJACAQA8Dffyhns9DK2peAd5A+hFQBAAAAcNvYYUnaI6XHKbUX//HFfjbmhQlYMgXx
-  </data>
- </layer>
- <objectgroup id="15" name="coin">
+ <objectgroup id="15" name="coins">
   <object id="147" x="211" y="178.031" width="10.0625" height="13.875"/>
   <object id="148" x="531.012" y="146.063" width="10.0625" height="13.875"/>
   <object id="149" x="546.882" y="146.019" width="10.0625" height="13.875"/>
