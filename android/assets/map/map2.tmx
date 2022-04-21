@@ -81,7 +81,9 @@
  <objectgroup id="8" name="finishLine">
   <object id="182" x="1984" y="4" width="16" height="188"/>
  </objectgroup>
+
  <objectgroup id="13" name="coins">
+
   <object id="207" x="211.094" y="146.063" width="10.0625" height="13.875"/>
   <object id="208" x="562.969" y="145.938" width="10.0625" height="13.875"/>
   <object id="209" x="578.906" y="145.938" width="10.0625" height="13.875"/>

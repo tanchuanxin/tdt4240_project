@@ -23,10 +23,12 @@ public class GameWorld implements Engine{
 
     public GameWorld(OrthographicCamera gameCam) {
         // Initialize Box2D World
-        world = new World(new Vector2(0,-10), true);
+        this.world = new World(new Vector2(0,-10), true);
+        this.b2dr = new Box2DDebugRenderer();
+        this.b2drCam = gameCam;
+
+        // Set up contact listeners
         world.setContactListener(new WorldContactListener());
-        b2dr = new Box2DDebugRenderer();
-        b2drCam = gameCam;
 
         // Set up game camera and viewport
 
@@ -35,7 +37,7 @@ public class GameWorld implements Engine{
     @Override
     public void update(float delta) {
         world.step(delta, 6, 2);
-        b2dr.render(world, b2drCam.combined.scl(PPM));
+        b2dr.render(world, b2drCam.combined);
     }
 
     @Override

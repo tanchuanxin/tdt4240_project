@@ -1,5 +1,6 @@
 package com.tnig.game.model.models.players;
 
+import com.badlogic.gdx.math.Vector2;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
@@ -21,6 +22,7 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     private int score = 1000000;
 
     private final EventManager eventManager;
+
     private int speed = 2;
     private int jumpingForce = 200;
     private State STATE = State.RUNNING;
@@ -39,10 +41,14 @@ public class NormalPlayer extends AbstractModel implements EventListener {
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);
         eventManager.subscribe(EventName.MOVE_RIGHT, this);
+        eventManager.subscribe(EventName.STOP_MOVE_LEFT, this);
+        eventManager.subscribe(EventName.STOP_MOVE_RIGHT, this);
+        eventManager.subscribe(EventName.STOP_JUMP, this);
     }
 
     @Override
     public void handleBeginContact(ContactObject object) {
+
 
         switch (object.getType().getObjectType()){
             case OBSTACLE:
@@ -62,6 +68,7 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                 }
                 break;
 
+
         }
 
 
@@ -69,6 +76,7 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     }
 
     @Override
+
     public void update(float delta){
 
         score -= 1157 / Constants.FPS;
@@ -81,8 +89,9 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
     @Override
     public void receiveEvent(Event event) {
-        switch (event.name){
+        switch (event.name) {
             case MOVE_LEFT:
+
                 setLinearVelocityX(-speed);
                 break;
             case MOVE_RIGHT:
@@ -91,8 +100,13 @@ public class NormalPlayer extends AbstractModel implements EventListener {
             case JUMP:
                 if (STATE == State.RUNNING){
                     jump();
+
                 }
                 break;
+            case STOP_JUMP:
+                if (STATE == State.JUMPING) {
+                    applyImpulseToCenter(new Vector2(0, -jumpingForce));
+                }
         }
     }
 

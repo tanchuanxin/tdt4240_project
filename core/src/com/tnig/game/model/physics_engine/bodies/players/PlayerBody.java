@@ -33,6 +33,4 @@ public class PlayerBody extends BodyBuilder {
         // TODO: Set filtering
 
     }
-
-
 }

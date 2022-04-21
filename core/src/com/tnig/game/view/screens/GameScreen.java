@@ -8,13 +8,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tnig.game.controller.InputController;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
+import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.managers.ScreenManager;
@@ -22,7 +23,8 @@ import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.GameRenderer;
+
+import java.util.List;
 
 
 public class GameScreen extends AbstractScreen {
@@ -30,11 +32,12 @@ public class GameScreen extends AbstractScreen {
     private final Engine engine;
     private final SpriteBatch batch;
     private final GameManager gameManager;
-    private final GameRenderer gameRenderer;
     private final OrthographicCamera gameCamera;
     private final OrthogonalTiledMapRenderer mapRenderer;
-    //private final Viewport viewport;
-
+    private final Viewport viewport;
+    private final TiledMap tiledMap;
+    private final float mapWidth;
+    private final float mapHeight;
 
     public GameScreen(ScreenManager screenManager,
                       EventManager eventManager,
@@ -45,38 +48,56 @@ public class GameScreen extends AbstractScreen {
         super(camera, assetLoader);
         this.screenManager = screenManager;
         this.batch = new SpriteBatch();
+        this.tiledMap = map.getTiledMap();
+
         // Set up game camera and viewport
-        // TODO: Fix the hardcoding
-        this.gameCamera = new OrthographicCamera(VIEWPORT_WIDTH/2f, VIEWPORT_HEIGHT/2f);
-        gameCamera.translate(0, map.getMapHeight() / 2f);
-        //viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCamera);
+        this.gameCamera = new OrthographicCamera();
+        viewport = new FitViewport(VIEWPORT_WIDTH / PPM, VIEWPORT_WIDTH / PPM, gameCamera);
+
+        // Scale tile map to fit screen
+        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / PPM);
+
+        // Get tile map properties
+        int mapTileWidth = tiledMap.getProperties().get("tilewidth", Integer.class);
+        int mapTileHeight = tiledMap.getProperties().get("tileheight", Integer.class);
+
+        this.mapWidth = (tiledMap.getProperties().get("width", Integer.class) * mapTileWidth) / PPM;
+        this.mapHeight = (tiledMap.getProperties().get("height", Integer.class) * mapTileHeight) / PPM;
+
+        // Set camera to starting position
+        gameCamera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
+
         engine = new GameWorld(gameCamera);
+
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
         GameInitializer initializer = new NormalGame(eventManager, engine, assetLoader, map);
         gameManager = new GameManager(eventManager, engine, initializer, map, numberOfPlayers);
         this.gameRenderer = new GameRenderer(batch, gameManager);
 
         Gdx.input.setInputProcessor(new InputController(eventManager));
-
-
     }
 
     @Override
-    public void show () {
+    public void show() {
 
     }
 
 
-    private void update(float delta){
-        gameCamera.position.x = gameManager.getPlayerPosX();
-        mapRenderer.setView(gameCamera);
-        gameCamera.update(); //update our camera every frame
-        batch.setProjectionMatrix(gameCamera.combined); //say the batch to only draw what we see in our camera
-
-
+    private void update(float delta) {
         // Update game
         engine.update(delta);
         gameManager.update(delta);
+
+        // Update camera
+        gameCamera.update(); // Update our camera every frame
+        gameCamera.position.x = gameManager.getPlayerPosX();
+        gameCamera.position.x = 0;
+
+        checkCameraBounds(); // Make sure camera doesn't leave the screen
+
+        // Make map and spritebatch only draw what the camera can see
+        mapRenderer.setView(gameCamera);
+        batch.setProjectionMatrix(gameCamera.combined);
     }
 
     @Override
@@ -89,8 +110,9 @@ public class GameScreen extends AbstractScreen {
         // Render game
         mapRenderer.render();
         batch.begin();
-        gameRenderer.render();
+        renderAnimatedViews();
         batch.end();
+
         // TODO: Push event game finished
 
 
@@ -98,7 +120,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        //this.viewport.update(width, height);
+        this.viewport.update(width, height);
     }
 
     @Override
@@ -114,7 +136,59 @@ public class GameScreen extends AbstractScreen {
         batch.dispose();
     }
 
+    /**
+     * Sets bounds on the camera so it never leaves the screen
+     */
+    private void checkCameraBounds() {
+        float mapLeftBound = 0;
+        float mapRightBound = mapWidth;
+        float mapBtmBound = 0;
+        float mapTopBound = mapHeight;
 
+        // The camera dimensions, halved
+        float cameraHalfWidth = gameCamera.viewportWidth * .5f;
+        float cameraHalfHeight = gameCamera.viewportHeight * .5f;
+
+        // Move camera after player as normal
+        float cameraLeft = gameCamera.position.x - cameraHalfWidth;
+        float cameraRight = gameCamera.position.x + cameraHalfWidth;
+        float cameraBottom = gameCamera.position.y - cameraHalfHeight;
+        float cameraTop = gameCamera.position.y + cameraHalfHeight;
+
+        // Check bounds on left right
+        if (VIEWPORT_WIDTH < gameCamera.viewportWidth) {
+            gameCamera.position.x = mapRightBound / 2;
+        } else {
+            if (cameraLeft <= mapLeftBound) {
+                gameCamera.position.x = mapLeftBound + cameraHalfWidth;
+            } else if (cameraRight >= mapRightBound) {
+                gameCamera.position.x = mapRightBound - cameraHalfWidth;
+            }
+        }
+
+        // Check bounds on top down
+        if (VIEWPORT_HEIGHT < gameCamera.viewportHeight) {
+            gameCamera.position.y = mapTopBound / 2;
+        } else {
+            if (cameraBottom <= mapBtmBound) {
+                gameCamera.position.y = mapBtmBound + cameraHalfHeight;
+            } else if (cameraTop >= mapTopBound) {
+                gameCamera.position.y = mapTopBound - cameraHalfHeight;
+            }
+        }
+    }
+
+    /**
+     * Gets all the animated controllers from the gamemanager and renders all the
+     * Animated views in the game
+     */
+    private void renderAnimatedViews() {
+        List<AnimatedController> controllers = gameManager.getAnimatedControllers();
+
+        for (AnimatedController controller : controllers) {
+            controller.getView().render(batch);
+        }
+    }
 
 
 }

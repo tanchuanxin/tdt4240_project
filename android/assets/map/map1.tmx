@@ -54,7 +54,9 @@
  <objectgroup id="13" name="deathSensor">
   <object id="146" x="514" y="204" width="1432" height="4"/>
  </objectgroup>
+
  <objectgroup id="15" name="coins">
+
   <object id="147" x="211" y="178.031" width="10.0625" height="13.875"/>
   <object id="148" x="531.012" y="146.063" width="10.0625" height="13.875"/>
   <object id="149" x="546.882" y="146.019" width="10.0625" height="13.875"/>
