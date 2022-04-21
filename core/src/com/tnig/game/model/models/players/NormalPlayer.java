@@ -8,20 +8,28 @@ import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
 import com.tnig.game.model.models.ContactObject;
 import com.tnig.game.model.models.ModelType;
-import com.tnig.game.model.models.Movable;
-import com.tnig.game.model.models.ObjectType;
+import com.tnig.game.model.models.ObjectShape;
+import com.tnig.game.model.models.coins.Coin;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.Constants;
 
 public class NormalPlayer extends AbstractModel implements EventListener {
 
     private static final boolean isStatic = false;
     private static final boolean isSensor = false;
     private static final ModelType type = PlayerType.NORMALPLAYER;
+    private static final ObjectShape shape = ObjectShape.BOX;
+    private int score = 1000000;
 
     private final EventManager eventManager;
     private int speed = 4;
     private int jumpingForce = 100;
     private State STATE = State.RUNNING;
+
+    @Override
+    public ObjectShape GetShape() {
+        return null;
+    }
 
     public enum State{
         JUMPING, RUNNING
@@ -37,10 +45,18 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
     @Override
     public void handleBeginContact(ContactObject object) {
-        if (object.getType().getObjectType() == ObjectType.OBSTACLE){
-            eventManager.pushEvent(new PlayerDead(this));
-            //dispose();
+
+        switch (object.getType().getObjectType()){
+            case OBSTACLE:
+                eventManager.pushEvent(new PlayerDead(this));
+                //dispose();
+                break;
+            case COIN:
+                Coin coin = (Coin) object;
+                score += coin.getValue();
         }
+
+
 
     }
 
@@ -53,6 +69,8 @@ public class NormalPlayer extends AbstractModel implements EventListener {
         else {
             STATE = State.JUMPING;
         }
+
+        score -= 1157 / Constants.FPS;
     }
 
 
@@ -61,10 +79,10 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     public void receiveEvent(Event event) {
         switch (event.name){
             case MOVE_LEFT:
-                setLinearVelocity(-speed, 0);
+                setLinearVelocityX(-speed);
                 break;
             case MOVE_RIGHT:
-                setLinearVelocity(speed, 0);
+                setLinearVelocityX(speed);
                 break;
             case JUMP:
                 if (STATE == State.RUNNING){

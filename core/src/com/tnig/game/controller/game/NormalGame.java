@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedObjectController;
 import com.tnig.game.controller.game_objects.static_objects.StaticObjectController;
 import com.tnig.game.controller.managers.EventManager;
-import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.models.ModelType;
@@ -29,28 +29,52 @@ import java.util.List;
  */
 //TODO: FINISH CLASS
 public class NormalGame implements GameInitializer {
+    private final EventManager eventManager;
+    private final Engine engine;
+    private final AssetLoader assetLoader;
+
     private final List<AnimatedController> animatedControllers = new ArrayList<>();
     private final List<Controller> controllers = new ArrayList<>();
     private AnimatedController player;
 
+    public NormalGame(EventManager eventManager, Engine engine, AssetLoader assetLoader, GameMap map) {
+        this.eventManager = eventManager;
+        this.engine = engine;
+        this.assetLoader = assetLoader;
+        initGame(map);
+    }
 
-    @Override
-    public GameManager initGame(EventManager eventManager, Engine engine, AssetLoader assetLoader, GameMap map, int players) {
+    private void initGame(GameMap map) {
         Gdx.app.log("GameManager", "init Game");
         TiledMap tiledMap = map.getTiledMap();
         // Static objects
-        initStaticControllers(eventManager, tiledMap, engine, Constants.spikeLayer, ObstacleType.SPIKE);
-        initStaticControllers(eventManager, tiledMap, engine, Constants.blockLayer, BlockType.NORMAL_BLOCK);
+        initStaticControllers(tiledMap, Constants.spikeLayer, ObstacleType.SPIKE);
+        initStaticControllers(tiledMap, Constants.blockLayer, BlockType.NORMAL_BLOCK);
+        initStaticControllers(tiledMap, Constants);
 
         // Animated objects
-        initAnimatedControllers(eventManager, tiledMap, engine, assetLoader, Constants.playerLayer, PlayerType.NORMALPLAYER);
+        initAnimatedControllers(tiledMap, Constants.playerLayer, PlayerType.NORMALPLAYER);
         // TODO: ADD OTHER ANIMATED OBJECTS HERE
 
-        return new GameManager(eventManager, engine, animatedControllers, controllers, player, tiledMap, players);
+
 
     }
 
-    private void initStaticControllers(EventManager eventManager, TiledMap map, Engine engine, String layer, ModelType modelType){
+    @Override
+    public List<AnimatedController> getAnimatedControllers() {
+        return animatedControllers;
+    }
+    @Override
+    public List<Controller> getControllers() {
+        return controllers;
+    }
+
+    @Override
+    public AnimatedController getPlayer() {
+        return player;
+    }
+
+    private void initStaticControllers(TiledMap map, String layer, ModelType modelType){
         for (RectangleMapObject object : map.getLayers()
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
@@ -62,8 +86,7 @@ public class NormalGame implements GameInitializer {
         }
     }
 
-    private void initAnimatedControllers(
-            EventManager eventManager, TiledMap map, Engine engine, AssetLoader assetLoader, String layer, ModelType modelType){
+    private void initAnimatedControllers(TiledMap map,String layer, ModelType modelType){
 
         // Initialize map animated objects
         for (RectangleMapObject object : map.getLayers()
@@ -81,6 +104,7 @@ public class NormalGame implements GameInitializer {
             if (modelType.getObjectType().equals(ObjectType.PLAYER)){
                 player = animatedController;
             }
+
         }
     }
 

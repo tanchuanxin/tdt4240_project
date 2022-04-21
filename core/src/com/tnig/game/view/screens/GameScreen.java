@@ -52,8 +52,8 @@ public class GameScreen extends AbstractScreen {
         //viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCamera);
         engine = new GameWorld(gameCamera);
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
-        GameInitializer initializer = new NormalGame();
-        this.gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
+        GameInitializer initializer = new NormalGame(eventManager, engine, assetLoader, map);
+        gameManager = new GameManager(eventManager, engine, initializer, numberOfPlayers);
         this.gameRenderer = new GameRenderer(batch, gameManager);
 
         Gdx.input.setInputProcessor(new InputController(eventManager));
