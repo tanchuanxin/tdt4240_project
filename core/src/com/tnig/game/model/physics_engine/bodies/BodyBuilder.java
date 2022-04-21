@@ -62,9 +62,9 @@ public abstract class BodyBuilder {
         fixtureDef.shape = shape;
         fixtureDef.isSensor = object.isSensor();
 
-        fixtureDef.density = 1;
-        fixtureDef.friction = 0.5f;
-        //fixtureDef.restitution = 0.01f;
+        fixtureDef.density = 20;
+        fixtureDef.friction = 0.9f;
+        fixtureDef.restitution = 0.2f;
         addToFixtureDef(fixtureDef);
 
         // Sets the model as userdata for the contactlistener

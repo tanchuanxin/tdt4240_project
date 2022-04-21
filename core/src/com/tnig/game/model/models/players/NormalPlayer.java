@@ -21,8 +21,8 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     private int score = 1000000;
 
     private final EventManager eventManager;
-    private int speed = 4;
-    private int jumpingForce = 100;
+    private int speed = 2;
+    private int jumpingForce = 200;
     private State STATE = State.RUNNING;
 
 
@@ -53,9 +53,14 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                 score += coin.getValue();
                 break;
             case SENSOR:
+                // TODO: FINISH
                 dispose();
                 break;
-
+            case BLOCK:
+                if (STATE == State.JUMPING){
+                    STATE = State.RUNNING;
+                }
+                break;
 
         }
 
@@ -65,13 +70,6 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
     @Override
     public void update(float delta){
-        float velocity_y = getLinearVelocity()[1];
-        if (velocity_y == 0){
-            STATE = State.RUNNING;
-        }
-        else {
-            STATE = State.JUMPING;
-        }
 
         score -= 1157 / Constants.FPS;
     }
@@ -92,9 +90,16 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                 break;
             case JUMP:
                 if (STATE == State.RUNNING){
-                    applyForceToCenter(0, jumpingForce);
+                    jump();
                 }
                 break;
+        }
+    }
+
+    private void jump(){
+        if (STATE == State.RUNNING){
+            applyForceToCenter(0, jumpingForce);
+            STATE = State.JUMPING;
         }
     }
 
