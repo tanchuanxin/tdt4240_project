@@ -6,11 +6,13 @@ import com.tnig.game.model.physics_engine.Engine;
 
 public class ObstacleFactory {
 
-    public static Model createModel(Engine engine, float x, float y, float width, float height, ModelType modelType){
+    public static Model createModel(Engine engine, String layer,
+                                    float x, float y, float width, float height,
+                                    ModelType modelType){
         ObstacleType type = (ObstacleType) modelType;
         switch (type){
             case SPIKE:
-                return new Spike(engine, x, y, width, height);
+                return new Spike(engine, layer, x, y, width, height);
             case MOCK_TYPE:
                 throw new IllegalArgumentException("Not created model for Mock");
             default:

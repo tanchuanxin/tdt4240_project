@@ -53,7 +53,7 @@ public class GameScreen extends AbstractScreen {
         engine = new GameWorld(gameCamera);
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
         GameInitializer initializer = new NormalGame(eventManager, engine, assetLoader, map);
-        gameManager = new GameManager(eventManager, engine, initializer, numberOfPlayers);
+        gameManager = new GameManager(eventManager, engine, initializer, map, numberOfPlayers);
         this.gameRenderer = new GameRenderer(batch, gameManager);
 
         Gdx.input.setInputProcessor(new InputController(eventManager));
@@ -91,10 +91,7 @@ public class GameScreen extends AbstractScreen {
         batch.begin();
         gameRenderer.render();
         batch.end();
-
-        if (gameManager.gameFinished()){
-            // TODO: Push event game finished
-        }
+        // TODO: Push event game finished
 
 
     }

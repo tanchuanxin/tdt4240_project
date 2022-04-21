@@ -1,12 +1,13 @@
 package com.tnig.game.controller.managers;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
+import com.tnig.game.controller.map.GameMap;
+import com.tnig.game.model.models.Model;
 import com.tnig.game.model.physics_engine.Engine;
 
 import java.util.Iterator;
@@ -24,6 +25,7 @@ public class GameManager implements EventListener {
     private final EventManager eventManager;
     private final int numberOfPlayers;
     private final AnimatedController player;
+    private final GameMap map;
     private State STATE;
 
     public enum State{
@@ -35,15 +37,18 @@ public class GameManager implements EventListener {
     public GameManager(EventManager eventManager,
                        Engine engine,
                        GameInitializer initializer,
+                       GameMap map,
                        int numberOfPlayers) {
         this.eventManager = eventManager;
         this.engine = engine;
         this.numberOfPlayers = numberOfPlayers;
+        this.map = map;
         animatedControllers = initializer.getAnimatedControllers();
         controllers = initializer.getControllers();
         player = initializer.getPlayer();
 
         eventManager.subscribe(EventName.PLAYER_DEAD, this);
+        eventManager.subscribe(EventName.DISPOSE_OBJECT, this);
     }
 
     /**
@@ -51,11 +56,13 @@ public class GameManager implements EventListener {
      * @param delta timestep
      */
     public void update(float delta){
-        // Uses iterator instead of for loop so it is possible to remove elements from the list
+        // Uses iterator2 instead of for loop so it is possible to remove elements from the list
         // While iterating
-        Iterator<AnimatedController> iterator = animatedControllers.iterator();
+
+
+        Iterator<Controller> iterator = controllers.iterator();
         while(iterator.hasNext()){
-            AnimatedController controller = iterator.next();
+            Controller controller = iterator.next();
             if (controller.isDisposable()){
                 iterator.remove();
                 engine.disposeModel(controller.getModel());
@@ -64,6 +71,21 @@ public class GameManager implements EventListener {
                 controller.update(delta);
             }
         }
+
+        // Update animatied controllers
+        Iterator<AnimatedController> iterator2 = animatedControllers.iterator();
+        while(iterator2.hasNext()){
+            AnimatedController controller = iterator2.next();
+            if (controller.isDisposable()){
+                iterator2.remove();
+                engine.disposeModel(controller.getModel());
+            }
+            else {
+                controller.update(delta);
+            }
+        }
+
+
     }
 
 
@@ -101,6 +123,11 @@ public class GameManager implements EventListener {
     public void receiveEvent(Event event) {
         switch (event.name){
             case PLAYER_DEAD:
+                STATE = State.NEW_GAME;
+                break;
+            case DISPOSE_OBJECT:
+                Model model = (Model) event.data.get("object");
+                map.disposeTile((int) model.getX(),(int) model.getY(), model.getLayer());
         }
     }
 }

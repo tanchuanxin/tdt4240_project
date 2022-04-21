@@ -9,5 +9,6 @@ public enum EventName {
     MOVE_LEFT,
     MOVE_RIGHT,
     JUMP,
-    PLAYER_DEAD
+    PLAYER_DEAD,
+    DISPOSE_OBJECT
 }

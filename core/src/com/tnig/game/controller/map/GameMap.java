@@ -2,7 +2,10 @@ package com.tnig.game.controller.map;
 
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.tnig.game.model.models.ModelType;
+import com.tnig.game.utilities.Constants;
 
 public class GameMap {
 
@@ -45,5 +48,14 @@ public class GameMap {
 
     public TiledMap getTiledMap() {
         return tiledMap;
+    }
+
+    public void disposeTile(int x, int y, String layerString){
+        System.out.println(layerString);
+        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("coins");
+        // Tilesize is 16
+        TiledMapTileLayer.Cell cell = layer.getCell(x / 16, y / 16);
+        cell.setTile(null);
+
     }
 }

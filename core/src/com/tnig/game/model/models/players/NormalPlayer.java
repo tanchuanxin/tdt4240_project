@@ -26,17 +26,15 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     private int jumpingForce = 100;
     private State STATE = State.RUNNING;
 
-    @Override
-    public ObjectShape GetShape() {
-        return null;
-    }
+
 
     public enum State{
         JUMPING, RUNNING
     }
 
-    public NormalPlayer(EventManager eventManager, Engine engine, float x, float y, float width, float height) {
-        super(engine, x, y, width, height, isStatic, isSensor, type);
+    public NormalPlayer(EventManager eventManager, Engine engine, String layer,
+                        float x, float y, float width, float height) {
+        super(engine, layer, x, y, width, height, isStatic, isSensor, type);
         this.eventManager = eventManager;
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);
@@ -49,7 +47,7 @@ public class NormalPlayer extends AbstractModel implements EventListener {
         switch (object.getType().getObjectType()){
             case OBSTACLE:
                 eventManager.pushEvent(new PlayerDead(this));
-                //dispose();
+                dispose();
                 break;
             case COIN:
                 Coin coin = (Coin) object;
@@ -73,7 +71,10 @@ public class NormalPlayer extends AbstractModel implements EventListener {
         score -= 1157 / Constants.FPS;
     }
 
-
+    @Override
+    public ObjectShape GetShape() {
+        return shape;
+    }
 
     @Override
     public void receiveEvent(Event event) {

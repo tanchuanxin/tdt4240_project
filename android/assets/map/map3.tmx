@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="187">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="197">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
-
   <image source="spikes.png" width="64" height="16"/>
  </tileset>
  <layer id="1" name="background" width="64" height="13">
@@ -16,7 +15,7 @@
   </data>
  </layer>
  <objectgroup id="9" name="player">
-  <object id="164" x="64" y="176" width="16" height="16"/>
+  <object id="164" x="65" y="179.25" width="13.25" height="12.75"/>
  </objectgroup>
  <objectgroup id="4" name="blocks" visible="0">
   <object id="156" x="0.545455" y="192.182" width="1024" height="16"/>
@@ -44,7 +43,26 @@
   <object id="185" x="383.849" y="98.9543" width="48.3013" height="13.2652"/>
   <object id="186" x="335.961" y="35.1019" width="16.1274" height="12.682"/>
  </objectgroup>
- <objectgroup id="8" name="finnishline" visible="0">
+ <objectgroup id="8" name="finishLine">
   <object id="144" x="960" y="9" width="16" height="183"/>
+ </objectgroup>
+ <objectgroup id="11" name="deathSensor" visible="0">
+  <object id="187" x="336.667" y="197.333" width="26" height="6.66667"/>
+ </objectgroup>
+ <layer id="12" name="coins" width="64" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF1AY1A+2AUTAK6AAGQzofDG4YBaNgJILRvEcaGA2vUQACpKaDGiQ8CqgLALG8BF0=
+  </data>
+ </layer>
+ <objectgroup id="13" name="coin">
+  <object id="188" x="434.875" y="146" width="10.0625" height="13.875"/>
+  <object id="189" x="466.906" y="178.063" width="10.0625" height="13.875"/>
+  <object id="190" x="659.143" y="178.063" width="10.0625" height="13.875"/>
+  <object id="191" x="675.012" y="178.062" width="10.0625" height="13.875"/>
+  <object id="192" x="690.882" y="178.106" width="10.0625" height="13.875"/>
+  <object id="193" x="770.969" y="66" width="10.0625" height="13.875"/>
+  <object id="194" x="338.969" y="18.019" width="10.0625" height="13.875"/>
+  <object id="195" x="242.882" y="66.019" width="10.0625" height="13.875"/>
+  <object id="196" x="242.969" y="130.019" width="10.0625" height="13.875"/>
  </objectgroup>
 </map>

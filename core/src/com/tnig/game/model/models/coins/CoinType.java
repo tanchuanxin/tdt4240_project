@@ -10,6 +10,6 @@ public enum CoinType implements ModelType {
 
     @Override
     public ObjectType getObjectType() {
-        return null;
+        return ObjectType.COIN;
     }
 }
