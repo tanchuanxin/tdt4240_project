@@ -68,8 +68,11 @@ public class GameScreen extends AbstractScreen {
         gameCamera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
 
         engine = new GameWorld(gameCamera);
-        GameInitializer initializer = new NormalGame();
-        this.gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
+
+        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
+        GameInitializer initializer = new NormalGame(eventManager, engine, assetLoader, map);
+        gameManager = new GameManager(eventManager, engine, initializer, map, numberOfPlayers);
+        this.gameRenderer = new GameRenderer(batch, gameManager);
 
         Gdx.input.setInputProcessor(new InputController(eventManager));
     }
@@ -110,9 +113,7 @@ public class GameScreen extends AbstractScreen {
         renderAnimatedViews();
         batch.end();
 
-        if (gameManager.gameFinished()) {
-            // TODO: Push event game finished
-        }
+        // TODO: Push event game finished
 
 
     }

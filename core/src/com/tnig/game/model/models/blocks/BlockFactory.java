@@ -7,7 +7,9 @@ import com.tnig.game.model.models.obstacles.Spike;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class BlockFactory {
-    public static Model createModel(Engine engine, float x, float y, float width, float height, ModelType modelType){
+    public static Model createModel(Engine engine,
+                                    float x, float y, float width, float height,
+                                    ModelType modelType){
         BlockType type = (BlockType) modelType;
         switch (type){
             case NORMAL_BLOCK:

@@ -5,10 +5,13 @@ import static com.tnig.game.utilities.Constants.PPM;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.tnig.game.model.models.GameObject;
+import com.tnig.game.model.models.PolygonObject;
 import com.tnig.game.model.physics_engine.Engine;
 
 /**
@@ -17,15 +20,7 @@ import com.tnig.game.model.physics_engine.Engine;
 public abstract class BodyBuilder {
 
     // Template methods
-
-    /**
-     * Gets the shape of the specific body
-     * @param object The object to create the shape from
-     * @return A Box2D shape
-     */
-    protected abstract Shape getShape(GameObject object);
-
-    /**
+     /**
      * Makes the necessary changes to the body definition to that specific body
      * @param bodyDef The body definition
      */
@@ -67,9 +62,11 @@ public abstract class BodyBuilder {
         fixtureDef.shape = shape;
         fixtureDef.isSensor = object.isSensor();
 
-        fixtureDef.density = 1;
-        fixtureDef.friction = 0f;
-        //fixtureDef.restitution = 0.01f;
+
+        fixtureDef.density = 20;
+        fixtureDef.friction = 0.9f;
+        fixtureDef.restitution = 0.2f;
+
         addToFixtureDef(fixtureDef);
 
         // Sets the model as userdata for the contactlistener
@@ -78,4 +75,36 @@ public abstract class BodyBuilder {
 
         return body;
     }
+
+
+    /**
+     * Gets the shape of the specific body
+     * @param object The object to create the shape from
+     * @return A Box2D shape
+     */
+    private Shape getShape(GameObject object){
+        Shape shape;
+        switch (object.GetShape()){
+            case BOX:
+                shape = new PolygonShape();
+                ((PolygonShape) shape).setAsBox(object.getWidth() / 2 / PPM, object.getHeight() / 2 / PPM);
+                break;
+            case CIRCLE:
+                shape = new CircleShape();
+                shape.setRadius(object.getWidth() / 2 / PPM);
+                break;
+            case POLYGON:
+                //TODO: Make possible for different polygons;
+                throw new UnsupportedOperationException("Not Implemented yet");
+                /*shape = new PolygonShape();
+                PolygonObject polygonObject = (PolygonObject) object;
+                ((PolygonShape) shape).set(polygonObject.getVertices());
+                break;*/
+            default:
+                throw new IllegalStateException("Unexpected value: " + object.GetShape());
+        }
+        return shape;
+    }
+
+
 }

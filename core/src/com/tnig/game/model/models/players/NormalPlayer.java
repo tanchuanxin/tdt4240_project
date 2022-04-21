@@ -9,27 +9,33 @@ import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
 import com.tnig.game.model.models.ContactObject;
 import com.tnig.game.model.models.ModelType;
-import com.tnig.game.model.models.Movable;
-import com.tnig.game.model.models.ObjectType;
+import com.tnig.game.model.models.ObjectShape;
+import com.tnig.game.model.models.coins.Coin;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.Constants;
 
 public class NormalPlayer extends AbstractModel implements EventListener {
 
     private static final boolean isStatic = false;
     private static final boolean isSensor = false;
-    private static final ModelType type = PlayerType.NORMALPLAYER;
+    private static final ObjectShape shape = ObjectShape.BOX;
+    private int score = 1000000;
 
     private final EventManager eventManager;
-    private int speed = 4;
-    private int jumpingForce = 5;
-    private int maxJumpVelocity = 2;
+
+    private int speed = 2;
+    private int jumpingForce = 200;
     private State STATE = State.RUNNING;
 
-    public enum State {
+
+
+    public enum State{
         JUMPING, RUNNING
     }
 
-    public NormalPlayer(EventManager eventManager, Engine engine, float x, float y, float width, float height) {
+    public NormalPlayer(EventManager eventManager, Engine engine,
+                        float x, float y, float width, float height,
+                        ModelType type) {
         super(engine, x, y, width, height, isStatic, isSensor, type);
         this.eventManager = eventManager;
         eventManager.subscribe(EventName.JUMP, this);
@@ -42,45 +48,72 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
     @Override
     public void handleBeginContact(ContactObject object) {
-        if (object.getType().getObjectType() == ObjectType.OBSTACLE) {
-            eventManager.pushEvent(new PlayerDead(this));
-            //dispose();
+
+
+        switch (object.getType().getObjectType()){
+            case OBSTACLE:
+                dispose();
+                break;
+            case COIN:
+                Coin coin = (Coin) object;
+                score += coin.getValue();
+                break;
+            case SENSOR:
+                // TODO: FINISH
+                dispose();
+                break;
+            case BLOCK:
+                if (STATE == State.JUMPING){
+                    STATE = State.RUNNING;
+                }
+                break;
+
+
         }
+
+
 
     }
 
     @Override
-    public void update(float delta) {
-        float velocityY = getLinearVelocity().y;
-        if (velocityY == 0) {
-            STATE = State.RUNNING;
-        } else {
-            STATE = State.JUMPING;
-        }
+
+    public void update(float delta){
+
+        score -= 1157 / Constants.FPS;
+    }
+
+    @Override
+    public ObjectShape GetShape() {
+        return shape;
     }
 
     @Override
     public void receiveEvent(Event event) {
         switch (event.name) {
             case MOVE_LEFT:
-                setLinearVelocity(new Vector2(-speed, getLinearVelocity().y));
+
+                setLinearVelocityX(-speed);
                 break;
             case MOVE_RIGHT:
-                setLinearVelocity(new Vector2(speed, getLinearVelocity().y));
-                break;
-            case STOP_MOVE_LEFT:
-            case STOP_MOVE_RIGHT:
-                setLinearVelocity(new Vector2(0, getLinearVelocity().y));
+                setLinearVelocityX(speed);
                 break;
             case JUMP:
-                if (STATE == State.RUNNING) {
-                    applyImpulseToCenter(new Vector2(0, jumpingForce));
+                if (STATE == State.RUNNING){
+                    jump();
+
                 }
                 break;
             case STOP_JUMP:
                 if (STATE == State.JUMPING) {
                     applyImpulseToCenter(new Vector2(0, -jumpingForce));
                 }
+        }
+    }
+
+    private void jump(){
+        if (STATE == State.RUNNING){
+            applyForceToCenter(0, jumpingForce);
+            STATE = State.JUMPING;
         }
     }
 
