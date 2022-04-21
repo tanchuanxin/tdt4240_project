@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="145">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="155">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
-
   <image source="spikes.png" width="64" height="16"/>
-
  </tileset>
  <layer id="1" name="background" width="128" height="13">
   <data encoding="base64" compression="zlib">
@@ -50,7 +48,25 @@
   <object id="143" x="448.248" y="179.25" width="15.5033" height="13.5" rotation="359.907"/>
   <object id="144" x="1472.75" y="178.75" width="30.5025" height="13.5" rotation="359.907"/>
  </objectgroup>
- <objectgroup id="8" name="finnishline" visible="0">
+ <objectgroup id="8" name="finishLine">
   <object id="93" x="1984" y="0" width="16" height="192"/>
+ </objectgroup>
+ <objectgroup id="13" name="deathSensor">
+  <object id="146" x="514" y="204" width="1432" height="4"/>
+ </objectgroup>
+ <layer id="14" name="coins" width="128" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt0rEJACAQA8Dffyhns9DK2peAd5A+hFQBAAAAcNvYYUnaI6XHKbUX//HFfjbmhQlYMgXx
+  </data>
+ </layer>
+ <objectgroup id="15" name="coin">
+  <object id="147" x="211" y="178.031" width="10.0625" height="13.875"/>
+  <object id="148" x="531.012" y="146.063" width="10.0625" height="13.875"/>
+  <object id="149" x="546.882" y="146.019" width="10.0625" height="13.875"/>
+  <object id="150" x="1090.97" y="146.063" width="10.0625" height="13.875"/>
+  <object id="151" x="1490.93" y="130.063" width="10.0625" height="13.875"/>
+  <object id="152" x="1506.97" y="130.019" width="10.0625" height="13.875"/>
+  <object id="153" x="1634.97" y="178.063" width="10.0625" height="13.875"/>
+  <object id="154" x="1698.94" y="146.063" width="10.0625" height="13.875"/>
  </objectgroup>
 </map>
