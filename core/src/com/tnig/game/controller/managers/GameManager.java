@@ -1,5 +1,6 @@
 package com.tnig.game.controller.managers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game_objects.Controller;
@@ -83,10 +84,12 @@ public class GameManager {
     }
 
     public float getPlayerPosX() {
+        Gdx.app.log("Player pos X:", String.valueOf(player.getModel().getX()));
         return player.getModel().getX();
     }
 
     public float getPlayerPosY() {
+        Gdx.app.log("Player pos Y:", String.valueOf(player.getModel().getY()));
         return player.getModel().getY();
     }
 

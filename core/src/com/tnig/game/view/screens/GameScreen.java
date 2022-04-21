@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.sun.org.apache.bcel.internal.Const;
 import com.tnig.game.controller.InputController;
 import com.tnig.game.controller.game.GameInitializer;
 import com.tnig.game.controller.game.NormalGame;
@@ -23,6 +24,7 @@ import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.Constants;
 
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class GameScreen extends AbstractScreen {
     private final TiledMap tiledMap;
     private final float mapWidth;
     private final float mapHeight;
+    private final float zoom = 2f;
 
     public GameScreen(ScreenManager screenManager,
                       EventManager eventManager,
@@ -52,10 +55,9 @@ public class GameScreen extends AbstractScreen {
 
         // Set up game camera and viewport
         this.gameCamera = new OrthographicCamera();
-        viewport = new FitViewport(VIEWPORT_WIDTH / PPM, VIEWPORT_WIDTH / PPM, gameCamera);
 
         // Scale tile map to fit screen
-        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / PPM);
+        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / PPM);
 
         // Get tile map properties
         int mapTileWidth = tiledMap.getProperties().get("tilewidth", Integer.class);
@@ -64,10 +66,15 @@ public class GameScreen extends AbstractScreen {
         this.mapWidth = (tiledMap.getProperties().get("width", Integer.class) * mapTileWidth) / PPM;
         this.mapHeight = (tiledMap.getProperties().get("height", Integer.class) * mapTileHeight) / PPM;
 
-        // Set camera to starting position
+        // Set camera to starting position and zoom in to correct size
+        gameCamera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        viewport = new FitViewport(mapWidth / zoom, mapHeight / zoom, gameCamera);
         gameCamera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
 
+        // Initialize game world and map to see what camera sees only
         engine = new GameWorld(gameCamera);
+        mapRenderer.setView(gameCamera);
+
         GameInitializer initializer = new NormalGame();
         this.gameManager = initializer.initGame(eventManager, engine, assetLoader, map, numberOfPlayers);
 
@@ -88,13 +95,18 @@ public class GameScreen extends AbstractScreen {
         // Update camera
         gameCamera.update(); // Update our camera every frame
         gameCamera.position.x = gameManager.getPlayerPosX();
-        gameCamera.position.x = 0;
 
         checkCameraBounds(); // Make sure camera doesn't leave the screen
 
         // Make map and spritebatch only draw what the camera can see
         mapRenderer.setView(gameCamera);
         batch.setProjectionMatrix(gameCamera.combined);
+
+        Gdx.app.log("viewport vwidth: ", String.valueOf(VIEWPORT_WIDTH));
+        Gdx.app.log("viewport vheight: ", String.valueOf(VIEWPORT_HEIGHT));
+        Gdx.app.log("viewport world width: ", String.valueOf(viewport.getWorldWidth()));
+        Gdx.app.log("viewport world height: ", String.valueOf(viewport.getWorldHeight()));
+
     }
 
     @Override
