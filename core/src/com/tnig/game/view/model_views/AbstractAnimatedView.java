@@ -24,11 +24,11 @@ public abstract class AbstractAnimatedView implements AnimatedView {
 
     // A template method could be used here
     @Override
-    public void render(SpriteBatch batch, AssetLoader assetLoader) {
-        float width = model.getWidth();
-        float height = model.getHeight();
-        float x = model.getX();
-        float y = model.getY();
+    public void render(SpriteBatch batch) {
+        float width = model.getWidth() / Constants.PPM;
+        float height = model.getHeight() / Constants.PPM;
+        float x = model.getX() / Constants.PPM;
+        float y = model.getY() / Constants.PPM;
         renderModel(batch, x, y, width, height, time);
     }
 }

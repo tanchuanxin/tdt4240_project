@@ -1,14 +1,16 @@
 package com.tnig.game.controller.events;
 
 public enum EventName {
-    INIT_APP,
-    APP_LOADING_COMPLETE,
-    VIEW_MAIN_MENU,
     NEW_GAME,
     MAP_SELECTED,
-    LEADERBOARD_SELECTED,
     QUIT_GAME,
     VIEW_LEADERBOARDS,
-    VIEW_SETTINGS,
-    SETTINGS_UPDATED
+    SETTINGS_UPDATED,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    JUMP,
+    STOP_MOVE_LEFT,
+    STOP_MOVE_RIGHT,
+    STOP_JUMP,
+    PLAYER_DEAD
 }

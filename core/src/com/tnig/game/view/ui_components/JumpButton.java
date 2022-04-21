@@ -9,7 +9,7 @@ import com.tnig.game.view.model_views.View;
  */
 public class JumpButton implements View {
     @Override
-    public void render(SpriteBatch batch, AssetLoader assetLoader) {
+    public void render(SpriteBatch batch) {
 
     }
 }

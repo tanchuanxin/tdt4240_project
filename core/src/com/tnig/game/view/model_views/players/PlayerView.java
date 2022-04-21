@@ -45,13 +45,6 @@ public class PlayerView extends AbstractAnimatedView {
         playerStanding = new TextureRegion(assetLoader.get(AssetLoader.TEXTURE_ATLAS).findRegion("jellyJump28x28"), 0,0,28,28);
     }
 
-//    /**
-//     * gets texture for player object from sprite assets
-//     */
-//    private Texture getTexture() {
-//        //TODO: Get texture from asset manager DONE?
-//        return new Texture("././././././android/assets/playerSprite");
-//    }
 
     /**
      * method inherited from AbstractAnimatedView
@@ -61,6 +54,6 @@ public class PlayerView extends AbstractAnimatedView {
     protected void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time) {
         final TextureRegion currentFrame = playerStanding;
 
-        batch.draw(currentFrame, x, y, width, height);
+        batch.draw(currentFrame, x-width/2, y-height/2, width, height);
     }
 }

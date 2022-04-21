@@ -1,5 +1,6 @@
 package com.tnig.game.controller.game_objects.dynamic_objects;
 
+import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.Model;
 import com.tnig.game.model.models.ModelFactory;
 import com.tnig.game.model.models.ModelType;
@@ -14,11 +15,12 @@ public class AnimatedObjectController implements AnimatedController {
     private final AnimatedView view;
 
 
-    public AnimatedObjectController(Engine engine,
+    public AnimatedObjectController(EventManager eventManager,
+                                    Engine engine,
                                     AssetLoader assetLoader,
                                     float x, float y, float width, float height,
                                     ModelType type) {
-        model = ModelFactory.createModel(engine, x, y, width, height, type);
+        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, type);
         view = ViewFactory.createView(model, assetLoader);
     }
 

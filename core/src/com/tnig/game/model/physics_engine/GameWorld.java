@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.models.Model;
 
@@ -16,24 +17,21 @@ import com.tnig.game.model.models.Model;
  * This class encapsulates the Box2D world, decoupling it from the rest of the project
  */
 public class GameWorld implements Engine{
-
     private final World world;
     private final Box2DDebugRenderer b2dr;
     private final OrthographicCamera b2drCam;
 
-    public GameWorld(GameMap map) {
+    public GameWorld(OrthographicCamera gameCam) {
         // Initialize Box2D World
-        world = new World(new Vector2(0,-10), true);
-        world.setContactListener(new WorldContactListener());
-        b2dr = new Box2DDebugRenderer();
+        this.world = new World(new Vector2(0,-10), true);
+        this.b2dr = new Box2DDebugRenderer();
+        this.b2drCam = gameCam;
 
-        // Use this camera for debugging in the desktop version
-        b2drCam = new OrthographicCamera(VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
-        // TODO: Find out where to put b2dr cam
-        System.out.println(map.getMapWidthInPixels());
-        System.out.println(map.getMapWidthInPixels());
-        b2drCam.position.set(VIEWPORT_WIDTH/ 2f / PPM, VIEWPORT_HEIGHT/ 2f / PPM, 0);
-        b2drCam.update();
+        // Set up contact listeners
+        world.setContactListener(new WorldContactListener());
+
+        // Set up game camera and viewport
+
     }
 
     @Override

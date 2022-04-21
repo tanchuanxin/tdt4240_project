@@ -21,17 +21,20 @@ public class GameManager {
     private TiledMap map;
     private final EventManager eventManager;
     private final int numberOfPlayers;
+    private final AnimatedController player;
 
     public GameManager(EventManager eventManager,
                        Engine engine,
                        List<AnimatedController> animatedControllers,
                        List<Controller> controllers,
+                       AnimatedController player,
                        TiledMap map,
                        int numberOfPlayers) {
         this.eventManager = eventManager;
         this.engine = engine;
         this.animatedControllers = animatedControllers;
         this.controllers = controllers;
+        this.player = player;
         this.map = map;
         this.numberOfPlayers = numberOfPlayers;
     }
@@ -77,6 +80,14 @@ public class GameManager {
 
     public List<AnimatedController> getAnimatedControllers() {
         return animatedControllers;
+    }
+
+    public float getPlayerPosX() {
+        return player.getModel().getX();
+    }
+
+    public float getPlayerPosY() {
+        return player.getModel().getY();
     }
 
     public List<Controller> getControllers() {

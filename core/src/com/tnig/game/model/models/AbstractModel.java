@@ -1,5 +1,9 @@
 package com.tnig.game.model.models;
 
+import static com.tnig.game.utilities.Constants.PPM;
+
+import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.tnig.game.model.physics_engine.bodies.BodyFactory;
 import com.tnig.game.model.physics_engine.Engine;
@@ -23,16 +27,17 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
         body = BodyFactory.getInstance().createBody(engine, x, y, this);
     }
 
+    //TODO: Maybe use events instead?
     protected void dispose(){
         disposable = true;
     }
 
     public float getX(){
-        return body.getPosition().x;
+        return body.getPosition().x * PPM;
     }
 
     public float getY(){
-        return body.getPosition().y;
+        return body.getPosition().y * PPM;
     }
 
     public float getHeight() {
@@ -76,5 +81,21 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     @Override
     public void update(float delta) {
 
+    }
+
+    protected Vector2 getLinearVelocity() {
+        return body.getLinearVelocity();
+    }
+
+    protected void setLinearVelocity(Vector2 dir){
+        body.setLinearVelocity(dir);
+    }
+
+    protected void applyForceToCenter(Vector2 dir){
+        body.applyForceToCenter(dir.x, dir.y, true);
+    }
+
+    protected void applyImpulseToCenter(Vector2 dir) {
+        body.applyLinearImpulse(dir, body.getWorldCenter(), true);
     }
 }

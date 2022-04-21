@@ -68,7 +68,7 @@ public abstract class BodyBuilder {
         fixtureDef.isSensor = object.isSensor();
 
         fixtureDef.density = 1;
-        fixtureDef.friction = 0.5f;
+        fixtureDef.friction = 0f;
         //fixtureDef.restitution = 0.01f;
         addToFixtureDef(fixtureDef);
 

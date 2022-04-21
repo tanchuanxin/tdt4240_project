@@ -6,13 +6,15 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class GameMap {
 
-    private int mapWidthInPixels, mapHeightInPixels;
+    private final int mapWidthInPixels;
+    private int mapHeightInPixels;
+    private int tileWidth;
+    private int tileHeight;
 
     private final TiledMap tiledMap;
 
     public GameMap(String mapLocation) {
-        int tileWidth, tileHeight,
-                mapWidthInTiles, mapHeightInTiles;
+        int mapWidthInTiles, mapHeightInTiles;
 
         tiledMap = new TmxMapLoader().load(mapLocation);
 
@@ -25,12 +27,20 @@ public class GameMap {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
     }
 
-    public int getMapHeightInPixels() {
+    public int getMapHeight() {
         return mapHeightInPixels;
     }
 
-    public int getMapWidthInPixels() {
+    public int getMapWidth() {
         return mapWidthInPixels;
+    }
+
+    public int getTileWidth() {
+        return tileWidth;
+    }
+
+    public int getTileHeight() {
+        return tileHeight;
     }
 
     public TiledMap getTiledMap() {
