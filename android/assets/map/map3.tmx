@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="197">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="200">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
   <image source="spikes.png" width="64" height="16"/>
@@ -11,13 +11,13 @@
  </layer>
  <layer id="2" name="graphics" width="64" height="13">
   <data encoding="base64" compression="zlib">
-   eJzdk0sKwjAURRO6CT/gdwnOoqDitjp0G+IuHXszKG1D0pe091nwwB20gfe9zxh9ntUPkiiyR/0H6JjZRy28bxBnC+0U57JE7BW0nmH2LyHnFe836K5Ym0PsM3QJcnz0UppHRGMo9VsJzvJiST7vwprNlBo8jP69v73YvTBpagxvkdF/bJepWaTqYBGLO1QT0/9DaPk9lSOXue6fSYn/Qpj9l+b389K+Bwm2/99VK4ncWU3ZrwSj/5PQa2q/zb/Su6k7GuObhW3lbP9bmvW/6wu5wzkU
+   eJzdk1sKwjAQRRO6CR/gcwn+RaEVt+Y2xP24IL+dfITWkGQy7R0LHrgfTcq8cscYfe7ND5Iosqf6D6RjZR8vW77fUJwtaac4lyXFXpHWM8z+weRs6b4jXRVrcxT7TLpEOd56Kc0toTFI/SbBMd6UwPl8CGo2U2rwIPr3/vZC94Ik1BjvIqL/1FvmZpGrA0UqbqkmpP9LaPk9l6OWufYficR/Mcj+pfn9vLT3gQPt/2fTi6N2VlPelwPR/4npNfe+4Uy6N/7/oDG+Wdhezn5/c7P+d30A4KE72w==
   </data>
  </layer>
  <objectgroup id="9" name="player">
   <object id="164" x="65" y="179.25" width="13.25" height="12.75"/>
  </objectgroup>
- <objectgroup id="4" name="blocks" visible="0">
+ <objectgroup id="4" name="blocks">
   <object id="156" x="0.545455" y="192.182" width="1024" height="16"/>
   <object id="165" x="240.333" y="144.167" width="95.3333" height="16"/>
   <object id="166" x="208.083" y="95.875" width="127.958" height="16"/>
@@ -30,6 +30,8 @@
   <object id="174" x="719.908" y="128" width="128.122" height="16"/>
   <object id="175" x="751.885" y="112.125" width="48.2307" height="16"/>
   <object id="176" x="848.135" y="96.25" width="79.7307" height="16"/>
+  <object id="198" x="5.12133" y="0.333333" width="192.424" height="2" rotation="89.9634"/>
+  <object id="199" x="1022.45" y="-0.333333" width="192.424" height="2" rotation="89.9634"/>
  </objectgroup>
  <objectgroup id="10" name="spikes" visible="0">
   <object id="177" x="208.063" y="83" width="31.5938" height="12.8125"/>
@@ -43,13 +45,13 @@
   <object id="185" x="383.849" y="98.9543" width="48.3013" height="13.2652"/>
   <object id="186" x="335.961" y="35.1019" width="16.1274" height="12.682"/>
  </objectgroup>
- <objectgroup id="8" name="finishLine">
+ <objectgroup id="8" name="finishLine" visible="0">
   <object id="144" x="960" y="9" width="16" height="183"/>
  </objectgroup>
  <objectgroup id="11" name="deathSensor" visible="0">
   <object id="187" x="336.667" y="197.333" width="26" height="6.66667"/>
  </objectgroup>
- <objectgroup id="13" name="coins">
+ <objectgroup id="13" name="coins" visible="0">
   <object id="188" x="434.875" y="146" width="10.0625" height="13.875"/>
   <object id="189" x="466.906" y="178.063" width="10.0625" height="13.875"/>
   <object id="190" x="659.143" y="178.063" width="10.0625" height="13.875"/>

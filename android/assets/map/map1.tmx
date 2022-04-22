@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="156">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="158">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
   <image source="spikes.png" width="64" height="16"/>
@@ -11,7 +11,7 @@
  </layer>
  <layer id="2" name="graphics" width="128" height="13">
   <data encoding="base64" compression="zlib">
-   eJztV1sKwjAQbPQSnqV39Sr98RAq+KjgGUTF1wYUbWnadLPubtoMDKggmc7sLGmWJSQkDBm3ibQCfdiAJ1vgTtibPZxfAg9MOk48x6jHHfx+AJ8j60ZupBUMF8cIZok7/yV4sgKuI/CGAvOptIJ2cOd/htwvwOsI8jcNlNLhQtr/eHz2u+aOd81dyh+Ppn5j7CzepISdTR9NGvP/hx8WmPuY1WH7ra3jXf74zqTG/LWAqt/c6KOZIv+QrmJ7RdXHercXzPfStt3yu68Kx+/1neYzszPzZW6q313/j50+HvXtd8j7vc/5mM+hz/8CKPwnAg==
+   eJztV1sKwjAQbPQSnqV39TT98wIq+KjgGUTF1wYRY+kj3cTdTbsDAypIpjM7S5plCoViyLhNuBXIwwY82QJ3zN7s4fwSeCDScaI5Rjzu4PcD+BxZN3LDrWC4OCYwS9T5L8GTFXCdgDcxMJ9yK2gHdf5nyP0CvI4gf1NDLh1N0P2Px2e/S+5419xp/njU9Rtj58K8GRN2Nn00Scz/H35YYO5jVoftt7SOd/njO5MS85eCWP2mRh/NMfIP6Sq2V7H6WO12QXwvbdst7r5yPXZ/r+40n5mdmS9z8/u96f+p08ejvv0Oeb/3OR/zOfT5X8bGJ2o=
   </data>
  </layer>
  <objectgroup id="9" name="player">
@@ -37,6 +37,8 @@
   <object id="74" x="1872" y="96" width="16" height="16"/>
   <object id="75" x="1936" y="192" width="112" height="16"/>
   <object id="98" x="0" y="192" width="448" height="16"/>
+  <object id="156" x="3.788" y="1.42109e-14" width="192.424" height="2" rotation="89.9634"/>
+  <object id="157" x="2047.79" y="1.66667" width="192.424" height="2" rotation="89.9634"/>
  </objectgroup>
  <objectgroup id="11" name="spikes" visible="0">
   <object id="131" x="671.985" y="178.512" width="15.5033" height="13.5" rotation="359.907"/>
