@@ -13,7 +13,7 @@ public class Spike extends AbstractModel {
 
     private static final boolean isStatic = true;
     private static final boolean isSensor = false;
-    private static final ObjectShape shape = ObjectShape.BOX;
+    private static final ObjectShape shape = ObjectShape.EQUILATERAL_TRIANGLE;
 
     private final EventManager eventManager;
 
