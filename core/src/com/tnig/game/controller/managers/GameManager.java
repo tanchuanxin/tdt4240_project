@@ -3,11 +3,11 @@ package com.tnig.game.controller.managers;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
-import com.tnig.game.controller.game.GameInitializer;
+import com.tnig.game.controller.game_initializers.GameInitializer;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.map.GameMap;
-import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.physics_engine.Engine;
 
 import java.util.Iterator;
@@ -48,7 +48,7 @@ public class GameManager implements EventListener {
         player = initializer.getPlayer();
 
         eventManager.subscribe(EventName.PLAYER_DEAD, this);
-        eventManager.subscribe(EventName.DISPOSE_OBJECT, this);
+        eventManager.subscribe(EventName.DISPOSE_SPRITE, this);
     }
 
     /**
@@ -125,9 +125,9 @@ public class GameManager implements EventListener {
             case PLAYER_DEAD:
                 STATE = State.NEW_GAME;
                 break;
-            case DISPOSE_OBJECT:
+            case DISPOSE_SPRITE:
                 Model model = (Model) event.data.get("object");
-                map.disposeTile((int) model.getX(),(int) model.getY());
+                map.disposeTile(model.getX(), model.getY());
         }
     }
 }

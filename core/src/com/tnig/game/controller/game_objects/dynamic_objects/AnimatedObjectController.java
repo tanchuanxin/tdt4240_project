@@ -1,9 +1,9 @@
 package com.tnig.game.controller.game_objects.dynamic_objects;
 
 import com.tnig.game.controller.managers.EventManager;
-import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.ModelFactory;
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.model_views.AnimatedView;

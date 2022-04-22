@@ -1,8 +1,8 @@
 package com.tnig.game.model.models.coins;
 
 import com.tnig.game.controller.managers.EventManager;
-import com.tnig.game.model.models.Model;
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.Model;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class CoinFactory {

@@ -1,9 +1,7 @@
 package com.tnig.game.model.models.blocks;
 
-import com.tnig.game.model.models.Model;
-import com.tnig.game.model.models.ModelType;
-import com.tnig.game.model.models.obstacles.ObstacleType;
-import com.tnig.game.model.models.obstacles.Spike;
+import com.tnig.game.model.models.interfaces.Model;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class BlockFactory {
@@ -13,7 +11,7 @@ public class BlockFactory {
         BlockType type = (BlockType) modelType;
         switch (type){
             case NORMAL_BLOCK:
-                return new NormalBlock(engine, x, y, width, height);
+                return new NormalBlock(engine, x, y, width, height, type);
             case MOCK:
                 throw new IllegalArgumentException("Not created model for Mock");
             default:

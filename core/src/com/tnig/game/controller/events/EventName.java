@@ -10,5 +10,7 @@ public enum EventName {
     MOVE_RIGHT,
     JUMP,
     PLAYER_DEAD,
-    DISPOSE_OBJECT
+    DISPOSE_SPRITE,
+    STOP_PLAYER,
+    PLAYER_AT_GOAL,
 }

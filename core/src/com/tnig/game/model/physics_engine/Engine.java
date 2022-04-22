@@ -1,7 +1,7 @@
 package com.tnig.game.model.physics_engine;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.interfaces.Model;
 
 public interface Engine {
 

@@ -3,11 +3,10 @@ package com.tnig.game.model.models.players;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
-import com.tnig.game.controller.events.game_events.PlayerDead;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
-import com.tnig.game.model.models.ContactObject;
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.ContactObject;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.ObjectShape;
 import com.tnig.game.model.models.coins.Coin;
 import com.tnig.game.model.physics_engine.Engine;
@@ -39,22 +38,17 @@ public class NormalPlayer extends AbstractModel implements EventListener {
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);
         eventManager.subscribe(EventName.MOVE_RIGHT, this);
+        eventManager.subscribe(EventName.STOP_PLAYER, this);
     }
 
     @Override
     public void handleBeginContact(ContactObject object) {
+        ModelType type = object.getEnum();
 
-        switch (object.getType().getObjectType()){
-            case OBSTACLE:
-                dispose();
-                break;
+        switch (type.getObjectType()){
             case COIN:
                 Coin coin = (Coin) object;
                 score += coin.getValue();
-                break;
-            case SENSOR:
-                // TODO: FINISH
-                dispose();
                 break;
             case BLOCK:
                 if (STATE == State.JUMPING){
@@ -62,11 +56,13 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                 }
                 break;
 
+
         }
 
 
 
     }
+
 
     @Override
     public void update(float delta){
@@ -75,7 +71,7 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     }
 
     @Override
-    public ObjectShape GetShape() {
+    public ObjectShape GetShapeType() {
         return shape;
     }
 
@@ -93,6 +89,9 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                     jump();
                 }
                 break;
+            case STOP_PLAYER:
+                setLinearVelocityX(0);
+
         }
     }
 

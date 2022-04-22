@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.tnig.game.controller.events.game_events.Jump;
 import com.tnig.game.controller.events.game_events.MoveLeft;
 import com.tnig.game.controller.events.game_events.MoveRight;
+import com.tnig.game.controller.events.game_events.StopPlayer;
 import com.tnig.game.controller.managers.EventManager;
 
 public class InputController implements InputProcessor {
@@ -20,18 +21,24 @@ public class InputController implements InputProcessor {
         switch (keycode){
             case Input.Keys.LEFT:
                 eventManager.pushEvent(new MoveLeft());
-                break;
+                return true;
             case Input.Keys.RIGHT:
                 eventManager.pushEvent(new MoveRight());
-                break;
+                return true;
             case Input.Keys.SPACE:
                 eventManager.pushEvent(new Jump());
-                break;
+                return true;
         }
         return false;
     }
     @Override
     public boolean keyUp(int keycode) {
+        switch (keycode){
+            case Input.Keys.LEFT:
+            case Input.Keys.RIGHT:
+                eventManager.pushEvent(new StopPlayer());
+                return true;
+        }
         return false;
     }
     @Override

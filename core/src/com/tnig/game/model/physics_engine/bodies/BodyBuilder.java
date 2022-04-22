@@ -10,8 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.tnig.game.model.models.GameObject;
-import com.tnig.game.model.models.PolygonObject;
+import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.physics_engine.Engine;
 
 /**
@@ -63,7 +62,7 @@ public abstract class BodyBuilder {
         fixtureDef.isSensor = object.isSensor();
 
         fixtureDef.density = 20;
-        fixtureDef.friction = 0.3f;
+        fixtureDef.friction = 0f;
         fixtureDef.restitution = 0.2f;
         addToFixtureDef(fixtureDef);
 
@@ -82,7 +81,7 @@ public abstract class BodyBuilder {
      */
     private Shape getShape(GameObject object){
         Shape shape;
-        switch (object.GetShape()){
+        switch (object.GetShapeType()){
             case BOX:
                 shape = new PolygonShape();
                 ((PolygonShape) shape).setAsBox(object.getWidth() / 2 / PPM, object.getHeight() / 2 / PPM);
@@ -99,7 +98,7 @@ public abstract class BodyBuilder {
                 ((PolygonShape) shape).set(polygonObject.getVertices());
                 break;*/
             default:
-                throw new IllegalStateException("Unexpected value: " + object.GetShape());
+                throw new IllegalStateException("Unexpected value: " + object.GetShapeType());
         }
         return shape;
     }

@@ -1,14 +1,13 @@
 package com.tnig.game.model.models.coins;
 
 import com.badlogic.gdx.Gdx;
-import com.tnig.game.controller.events.game_events.DisposeObject;
+import com.tnig.game.controller.events.game_events.DisposeSprite;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
-import com.tnig.game.model.models.ContactObject;
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.ContactObject;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.ObjectShape;
 import com.tnig.game.model.models.ObjectType;
-import com.tnig.game.model.models.blocks.BlockType;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class Coin extends AbstractModel {
@@ -28,12 +27,12 @@ public class Coin extends AbstractModel {
 
     @Override
     public void handleBeginContact(ContactObject object) {
-        if (object.getType().getObjectType() == ObjectType.PLAYER){
+        if (object.getEnum().getObjectType() == ObjectType.PLAYER){
             dispose();
-            eventManager.pushEvent(new DisposeObject(this));
+            eventManager.pushEvent(new DisposeSprite(this));
         }
 
-        Gdx.app.log("Coint", "Contact with " + object.getType().getObjectType());
+        Gdx.app.log("Coint", "Contact with " + object.getEnum().getObjectType());
     }
 
     public int getValue() {
@@ -41,7 +40,7 @@ public class Coin extends AbstractModel {
     }
 
     @Override
-    public ObjectShape GetShape() {
+    public ObjectShape GetShapeType() {
         return shape;
     }
 }

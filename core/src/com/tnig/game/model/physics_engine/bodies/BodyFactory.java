@@ -1,7 +1,7 @@
 package com.tnig.game.model.physics_engine.bodies;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.tnig.game.model.models.GameObject;
+import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.models.ObjectType;
 import com.tnig.game.model.physics_engine.bodies.blocks.NormalBlockBody;
 import com.tnig.game.model.physics_engine.bodies.obstacles.StaticTriangleBody;
@@ -30,7 +30,7 @@ public class BodyFactory {
      * @param object The object which should contain the body
      */
     public Body createBody(Engine engine, float x, float y, GameObject object){
-        ObjectType type = object.getType().getObjectType();
+        ObjectType type = object.getEnum().getObjectType();
 
         switch (type){
             case PLAYER:

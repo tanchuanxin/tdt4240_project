@@ -4,6 +4,10 @@ import static com.tnig.game.utilities.Constants.PPM;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.tnig.game.model.models.interfaces.ContactObject;
+import com.tnig.game.model.models.interfaces.GameObject;
+import com.tnig.game.model.models.interfaces.Model;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.bodies.BodyFactory;
 import com.tnig.game.model.physics_engine.Engine;
 
@@ -27,8 +31,8 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
         body = BodyFactory.getInstance().createBody(engine, x, y, this);
     }
 
-    //TODO: Maybe use events instead?
-    protected void dispose(){
+    @Override
+    public void dispose(){
         disposable = true;
     }
 
@@ -49,7 +53,7 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     }
 
     @Override
-    public ModelType getType() {
+    public ModelType getEnum() {
         return type;
     }
 

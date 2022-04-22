@@ -1,17 +1,16 @@
-package com.tnig.game.controller.game;
+package com.tnig.game.controller.game_initializers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedObjectController;
 import com.tnig.game.controller.game_objects.static_objects.StaticObjectController;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.map.GameMap;
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.ObjectType;
 import com.tnig.game.model.models.blocks.BlockType;
 import com.tnig.game.model.models.coins.CoinType;
@@ -56,8 +55,9 @@ public class NormalGame implements GameInitializer {
         initStaticControllers(tiledMap, Constants.blockLayer, BlockType.NORMAL_BLOCK);
         // Coins
         initStaticControllers(tiledMap, Constants.coinLayer, CoinType.NORMAL_COIN);
-        // Death sensor
+        // Sensors
         initStaticControllers(tiledMap, Constants.deathSensorLayer, SensorType.DEATH_SENSOR);
+        initStaticControllers(tiledMap, Constants.finishLineLayer, SensorType.FINISH_LINE);
 
         // Animated objects
         initAnimatedControllers(tiledMap, Constants.playerLayer, PlayerType.NORMALPLAYER);

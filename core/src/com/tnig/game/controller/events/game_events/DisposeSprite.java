@@ -2,15 +2,16 @@ package com.tnig.game.controller.events.game_events;
 
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventName;
+import com.tnig.game.model.models.interfaces.Model;
 
 import java.util.HashMap;
 
-public class DisposeObject extends Event {
+public class DisposeSprite extends Event {
 
-    public DisposeObject(Object object) {
-        name = EventName.DISPOSE_OBJECT;
+    public DisposeSprite(Model model) {
+        name = EventName.DISPOSE_SPRITE;
         data = new HashMap<>();
-        data.put("object", object);
+        data.put("object", model);
 
     }
 }

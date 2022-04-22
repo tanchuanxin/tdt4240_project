@@ -66,8 +66,9 @@ public class EventManager {
             for (EventListener subscriber : events.get(event.name)) {
                 subscriber.receiveEvent(event);
             }
-            System.out.println("Push Event: " + event.name);
+
         }
+        System.out.println("Push Event: " + event.name);
     }
 
     /**

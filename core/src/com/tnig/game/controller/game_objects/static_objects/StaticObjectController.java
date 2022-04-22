@@ -2,9 +2,9 @@ package com.tnig.game.controller.game_objects.static_objects;
 
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.managers.EventManager;
-import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.ModelFactory;
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class StaticObjectController implements Controller {

@@ -1,6 +1,6 @@
 package com.tnig.game.model.models.sensors;
 
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.ObjectType;
 
 public enum SensorType implements ModelType {

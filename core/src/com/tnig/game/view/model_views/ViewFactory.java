@@ -1,6 +1,6 @@
 package com.tnig.game.view.model_views;
 
-import com.tnig.game.model.models.Model;
+import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.ObjectType;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.model_views.players.PlayerViewFactory;
@@ -8,7 +8,7 @@ import com.tnig.game.view.model_views.players.PlayerViewFactory;
 public class ViewFactory {
 
     public static AnimatedView createView(Model model, AssetLoader assetLoader){
-        ObjectType type = model.getType().getObjectType();
+        ObjectType type = model.getEnum().getObjectType();
         switch (type){
             case PLAYER:
                 return PlayerViewFactory.createView(model, assetLoader);

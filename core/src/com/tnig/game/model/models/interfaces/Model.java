@@ -1,4 +1,4 @@
-package com.tnig.game.model.models;
+package com.tnig.game.model.models.interfaces;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -10,6 +10,6 @@ public interface Model {
     float getY();
     float getWidth();
     float getHeight();
-    ModelType getType();
+    ModelType getEnum();
 
 }
