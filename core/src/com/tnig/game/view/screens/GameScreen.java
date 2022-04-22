@@ -49,6 +49,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final FillViewport viewport;
     private final Box2DDebugRenderer b2dr;
     private final GameMap map;
+    private final Table tableRight;
+    private final Table tableLeft;
 
     private boolean paused = false;
 
@@ -90,12 +92,12 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
 
-        Table tableRight = new Table();
+        tableRight = new Table();
         tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
         tableRight.add(jumpBtn);
         stage.addActor(tableRight);
 
-        Table tableLeft = new Table();
+        tableLeft = new Table();
         final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
         touchpad.addListener(new ChangeListener() {
             @Override
@@ -196,6 +198,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
     public void resize(int width, int height) {
         viewport.update(width, height);
         stage.getViewport().update(width, height, true);
+        tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
+        tableLeft.setPosition(90, 90);
     }
 
     @Override
