@@ -51,7 +51,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final GameMap map;
 
     private boolean paused = false;
-    private final Stage stage;
 
     public GameScreen(ScreenManager screenManager,
                       final EventManager eventManager,
@@ -83,43 +82,40 @@ public class GameScreen extends AbstractScreen implements EventListener {
         eventManager.subscribe(EventName.GAME_OVER, this);
 
         // Create GUI for game
-        stage = new Stage(viewport);
-//
-//
 //        // TODO: Switch this line when ready to test on mobile
         Gdx.input.setInputProcessor(new InputController(eventManager));
-//        Gdx.input.setInputProcessor(stage);
-//
-//        ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
-//
-//        Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
-//
-//        Table tableRight = new Table();
-//        tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
-//        tableRight.add(jumpBtn);
-//        stage.addActor(tableRight);
-//
-//        Table tableLeft = new Table();
-//        final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
-//        touchpad.addListener(new ChangeListener() {
-//            @Override
-//            public void changed(ChangeEvent changeEvent, Actor actor) {
-//                // Check move left or right
-//                if (touchpad.getKnobPercentX() > 0.1) {
-//                    eventManager.pushEvent(new MoveRight());
-//                }
-//                else if (touchpad.getKnobPercentX() < -0.1) {
-//                    eventManager.pushEvent(new MoveLeft());
-//                }
-//                else {
-//                    eventManager.pushEvent(new StopPlayer());
-//                }
-//            }
-//        });
-//        touchpad.setSize(30f, 30f);
-//        tableLeft.setPosition(90, 90);
-//        tableLeft.add(touchpad);
-//        stage.addActor(tableLeft);
+//        Gdx.input.setInputProcessor(guiStage);
+
+        ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
+
+        Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
+
+        Table tableRight = new Table();
+        tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
+        tableRight.add(jumpBtn);
+        stage.addActor(tableRight);
+
+        Table tableLeft = new Table();
+        final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
+        touchpad.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                // Check move left or right
+                if (touchpad.getKnobPercentX() > 0.1) {
+                    eventManager.pushEvent(new MoveRight());
+                }
+                else if (touchpad.getKnobPercentX() < -0.1) {
+                    eventManager.pushEvent(new MoveLeft());
+                }
+                else {
+                    eventManager.pushEvent(new StopPlayer(0));
+                }
+            }
+        });
+        touchpad.setSize(30f, 30f);
+        tableLeft.setPosition(90, 90);
+        tableLeft.add(touchpad);
+        stage.addActor(tableLeft);
 
         // Create debug renderer
         b2dr = new Box2DDebugRenderer();
@@ -167,7 +163,9 @@ public class GameScreen extends AbstractScreen implements EventListener {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-//        stage.act(delta);
+        viewport.apply(true);
+
+        stage.act(delta);
 
         if (!paused){
             update(delta);
@@ -180,7 +178,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
             b2dr.render(gameManager.getEngine().getWorld(), viewport.getCamera().combined);
         }
 
-//        stage.draw();
+        stage.getViewport().apply();
+        stage.draw();
     }
 
     @Override
@@ -196,7 +195,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-//        stage.getViewport().update(width, height, true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
