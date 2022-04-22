@@ -10,9 +10,12 @@ import java.util.List;
 public class GameOverScreen extends AbstractScreen{
 
     private final List<GameState> gameStates;
+    private final NetworkService networkService;
 
-    public GameOverScreen(OrthographicCamera camera, AssetLoader assetLoader, List<GameState> gameStates) {
+    public GameOverScreen(OrthographicCamera camera, AssetLoader assetLoader,
+                          List<GameState> gameStates, NetworkService networkService) {
         super(camera, assetLoader);
         this.gameStates = gameStates;
+        this.networkService = networkService;
     }
 }
