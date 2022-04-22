@@ -2,6 +2,7 @@ package com.tnig.game.model.physics_engine.bodies;
 
 
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -88,6 +89,14 @@ public abstract class BodyBuilder {
             case CIRCLE:
                 shape = new CircleShape();
                 shape.setRadius(object.getWidth() / 2 );
+                break;
+            case EQUILATERAL_TRIANGLE:
+                shape = new PolygonShape();
+                Vector2[] vertices = new Vector2[3];
+                vertices[0] = new Vector2(-object.getWidth() / 2, -object.getHeight() / 2);
+                vertices[1] = new Vector2(object.getWidth() / 2, -object.getHeight() / 2);
+                vertices[2] = new Vector2(0, object.getHeight() / 2);
+                ((PolygonShape) shape).set(vertices);
                 break;
             case POLYGON:
                 //TODO: Make possible for different polygons;
