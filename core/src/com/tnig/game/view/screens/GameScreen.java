@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -47,7 +48,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final FillViewport viewport;
     private final Box2DDebugRenderer b2dr;
-//    private final OrthographicCamera gameCamera;
+    private final GameMap map;
 
     private boolean paused = false;
     private final Stage stage;
@@ -62,6 +63,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.screenManager = screenManager;
         this.batch = new SpriteBatch();
         GameMap map = new GameMap(mapNumber);
+
+        this.map = map;
 
 //        this.gameCamera = new OrthographicCamera();
 //        this.viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
@@ -80,42 +83,43 @@ public class GameScreen extends AbstractScreen implements EventListener {
         eventManager.subscribe(EventName.GAME_OVER, this);
 
         // Create GUI for game
-        stage = new Stage();
-
-        // TODO: Switch this line when ready to test on mobile
+        stage = new Stage(viewport);
+//
+//
+//        // TODO: Switch this line when ready to test on mobile
         Gdx.input.setInputProcessor(new InputController(eventManager));
-        //Gdx.input.setInputProcessor(stage);
-
-        ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
-
-        Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
-
-        Table tableRight = new Table();
-        tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
-        tableRight.add(jumpBtn);
-        stage.addActor(tableRight);
-
-        Table tableLeft = new Table();
-        final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
-        touchpad.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                // Check move left or right
-                if (touchpad.getKnobPercentX() > 0.1) {
-                    eventManager.pushEvent(new MoveRight());
-                }
-                else if (touchpad.getKnobPercentX() < -0.1) {
-                    eventManager.pushEvent(new MoveLeft());
-                }
-                else {
-                    eventManager.pushEvent(new StopPlayer());
-                }
-            }
-        });
-        touchpad.setSize(30f, 30f);
-        tableLeft.setPosition(90, 90);
-        tableLeft.add(touchpad);
-        stage.addActor(tableLeft);
+//        Gdx.input.setInputProcessor(stage);
+//
+//        ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
+//
+//        Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
+//
+//        Table tableRight = new Table();
+//        tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
+//        tableRight.add(jumpBtn);
+//        stage.addActor(tableRight);
+//
+//        Table tableLeft = new Table();
+//        final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
+//        touchpad.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent changeEvent, Actor actor) {
+//                // Check move left or right
+//                if (touchpad.getKnobPercentX() > 0.1) {
+//                    eventManager.pushEvent(new MoveRight());
+//                }
+//                else if (touchpad.getKnobPercentX() < -0.1) {
+//                    eventManager.pushEvent(new MoveLeft());
+//                }
+//                else {
+//                    eventManager.pushEvent(new StopPlayer());
+//                }
+//            }
+//        });
+//        touchpad.setSize(30f, 30f);
+//        tableLeft.setPosition(90, 90);
+//        tableLeft.add(touchpad);
+//        stage.addActor(tableLeft);
 
         // Create debug renderer
         b2dr = new Box2DDebugRenderer();
@@ -141,7 +145,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private void update(float delta){
         // Update camera
         viewport.getCamera().update(); // Update our camera every frame
-        viewport.getCamera().position.set(gameManager.getPlayerPosX(), gameManager.getPlayerPosY(), 0);
+//        viewport.getCamera().position.set(gameManager.getPlayerPosX(), gameManager.getPlayerPosY(), 0);
+        viewport.getCamera().position.set(gameManager.getPlayerPosX(), viewport.getWorldHeight()/2, 0);
 
         Gdx.app.log("gameManager.getPlayerPosX(): ", String.valueOf(gameManager.getPlayerPosX()));
         Gdx.app.log("gameManager.getPlayerPosY(): ", String.valueOf(gameManager.getPlayerPosY()));
@@ -162,7 +167,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act(delta);
+//        stage.act(delta);
 
         if (!paused){
             update(delta);
@@ -175,7 +180,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
             b2dr.render(gameManager.getEngine().getWorld(), viewport.getCamera().combined);
         }
 
-        stage.draw();
+//        stage.draw();
     }
 
     @Override
@@ -191,7 +196,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        stage.getViewport().update(width, height, true);
+//        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -226,9 +231,9 @@ public class GameScreen extends AbstractScreen implements EventListener {
      */
     private void checkCameraBounds() {
         float mapLeftBound = 0;
-        float mapRightBound = 1024 / Constants.PPM;
+        float mapRightBound = this.map.getMapWidthInUnits();
         float mapBtmBound = 0;
-        float mapTopBound = 208 / Constants.PPM;
+        float mapTopBound = this.map.getMapHeightInUnits();
 
         Gdx.app.log("mapLeftBound: ", String.valueOf(mapLeftBound));
         Gdx.app.log("mapRightBound: ", String.valueOf(mapRightBound));
@@ -240,8 +245,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         Gdx.app.log("Camera position: ", String.valueOf(cam.position));
 
         // Check camera bounds
-        float cameraHalfWidth = viewport.getScreenWidth() / Constants.PPM / 16 * .5f;
-        float cameraHalfHeight = viewport.getScreenHeight() / Constants.PPM / 16 * .5f;
+        float cameraHalfWidth = viewport.getScreenWidth() / PPM / map.getTileWidth() * .5f;
+        float cameraHalfHeight = viewport.getScreenHeight() / PPM / map.getTileHeight() * .5f;
         Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
         Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
         float cameraLeft = cam.position.x - cameraHalfWidth;
@@ -267,6 +272,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
         } else if (cameraRight >= mapRightBound) {
             cam.position.x = mapRightBound - cameraHalfWidth;
         }
+
+
+//        viewport.setCamera(cam);
+
 
 //        // Check bounds on btm top
 //        if (cameraBtm <= mapBtmBound) {
