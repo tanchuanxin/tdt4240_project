@@ -3,6 +3,7 @@ package com.tnig.game.view.screens;
 import static com.tnig.game.utilities.Constants.PPM;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -51,6 +52,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final GameMap map;
     private final Table tableRight;
     private final Table tableLeft;
+    private final InputMultiplexer inputMultiplexer;
 
     private boolean paused = false;
 
@@ -66,6 +68,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         GameMap map = new GameMap(mapNumber);
 
         this.map = map;
+        this.inputMultiplexer = new InputMultiplexer();
 
 //        this.gameCamera = new OrthographicCamera();
 //        this.viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
@@ -83,11 +86,12 @@ public class GameScreen extends AbstractScreen implements EventListener {
         eventManager.subscribe(EventName.NEW_GAME, this);
         eventManager.subscribe(EventName.GAME_OVER, this);
 
-        // Create GUI for game
-//        // TODO: Switch this line when ready to test on mobile
-        Gdx.input.setInputProcessor(new InputController(eventManager));
-//        Gdx.input.setInputProcessor(guiStage);
+        // Get input processors
+        inputMultiplexer.addProcessor(new InputController(eventManager));
+        inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
 
+        // Create GUI for game
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
         Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
