@@ -1,5 +1,6 @@
 package com.tnig.game.model.models.players;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.tnig.game.controller.events.Event;
@@ -26,7 +27,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     private float jumpingForce = 3.7f;
     private State STATE = State.RUNNING;
 
-    public enum State{
+    public enum State {
         JUMPING, RUNNING
     }
 
@@ -45,13 +46,13 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     public void handleBeginContact(ContactObject object) {
         ModelType type = object.getEnum();
 
-        switch (type.getObjectType()){
+        switch (type.getObjectType()) {
             case COIN:
                 Coin coin = (Coin) object;
                 score += coin.getValue();
                 break;
             case BLOCK:
-                if (STATE == State.JUMPING){
+                if (STATE == State.JUMPING) {
                     STATE = State.RUNNING;
                 }
                 break;
@@ -60,8 +61,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
 
 
     @Override
-    public void update(float delta){
-
+    public void update(float delta) {
         score -= 1157 / Constants.FPS;
     }
 
@@ -79,7 +79,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
 
     @Override
     public void receiveEvent(Event event) {
-        switch (event.name){
+        switch (event.name) {
             case MOVE_LEFT:
                 setLinearVelocityX(-speed);
                 break;
@@ -87,7 +87,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 setLinearVelocityX(speed);
                 break;
             case JUMP:
-                if (STATE == State.RUNNING){
+                if (STATE == State.RUNNING) {
                     jump();
                 }
                 break;
@@ -105,6 +105,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                         break;
                     case Input.Keys.DOWN:
                         if (STATE == State.JUMPING) {
+                            setLinearVelocityY(0);
                             applyImpulseToCenter(new Vector2(0, -jumpingForce));
                         }
                         break;
@@ -114,8 +115,8 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         }
     }
 
-    private void jump(){
-        if (STATE == State.RUNNING){
+    private void jump() {
+        if (STATE == State.RUNNING) {
             applyImpulseToCenter(new Vector2(0, jumpingForce));
             STATE = State.JUMPING;
         }

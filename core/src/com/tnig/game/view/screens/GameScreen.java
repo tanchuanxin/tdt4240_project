@@ -144,8 +144,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
 //        viewport.getCamera().position.set(gameManager.getPlayerPosX(), gameManager.getPlayerPosY(), 0);
         viewport.getCamera().position.set(gameManager.getPlayerPosX(), viewport.getWorldHeight()/2, 0);
 
-        Gdx.app.log("gameManager.getPlayerPosX(): ", String.valueOf(gameManager.getPlayerPosX()));
-        Gdx.app.log("gameManager.getPlayerPosY(): ", String.valueOf(gameManager.getPlayerPosY()));
+//        Gdx.app.log("gameManager.getPlayerPosX(): ", String.valueOf(gameManager.getPlayerPosX()));
+//        Gdx.app.log("gameManager.getPlayerPosY(): ", String.valueOf(gameManager.getPlayerPosY()));
 
         // Update game
         gameManager.update(delta);
@@ -234,35 +234,36 @@ public class GameScreen extends AbstractScreen implements EventListener {
         float mapBtmBound = 0;
         float mapTopBound = this.map.getMapHeightInUnits();
 
-        Gdx.app.log("mapLeftBound: ", String.valueOf(mapLeftBound));
-        Gdx.app.log("mapRightBound: ", String.valueOf(mapRightBound));
-        Gdx.app.log("mapBtmBound: ", String.valueOf(mapBtmBound));
-        Gdx.app.log("mapTopBound: ", String.valueOf(mapTopBound));
+//        Gdx.app.log("mapLeftBound: ", String.valueOf(mapLeftBound));
+//        Gdx.app.log("mapRightBound: ", String.valueOf(mapRightBound));
+//        Gdx.app.log("mapBtmBound: ", String.valueOf(mapBtmBound));
+//        Gdx.app.log("mapTopBound: ", String.valueOf(mapTopBound));
 
         OrthographicCamera cam = (OrthographicCamera) viewport.getCamera();
 
-        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
+//        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
 
         // Check camera bounds
         float cameraHalfWidth = viewport.getScreenWidth() / PPM / map.getTileWidth() ;
         float cameraHalfHeight = viewport.getScreenHeight() / PPM / map.getTileHeight();
-        Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
-        Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
+//        Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
+//        Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
+
         float cameraLeft = cam.position.x - cameraHalfWidth;
         float cameraRight = cam.position.x + cameraHalfWidth;
         float cameraBtm = cam.position.y - cameraHalfHeight;
         float cameraTop = cam.position.y + cameraHalfHeight;
-        Gdx.app.log("cam.viewportWidth: ", String.valueOf(cam.viewportWidth));
-        Gdx.app.log("cam.viewportHeight: ", String.valueOf(cam.viewportHeight));
-        Gdx.app.log("viewport.getScreenWidth(): ", String.valueOf(viewport.getScreenWidth()));
-        Gdx.app.log("viewport.getScreenHeight(): ", String.valueOf(viewport.getScreenHeight()));
-
-        Gdx.app.log("cameraLeft: ", String.valueOf(cameraLeft));
-        Gdx.app.log("cameraRight: ", String.valueOf(cameraRight));
-        Gdx.app.log("cameraBtm: ", String.valueOf(cameraBtm));
-        Gdx.app.log("cameraTop: ", String.valueOf(cameraTop));
-
-        Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
+//        Gdx.app.log("cam.viewportWidth: ", String.valueOf(cam.viewportWidth));
+//        Gdx.app.log("cam.viewportHeight: ", String.valueOf(cam.viewportHeight));
+//        Gdx.app.log("viewport.getScreenWidth(): ", String.valueOf(viewport.getScreenWidth()));
+//        Gdx.app.log("viewport.getScreenHeight(): ", String.valueOf(viewport.getScreenHeight()));
+//
+//        Gdx.app.log("cameraLeft: ", String.valueOf(cameraLeft));
+//        Gdx.app.log("cameraRight: ", String.valueOf(cameraRight));
+//        Gdx.app.log("cameraBtm: ", String.valueOf(cameraBtm));
+//        Gdx.app.log("cameraTop: ", String.valueOf(cameraTop));
+//
+//        Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
 
 
         // Check bounds on left right
@@ -301,7 +302,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 //            cam.position.y = mapTopBound - cam.viewportHeight /2 ;
 //        }
 //
-        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
+//        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
     }
 
 
