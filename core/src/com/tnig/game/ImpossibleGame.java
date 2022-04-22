@@ -1,6 +1,7 @@
 package com.tnig.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.networking.Network;
@@ -22,7 +23,7 @@ public class ImpossibleGame extends Game {
     @Override
     public void create() {
         // Initialize screen manager and set it to loading screen while we load assets
-        camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+        camera.setToOrtho(false);
         ScreenManager screenManager = new ScreenManager(this, camera, assetLoader, network);
 
         network.someFunction();

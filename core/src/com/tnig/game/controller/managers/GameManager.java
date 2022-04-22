@@ -10,6 +10,7 @@ import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.physics_engine.Engine;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,7 +59,6 @@ public class GameManager implements EventListener {
     public void update(float delta){
         // Uses iterator2 instead of for loop so it is possible to remove elements from the list
         // While iterating
-
 
         Iterator<Controller> iterator = controllers.iterator();
         while(iterator.hasNext()){

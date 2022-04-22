@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.tnig.game.controller.InputController;
 import com.tnig.game.controller.game_initializers.GameInitializer;
 import com.tnig.game.controller.game_initializers.NormalGame;
+import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.managers.ScreenManager;
@@ -19,7 +20,8 @@ import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.GameRenderer;
+
+import java.util.List;
 
 
 public class GameScreen extends AbstractScreen {
@@ -27,7 +29,6 @@ public class GameScreen extends AbstractScreen {
     private final Engine engine;
     private final SpriteBatch batch;
     private final GameManager gameManager;
-    private final GameRenderer gameRenderer;
     private final OrthographicCamera gameCamera;
     private final OrthogonalTiledMapRenderer mapRenderer;
     //private final Viewport viewport;
@@ -51,7 +52,6 @@ public class GameScreen extends AbstractScreen {
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
         GameInitializer initializer = new NormalGame(eventManager, engine, assetLoader, map);
         gameManager = new GameManager(eventManager, engine, initializer, map, numberOfPlayers);
-        this.gameRenderer = new GameRenderer(batch, gameManager);
 
         Gdx.input.setInputProcessor(new InputController(eventManager));
 
@@ -86,7 +86,7 @@ public class GameScreen extends AbstractScreen {
         // Render game
         mapRenderer.render();
         batch.begin();
-        gameRenderer.render();
+        renderAnimatedViews();
         batch.end();
         // TODO: Push event game finished
 
@@ -112,6 +112,17 @@ public class GameScreen extends AbstractScreen {
     }
 
 
+    /**
+     * Gets all the animated controllers from the gamemanager and renders all the
+     * Animated views in the game
+     */
+    private void renderAnimatedViews() {
+        List<AnimatedController> controllers = gameManager.getAnimatedControllers();
+
+        for (AnimatedController controller: controllers) {
+            controller.getView().render(batch);
+        }
+    }
 
 
 }
