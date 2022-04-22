@@ -107,6 +107,9 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                         if (STATE == State.JUMPING) {
                             applyImpulseToCenter(new Vector2(0, -jumpingForce));
                         }
+                        break;
+                    default:
+                        setLinearVelocityX(0);
                 }
         }
     }
