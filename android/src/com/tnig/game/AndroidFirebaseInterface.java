@@ -37,11 +37,6 @@ public class AndroidFirebaseInterface implements NetworkService {
         updateHighscore();
     }
 
-    @Override
-    public void someFunction() {
-        System.out.println("Just som android function.");
-    }
-
     /**
      * Creates a new user entity, with name and score, in the highscore database.
      *

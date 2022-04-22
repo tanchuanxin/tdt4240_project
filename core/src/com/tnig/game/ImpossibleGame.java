@@ -24,7 +24,6 @@ public class ImpossibleGame extends Game {
         camera.setToOrtho(false);
         ScreenManager screenManager = new ScreenManager(this, camera, assetLoader, networkService);
 
-        networkService.someFunction();
         networkService.updateHighscore();
         // Fire off event to load assets and display loading screen
         screenManager.setScreen(ScreenName.LOADING);

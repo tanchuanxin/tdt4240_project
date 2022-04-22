@@ -7,11 +7,6 @@ import java.util.ArrayList;
 
 public class DesktopFirebaseInterface implements NetworkService {
     @Override
-    public void someFunction() {
-
-    }
-
-    @Override
     public void pushHighscore(int level, PlayerData firebasePlayer) {
 
     }

@@ -39,10 +39,8 @@ public class MainMenuScreen extends AbstractScreen {
         Button twoPlayerBtn = buttonFactory.createSwitchScreenEventButton(
                 ScreenName.MAP_SELECT, new InitGameEvent(2), "2 Player", true);
 
-
-
         Button leaderboardsBtn = buttonFactory
-                .createSwitchingScreenButton(ScreenName.LEADERBOARDS, "Leaderboards", true);
+                .createSwitchingScreenButton(ScreenName.LEADERBOARD_SELECTION, "Leaderboards", true);
 
         Button exitBtn = buttonFactory
                 .createEventButton(new QuitGameEvent(), "Exit", true);
