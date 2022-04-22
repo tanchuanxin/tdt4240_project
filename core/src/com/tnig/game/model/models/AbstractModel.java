@@ -86,19 +86,19 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
 
     }
 
-    protected float[] getLinearVelocity(){
-        float x = body.getLinearVelocity().x;
-        float y = body.getLinearVelocity().y;
-        return new float[]{x, y};
+    protected Vector2 getLinearVelocity(){
+        return body.getLinearVelocity();
     }
 
-    protected void setLinearVelocityX(int xDir){
+    protected void setLinearVelocityX(float xDir){
         body.setLinearVelocity(new Vector2(xDir, body.getLinearVelocity().y));
     }
 
-    protected void applyForceToCenter(float forceX, float forceY){
-        body.applyForceToCenter(forceX, forceY, true);
+    protected void applyForceToCenter(Vector2 force){
+        body.applyForceToCenter(force, true);
     }
 
-
+    protected void applyImpulseToCenter(Vector2 force){
+        body.applyLinearImpulse(force, body.getWorldCenter(), true);
+    }
 }

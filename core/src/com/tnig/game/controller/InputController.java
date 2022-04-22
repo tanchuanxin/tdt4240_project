@@ -39,7 +39,8 @@ public class InputController implements InputProcessor {
         switch (keycode){
             case Input.Keys.LEFT:
             case Input.Keys.RIGHT:
-                eventManager.pushEvent(new StopPlayer());
+            case Input.Keys.DOWN:
+                eventManager.pushEvent(new StopPlayer(keycode));
                 return true;
         }
         return false;

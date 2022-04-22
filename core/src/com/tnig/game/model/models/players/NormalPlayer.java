@@ -1,5 +1,7 @@
 package com.tnig.game.model.models.players;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
@@ -20,11 +22,9 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     private int score = 1000000;
 
     private final EventManager eventManager;
-    private int speed = 2;
-    private int jumpingForce = 200;
+    private float speed = 2.2f;
+    private float jumpingForce = 3.7f;
     private State STATE = State.RUNNING;
-
-
 
     public enum State{
         JUMPING, RUNNING
@@ -92,14 +92,28 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 }
                 break;
             case STOP_PLAYER:
-                setLinearVelocityX(0);
-
+                switch ((int) event.data.get("key")) {
+                    case Input.Keys.LEFT:
+                        if (getLinearVelocity().x < 0) {
+                            setLinearVelocityX(0);
+                        }
+                        break;
+                    case Input.Keys.RIGHT:
+                        if (getLinearVelocity().x > 0) {
+                            setLinearVelocityX(0);
+                        }
+                        break;
+                    case Input.Keys.DOWN:
+                        if (STATE == State.JUMPING) {
+                            applyImpulseToCenter(new Vector2(0, -jumpingForce));
+                        }
+                }
         }
     }
 
     private void jump(){
         if (STATE == State.RUNNING){
-            applyForceToCenter(0, jumpingForce);
+            applyImpulseToCenter(new Vector2(0, jumpingForce));
             STATE = State.JUMPING;
         }
     }
