@@ -244,10 +244,11 @@ public class GameScreen extends AbstractScreen implements EventListener {
 //        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
 
         // Check camera bounds
-        float cameraHalfWidth = viewport.getScreenWidth() / PPM / map.getTileWidth() * .5f;
-        float cameraHalfHeight = viewport.getScreenHeight() / PPM / map.getTileHeight() * .5f;
+        float cameraHalfWidth = viewport.getScreenWidth() / PPM / map.getTileWidth() ;
+        float cameraHalfHeight = viewport.getScreenHeight() / PPM / map.getTileHeight();
 //        Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
 //        Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
+
         float cameraLeft = cam.position.x - cameraHalfWidth;
         float cameraRight = cam.position.x + cameraHalfWidth;
         float cameraBtm = cam.position.y - cameraHalfHeight;
