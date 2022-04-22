@@ -138,6 +138,7 @@ public class GameManager implements EventListener {
         return game.getPlayer().getModel().getY();
     }
 
+    public Engine getEngine() { return engine; }
 
     public List<Controller> getControllers() {
         return game.getControllers();

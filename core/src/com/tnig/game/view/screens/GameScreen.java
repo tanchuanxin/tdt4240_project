@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -45,6 +46,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final GameManager gameManager;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final FillViewport viewport;
+    private final Box2DDebugRenderer b2dr;
 //    private final OrthographicCamera gameCamera;
 
     private boolean paused = false;
@@ -114,6 +116,9 @@ public class GameScreen extends AbstractScreen implements EventListener {
         tableLeft.setPosition(90, 90);
         tableLeft.add(touchpad);
         stage.addActor(tableLeft);
+
+        // Create debug renderer
+        b2dr = new Box2DDebugRenderer();
     }
 
     @Override
@@ -138,15 +143,11 @@ public class GameScreen extends AbstractScreen implements EventListener {
         viewport.getCamera().update(); // Update our camera every frame
         viewport.getCamera().position.set(gameManager.getPlayerPosX(), gameManager.getPlayerPosY(), 0);
 
-        viewport.getCamera().position.set(gameManager.getPlayerPosX(), viewport.getWorldHeight()/2, 0);
-
-
         Gdx.app.log("gameManager.getPlayerPosX(): ", String.valueOf(gameManager.getPlayerPosX()));
         Gdx.app.log("gameManager.getPlayerPosY(): ", String.valueOf(gameManager.getPlayerPosY()));
 
         // Update game
         gameManager.update(delta);
-
 
         checkCameraBounds(); // Make sure camera doesn't leave the screen
         viewport.getCamera().update();
@@ -171,7 +172,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
             batch.begin();
             renderAnimatedViews();
             batch.end();
-
+            b2dr.render(gameManager.getEngine().getWorld(), viewport.getCamera().combined);
         }
 
         stage.draw();
@@ -189,7 +190,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     @Override
     public void resize(int width, int height) {
-        this.viewport.update(width, height);
+        viewport.update(width, height);
         stage.getViewport().update(width, height, true);
     }
 
