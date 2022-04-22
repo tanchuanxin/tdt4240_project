@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.tnig.game.controller.InputController;
+import com.tnig.game.controller.events.Event;
+import com.tnig.game.controller.events.EventListener;
+import com.tnig.game.controller.events.EventName;
 import com.tnig.game.controller.game_initializers.GameInitializer;
 import com.tnig.game.controller.game_initializers.NormalGame;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
@@ -24,38 +27,51 @@ import com.tnig.game.utilities.AssetLoader;
 import java.util.List;
 
 
-public class GameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen implements EventListener {
     private final ScreenManager screenManager;
-    private final Engine engine;
     private final SpriteBatch batch;
     private final GameManager gameManager;
     private final OrthographicCamera gameCamera;
     private final OrthogonalTiledMapRenderer mapRenderer;
     //private final Viewport viewport;
+    private boolean paused = false;
 
 
     public GameScreen(ScreenManager screenManager,
                       EventManager eventManager,
                       OrthographicCamera camera,
                       AssetLoader assetLoader,
-                      GameMap map,
+                      int mapNumber,
                       int numberOfPlayers) {
         super(camera, assetLoader);
         this.screenManager = screenManager;
         this.batch = new SpriteBatch();
+        GameMap map = new GameMap(mapNumber);
         // Set up game camera and viewport
         // TODO: Fix the hardcoding
         this.gameCamera = new OrthographicCamera(VIEWPORT_WIDTH/2f, VIEWPORT_HEIGHT/2f);
         gameCamera.translate(0, map.getMapHeight() / 2f);
         //viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCamera);
-        engine = new GameWorld(gameCamera);
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
-        GameInitializer initializer = new NormalGame(eventManager, engine, assetLoader, map);
-        gameManager = new GameManager(eventManager, engine, initializer, map, numberOfPlayers);
+        gameManager = new GameManager(eventManager, assetLoader, map, gameCamera, numberOfPlayers);
 
         Gdx.input.setInputProcessor(new InputController(eventManager));
 
+        eventManager.subscribe(EventName.NEW_GAME, this);
+        eventManager.subscribe(EventName.GAME_OVER, this);
 
+
+    }
+
+    @Override
+    public void receiveEvent(Event event) {
+        switch (event.name){
+            case NEW_GAME:
+                gameManager.newGame();
+                break;
+            case GAME_OVER:
+                break;
+        }
     }
 
     @Override
@@ -72,7 +88,6 @@ public class GameScreen extends AbstractScreen {
 
 
         // Update game
-        engine.update(delta);
         gameManager.update(delta);
     }
 
@@ -81,16 +96,28 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        update(delta);
 
-        // Render game
-        mapRenderer.render();
-        batch.begin();
-        renderAnimatedViews();
-        batch.end();
-        // TODO: Push event game finished
+        if (!paused){
+            update(delta);
 
+            // Render game
+            mapRenderer.render();
+            batch.begin();
+            renderAnimatedViews();
+            batch.end();
 
+        }
+
+    }
+
+    @Override
+    public void pause(){
+        paused = true;
+    }
+
+    @Override
+    public void resume(){
+        paused = false;
     }
 
     @Override
@@ -106,9 +133,9 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        engine.dispose();
         gameManager.dispose();
         batch.dispose();
+        mapRenderer.dispose();
     }
 
 
@@ -123,6 +150,7 @@ public class GameScreen extends AbstractScreen {
             controller.getView().render(batch);
         }
     }
+
 
 
 }

@@ -12,7 +12,7 @@ import com.tnig.game.model.models.coins.Coin;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.Constants;
 
-public class NormalPlayer extends AbstractModel implements EventListener {
+public class NormalPlayer extends AbstractModel implements EventListener, Player {
 
     private static final boolean isStatic = false;
     private static final boolean isSensor = false;
@@ -55,12 +55,7 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                     STATE = State.RUNNING;
                 }
                 break;
-
-
         }
-
-
-
     }
 
 
@@ -69,6 +64,13 @@ public class NormalPlayer extends AbstractModel implements EventListener {
 
         score -= 1157 / Constants.FPS;
     }
+
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
 
     @Override
     public ObjectShape GetShapeType() {

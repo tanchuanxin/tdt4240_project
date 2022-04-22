@@ -6,6 +6,7 @@ import com.tnig.game.controller.events.game_events.Jump;
 import com.tnig.game.controller.events.game_events.MoveLeft;
 import com.tnig.game.controller.events.game_events.MoveRight;
 import com.tnig.game.controller.events.game_events.StopPlayer;
+import com.tnig.game.controller.events.screen_events.PauseEvent;
 import com.tnig.game.controller.managers.EventManager;
 
 public class InputController implements InputProcessor {
@@ -28,6 +29,8 @@ public class InputController implements InputProcessor {
             case Input.Keys.SPACE:
                 eventManager.pushEvent(new Jump());
                 return true;
+            case Input.Keys.P:
+                eventManager.pushEvent(new PauseEvent());
         }
         return false;
     }

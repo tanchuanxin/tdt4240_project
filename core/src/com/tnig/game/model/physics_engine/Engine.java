@@ -11,12 +11,20 @@ public interface Engine {
      */
     void update(float delta);
 
+    /**
+     * Initializes a new world
+     */
+    void initNewWorld();
 
     /**
      * Disposes the engine when it is not needed anymore
      */
     void dispose();
 
+    /**
+     * Removes a body connected to a model from the world
+     * @param model
+     */
     void disposeModel(Model model);
 
     /**

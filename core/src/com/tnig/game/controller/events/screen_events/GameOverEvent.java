@@ -5,10 +5,11 @@ import com.tnig.game.controller.events.EventName;
 import com.tnig.game.model.GameState;
 
 import java.util.HashMap;
+import java.util.List;
 
-public class NewGameEvent extends Event {
-    public NewGameEvent(GameState gameState) {
-        name = EventName.NEW_GAME;
+public class GameOverEvent extends Event {
+    public GameOverEvent(GameState gameState) {
+        name = EventName.GAME_OVER;
         data = new HashMap<>();
         data.put("gamestate", gameState);
 

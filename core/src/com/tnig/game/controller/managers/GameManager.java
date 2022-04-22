@@ -1,16 +1,23 @@
 package com.tnig.game.controller.managers;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
+import com.tnig.game.controller.events.screen_events.GameOverEvent;
+import com.tnig.game.controller.events.screen_events.NewGameEvent;
 import com.tnig.game.controller.game_initializers.GameInitializer;
+import com.tnig.game.controller.game_initializers.NormalGame;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.map.GameMap;
+import com.tnig.game.model.GameState;
 import com.tnig.game.model.models.interfaces.Model;
+import com.tnig.game.model.models.players.Player;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.model.physics_engine.GameWorld;
+import com.tnig.game.utilities.AssetLoader;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,36 +27,38 @@ import java.util.List;
  */
 public class GameManager implements EventListener {
 
-    private List<AnimatedController> animatedControllers;
-    private List<Controller> controllers;
-    private Engine engine;
     private final EventManager eventManager;
-    private final int numberOfPlayers;
-    private final AnimatedController player;
+    private Engine engine;
+    private AssetLoader assetLoader;
+    private int playersLeft;
     private final GameMap map;
-    private State STATE;
+    private GameInitializer game;
 
-    public enum State{
-        PLAYING,
-        NEW_GAME,
-        GAME_OVER
-    }
 
     public GameManager(EventManager eventManager,
-                       Engine engine,
-                       GameInitializer initializer,
+                       AssetLoader assetLoader,
                        GameMap map,
+                       OrthographicCamera gameCam,
                        int numberOfPlayers) {
         this.eventManager = eventManager;
-        this.engine = engine;
-        this.numberOfPlayers = numberOfPlayers;
         this.map = map;
-        animatedControllers = initializer.getAnimatedControllers();
-        controllers = initializer.getControllers();
-        player = initializer.getPlayer();
+        this.assetLoader = assetLoader;
+        engine = new GameWorld(gameCam);
+        game = new NormalGame(eventManager, engine, assetLoader, map);
+        playersLeft = numberOfPlayers - 1;
 
         eventManager.subscribe(EventName.PLAYER_DEAD, this);
         eventManager.subscribe(EventName.DISPOSE_SPRITE, this);
+    }
+
+    public void newGame(){
+        if (playersLeft <= 0){
+            throw new IllegalStateException("Players left cant be 0");
+        }
+        playersLeft -= 1;
+        engine.initNewWorld();
+        game = new NormalGame(eventManager, engine, assetLoader, map);
+
     }
 
     /**
@@ -59,8 +68,9 @@ public class GameManager implements EventListener {
     public void update(float delta){
         // Uses iterator2 instead of for loop so it is possible to remove elements from the list
         // While iterating
+        engine.update(delta);
 
-        Iterator<Controller> iterator = controllers.iterator();
+        Iterator<Controller> iterator = game.getControllers().iterator();
         while(iterator.hasNext()){
             Controller controller = iterator.next();
             if (controller.isDisposable()){
@@ -73,7 +83,7 @@ public class GameManager implements EventListener {
         }
 
         // Update animatied controllers
-        Iterator<AnimatedController> iterator2 = animatedControllers.iterator();
+        Iterator<AnimatedController> iterator2 = game.getAnimatedControllers().iterator();
         while(iterator2.hasNext()){
             AnimatedController controller = iterator2.next();
             if (controller.isDisposable()){
@@ -88,46 +98,42 @@ public class GameManager implements EventListener {
 
     }
 
-
-
-
-
-    public void dispose(){
-        animatedControllers = null;
-        controllers = null;
-        engine = null;
-
-    }
-
-    public List<AnimatedController> getAnimatedControllers() {
-        return animatedControllers;
-    }
-
-    public float getPlayerPosX() {
-        return player.getModel().getX();
-    }
-
-    public float getPlayerPosY() {
-        return player.getModel().getY();
-    }
-
-    public List<Controller> getControllers() {
-        return controllers;
-    }
-
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
+    private GameState createGameState(){
+        Player player = (Player) game.getPlayer().getModel();
+        return new GameState(player.getScore(), map.getMapNumber());
     }
 
     @Override
     public void receiveEvent(Event event) {
         switch (event.name){
             case PLAYER_DEAD:
-                STATE = State.NEW_GAME;
+                if (playersLeft > 0){
+                    eventManager.pushEvent(new NewGameEvent(createGameState()));
+                }
+                else {
+                    eventManager.pushEvent(new GameOverEvent(createGameState()));
+                }
                 break;
             case DISPOSE_SPRITE:
                 Model model = (Model) event.data.get("object");
                 map.disposeTile(model.getX(), model.getY());
         }
+    }
+
+    public void dispose(){
+        engine.dispose();
+
+    }
+
+    public List<AnimatedController> getAnimatedControllers() {
+        return game.getAnimatedControllers();
+    }
+
+    public float getPlayerPosX() {
+        return game.getPlayer().getModel().getX();
+    }
+
+    public List<Controller> getControllers() {
+        return game.getControllers();
     }
 }

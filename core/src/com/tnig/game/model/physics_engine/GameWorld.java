@@ -12,14 +12,13 @@ import com.tnig.game.model.models.interfaces.Model;
  * This class encapsulates the Box2D world, decoupling it from the rest of the project
  */
 public class GameWorld implements Engine{
-    private final World world;
+    private World world;
     private final Box2DDebugRenderer b2dr;
     private final OrthographicCamera b2drCam;
 
     public GameWorld(OrthographicCamera gameCam) {
         // Initialize Box2D World
-        world = new World(new Vector2(0,-10), true);
-        world.setContactListener(new WorldContactListener());
+        initNewWorld();
         b2dr = new Box2DDebugRenderer();
         b2drCam = gameCam;
 
@@ -27,10 +26,17 @@ public class GameWorld implements Engine{
 
     }
 
+
     @Override
     public void update(float delta) {
         world.step(delta, 6, 2);
         b2dr.render(world, b2drCam.combined.scl(PPM));
+    }
+
+    @Override
+    public void initNewWorld() {
+        world = new World(new Vector2(0,-10), true);
+        world.setContactListener(new WorldContactListener());
     }
 
     @Override

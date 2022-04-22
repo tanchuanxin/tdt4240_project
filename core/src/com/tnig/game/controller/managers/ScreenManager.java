@@ -3,12 +3,9 @@ package com.tnig.game.controller.managers;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.tnig.game.controller.map.GameMap;
+import com.tnig.game.model.GameState;
 import com.tnig.game.model.networking.Network;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.utilities.Constants;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventName;
@@ -20,6 +17,9 @@ import com.tnig.game.view.screens.MainMenuScreen;
 import com.tnig.game.view.screens.MapSelectScreen;
 import com.tnig.game.view.screens.ScreenName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ScreenManager implements EventListener {
     private final EventManager eventManager = new EventManager();
     private final Game game;
@@ -28,6 +28,7 @@ public class ScreenManager implements EventListener {
     private final Network network;
     private int mapNumber = -1;
     private int numberOfPlayers = -1;
+    private List<GameState> gameStates = new ArrayList<>();
 
     public ScreenManager(Game game, OrthographicCamera camera, AssetLoader assetLoader, Network network) {
         this.game = game;
@@ -38,7 +39,10 @@ public class ScreenManager implements EventListener {
         // Subscribe to events
 
         eventManager.subscribe(EventName.MAP_SELECTED, this);
+        eventManager.subscribe(EventName.INIT_GAME, this);
+        eventManager.subscribe(EventName.GAME_OVER, this);
         eventManager.subscribe(EventName.NEW_GAME, this);
+        eventManager.subscribe(EventName.PAUSE, this);
     }
 
     /**
@@ -50,11 +54,18 @@ public class ScreenManager implements EventListener {
             case MAP_SELECTED:
                 mapNumber = (int) event.data.get("mapNum");
                 break;
-            case NEW_GAME:
+            case INIT_GAME:
                 numberOfPlayers = (int) event.data.get("numOfPlayers");
                 break;
+            case NEW_GAME:
+            case GAME_OVER:
+                gameStates.add((GameState) event.data.get("gamestate"));
+                break;
+            case PAUSE:
+                game.pause();
             case QUIT_GAME:
                 quitGame();
+                break;
         }
 
     }
@@ -72,12 +83,8 @@ public class ScreenManager implements EventListener {
                 if (mapNumber == -1){
                     throw new IllegalStateException("Map hasnt been updated");
                 }
-                String mapLocation = getMapLocation(mapNumber);
-                GameMap map = new GameMap(mapLocation);
-                Gdx.app.log("Map", mapLocation);
-                Gdx.app.log("Number of Players", String.valueOf(numberOfPlayers));
 
-                game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, map, numberOfPlayers));
+                game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, mapNumber, numberOfPlayers));
                 break;
             case MAP_SELECT:
                 game.setScreen(new MapSelectScreen(this, camera, assetLoader, eventManager));
@@ -98,18 +105,4 @@ public class ScreenManager implements EventListener {
         Gdx.app.exit();
     }
 
-    private String getMapLocation(int mapNumber){
-        return(Constants.MAP_ASSET_LOCATION + "map" + String.valueOf(mapNumber) + ".tmx");
-//        switch (mapNumber){
-//            case 1:
-//                return Constants.map1;
-//            case 2:
-//                return Constants.map2;
-//            case 3:
-//                return Constants.map3;
-//            default:
-//                throw new IllegalArgumentException("Havent implemented map number:" + mapNumber);
-//
-//        }
-    }
 }

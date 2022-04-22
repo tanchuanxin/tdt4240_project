@@ -8,15 +8,16 @@ import com.tnig.game.utilities.Constants;
 
 public class GameMap {
 
-    private final int mapWidthInPixels;
-    private int mapHeightInPixels;
-    private int tileWidth;
-    private int tileHeight;
+    private final int mapWidthInPixels, mapHeightInPixels;
+    private final int tileWidth, tileHeight;
+    private final int mapWidthInTiles, mapHeightInTiles;
+    private final int mapNumber;
 
     private final TiledMap tiledMap;
 
-    public GameMap(String mapLocation) {
-        int mapWidthInTiles, mapHeightInTiles;
+    public GameMap(int mapNUmber) {
+        this.mapNumber = mapNUmber;
+        String mapLocation = getMapLocation(mapNUmber);
 
         tiledMap = new TmxMapLoader().load(mapLocation);
 
@@ -27,6 +28,10 @@ public class GameMap {
         mapHeightInTiles  = properties.get("height", Integer.class);
         mapWidthInPixels  = mapWidthInTiles  * tileWidth;
         mapHeightInPixels = mapHeightInTiles * tileHeight;
+    }
+
+    public int getMapNumber() {
+        return mapNumber;
     }
 
     public int getMapHeight() {
@@ -53,6 +58,12 @@ public class GameMap {
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(Constants.graphicsLayer);
         TiledMapTileLayer.Cell cell = layer.getCell((int) x / tileWidth, (int) y / tileHeight);
         cell.setTile(null);
+
+    }
+
+
+    private String getMapLocation(int mapNumber){
+        return(Constants.MAP_ASSET_LOCATION + "map" + String.valueOf(mapNumber) + ".tmx");
 
     }
 }
