@@ -2,7 +2,7 @@ package com.tnig.game.model.networking;
 
 import java.util.ArrayList;
 
-public class CoreFirebaseInterface  implements Network{
+public class CoreFirebaseInterface  implements NetworkService {
 
     @Override
     public void someFunction() {

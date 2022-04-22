@@ -3,7 +3,6 @@ package com.tnig.game.desktop;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.tnig.game.ImpossibleGame;
-import com.tnig.game.model.networking.Network;
 
 import static com.tnig.game.utilities.Constants.FPS;
 import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;

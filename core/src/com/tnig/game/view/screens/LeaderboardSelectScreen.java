@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
-import com.tnig.game.model.networking.Network;
+import com.tnig.game.model.networking.NetworkService;
 import com.tnig.game.utilities.AssetLoader;
 
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ public class LeaderboardSelectScreen extends AbstractScreen {
                                    OrthographicCamera camera,
                                    AssetLoader assetLoader,
                                    final EventManager eventManager,
-                                   Network network) {
+                                   NetworkService networkService) {
         super(camera, assetLoader);
-        ArrayList<Integer> levelNum = new ArrayList<>(network.getLevels());
+        ArrayList<Integer> levelNum = new ArrayList<>(networkService.getLevels());
         Table table = new Table();
 
         // Create actors

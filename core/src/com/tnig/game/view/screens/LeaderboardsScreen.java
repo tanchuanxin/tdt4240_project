@@ -10,7 +10,7 @@ import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
-import com.tnig.game.model.networking.Network;
+import com.tnig.game.model.networking.NetworkService;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.controller.events.EventName;
 
@@ -24,7 +24,7 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
                               OrthographicCamera camera,
                               AssetLoader assetLoader,
                               final EventManager eventManager,
-                              Network network) {
+                              NetworkService networkService) {
         super(camera, assetLoader);
         eventManager.subscribe(EventName.VIEW_LEADERBOARDS, this);
         Table table = new Table();
@@ -53,7 +53,7 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
         table.add(selectMap).center().fillX();
 
         int counter = 0;
-        for (ArrayList<String> internalList : network.getHighScore(mapNum)) {
+        for (ArrayList<String> internalList : networkService.getHighScore(mapNum)) {
             counter++;
             table.row().spaceBottom(20f);
             for (String user : internalList) {

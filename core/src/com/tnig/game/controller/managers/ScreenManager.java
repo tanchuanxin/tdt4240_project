@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.model.GameState;
-import com.tnig.game.model.networking.Network;
+import com.tnig.game.model.networking.NetworkService;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.Event;
@@ -25,16 +25,16 @@ public class ScreenManager implements EventListener {
     private final Game game;
     private final OrthographicCamera camera;
     private final AssetLoader assetLoader;
-    private final Network network;
+    private final NetworkService networkService;
     private int mapNumber = -1;
     private int numberOfPlayers = -1;
     private List<GameState> gameStates = new ArrayList<>();
 
-    public ScreenManager(Game game, OrthographicCamera camera, AssetLoader assetLoader, Network network) {
+    public ScreenManager(Game game, OrthographicCamera camera, AssetLoader assetLoader, NetworkService networkService) {
         this.game = game;
         this.camera = camera;
         this.assetLoader = assetLoader;
-        this.network = network;
+        this.networkService = networkService;
 
         // Subscribe to events
 
@@ -90,10 +90,10 @@ public class ScreenManager implements EventListener {
                 game.setScreen(new MapSelectScreen(this, camera, assetLoader, eventManager));
                 break;
             case LEADERBOARDSELECTION:
-                game.setScreen(new LeaderboardSelectScreen(this, camera, assetLoader, eventManager, network));
+                game.setScreen(new LeaderboardSelectScreen(this, camera, assetLoader, eventManager, networkService));
                 break;
             case LEADERBOARDS:
-                game.setScreen(new LeaderboardsScreen(this, camera, assetLoader, eventManager, network));
+                game.setScreen(new LeaderboardsScreen(this, camera, assetLoader, eventManager, networkService));
                 break;
             case GAME_OVER:
                 throw new IllegalArgumentException("Not implemented yet");
