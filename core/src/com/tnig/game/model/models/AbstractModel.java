@@ -17,7 +17,8 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     private boolean disposable = false;
 
 
-    protected AbstractModel(Engine engine, float x, float y, float width, float height,
+    protected AbstractModel(Engine engine,
+                            float x, float y, float width, float height,
                             boolean isStatic, boolean isSensor, ModelType type) {
         this.width = width;
         this.height = height;
@@ -89,8 +90,10 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
         return body.getLinearVelocity();
     }
 
-    protected void setLinearVelocity(Vector2 dir){
-        body.setLinearVelocity(dir);
+
+    protected void setLinearVelocityX(int xDir){
+        body.setLinearVelocity(new Vector2(xDir, body.getLinearVelocity().y));
+
     }
 
     protected void applyForceToCenter(Vector2 dir){
@@ -100,4 +103,6 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     protected void applyImpulseToCenter(Vector2 dir) {
         body.applyLinearImpulse(dir, body.getWorldCenter(), true);
     }
+
+
 }

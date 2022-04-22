@@ -27,7 +27,7 @@ public class StaticTriangleBody extends BodyBuilder {
         shape.setAsBox(object.getWidth() / 2, object.getHeight() / 2);
         return shape;
     }
-
+  
     @Override
     protected void addToBodyDef(BodyDef bodyDef) {
         // TODO: set bodydef

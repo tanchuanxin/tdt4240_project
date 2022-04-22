@@ -13,7 +13,7 @@ public class PlayerFactory {
         PlayerType type = (PlayerType) modelType;
         switch (type){
             case NORMALPLAYER:
-                return new NormalPlayer(eventManager, engine, x, y, width, height);
+                return new NormalPlayer(eventManager, engine, x, y, width, height, type);
             case MOCK:
                 throw new IllegalArgumentException("Not created model for Mock");
             default:
