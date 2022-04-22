@@ -34,6 +34,7 @@ import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.ui_components.ButtonFactory;
+import com.tnig.game.utilities.Constants;
 
 import java.util.List;
 
@@ -44,6 +45,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final GameManager gameManager;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final FillViewport viewport;
+//    private final OrthographicCamera gameCamera;
+
     private boolean paused = false;
     private final Stage stage;
 
@@ -58,8 +61,12 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.batch = new SpriteBatch();
         GameMap map = new GameMap(mapNumber);
 
+//        this.gameCamera = new OrthographicCamera();
+//        this.viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
+//        viewport.apply(true);
+
         // Create viewport
-        viewport = new FillViewport(map.getWidthInUnits(), map.getHeightInUnits());
+        viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
         viewport.apply(true);
 
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
@@ -128,10 +135,19 @@ public class GameScreen extends AbstractScreen implements EventListener {
         // Update camera
         viewport.getCamera().update(); // Update our camera every frame
         viewport.getCamera().position.set(gameManager.getPlayerPosX(), gameManager.getPlayerPosY(), 0);
-        checkCameraBounds(); // Make sure camera doesn't leave the screen
+
+        viewport.getCamera().position.set(gameManager.getPlayerPosX(), viewport.getWorldHeight()/2, 0);
+
+
+        Gdx.app.log("gameManager.getPlayerPosX(): ", String.valueOf(gameManager.getPlayerPosX()));
+        Gdx.app.log("gameManager.getPlayerPosY(): ", String.valueOf(gameManager.getPlayerPosY()));
 
         // Update game
         gameManager.update(delta);
+
+
+        checkCameraBounds(); // Make sure camera doesn't leave the screen
+        viewport.getCamera().update();
 
         // Make map and spritebatch only draw what the camera can see
         mapRenderer.setView((OrthographicCamera) viewport.getCamera());
@@ -206,39 +222,75 @@ public class GameScreen extends AbstractScreen implements EventListener {
      * Sets bounds on the camera so it never leaves the screen
      */
     private void checkCameraBounds() {
-//        float mapLeftBound = 0;
-//        float mapRightBound = mapWidthInUnits;
-//        float mapBtmBound = 0;
-//        float mapTopBound = mapHeightInUnits;
-//
-//        Gdx.app.log("Map right bound: ", String.valueOf(mapRightBound));
-//        Gdx.app.log("Map left bound: ", String.valueOf(mapLeftBound));
-//
-//        OrthographicCamera cam = (OrthographicCamera) viewport.getCamera();
-//
-//        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
-//
-//        // Check camera bounds
-//        float cameraLeft = cam.position.x - cam.viewportWidth / 2;
-//        float cameraRight = cam.position.x + cam.viewportWidth / 2;
-//        float cameraBtm = cam.position.y - cam.viewportHeight / 2;
-//        float cameraTop = cam.position.y + cam.viewportHeight / 2;
-//
-//        // Check bounds on left right
-//        if (cameraLeft <= mapLeftBound) {
-//            cam.position.x = mapLeftBound + cam.viewportWidth / 2;
-//        } else if (cameraRight >= mapRightBound) {
-//            cam.position.x = mapRightBound - cam.viewportWidth / 2;
+        float mapLeftBound = 0;
+        float mapRightBound = 1024 / Constants.PPM;
+        float mapBtmBound = 0;
+        float mapTopBound = 208 / Constants.PPM;
+
+        Gdx.app.log("mapLeftBound: ", String.valueOf(mapLeftBound));
+        Gdx.app.log("mapRightBound: ", String.valueOf(mapRightBound));
+        Gdx.app.log("mapBtmBound: ", String.valueOf(mapBtmBound));
+        Gdx.app.log("mapTopBound: ", String.valueOf(mapTopBound));
+
+        OrthographicCamera cam = (OrthographicCamera) viewport.getCamera();
+
+        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
+
+        // Check camera bounds
+        float cameraHalfWidth = viewport.getScreenWidth() / Constants.PPM / 16 * .5f;
+        float cameraHalfHeight = viewport.getScreenHeight() / Constants.PPM / 16 * .5f;
+        Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
+        Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
+        float cameraLeft = cam.position.x - cameraHalfWidth;
+        float cameraRight = cam.position.x + cameraHalfWidth;
+        float cameraBtm = cam.position.y - cameraHalfHeight;
+        float cameraTop = cam.position.y + cameraHalfHeight;
+        Gdx.app.log("cam.viewportWidth: ", String.valueOf(cam.viewportWidth));
+        Gdx.app.log("cam.viewportHeight: ", String.valueOf(cam.viewportHeight));
+        Gdx.app.log("viewport.getScreenWidth(): ", String.valueOf(viewport.getScreenWidth()));
+        Gdx.app.log("viewport.getScreenHeight(): ", String.valueOf(viewport.getScreenHeight()));
+
+        Gdx.app.log("cameraLeft: ", String.valueOf(cameraLeft));
+        Gdx.app.log("cameraRight: ", String.valueOf(cameraRight));
+        Gdx.app.log("cameraBtm: ", String.valueOf(cameraBtm));
+        Gdx.app.log("cameraTop: ", String.valueOf(cameraTop));
+
+        Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
+
+
+        // Check bounds on left right
+        if (cameraLeft <= mapLeftBound) {
+            cam.position.x = mapLeftBound + cameraHalfWidth ;
+        } else if (cameraRight >= mapRightBound) {
+            cam.position.x = mapRightBound - cameraHalfWidth;
+        }
+
+//        // Check bounds on btm top
+//        if (cameraBtm <= mapBtmBound) {
+//            cam.position.y = mapBtmBound + cameraHalfHeight ;
+//        } else if (cameraTop >= mapRightBound) {
+//            cam.position.y = mapTopBound - cameraHalfHeight;
+//        }
+
+        // Horizontal axis
+//        if (Constants.VIEWPORT_WIDTH < cam.viewportWidth) {
+//            cam.position.x = mapRightBound / 2;
+//        } else {
+//            if (cameraLeft <= mapLeftBound) {
+//                cam.position.x = mapLeftBound + cameraHalfWidth;
+//            } else if (cameraRight >= mapRightBound) {
+//                cam.position.x = mapRightBound - cameraHalfWidth;
+//            }
 //        }
 //
 //        // Check bounds on top down
 //        if (cameraBtm <= mapBtmBound) {
-//            cam.position.y = mapBtmBound + cam.viewportHeight / 2;
+//            cam.position.y = mapBtmBound + cam.viewportHeight /2 ;
 //        } else if (cameraTop >= mapTopBound) {
-//            cam.position.y = mapTopBound - cam.viewportHeight / 2;
+//            cam.position.y = mapTopBound - cam.viewportHeight /2 ;
 //        }
 //
-//        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
+        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
     }
 
 

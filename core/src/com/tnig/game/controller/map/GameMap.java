@@ -2,6 +2,7 @@ package com.tnig.game.controller.map;
 
 import static com.tnig.game.utilities.Constants.PPM;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -13,6 +14,7 @@ public class GameMap {
     private final int mapWidthInPixels, mapHeightInPixels;
     private final int tileWidth, tileHeight;
     private final int mapWidthInTiles, mapHeightInTiles;
+    private final float mapWidthInUnits, mapHeightInUnits;
     private final int mapNumber;
 
     private final TiledMap tiledMap;
@@ -30,26 +32,36 @@ public class GameMap {
         mapHeightInTiles  = properties.get("height", Integer.class);
         mapWidthInPixels  = mapWidthInTiles  * tileWidth;
         mapHeightInPixels = mapHeightInTiles * tileHeight;
+        mapWidthInUnits = mapWidthInPixels / PPM;
+        mapHeightInUnits = mapHeightInPixels / PPM;
+
+        Gdx.app.log("tileWidth: ", String.valueOf(tileWidth));
+        Gdx.app.log("mapWidthInTiles: ", String.valueOf(mapWidthInTiles));
+        Gdx.app.log("mapWidthInPixels: ", String.valueOf(mapWidthInPixels));
+        Gdx.app.log("tileHeight: ", String.valueOf(tileHeight));
+        Gdx.app.log("mapHeightInTiles: ", String.valueOf(mapHeightInTiles));
+        Gdx.app.log("mapHeightInPixels: ", String.valueOf(mapHeightInPixels));
+        Gdx.app.log("ppm: ", String.valueOf(Constants.PPM));
     }
 
     public int getMapNumber() {
         return mapNumber;
     }
 
-    public int getHeight() {
+    public int getMapHeightInPixels() {
         return mapHeightInPixels;
     }
 
-    public int getWidth() {
+    public int getMapWidthInPixels() {
         return mapWidthInPixels;
     }
 
-    public float getWidthInUnits(){
-        return mapHeightInPixels / PPM;
+    public float getMapWidthInUnits(){
+        return mapWidthInUnits;
     }
 
-    public float getHeightInUnits(){
-        return mapHeightInPixels / PPM;
+    public float getMapHeightInUnits(){
+        return mapHeightInUnits;
     }
 
     public int getTileWidth() {
