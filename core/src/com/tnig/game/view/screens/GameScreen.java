@@ -1,27 +1,22 @@
 package com.tnig.game.view.screens;
 
 import static com.tnig.game.utilities.Constants.PPM;
-import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
-import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.tnig.game.controller.InputController;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
-import com.tnig.game.controller.game_initializers.GameInitializer;
-import com.tnig.game.controller.game_initializers.NormalGame;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.controller.map.GameMap;
-import com.tnig.game.model.physics_engine.Engine;
-import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
 
 import java.util.List;
@@ -31,9 +26,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final ScreenManager screenManager;
     private final SpriteBatch batch;
     private final GameManager gameManager;
-    private final OrthographicCamera gameCamera;
     private final OrthogonalTiledMapRenderer mapRenderer;
-    //private final Viewport viewport;
+    private final FillViewport viewport;
     private boolean paused = false;
 
 
@@ -47,13 +41,16 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.screenManager = screenManager;
         this.batch = new SpriteBatch();
         GameMap map = new GameMap(mapNumber);
-        // Set up game camera and viewport
-        // TODO: Fix the hardcoding
-        this.gameCamera = new OrthographicCamera(VIEWPORT_WIDTH/2f, VIEWPORT_HEIGHT/2f);
-        gameCamera.translate(0, map.getMapHeight() / 2f);
-        //viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, gameCamera);
+
+
+        // Create viewport
+        viewport = new FillViewport(map.getWidthInUnits(), map.getHeightInUnits());
+        viewport.apply(true);
+
         mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
-        gameManager = new GameManager(eventManager, assetLoader, map, gameCamera, numberOfPlayers);
+        mapRenderer.setView((OrthographicCamera) viewport.getCamera());
+
+        gameManager = new GameManager(eventManager, assetLoader, map, viewport, numberOfPlayers);
 
         Gdx.input.setInputProcessor(new InputController(eventManager));
 
@@ -81,14 +78,18 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
 
     private void update(float delta){
-        gameCamera.position.x = gameManager.getPlayerPosX();
-        mapRenderer.setView(gameCamera);
-        gameCamera.update(); //update our camera every frame
-        batch.setProjectionMatrix(gameCamera.combined); //say the batch to only draw what we see in our camera
 
+        // Update camera
+        viewport.getCamera().update(); // Update our camera every frame
+        viewport.getCamera().position.set(gameManager.getPlayerPosX(), gameManager.getPlayerPosY(), 0);
+        checkCameraBounds(); // Make sure camera doesn't leave the screen
 
         // Update game
         gameManager.update(delta);
+
+        // Make map and spritebatch only draw what the camera can see
+        mapRenderer.setView((OrthographicCamera) viewport.getCamera());
+        batch.setProjectionMatrix(viewport.getCamera().combined);
     }
 
     @Override
@@ -122,7 +123,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     @Override
     public void resize(int width, int height) {
-        //this.viewport.update(width, height);
+        this.viewport.update(width, height);
     }
 
     @Override
@@ -149,6 +150,45 @@ public class GameScreen extends AbstractScreen implements EventListener {
         for (AnimatedController controller: controllers) {
             controller.getView().render(batch);
         }
+    }
+
+    /**
+     * Sets bounds on the camera so it never leaves the screen
+     */
+    private void checkCameraBounds() {
+//        float mapLeftBound = 0;
+//        float mapRightBound = mapWidthInUnits;
+//        float mapBtmBound = 0;
+//        float mapTopBound = mapHeightInUnits;
+//
+//        Gdx.app.log("Map right bound: ", String.valueOf(mapRightBound));
+//        Gdx.app.log("Map left bound: ", String.valueOf(mapLeftBound));
+//
+//        OrthographicCamera cam = (OrthographicCamera) viewport.getCamera();
+//
+//        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
+//
+//        // Check camera bounds
+//        float cameraLeft = cam.position.x - cam.viewportWidth / 2;
+//        float cameraRight = cam.position.x + cam.viewportWidth / 2;
+//        float cameraBtm = cam.position.y - cam.viewportHeight / 2;
+//        float cameraTop = cam.position.y + cam.viewportHeight / 2;
+//
+//        // Check bounds on left right
+//        if (cameraLeft <= mapLeftBound) {
+//            cam.position.x = mapLeftBound + cam.viewportWidth / 2;
+//        } else if (cameraRight >= mapRightBound) {
+//            cam.position.x = mapRightBound - cam.viewportWidth / 2;
+//        }
+//
+//        // Check bounds on top down
+//        if (cameraBtm <= mapBtmBound) {
+//            cam.position.y = mapBtmBound + cam.viewportHeight / 2;
+//        } else if (cameraTop >= mapTopBound) {
+//            cam.position.y = mapTopBound - cam.viewportHeight / 2;
+//        }
+//
+//        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
     }
 
 

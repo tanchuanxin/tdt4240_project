@@ -1,5 +1,7 @@
 package com.tnig.game.controller.game_initializers;
 
+import static com.tnig.game.utilities.Constants.PPM;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -86,8 +88,8 @@ public class NormalGame implements GameInitializer {
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
             Controller controller = new StaticObjectController(
-                    eventManager, engine,rect.x + rect.width / 2, rect.y + rect.height / 2,
-                    rect.width, rect.height, modelType);
+                    eventManager, engine, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
+                    rect.width / PPM, rect.height / PPM, modelType);
 
             controllers.add(controller);
         }
@@ -103,8 +105,8 @@ public class NormalGame implements GameInitializer {
             Rectangle rect = object.getRectangle();
 
             animatedController = new AnimatedObjectController(
-                   eventManager, engine, assetLoader, rect.x - rect.width / 2, rect.y,
-                    rect.width, rect.height, modelType);
+                    eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
+                    rect.width / PPM, rect.height / PPM, modelType);
 
             animatedControllers.add(animatedController);
 

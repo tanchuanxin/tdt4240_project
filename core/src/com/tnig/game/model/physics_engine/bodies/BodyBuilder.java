@@ -1,6 +1,5 @@
 package com.tnig.game.model.physics_engine.bodies;
 
-import static com.tnig.game.utilities.Constants.PPM;
 
 
 import com.badlogic.gdx.physics.box2d.Body;
@@ -50,7 +49,7 @@ public abstract class BodyBuilder {
         bodyDef.fixedRotation = true;
 
         // World units = meters, from world to screen -> Divide by Pixel Per Meter
-        bodyDef.position.set(x / PPM, y / PPM);
+        bodyDef.position.set(x, y);
 
         addToBodyDef(bodyDef);
         //Puts the body in the Box2D world
@@ -63,7 +62,7 @@ public abstract class BodyBuilder {
 
         fixtureDef.density = 20;
         fixtureDef.friction = 0f;
-        fixtureDef.restitution = 0.2f;
+        fixtureDef.restitution = 0f;
         addToFixtureDef(fixtureDef);
 
         // Sets the model as userdata for the contactlistener
@@ -84,11 +83,11 @@ public abstract class BodyBuilder {
         switch (object.GetShapeType()){
             case BOX:
                 shape = new PolygonShape();
-                ((PolygonShape) shape).setAsBox(object.getWidth() / 2 / PPM, object.getHeight() / 2 / PPM);
+                ((PolygonShape) shape).setAsBox(object.getWidth() / 2 , object.getHeight() / 2);
                 break;
             case CIRCLE:
                 shape = new CircleShape();
-                shape.setRadius(object.getWidth() / 2 / PPM);
+                shape.setRadius(object.getWidth() / 2 );
                 break;
             case POLYGON:
                 //TODO: Make possible for different polygons;

@@ -1,5 +1,7 @@
 package com.tnig.game.controller.map;
 
+import static com.tnig.game.utilities.Constants.PPM;
+
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -34,12 +36,20 @@ public class GameMap {
         return mapNumber;
     }
 
-    public int getMapHeight() {
+    public int getHeight() {
         return mapHeightInPixels;
     }
 
-    public int getMapWidth() {
+    public int getWidth() {
         return mapWidthInPixels;
+    }
+
+    public float getWidthInUnits(){
+        return mapHeightInPixels / PPM;
+    }
+
+    public float getHeightInUnits(){
+        return mapHeightInPixels / PPM;
     }
 
     public int getTileWidth() {
@@ -54,7 +64,14 @@ public class GameMap {
         return tiledMap;
     }
 
-    public void disposeTile(float x, float y){
+    /**
+     * Removes the graphic from the given tile
+     * @param x the x-position given in units
+     * @param y the y-position given in units
+     */
+    public void disposeGraphicOnTile(float x, float y){
+        x *= PPM;
+        y *= PPM;
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(Constants.graphicsLayer);
         TiledMapTileLayer.Cell cell = layer.getCell((int) x / tileWidth, (int) y / tileHeight);
         cell.setTile(null);

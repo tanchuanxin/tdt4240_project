@@ -1,6 +1,6 @@
 package com.tnig.game.controller.managers;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
@@ -38,12 +38,12 @@ public class GameManager implements EventListener {
     public GameManager(EventManager eventManager,
                        AssetLoader assetLoader,
                        GameMap map,
-                       OrthographicCamera gameCam,
+                       Viewport viewport,
                        int numberOfPlayers) {
         this.eventManager = eventManager;
         this.map = map;
         this.assetLoader = assetLoader;
-        engine = new GameWorld(gameCam);
+        engine = new GameWorld(viewport);
         game = new NormalGame(eventManager, engine, assetLoader, map);
         playersLeft = numberOfPlayers - 1;
 
@@ -116,7 +116,7 @@ public class GameManager implements EventListener {
                 break;
             case DISPOSE_SPRITE:
                 Model model = (Model) event.data.get("object");
-                map.disposeTile(model.getX(), model.getY());
+                map.disposeGraphicOnTile(model.getX(), model.getY());
         }
     }
 
@@ -132,6 +132,11 @@ public class GameManager implements EventListener {
     public float getPlayerPosX() {
         return game.getPlayer().getModel().getX();
     }
+
+    public float getPlayerPosY() {
+        return game.getPlayer().getModel().getY();
+    }
+
 
     public List<Controller> getControllers() {
         return game.getControllers();

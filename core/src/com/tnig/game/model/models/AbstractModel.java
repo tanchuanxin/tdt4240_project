@@ -1,6 +1,5 @@
 package com.tnig.game.model.models;
 
-import static com.tnig.game.utilities.Constants.PPM;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -37,11 +36,11 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     }
 
     public float getX(){
-        return body.getPosition().x * PPM;
+        return body.getPosition().x;
     }
 
     public float getY(){
-        return body.getPosition().y * PPM;
+        return body.getPosition().y;
     }
 
     public float getHeight() {

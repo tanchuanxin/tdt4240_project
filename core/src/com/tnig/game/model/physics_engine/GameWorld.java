@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tnig.game.model.models.interfaces.Model;
 
 /**
@@ -14,13 +15,14 @@ import com.tnig.game.model.models.interfaces.Model;
 public class GameWorld implements Engine{
     private World world;
     private final Box2DDebugRenderer b2dr;
-    private final OrthographicCamera b2drCam;
+    private final Viewport viewport;
+    private final int gravity = -10;
 
-    public GameWorld(OrthographicCamera gameCam) {
+    public GameWorld(Viewport viewport) {
         // Initialize Box2D World
         initNewWorld();
         b2dr = new Box2DDebugRenderer();
-        b2drCam = gameCam;
+        this.viewport = viewport;
 
         // Set up game camera and viewport
 
@@ -30,12 +32,12 @@ public class GameWorld implements Engine{
     @Override
     public void update(float delta) {
         world.step(delta, 6, 2);
-        b2dr.render(world, b2drCam.combined.scl(PPM));
+        b2dr.render(world, viewport.getCamera().combined);
     }
 
     @Override
     public void initNewWorld() {
-        world = new World(new Vector2(0,-10), true);
+        world = new World(new Vector2(0, gravity), true);
         world.setContactListener(new WorldContactListener());
     }
 
