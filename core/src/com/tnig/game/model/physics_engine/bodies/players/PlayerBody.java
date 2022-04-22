@@ -21,6 +21,12 @@ public class PlayerBody extends BodyBuilder {
     private PlayerBody() {
     }
 
+    @Override
+    protected Shape getShape(GameObject object) {
+        final PolygonShape shape = new PolygonShape();
+        shape.setAsBox(object.getWidth() / 2, object.getHeight() / 2);
+        return shape;
+    }
 
     @Override
     protected void addToBodyDef(BodyDef bodyDef) {

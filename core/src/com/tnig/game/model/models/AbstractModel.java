@@ -25,6 +25,8 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
         this.isStatic = isStatic;
         this.isSensor = isSensor;
         this.type = type;
+
+        // Note we need to set x and y coordinates properly
         body = BodyFactory.getInstance().createBody(engine, x, y, this);
     }
 
@@ -34,11 +36,11 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     }
 
     public float getX(){
-        return body.getPosition().x * PPM;
+        return body.getPosition().x;
     }
 
     public float getY(){
-        return body.getPosition().y * PPM;
+        return body.getPosition().y;
     }
 
     public float getHeight() {

@@ -18,32 +18,26 @@ import com.tnig.game.model.models.Model;
  */
 public class GameWorld implements Engine{
     private final World world;
-    private final Box2DDebugRenderer b2dr;
-    private final OrthographicCamera b2drCam;
+    private final float gravity = -20f;
 
-    public GameWorld(OrthographicCamera gameCam) {
+    public GameWorld() {
         // Initialize Box2D World
-        this.world = new World(new Vector2(0,-10), true);
-        this.b2dr = new Box2DDebugRenderer();
-        this.b2drCam = gameCam;
+        this.world = new World(new Vector2(0,gravity), true);
 
         // Set up contact listeners
         world.setContactListener(new WorldContactListener());
 
         // Set up game camera and viewport
-
     }
 
     @Override
     public void update(float delta) {
         world.step(delta, 6, 2);
-        b2dr.render(world, b2drCam.combined);
     }
 
     @Override
     public void dispose() {
         world.dispose();
-
     }
 
     @Override

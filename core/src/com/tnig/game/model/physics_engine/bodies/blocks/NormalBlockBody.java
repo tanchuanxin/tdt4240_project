@@ -22,7 +22,13 @@ public class NormalBlockBody extends BodyBuilder {
     private NormalBlockBody() {
     }
 
-
+    @Override
+    protected Shape getShape(GameObject object) {
+        //TODO: Implement Triangle shape
+        final PolygonShape shape = new PolygonShape();
+        shape.setAsBox(object.getWidth() / 2, object.getHeight() / 2);
+        return shape;
+    }
 
     @Override
     protected void addToBodyDef(BodyDef bodyDef) {

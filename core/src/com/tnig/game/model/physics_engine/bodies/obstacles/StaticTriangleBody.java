@@ -20,7 +20,14 @@ public class StaticTriangleBody extends BodyBuilder {
     private StaticTriangleBody() {
     }
 
-
+    @Override
+    protected Shape getShape(GameObject object) {
+        //TODO: Implement Triangle shape
+        final PolygonShape shape = new PolygonShape();
+        shape.setAsBox(object.getWidth() / 2, object.getHeight() / 2);
+        return shape;
+    }
+  
     @Override
     protected void addToBodyDef(BodyDef bodyDef) {
         // TODO: set bodydef

@@ -1,5 +1,7 @@
 package com.tnig.game.model.models.players;
 
+import static com.tnig.game.utilities.Constants.PPM;
+
 import com.badlogic.gdx.math.Vector2;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
@@ -22,12 +24,9 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     private int score = 1000000;
 
     private final EventManager eventManager;
-
-    private int speed = 2;
-    private int jumpingForce = 200;
+    private float speed = 4;
+    private float jumpingForce = 8;
     private State STATE = State.RUNNING;
-
-
 
     public enum State{
         JUMPING, RUNNING
@@ -67,12 +66,7 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                     STATE = State.RUNNING;
                 }
                 break;
-
-
         }
-
-
-
     }
 
     @Override
@@ -95,12 +89,23 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                 setLinearVelocityX(-speed);
                 break;
             case MOVE_RIGHT:
-                setLinearVelocityX(speed);
+                setLinearVelocity(new Vector2(speed, getLinearVelocity().y));
+                break;
+            case STOP_MOVE_LEFT:
+                // Only stop if moving left
+                if (getLinearVelocity().x < 0) {
+                    setLinearVelocity(new Vector2(0, getLinearVelocity().y));
+                }
+                break;
+            case STOP_MOVE_RIGHT:
+                // Only stop if moving right
+                if (getLinearVelocity().x > 0) {
+                    setLinearVelocity(new Vector2(0, getLinearVelocity().y));
+                }
                 break;
             case JUMP:
                 if (STATE == State.RUNNING){
                     jump();
-
                 }
                 break;
             case STOP_JUMP:
@@ -116,5 +121,4 @@ public class NormalPlayer extends AbstractModel implements EventListener {
             STATE = State.JUMPING;
         }
     }
-
 }

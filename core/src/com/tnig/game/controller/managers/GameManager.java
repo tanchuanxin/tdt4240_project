@@ -1,5 +1,8 @@
 package com.tnig.game.controller.managers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
@@ -9,6 +12,7 @@ import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.models.Model;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.Constants;
 
 import java.util.Iterator;
 import java.util.List;
@@ -96,7 +100,7 @@ public class GameManager implements EventListener {
         animatedControllers = null;
         controllers = null;
         engine = null;
-
+        map = null;
     }
 
     public List<AnimatedController> getAnimatedControllers() {
@@ -109,6 +113,10 @@ public class GameManager implements EventListener {
 
     public float getPlayerPosY() {
         return player.getModel().getY();
+    }
+
+    public AnimatedController getPlayer() {
+        return player;
     }
 
     public List<Controller> getControllers() {

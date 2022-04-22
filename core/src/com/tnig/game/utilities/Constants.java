@@ -1,18 +1,13 @@
 package com.tnig.game.utilities;
 
 public class Constants {
-
     public static final float PPM = 64f;
 
     public static final int FPS = 60;
-    public static final float VIEWPORT_WIDTH = 400f;
-    public static final float VIEWPORT_HEIGHT = 200f;
-
-    public static final float WORLD_WIDTH = 320f;
-    public static final float WORLD_HEIGHT = 180f;
+    public static final float VIEWPORT_WIDTH = 1200f;
+    public static final float VIEWPORT_HEIGHT = 600f;
 
     public static final String MAP_ASSET_LOCATION = "map/";
-
 
     // Layers on the map
     public static final String blockLayer = "blocks";
@@ -22,6 +17,4 @@ public class Constants {
     public static final String deathSensorLayer = "deathSensor";
     public static final String finishLineLayer = "finishLine";
     public static final String graphicsLayer = "graphics";
-
-
 }
