@@ -14,25 +14,22 @@ import com.tnig.game.model.models.interfaces.Model;
  */
 public class GameWorld implements Engine{
     private World world;
-    private final Box2DDebugRenderer b2dr;
     private final Viewport viewport;
     private final int gravity = -10;
 
     public GameWorld(Viewport viewport) {
         // Initialize Box2D World
         initNewWorld();
-        b2dr = new Box2DDebugRenderer();
+
         this.viewport = viewport;
 
         // Set up game camera and viewport
-
     }
 
 
     @Override
     public void update(float delta) {
         world.step(delta, 6, 2);
-        b2dr.render(world, viewport.getCamera().combined);
     }
 
     @Override
