@@ -30,6 +30,9 @@ public class InputController implements InputProcessor {
             case Input.Keys.SPACE:
                 eventManager.pushEvent(new Jump());
                 return true;
+            case Input.Keys.DOWN:
+                eventManager.pushEvent(new StopPlayer(keycode));
+                return true;
             case Input.Keys.P:
                 eventManager.pushEvent(new PauseEvent());
         }
@@ -40,7 +43,6 @@ public class InputController implements InputProcessor {
         switch (keycode){
             case Input.Keys.LEFT:
             case Input.Keys.RIGHT:
-            case Input.Keys.DOWN:
                 eventManager.pushEvent(new StopPlayer(keycode));
                 return true;
         }
