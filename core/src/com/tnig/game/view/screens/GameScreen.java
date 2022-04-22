@@ -79,7 +79,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         // Create GUI for game
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
+
+        // TODO: Switch this line when ready to test on mobile
+        Gdx.input.setInputProcessor(new InputController(eventManager));
+        //Gdx.input.setInputProcessor(stage);
 
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
@@ -95,7 +98,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
         touchpad.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                Gdx.app.log("Touchpad: ", String.valueOf(touchpad.getKnobPercentX()));
                 // Check move left or right
                 if (touchpad.getKnobPercentX() > 0.1) {
                     eventManager.pushEvent(new MoveRight());
