@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.tnig.game.controller.game_objects.Controller;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.Constants;
 
 import java.util.Iterator;
 import java.util.List;
@@ -76,7 +77,6 @@ public class GameManager {
         controllers = null;
         engine = null;
         map = null;
-
     }
 
     public List<AnimatedController> getAnimatedControllers() {
@@ -84,13 +84,15 @@ public class GameManager {
     }
 
     public float getPlayerPosX() {
-        Gdx.app.log("Player pos X:", String.valueOf(player.getModel().getX()));
         return player.getModel().getX();
     }
 
     public float getPlayerPosY() {
-        Gdx.app.log("Player pos Y:", String.valueOf(player.getModel().getY()));
         return player.getModel().getY();
+    }
+
+    public AnimatedController getPlayer() {
+        return player;
     }
 
     public List<Controller> getControllers() {

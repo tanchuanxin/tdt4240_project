@@ -26,7 +26,7 @@ public class NormalBlockBody extends BodyBuilder {
     protected Shape getShape(GameObject object) {
         //TODO: Implement Triangle shape
         final PolygonShape shape = new PolygonShape();
-        shape.setAsBox(object.getWidth() / 2 / PPM, object.getHeight() / 2 / PPM);
+        shape.setAsBox(object.getWidth() / 2, object.getHeight() / 2);
         return shape;
     }
 

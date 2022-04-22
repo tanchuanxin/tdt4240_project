@@ -1,4 +1,6 @@
 package com.tnig.game.view.model_views.players;
+import static com.tnig.game.utilities.Constants.PPM;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.tnig.game.model.models.Model;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.Constants;
 import com.tnig.game.view.model_views.AbstractAnimatedView;
 
 
@@ -54,6 +57,6 @@ public class PlayerView extends AbstractAnimatedView {
     protected void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time) {
         final TextureRegion currentFrame = playerStanding;
 
-        batch.draw(currentFrame, x-width/2, y-height/2, width, height);
+        batch.draw(currentFrame, x-(width/2), y-(height/2), width, height);
     }
 }

@@ -1,5 +1,7 @@
 package com.tnig.game.model.models.players;
 
+import static com.tnig.game.utilities.Constants.PPM;
+
 import com.badlogic.gdx.math.Vector2;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
@@ -12,6 +14,7 @@ import com.tnig.game.model.models.ModelType;
 import com.tnig.game.model.models.Movable;
 import com.tnig.game.model.models.ObjectType;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.Constants;
 
 public class NormalPlayer extends AbstractModel implements EventListener {
 
@@ -20,9 +23,8 @@ public class NormalPlayer extends AbstractModel implements EventListener {
     private static final ModelType type = PlayerType.NORMALPLAYER;
 
     private final EventManager eventManager;
-    private int speed = 4;
-    private int jumpingForce = 5;
-    private int maxJumpVelocity = 2;
+    private float speed = 4;
+    private float jumpingForce = 8;
     private State STATE = State.RUNNING;
 
     public enum State {
@@ -69,8 +71,16 @@ public class NormalPlayer extends AbstractModel implements EventListener {
                 setLinearVelocity(new Vector2(speed, getLinearVelocity().y));
                 break;
             case STOP_MOVE_LEFT:
+                // Only stop if moving left
+                if (getLinearVelocity().x < 0) {
+                    setLinearVelocity(new Vector2(0, getLinearVelocity().y));
+                }
+                break;
             case STOP_MOVE_RIGHT:
-                setLinearVelocity(new Vector2(0, getLinearVelocity().y));
+                // Only stop if moving right
+                if (getLinearVelocity().x > 0) {
+                    setLinearVelocity(new Vector2(0, getLinearVelocity().y));
+                }
                 break;
             case JUMP:
                 if (STATE == State.RUNNING) {

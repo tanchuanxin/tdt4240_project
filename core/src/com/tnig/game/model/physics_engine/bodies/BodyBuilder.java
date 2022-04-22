@@ -3,6 +3,7 @@ package com.tnig.game.model.physics_engine.bodies;
 import static com.tnig.game.utilities.Constants.PPM;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -55,8 +56,10 @@ public abstract class BodyBuilder {
         bodyDef.type = isStatic ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true;
 
-        // World units = meters, from world to screen -> Divide by Pixel Per Meter
-        bodyDef.position.set(x / PPM, y / PPM);
+        // Note: We already divided by PPM to scale to world units in model, all PPM divisions done in model
+        bodyDef.position.set(x, y);
+
+        Gdx.app.log("Body spawned at: ", String.valueOf(bodyDef.position));
 
         addToBodyDef(bodyDef);
         //Puts the body in the Box2D world
