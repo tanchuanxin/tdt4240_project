@@ -27,6 +27,7 @@ public class ScreenManager implements EventListener {
     private final AssetLoader assetLoader;
     private final NetworkService networkService;
     private int mapNumber = -1;
+    private int leaderboardMapNum = 1;
     private int numberOfPlayers = -1;
     private List<GameState> gameStates = new ArrayList<>();
 
@@ -39,10 +40,12 @@ public class ScreenManager implements EventListener {
         // Subscribe to events
 
         eventManager.subscribe(EventName.MAP_SELECTED, this);
+        eventManager.subscribe(EventName.VIEW_LEADERBOARDS, this);
         eventManager.subscribe(EventName.INIT_GAME, this);
         eventManager.subscribe(EventName.GAME_OVER, this);
         eventManager.subscribe(EventName.NEW_GAME, this);
         eventManager.subscribe(EventName.PAUSE, this);
+        eventManager.subscribe(EventName.QUIT_GAME, this);
     }
 
     /**
@@ -63,11 +66,15 @@ public class ScreenManager implements EventListener {
                 break;
             case PAUSE:
                 game.pause();
+                break;
+            case VIEW_LEADERBOARDS:
+                leaderboardMapNum = event.data.get("mapNum") != null ? (int) event.data.get("mapNum") : 1;
+                setScreen(ScreenName.LEADERBOARDS);
+                break;
             case QUIT_GAME:
                 quitGame();
                 break;
         }
-
     }
 
     // Switch screens
@@ -83,17 +90,16 @@ public class ScreenManager implements EventListener {
                 if (mapNumber == -1){
                     throw new IllegalStateException("Map hasnt been updated");
                 }
-
                 game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, mapNumber, numberOfPlayers));
                 break;
             case MAP_SELECT:
                 game.setScreen(new MapSelectScreen(this, camera, assetLoader, eventManager));
                 break;
-            case LEADERBOARDSELECTION:
-                game.setScreen(new LeaderboardSelectScreen(this, camera, assetLoader, eventManager, networkService));
+            case LEADERBOARD_SELECTION:
+                game.setScreen(new LeaderboardSelectScreen(this, camera, assetLoader, eventManager));
                 break;
             case LEADERBOARDS:
-                game.setScreen(new LeaderboardsScreen(this, camera, assetLoader, eventManager, networkService));
+                game.setScreen(new LeaderboardsScreen(this, camera, assetLoader, eventManager, networkService, leaderboardMapNum));
                 break;
             case GAME_OVER:
                 throw new IllegalArgumentException("Not implemented yet");
@@ -104,5 +110,4 @@ public class ScreenManager implements EventListener {
         assetLoader.dispose();
         Gdx.app.exit();
     }
-
 }

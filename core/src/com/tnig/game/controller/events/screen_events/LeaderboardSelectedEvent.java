@@ -5,9 +5,9 @@ import com.tnig.game.controller.events.EventName;
 
 import java.util.HashMap;
 
-public class LeaderBoardSelectedEvent extends Event {
+public class LeaderboardSelectedEvent extends Event {
 
-    public LeaderBoardSelectedEvent(int mapNum) {
+    public LeaderboardSelectedEvent(int mapNum) {
         this.name = EventName.VIEW_LEADERBOARDS;
         this.data = new HashMap<>();
         this.data.put("mapNum", mapNum);
