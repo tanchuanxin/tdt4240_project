@@ -26,6 +26,7 @@ public class InputController implements InputProcessor {
             case Input.Keys.RIGHT:
                 eventManager.pushEvent(new MoveRight());
                 return true;
+            case Input.Keys.UP:
             case Input.Keys.SPACE:
                 eventManager.pushEvent(new Jump());
                 return true;
