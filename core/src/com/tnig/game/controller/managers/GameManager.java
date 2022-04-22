@@ -31,7 +31,7 @@ public class GameManager implements EventListener {
     private Engine engine;
     private AssetLoader assetLoader;
     private int playersLeft;
-    private final GameMap map;
+    private GameMap map;
     private GameInitializer game;
 
 
@@ -57,6 +57,7 @@ public class GameManager implements EventListener {
         }
         playersLeft -= 1;
         engine.initNewWorld();
+        map = new GameMap(map.getMapNumber());
         game = new NormalGame(eventManager, engine, assetLoader, map);
 
     }
