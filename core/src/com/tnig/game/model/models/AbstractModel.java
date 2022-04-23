@@ -57,7 +57,7 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     }
 
     @Override
-    public ModelType getEnum() {
+    public ModelType getType() {
         return type;
     }
 
@@ -91,8 +91,9 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
 
     }
 
-    protected Vector2 getLinearVelocity(){
-        return body.getLinearVelocity();
+    public float[] getLinearVelocity(){
+        Vector2 v = body.getLinearVelocity();
+        return new float[]{v.x, v.y};
     }
 
     protected void setLinearVelocityX(float velocityX){
@@ -103,11 +104,8 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
         body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, velocityY));
     }
 
-    protected void applyForceToCenter(Vector2 force){
-        body.applyForceToCenter(force, true);
-    }
 
-    protected void applyImpulseToCenter(Vector2 force){
-        body.applyLinearImpulse(force, body.getWorldCenter(), true);
+    protected void applyImpulseToCenter(float forceX, float forceY){
+        body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);
     }
 }

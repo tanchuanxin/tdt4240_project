@@ -10,6 +10,7 @@ public interface Model {
     float getY();
     float getWidth();
     float getHeight();
-    ModelType getEnum();
+    ModelType getType();
+    float[] getLinearVelocity();
 
 }

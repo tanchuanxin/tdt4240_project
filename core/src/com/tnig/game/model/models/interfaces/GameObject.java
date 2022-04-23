@@ -8,7 +8,7 @@ public interface GameObject {
     float getRotation();
     boolean isStatic();
     boolean isSensor();
-    ModelType getEnum();
+    ModelType getType();
     ObjectShape GetShapeType();
 
 }

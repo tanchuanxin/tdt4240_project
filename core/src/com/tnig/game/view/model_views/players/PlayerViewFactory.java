@@ -9,7 +9,7 @@ public class PlayerViewFactory {
 
     public static AnimatedView createView(Model model, AssetLoader assetLoader){
 
-        PlayerType type = (PlayerType) model.getEnum();
+        PlayerType type = (PlayerType) model.getType();
         switch (type){
             case NORMALPLAYER:
                 return new PlayerView(model, assetLoader);

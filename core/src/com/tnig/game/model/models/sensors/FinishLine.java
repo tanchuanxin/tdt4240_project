@@ -20,7 +20,7 @@ public class FinishLine extends Sensor{
 
     @Override
     public void handleBeginContact(ContactObject object) {
-        if (object.getEnum().getObjectType() == ObjectType.PLAYER){
+        if (object.getType().getObjectType() == ObjectType.PLAYER){
             eventManager.pushEvent(new PlayerAtGoal());
         }
     }

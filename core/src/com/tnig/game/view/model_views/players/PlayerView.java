@@ -10,6 +10,7 @@ import com.tnig.game.view.model_views.AbstractAnimatedView;
 
 public class PlayerView extends AbstractAnimatedView {
 
+    private final Model model;
     private final TextureRegion playerStanding;
     private final Animation<TextureRegion> playerJump;
     private final Animation<TextureRegion> playerWin;
@@ -25,6 +26,7 @@ public class PlayerView extends AbstractAnimatedView {
      */
     public PlayerView(Model model, AssetLoader assetLoader) {
         super(model);
+        this.model = model;
 
         // Create animation texture
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -54,17 +56,10 @@ public class PlayerView extends AbstractAnimatedView {
         isFacingRight = true;
     }
 
-
-    /**
-     * method inherited from AbstractAnimatedView
-     * renders/draws the player on the screen
-      */
-    @Override
-    protected void renderModel(SpriteBatch batch, Model model, float x, float y, float width, float height, float time) {
+    private TextureRegion getCurrentFrame(){
         final TextureRegion currentFrame;
-
         // TODO need to add dying animation
-        if (model.getBody().getLinearVelocity().y > 0) {
+        if (model.getLinearVelocity()[1] > 0) {
             currentState = state.JUMPING;
         } else {
             currentState = state.STANDING;
@@ -77,15 +72,31 @@ public class PlayerView extends AbstractAnimatedView {
         } else {
             currentFrame = playerStanding;
         }
+        return currentFrame;
+    }
 
-        if ((model.getBody().getLinearVelocity().x < 0 || !isFacingRight) && !currentFrame.isFlipX()) {
+    private void calculateSpriteDirection(TextureRegion currentFrame){
+        if ((model.getLinearVelocity()[0] < 0 || !isFacingRight) && !currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
             isFacingRight = false;
-        } else if ((model.getBody().getLinearVelocity().x > 0 || isFacingRight) && currentFrame.isFlipX()) {
+        } else if ((model.getLinearVelocity()[0] > 0 || isFacingRight) && currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
             isFacingRight = true;
         }
+    }
 
+
+    /**
+     * method inherited from AbstractAnimatedView
+     * renders/draws the player on the screen
+      */
+    @Override
+    protected void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time) {
+
+
+        TextureRegion currentFrame = getCurrentFrame();
+
+        calculateSpriteDirection(currentFrame);
 
         stateTimer = currentState == previousState ? stateTimer + time : 0;
         previousState = currentState;

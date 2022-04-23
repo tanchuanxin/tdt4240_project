@@ -27,12 +27,12 @@ public class Coin extends AbstractModel {
 
     @Override
     public void handleBeginContact(ContactObject object) {
-        if (object.getEnum().getObjectType() == ObjectType.PLAYER){
+        if (object.getType().getObjectType() == ObjectType.PLAYER){
             dispose();
             eventManager.pushEvent(new DisposeSprite(this));
         }
 
-        Gdx.app.log("Coint", "Contact with " + object.getEnum().getObjectType());
+        Gdx.app.log("Coint", "Contact with " + object.getType().getObjectType());
     }
 
     public int getValue() {
