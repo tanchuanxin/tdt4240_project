@@ -12,7 +12,7 @@ import com.tnig.game.model.physics_engine.Engine;
 
 public abstract class AbstractModel implements ContactObject, Model, GameObject {
 
-    private final float width, height;
+    private final float width, height, rotation;
     private final boolean isStatic, isSensor;
     private final Body body;
     private final ModelType type;
@@ -20,10 +20,11 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
 
 
     protected AbstractModel(Engine engine,
-                            float x, float y, float width, float height,
+                            float x, float y, float width, float height, float rotation,
                             boolean isStatic, boolean isSensor, ModelType type) {
         this.width = width;
         this.height = height;
+        this.rotation = rotation;
         this.isStatic = isStatic;
         this.isSensor = isSensor;
         this.type = type;
@@ -49,6 +50,10 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
 
     public float getWidth() {
         return width;
+    }
+
+    public float getRotation() {
+        return rotation;
     }
 
     @Override

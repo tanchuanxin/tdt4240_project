@@ -12,9 +12,9 @@ public class FinishLine extends Sensor{
     private final EventManager eventManager;
 
     protected FinishLine(EventManager eventManager, Engine engine,
-                         float x, float y, float width, float height,
+                         float x, float y, float width, float height, float rotation,
                          ModelType type) {
-        super(engine, x, y, width, height, type);
+        super(engine, x, y, width, height, rotation, type);
         this.eventManager = eventManager;
     }
 

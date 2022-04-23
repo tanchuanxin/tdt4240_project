@@ -93,11 +93,9 @@ public class NormalGame implements GameInitializer {
                 rotation = object.getProperties().get("rotation", Float.class);
             }
 
-            Gdx.app.log("Static rotation: ", String.valueOf(rotation));
-
             Controller controller = new StaticObjectController(
                     eventManager, engine, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
-                    rect.width / PPM, rect.height / PPM, modelType);
+                    rect.width / PPM, rect.height / PPM, rotation, modelType);
 
             controllers.add(controller);
         }
@@ -117,11 +115,9 @@ public class NormalGame implements GameInitializer {
                 rotation = object.getProperties().get("rotation", Float.class);
             }
 
-            Gdx.app.log("Animated rotation: ", String.valueOf(rotation));
-
             animatedController = new AnimatedObjectController(
                     eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
-                    rect.width / PPM, rect.height / PPM, modelType);
+                    rect.width / PPM, rect.height / PPM, rotation, modelType);
 
             animatedControllers.add(animatedController);
 

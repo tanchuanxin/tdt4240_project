@@ -18,9 +18,9 @@ public class Spike extends AbstractModel {
     private final EventManager eventManager;
 
     protected Spike(EventManager eventManager, Engine engine,
-                    float x, float y, float width, float height,
+                    float x, float y, float width, float height, float rotation,
                     ModelType type) {
-        super(engine, x, y, width, height, isStatic, isSensor, type);
+        super(engine, x, y, width, height, rotation, isStatic, isSensor, type);
         this.eventManager = eventManager;
     }
 

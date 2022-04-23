@@ -12,10 +12,9 @@ public class StaticObjectController implements Controller {
     private final Model model;
 
     public StaticObjectController(EventManager eventManager, Engine engine,
-                                  float x, float y, float width, float height, ModelType type) {
-        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, type);
+                                  float x, float y, float width, float height, float rotation, ModelType type) {
+        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, rotation, type);
     }
-
 
     public boolean isDisposable(){
         return model.isDisposable();
@@ -31,6 +30,4 @@ public class StaticObjectController implements Controller {
     public void update(float delta) {
         model.update(delta);
     }
-
-
 }

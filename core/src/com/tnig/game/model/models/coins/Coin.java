@@ -18,9 +18,9 @@ public class Coin extends AbstractModel {
     private EventManager eventManager;
 
     protected Coin(EventManager eventManager, Engine engine,
-                   float x, float y, float width, float height,
+                   float x, float y, float width, float height, float rotation,
                    ModelType type, int value) {
-        super(engine, x, y, width, height, isStatic, isSensor, type);
+        super(engine, x, y, width, height, rotation, isStatic, isSensor, type);
         this.eventManager = eventManager;
         this.value = value;
     }

@@ -12,8 +12,8 @@ public class NormalBlock extends AbstractModel {
 
     private static final ObjectShape shape = ObjectShape.BOX;
 
-    protected NormalBlock(Engine engine, float x, float y, float width, float height, ModelType type) {
-        super(engine, x, y, width, height, isStatic, isSensor, type);
+    protected NormalBlock(Engine engine, float x, float y, float width, float height, float rotation, ModelType type) {
+        super(engine, x, y, width, height, rotation, isStatic, isSensor, type);
     }
 
     @Override
