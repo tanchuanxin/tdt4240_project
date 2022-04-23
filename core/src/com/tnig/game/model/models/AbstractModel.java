@@ -7,6 +7,7 @@ import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.interfaces.ModelType;
+import com.tnig.game.model.physics_engine.bodies.BodyBuilder;
 import com.tnig.game.model.physics_engine.bodies.BodyFactory;
 import com.tnig.game.model.physics_engine.Engine;
 
@@ -28,7 +29,7 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
         this.isStatic = isStatic;
         this.isSensor = isSensor;
         this.type = type;
-        body = BodyFactory.getInstance().createBody(engine, x, y, this);
+        body = BodyBuilder.createBody(engine, x, y, this);
     }
 
     @Override
