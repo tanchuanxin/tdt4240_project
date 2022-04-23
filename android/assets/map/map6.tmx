@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="253">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="258">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
   <image source="spikes.png" width="64" height="16"/>
  </tileset>
+ <tileset firstgid="929" source="spikes.tsx"/>
  <layer id="1" name="background" width="128" height="13">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMA6Dx/oXWbj2Ogr2kqqqqqqqqvjmqmr+9
@@ -11,7 +12,7 @@
  </layer>
  <layer id="2" name="graphics" width="128" height="13">
   <data encoding="base64" compression="zlib">
-   eJztVwsKwjAM7eYldpbd1XOp4Bc8g6jgJ2UUQmm3JE3XDvYgIC5dPu+lUWNWrJgHl9aYK9itLZ3JiqWhQZ93oJ892IGoIy3dNZ7VjiPUewI7o7of5dJJAu73E+p5gb0XdI9wNWvB0VnI9wOxvmA/FLNfgHDvgR5NpW2f94o5aM86R7PcuBxfKv9z7+qpfufmX3JWU28WEr1x/Wudfwq/Kc85eVB7qtlKKe+hM2O6rIX/7WbI0931tfDPgUbMOWYeowb+QzWXSou6561eneGzGnEl56Z8YtDgX3vvWbj97czvtRZCvy0p0NSsdH45eynmV3L+x3rvzyG1Vg6fpf+/S2Lb+jR3hJT/2Dz63/t85O557L057g4KQnExh1yk9M2dcxx1zcB/hyw2d6mmCc77c+dCjenviVQONfPC9gcbyC7N
+   eJztV20KwjAM7bZL7Cy7q/+8kwp+gmcQFfxIGYVQ2i5p07WDPQiIpsvHe2mmUitWzINLq9QV7NaWzmTF0tCgzzvQzx7sQNSRlO4ay2rHEeo9gZ1R3Y9y6SQB9/sJ9bzA3gu6R7ia1eDozOX7gVhfsB+KOSxAuHdHj6bS1r8PgjlIzzpHs9y4HF8q/3Pv6lC/t11+/mPOSupNI0ZvXP9a5z+U1hT/FH1w8qD2VLKVsby7zoR0WQv/m27M09z1lPn2QZJ/DiRizjHzGDXw76q5VFrUPa/1agyflYgbc27KxwcJ/qX3nobZ38bsXkvB9W5JgaRmY+eXs5d8fiXnP9R7ew6ptXL4LP3/PSa2rk9yR8Ty75tH+3ubj9w99z03x91BgSsu5pCLlL6Zc4ajvhn575H55i7VJMF5fu5cqDHtPZHKoWRe2P7QCjFp
   </data>
  </layer>
  <objectgroup id="9" name="player">
@@ -37,6 +38,26 @@
   <object id="231" x="1952" y="176" width="16" height="16"/>
   <object id="250" x="1344" y="176" width="16" height="16"/>
   <object id="251" x="480" y="112" width="16" height="16"/>
+  <object id="253" x="656" y="80" width="16" height="16">
+   <properties>
+    <property name="rotation" type="float" value="270"/>
+   </properties>
+  </object>
+  <object id="254" x="656" y="96" width="16" height="16">
+   <properties>
+    <property name="rotation" type="float" value="270"/>
+   </properties>
+  </object>
+  <object id="255" x="784" y="96" width="16" height="16">
+   <properties>
+    <property name="rotation" type="float" value="270"/>
+   </properties>
+  </object>
+  <object id="256" x="784" y="112" width="16" height="16">
+   <properties>
+    <property name="rotation" type="float" value="270"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="blocks">
   <object id="124" x="0" y="192" width="336" height="16"/>

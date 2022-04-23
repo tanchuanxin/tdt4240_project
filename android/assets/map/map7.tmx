@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="237">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="238">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
   <image source="spikes.png" width="64" height="16"/>
  </tileset>
+ <tileset firstgid="929" source="spikes.tsx"/>
  <layer id="1" name="background" width="64" height="13">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMA6Dx/oXWbkGuYC+pqqrqgwMNzF/f
@@ -11,7 +12,7 @@
  </layer>
  <layer id="2" name="graphics" width="64" height="13">
   <data encoding="base64" compression="zlib">
-   eJzdk0kOwjAMRRNxCQaJMhyBXUCi3KtLrsE1WfOzqCiRU8ep3Uo86S/aSB6/nbPnuZohiSFH1H+CzoV9dMz7HnEa6GA4lw1ib6HdArN/MTnveG+hh2FtAbGv0C3J8bZL6TyhGqR+kxBqiyLgfD5EazZTaoho9B/9HaXdiyZ9jektavRP7TI3i1wdWlBxx2rS9P8YVn7P5ShlqfvXROK/FM3+pfnjvKzvgWMu/1OUzmrKfjk0+r8wu8vtt/8nvZtuoBrfrP1Xwf9+c7P+d30A0kcW9A==
+   eJzdlUkKAjEQRRO8hAM4HsFdFNR79dJruPKOrv1ZNLah0pVKV0XwwV90AjX+0M7Zc581SGLIDvXvoUNhHx1zv0acDbQ1nMsCsZfQ6gezfzA5L7i/QjfD2gJin6BzkuNll9J5QjVI/SYh1BZFwPl8iNZsptQQ0eg/+jtKuxdN+hrTt6jRP7XL3CxydWhBxR2rSdP/Y1j5PZejlNbv/2mwd4n/UjT7l+aP87J+Dxyt/E9ROqsp++XQ6P/I7C633/5M+s/qBqrxzdx/FPz3Nzfrf9cb0jEXmg==
   </data>
  </layer>
  <objectgroup id="9" name="player">
@@ -49,6 +50,11 @@
   <object id="230" x="432" y="176" width="16" height="16"/>
   <object id="231" x="704" y="176" width="16" height="16"/>
   <object id="232" x="768" y="96" width="16" height="16"/>
+  <object id="237" x="384" y="128" width="16" height="16">
+   <properties>
+    <property name="rotation" type="float" value="180"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="8" name="finishLine">
   <object id="144" x="960" y="9" width="16" height="183"/>
