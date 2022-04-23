@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="185">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="187">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
   <image source="spikes.png" width="64" height="16"/>
@@ -37,6 +37,8 @@
   <object id="74" x="1872" y="96" width="16" height="16"/>
   <object id="75" x="1936" y="192" width="112" height="16"/>
   <object id="98" x="0" y="192" width="448" height="16"/>
+  <object id="185" x="2032" y="0" width="16" height="192"/>
+  <object id="186" x="0" y="0" width="16" height="192"/>
  </objectgroup>
  <objectgroup id="11" name="spikes">
   <object id="162" x="1472" y="176" width="16" height="16"/>
@@ -54,9 +56,7 @@
   <object id="93" x="1984" y="0" width="16" height="192"/>
  </objectgroup>
  <objectgroup id="13" name="deathSensor">
-  <object id="167" x="2046" y="0" width="2" height="214"/>
   <object id="168" x="-8" y="206" width="2056" height="2"/>
-  <object id="169" x="0" y="0" width="6" height="208"/>
  </objectgroup>
  <objectgroup id="15" name="coins">
   <object id="171" x="208" y="176" width="16" height="16"/>
