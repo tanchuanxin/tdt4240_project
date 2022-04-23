@@ -1,5 +1,6 @@
 package com.tnig.game.model.models.players;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
@@ -18,7 +19,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     private static final boolean isStatic = false;
     private static final boolean isSensor = false;
     private static final ObjectShape shape = ObjectShape.BOX;
-    private int score = 1000000;
+    private int score = 100000;
 
     private final EventManager eventManager;
     private float speed = 2.2f;
@@ -38,6 +39,8 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         eventManager.subscribe(EventName.MOVE_LEFT, this);
         eventManager.subscribe(EventName.MOVE_RIGHT, this);
         eventManager.subscribe(EventName.STOP_PLAYER, this);
+        eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
+
     }
 
     @Override
@@ -62,8 +65,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     public void update(float delta) {
         score -= 1157 / Constants.FPS;
     }
-
-
+    
     @Override
     public int getScore() {
         return score;
@@ -110,6 +112,10 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                     default:
                         setLinearVelocityX(0);
                 }
+                break;
+            case PLAYER_AT_GOAL:
+                Gdx.app.log("hi", "hi");
+                break;
         }
     }
 

@@ -4,13 +4,16 @@ import static com.tnig.game.utilities.Constants.PPM;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -44,6 +47,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final Box2DDebugRenderer b2dr;
     private GameMap map;
     private final Table tableRight;
+    private Label scoreLabelText;
+    private Label scoreLabel;
     private final Table tableLeft;
     private final InputMultiplexer inputMultiplexer;
 
@@ -86,10 +91,23 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
 
+
+
+
         tableRight = new Table();
         tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
         tableRight.add(jumpBtn);
         stage.addActor(tableRight);
+
+        scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabelText.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()-35, Align.center);
+        scoreLabelText.setFontScale(2);
+        stage.addActor(scoreLabelText);
+
+        scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()-70, Align.center);
+        scoreLabel.setFontScale(2);
+        stage.addActor(scoreLabel);
 
         tableLeft = new Table();
         final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
@@ -155,9 +173,15 @@ public class GameScreen extends AbstractScreen implements EventListener {
         checkCameraBounds(); // Make sure camera doesn't leave the screen
         viewport.getCamera().update();
 
+
+
         // Make map and spritebatch only draw what the camera can see
         mapRenderer.setView((OrthographicCamera) viewport.getCamera());
         batch.setProjectionMatrix(viewport.getCamera().combined);
+
+        // update score label
+//        this.scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        this.scoreLabel.setText(String.valueOf(this.gameManager.getScore()));
     }
 
     @Override
