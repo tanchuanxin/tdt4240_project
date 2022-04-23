@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="158">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="160">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <layer id="1" name="background" width="64" height="13">
   <data encoding="base64" compression="zlib">
@@ -20,14 +20,14 @@
   <object id="147" x="544" y="160" width="80" height="16"/>
   <object id="148" x="656" y="128" width="96" height="16"/>
   <object id="149" x="784" y="192" width="240" height="16"/>
+  <object id="158" x="1008" y="0" width="16" height="192"/>
+  <object id="159" x="0" y="0" width="16" height="192"/>
  </objectgroup>
  <objectgroup id="7" name="spikes"/>
  <objectgroup id="8" name="finishLine">
   <object id="144" x="960" y="32" width="16" height="160"/>
  </objectgroup>
  <objectgroup id="10" name="deathSensor">
-  <object id="154" x="0" y="0" width="1.89104" height="208.015"/>
-  <object id="155" x="1020.22" y="0" width="3.78209" height="208.96"/>
   <object id="156" x="0" y="204.233" width="1024" height="3.76731"/>
  </objectgroup>
  <objectgroup id="6" name="coins">

@@ -37,8 +37,9 @@
   <object id="74" x="1872" y="96" width="16" height="16"/>
   <object id="75" x="1936" y="192" width="112" height="16"/>
   <object id="98" x="0" y="192" width="448" height="16"/>
-  <object id="185" x="2.5" y="-1" width="3" height="208"/>
-  <object id="186" x="2043.75" y="-1.75" width="3" height="208"/>
+  <object id="185" x="2032" y="0" width="16" height="192"/>
+  <object id="186" x="0" y="0" width="16" height="192"/>
+
  </objectgroup>
  <objectgroup id="11" name="spikes">
   <object id="162" x="1472" y="176" width="16" height="16"/>
