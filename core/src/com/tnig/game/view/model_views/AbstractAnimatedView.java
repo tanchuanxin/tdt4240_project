@@ -10,7 +10,7 @@ public abstract class AbstractAnimatedView implements AnimatedView {
     private float time = 0;
     private final Model model;
 
-    protected abstract void renderModel(SpriteBatch batch, Model model, float x, float y, float width, float height, float time);
+    protected abstract void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time);
 
     public AbstractAnimatedView(Model model) {
         this.model = model;
@@ -29,7 +29,7 @@ public abstract class AbstractAnimatedView implements AnimatedView {
         float x = model.getX();
         float y = model.getY();
 
-        renderModel(batch, model, x, y, width, height, time);
+        renderModel(batch, x, y, width, height, time);
 
 
     }

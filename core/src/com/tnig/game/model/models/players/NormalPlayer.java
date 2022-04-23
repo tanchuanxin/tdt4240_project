@@ -1,8 +1,6 @@
 package com.tnig.game.model.models.players;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
@@ -44,7 +42,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
 
     @Override
     public void handleBeginContact(ContactObject object) {
-        ModelType type = object.getEnum();
+        ModelType type = object.getType();
 
         switch (type.getObjectType()) {
             case COIN:
@@ -94,19 +92,19 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
             case STOP_PLAYER:
                 switch ((int) event.data.get("key")) {
                     case Input.Keys.LEFT:
-                        if (getLinearVelocity().x < 0) {
+                        if (getLinearVelocity()[0] < 0) {
                             setLinearVelocityX(0);
                         }
                         break;
                     case Input.Keys.RIGHT:
-                        if (getLinearVelocity().x > 0) {
+                        if (getLinearVelocity()[0] > 0) {
                             setLinearVelocityX(0);
                         }
                         break;
                     case Input.Keys.DOWN:
                         if (STATE == State.JUMPING) {
                             setLinearVelocityY(0);
-                            applyImpulseToCenter(new Vector2(0, -jumpingForce));
+                            applyImpulseToCenter(0, -jumpingForce);
                         }
                         break;
                     default:
@@ -117,7 +115,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
 
     private void jump() {
         if (STATE == State.RUNNING) {
-            applyImpulseToCenter(new Vector2(0, jumpingForce));
+            applyImpulseToCenter(0, jumpingForce);
             STATE = State.JUMPING;
         }
     }

@@ -26,7 +26,7 @@ public class Spike extends AbstractModel {
 
     @Override
     public void handleBeginContact(ContactObject object) {
-        if (object.getEnum().getObjectType() == ObjectType.PLAYER){
+        if (object.getType().getObjectType() == ObjectType.PLAYER){
             eventManager.pushEvent(new PlayerDead(this));
             object.dispose();
         }

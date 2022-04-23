@@ -7,17 +7,13 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.tnig.game.controller.InputController;
@@ -28,8 +24,6 @@ import com.tnig.game.controller.events.game_events.Jump;
 import com.tnig.game.controller.events.game_events.MoveLeft;
 import com.tnig.game.controller.events.game_events.MoveRight;
 import com.tnig.game.controller.events.game_events.StopPlayer;
-import com.tnig.game.controller.events.screen_events.InitGameEvent;
-import com.tnig.game.controller.events.screen_events.QuitGameEvent;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.GameManager;
@@ -37,7 +31,6 @@ import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.ui_components.ButtonFactory;
-import com.tnig.game.utilities.Constants;
 
 import java.util.List;
 
@@ -55,6 +48,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final InputMultiplexer inputMultiplexer;
 
     private boolean paused = false;
+    private boolean gameOver = false;
 
     public GameScreen(ScreenManager screenManager,
                       final EventManager eventManager,
@@ -69,10 +63,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         this.map = map;
         this.inputMultiplexer = new InputMultiplexer();
-
-//        this.gameCamera = new OrthographicCamera();
-//        this.viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
-//        viewport.apply(true);
 
         // Create viewport
         viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
@@ -134,6 +124,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
                 gameManager.newGame();
                 break;
             case GAME_OVER:
+                gameOver = true;
                 break;
         }
     }
@@ -186,6 +177,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         stage.getViewport().apply();
         stage.draw();
+
+        if (gameOver){
+            screenManager.setScreen(ScreenName.MAIN_MENU);
+        }
     }
 
     @Override
@@ -214,7 +209,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        super.dispose();
         gameManager.dispose();
         batch.dispose();
         mapRenderer.dispose();
