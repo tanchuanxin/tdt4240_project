@@ -13,7 +13,7 @@ public class BlockFactory {
             case NORMAL_BLOCK:
                 return new NormalBlock(engine, x, y, width, height, rotation, type);
             case INVISIBLE_BLOCK:
-                return new InvisibleBlock(engine, x, y, width, height, rotation, type);
+                throw new IllegalArgumentException("Not created model for type invisible block yet");
             default:
                 throw new IllegalArgumentException("Not created model for type yet: " + type);
         }
