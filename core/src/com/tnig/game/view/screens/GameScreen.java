@@ -39,10 +39,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final ScreenManager screenManager;
     private final SpriteBatch batch;
     private final GameManager gameManager;
-    private final OrthogonalTiledMapRenderer mapRenderer;
+    private OrthogonalTiledMapRenderer mapRenderer;
     private final FillViewport viewport;
     private final Box2DDebugRenderer b2dr;
-    private final GameMap map;
+    private GameMap map;
     private final Table tableRight;
     private final Table tableLeft;
     private final InputMultiplexer inputMultiplexer;
@@ -122,6 +122,11 @@ public class GameScreen extends AbstractScreen implements EventListener {
         switch (event.name){
             case NEW_GAME:
                 gameManager.newGame();
+                // refresh map
+                this.map = gameManager.getMap();
+                this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
+                this.mapRenderer.setView((OrthographicCamera) viewport.getCamera());
+
                 break;
             case GAME_OVER:
                 gameOver = true;

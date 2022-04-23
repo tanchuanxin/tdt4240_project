@@ -31,6 +31,11 @@ public class GameManager implements EventListener {
     private Engine engine;
     private AssetLoader assetLoader;
     private int playersLeft;
+
+    public GameMap getMap() {
+        return map;
+    }
+
     private GameMap map;
     private GameInitializer game;
 
@@ -57,9 +62,9 @@ public class GameManager implements EventListener {
         }
         playersLeft -= 1;
         engine.initNewWorld();
+
         map = new GameMap(map.getMapNumber());
         game = new NormalGame(eventManager, engine, assetLoader, map);
-
     }
 
     /**
@@ -83,7 +88,7 @@ public class GameManager implements EventListener {
             }
         }
 
-        // Update animatied controllers
+        // Update animated controllers
         Iterator<AnimatedController> iterator2 = game.getAnimatedControllers().iterator();
         while(iterator2.hasNext()){
             AnimatedController controller = iterator2.next();
@@ -123,7 +128,6 @@ public class GameManager implements EventListener {
 
     public void dispose(){
         engine.dispose();
-
     }
 
     public List<AnimatedController> getAnimatedControllers() {

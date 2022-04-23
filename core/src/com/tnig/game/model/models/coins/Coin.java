@@ -32,7 +32,7 @@ public class Coin extends AbstractModel {
             eventManager.pushEvent(new DisposeSprite(this));
         }
 
-        Gdx.app.log("Coint", "Contact with " + object.getType().getObjectType());
+        Gdx.app.log("Coin", "Contact with " + object.getType().getObjectType());
     }
 
     public int getValue() {
