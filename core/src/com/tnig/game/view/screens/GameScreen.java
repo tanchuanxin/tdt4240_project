@@ -100,12 +100,12 @@ public class GameScreen extends AbstractScreen implements EventListener {
         stage.addActor(tableRight);
 
         scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabelText.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()-35, Align.center);
+        scoreLabelText.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-35, Align.center);
         scoreLabelText.setFontScale(2);
         stage.addActor(scoreLabelText);
 
         scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()-70, Align.center);
+        scoreLabel.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-70, Align.center);
         scoreLabel.setFontScale(2);
         stage.addActor(scoreLabel);
 
