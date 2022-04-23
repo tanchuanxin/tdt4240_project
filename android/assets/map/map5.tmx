@@ -11,7 +11,7 @@
  </layer>
  <layer id="2" name="graphics" width="128" height="13">
   <data encoding="base64" compression="zlib">
-   eJztV1sKwjAQbPQSnqV39Sr98RAq+KjgGUTF1wYUbWnadLPubtoMDKggmc7sLGmWJSQkDBm3ibQCfdiAJ1vgTtibPZxfAg9MOk48x6jHHfx+AJ8j60ZupBUMF8cIZok7/yV4sgKuI/CGAvOptIJ2cOd/htwvwOsI8jcNlNLhQtr/eHz2u+aOd81dyh+Ppn5j7CzepISdTR9NGvP/hx8WmPuY1WH7ra3jXf74zqTG/LWAqt/c6KOZIv+QrmJ7RdXHercXzPfStt3yu68Kx+/1neYzszPzZW6q313/j50+HvXtd8j7vc/5mM+hz/8CKPwnAg==
+   eJztVwkKwjAQbPQTvqVv61d8jY9QwaOCbxAVrw0o2tK028262bQZGFBBMp3ZWdIsS0hIGDJuk9AK9GEDnmyBu8De7OH8EngQ0nGSOUY97uD3A/gcWTdyE1rBcHGMYJak81+CJyvgOgJvODCfhlbQDun8z5D7BXgdQf6mgaF0uJD2Px2f/a65411zl/Kno6nfFDuLNzlhZxOjSWP+//DDgnIfszpsv7V1vMsf7ExqzF8LuPotjT6aOfL36Sq1V1x9rHd7IXwvbdstv/uqcPxe32mYmZ2ZL3NT/e76f+zEeNS33z7v95jzKZ99n/8F4CIk8g==
   </data>
  </layer>
  <objectgroup id="9" name="player">
@@ -39,6 +39,7 @@
   <object id="98" x="0" y="192" width="448" height="16"/>
   <object id="185" x="2032" y="0" width="16" height="192"/>
   <object id="186" x="0" y="0" width="16" height="192"/>
+
  </objectgroup>
  <objectgroup id="11" name="spikes">
   <object id="162" x="1472" y="176" width="16" height="16"/>

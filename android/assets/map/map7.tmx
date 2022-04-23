@@ -12,10 +12,10 @@
  </layer>
  <layer id="2" name="graphics" width="64" height="13">
   <data encoding="base64" compression="zlib">
-   eJzdlUkKAjEQRRO8hAM4HsFdFNR79dJruPKOrv1ZNLah0pVKV0XwwV90AjX+0M7Zc581SGLIDvXvoUNhHx1zv0acDbQ1nMsCsZfQ6gezfzA5L7i/QjfD2gJin6BzkuNll9J5QjVI/SYh1BZFwPl8iNZsptQQ0eg/+jtKuxdN+hrTt6jRP7XL3CxydWhBxR2rSdP/Y1j5PZejlNbv/2mwd4n/UjT7l+aP87J+Dxyt/E9ROqsp++XQ6P/I7C633/5M+s/qBqrxzdx/FPz3Nzfrf9cb0jEXmg==
+   eJxjYKA9aGGmgyU0BIpA9ysBsTKR/qghIC8HNEceiBVoGC6SQLOlgFh6AMJ+LgE77YHyDkDsSEO3WQHNtgZiGzQ7vtHOSgZGLJgcQGp6IwVYkesoLIBQOkcG1AobStwAAtTwPyh9gzC1/UJNAHMjel6khv+xxSWusMDlDmoBbObicxM10z8+QKv0jssOYgG98/9iGsQ7KekPHVDT/6TaDwovWucHQoBe6R8bIDasKIlfQoAa/jcmEHe44hcmRmqdBVJ/mQmRfkgFEowIbMWIyicU1sMdAwBJ1hfz
   </data>
  </layer>
- <objectgroup id="9" name="player">
+ <objectgroup id="9" name="player" visible="0">
   <object id="236" x="66.5511" y="179.725" width="11.625" height="12.125"/>
  </objectgroup>
  <objectgroup id="4" name="blocks">
@@ -34,7 +34,7 @@
   <object id="238" x="1008" y="0" width="16" height="192"/>
   <object id="239" x="0" y="0" width="16" height="192"/>
  </objectgroup>
- <objectgroup id="10" name="spikes">
+ <objectgroup id="10" name="spikes" visible="0">
   <object id="197" x="208" y="80" width="16" height="16"/>
   <object id="198" x="224" y="80" width="16" height="16"/>
   <object id="202" x="336" y="176" width="16" height="16"/>
@@ -58,7 +58,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="8" name="finishLine">
+ <objectgroup id="8" name="finishLine" visible="0">
   <object id="144" x="960" y="9" width="16" height="183"/>
  </objectgroup>
  <objectgroup id="11" name="deathSensor">

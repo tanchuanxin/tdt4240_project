@@ -105,8 +105,10 @@ public class GameManager implements EventListener {
     }
 
     private GameState createGameState(){
-        Player player = (Player) game.getPlayer().getModel();
-        return new GameState(player.getScore(), map.getMapNumber());
+        Model model = game.getPlayer().getModel();
+        Player player = (Player) model;
+        int score = (int) (player.getScore() * model.getX() / map.getMapWidthInUnits());
+        return new GameState(score, map.getMapNumber());
     }
 
     @Override

@@ -12,8 +12,8 @@ public class BlockFactory {
         switch (type){
             case NORMAL_BLOCK:
                 return new NormalBlock(engine, x, y, width, height, rotation, type);
-            case MOCK:
-                throw new IllegalArgumentException("Not created model for Mock");
+            case INVISIBLE_BLOCK:
+                throw new IllegalArgumentException("Not created model for type invisible block yet");
             default:
                 throw new IllegalArgumentException("Not created model for type yet: " + type);
         }
