@@ -7,11 +7,11 @@ import com.tnig.game.model.physics_engine.Engine;
 
 public class CoinFactory {
     public static Model createModel(EventManager eventManager, Engine engine,
-                                    float x, float y, float width, float height, ModelType modelType){
+                                    float x, float y, float width, float height, float rotation, ModelType modelType){
         CoinType type = (CoinType) modelType;
         switch (type){
             case NORMAL_COIN:
-                return new Coin(eventManager, engine, x, y, width, height, type, 10000);
+                return new Coin(eventManager, engine, x, y, width, height, rotation, type, 10000);
             case MOCK:
                 throw new IllegalArgumentException("Not created model for Mock");
             default:

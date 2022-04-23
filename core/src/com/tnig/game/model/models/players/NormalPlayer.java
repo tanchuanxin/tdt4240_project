@@ -32,9 +32,9 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     }
 
     public NormalPlayer(EventManager eventManager, Engine engine,
-                        float x, float y, float width, float height,
+                        float x, float y, float width, float height, float rotation,
                         ModelType type) {
-        super(engine, x, y, width, height, isStatic, isSensor, type);
+        super(engine, x, y, width, height, rotation, isStatic, isSensor, type);
         this.eventManager = eventManager;
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);

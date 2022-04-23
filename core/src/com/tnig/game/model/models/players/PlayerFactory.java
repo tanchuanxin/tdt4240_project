@@ -8,12 +8,12 @@ import com.tnig.game.model.physics_engine.Engine;
 public class PlayerFactory {
     public static Model createModel(EventManager eventManager,
                                     Engine engine,
-                                    float x, float y, float width, float height,
+                                    float x, float y, float width, float height, float rotation,
                                     ModelType modelType){
         PlayerType type = (PlayerType) modelType;
         switch (type){
             case NORMALPLAYER:
-                return new NormalPlayer(eventManager, engine, x, y, width, height, type);
+                return new NormalPlayer(eventManager, engine, x, y, width, height, rotation, type);
             case MOCK:
                 throw new IllegalArgumentException("Not created model for Mock");
             default:

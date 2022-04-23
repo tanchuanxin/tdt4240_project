@@ -6,5 +6,4 @@ public interface Controller {
     Model getModel();
     boolean isDisposable();
     void update(float delta);
-
 }

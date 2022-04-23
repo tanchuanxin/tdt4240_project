@@ -14,16 +14,14 @@ public class AnimatedObjectController implements AnimatedController {
     private final Model model;
     private final AnimatedView view;
 
-
     public AnimatedObjectController(EventManager eventManager,
                                     Engine engine,
                                     AssetLoader assetLoader,
-                                    float x, float y, float width, float height,
+                                    float x, float y, float width, float height, float rotation,
                                     ModelType type) {
-        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, type);
+        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, rotation, type);
         view = ViewFactory.createView(model, assetLoader);
     }
-
 
     public boolean isDisposable(){
         return model.isDisposable();

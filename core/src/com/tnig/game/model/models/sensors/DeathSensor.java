@@ -14,9 +14,9 @@ public class DeathSensor extends Sensor {
 
 
     protected DeathSensor(EventManager eventManager, Engine engine,
-                          float x, float y, float width, float height,
+                          float x, float y, float width, float height, float rotation,
                           ModelType type) {
-        super(engine, x, y, width, height, type);
+        super(engine, x, y, width, height, rotation, type);
         this.eventManager = eventManager;
     }
 

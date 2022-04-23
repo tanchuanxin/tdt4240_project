@@ -93,9 +93,28 @@ public abstract class BodyBuilder {
             case EQUILATERAL_TRIANGLE:
                 shape = new PolygonShape();
                 Vector2[] vertices = new Vector2[3];
-                vertices[0] = new Vector2(-object.getWidth() / 2, -object.getHeight() / 2);
-                vertices[1] = new Vector2(object.getWidth() / 2, -object.getHeight() / 2);
-                vertices[2] = new Vector2(0, object.getHeight() / 2);
+                switch ((int) object.getRotation()) {
+                    case 0:
+                        vertices[0] = new Vector2(-object.getWidth() / 2, -object.getHeight() / 2);
+                        vertices[1] = new Vector2(object.getWidth() / 2, -object.getHeight() / 2);
+                        vertices[2] = new Vector2(0, object.getHeight() / 2);
+                        break;
+                    case 90:
+                        vertices[0] = new Vector2(-object.getHeight() / 2, object.getWidth() / 2);
+                        vertices[1] = new Vector2(object.getHeight() / 2, 0);
+                        vertices[2] = new Vector2(-object.getHeight() / 2, -object.getWidth() / 2);
+                        break;
+                    case 180:
+                        vertices[0] = new Vector2(-object.getWidth() / 2, object.getHeight() / 2);
+                        vertices[1] = new Vector2(object.getWidth() / 2, object.getHeight() / 2);
+                        vertices[2] = new Vector2(0, -object.getHeight() / 2);
+                        break;
+                    case 270:
+                        vertices[0] = new Vector2(object.getHeight() / 2, object.getWidth() / 2);
+                        vertices[1] = new Vector2(object.getHeight() / 2, -object.getWidth() / 2);
+                        vertices[2] = new Vector2(-object.getHeight() / 2, 0);
+                        break;
+                }
                 ((PolygonShape) shape).set(vertices);
                 break;
             case POLYGON:
