@@ -87,6 +87,14 @@ public class NormalGame implements GameInitializer {
         for (RectangleMapObject object : map.getLayers()
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
+
+            float rotation = 0;
+            if (object.getProperties().get("rotation", Float.class) != null) {
+                rotation = object.getProperties().get("rotation", Float.class);
+            }
+
+            Gdx.app.log("Static rotation: ", String.valueOf(rotation));
+
             Controller controller = new StaticObjectController(
                     eventManager, engine, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
                     rect.width / PPM, rect.height / PPM, modelType);
@@ -103,6 +111,13 @@ public class NormalGame implements GameInitializer {
 
             AnimatedController animatedController;
             Rectangle rect = object.getRectangle();
+
+            float rotation = 0;
+            if (object.getProperties().get("rotation", Float.class) != null) {
+                rotation = object.getProperties().get("rotation", Float.class);
+            }
+
+            Gdx.app.log("Animated rotation: ", String.valueOf(rotation));
 
             animatedController = new AnimatedObjectController(
                     eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
