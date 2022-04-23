@@ -16,14 +16,12 @@ public class Spike extends AbstractModel {
     private static final ObjectShape shape = ObjectShape.TRIANGLE;
 
     private final EventManager eventManager;
-    private final float rotation;
 
     protected Spike(EventManager eventManager, Engine engine,
                     float x, float y, float width, float height, float rotation,
                     ModelType type) {
         super(engine, x, y, width, height, rotation, isStatic, isSensor, type);
         this.eventManager = eventManager;
-        this.rotation = rotation;
     }
 
     @Override
