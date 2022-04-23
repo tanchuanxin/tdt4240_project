@@ -111,6 +111,11 @@ public class GameManager implements EventListener {
         return new GameState(score, map.getMapNumber());
     }
 
+    public int getScore() {
+        Player player = (Player) game.getPlayer().getModel();
+        return player.getScore();
+    }
+
     @Override
     public void receiveEvent(Event event) {
         switch (event.name){
