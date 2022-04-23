@@ -16,12 +16,12 @@ public class StaticTriangleBody extends BodyBuilder {
     }
 
 
-    @Override
+    //@Override
     protected void addToBodyDef(BodyDef bodyDef) {
         // TODO: set bodydef
     }
 
-    @Override
+    //@Override
     protected void addToFixtureDef(FixtureDef fixtureDef) {
         // TODO: Set filtering
 
