@@ -13,6 +13,11 @@ public class PlayerView extends AbstractAnimatedView {
     private final TextureRegion playerStanding;
     private final Animation<TextureRegion> playerJump;
     private final Animation<TextureRegion> playerWin;
+    private float stateTimer;
+    private enum state {STANDING, JUMPING};
+    private state currentState;
+    private state previousState;
+    private boolean isFacingRight;
 
     /**
      * constructor
@@ -41,6 +46,12 @@ public class PlayerView extends AbstractAnimatedView {
 
         // Standing frame
         playerStanding = new TextureRegion(assetLoader.get(AssetLoader.TEXTURE_ATLAS).findRegion("jellyJump28x28"), 0,0,28,28);
+
+        // facing left or right
+        stateTimer = 0;
+        currentState = state.STANDING;
+        previousState = state.STANDING;
+        isFacingRight = true;
     }
 
 
@@ -49,9 +60,36 @@ public class PlayerView extends AbstractAnimatedView {
      * renders/draws the player on the screen
       */
     @Override
-    protected void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time) {
-        final TextureRegion currentFrame = playerStanding;
+    protected void renderModel(SpriteBatch batch, Model model, float x, float y, float width, float height, float time) {
+        final TextureRegion currentFrame;
 
-        batch.draw(currentFrame, x-width/2, y-height/2, width, height);
+        // TODO need to add dying animation
+        if (model.getBody().getLinearVelocity().y > 0) {
+            currentState = state.JUMPING;
+        } else {
+            currentState = state.STANDING;
+        }
+
+        if (currentState == state.JUMPING) {
+            currentFrame = playerJump.getKeyFrame(stateTimer);
+        } else if (currentState == state.STANDING) {
+            currentFrame = playerStanding;
+        } else {
+            currentFrame = playerStanding;
+        }
+
+        if ((model.getBody().getLinearVelocity().x < 0 || !isFacingRight) && !currentFrame.isFlipX()) {
+            currentFrame.flip(true, false);
+            isFacingRight = false;
+        } else if ((model.getBody().getLinearVelocity().x > 0 || isFacingRight) && currentFrame.isFlipX()) {
+            currentFrame.flip(true, false);
+            isFacingRight = true;
+        }
+
+
+        stateTimer = currentState == previousState ? stateTimer + time : 0;
+        previousState = currentState;
+
+        batch.draw(currentFrame,x-width, y-height/4*3, width*2, height*2);
     }
 }
