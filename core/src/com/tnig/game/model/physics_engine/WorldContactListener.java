@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.tnig.game.model.models.ContactObject;
+import com.tnig.game.model.models.interfaces.ContactObject;
 
 public class WorldContactListener implements ContactListener {
 
@@ -16,6 +16,7 @@ public class WorldContactListener implements ContactListener {
         ContactObject objectB = (ContactObject) contact.getFixtureB().getUserData();
 
         objectA.handleBeginContact(objectB);
+        objectB.handleBeginContact(objectA);
 
     }
 

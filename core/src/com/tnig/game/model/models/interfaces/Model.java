@@ -1,4 +1,4 @@
-package com.tnig.game.model.models;
+package com.tnig.game.model.models.interfaces;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -11,4 +11,6 @@ public interface Model {
     float getWidth();
     float getHeight();
     ModelType getType();
+    float[] getLinearVelocity();
+
 }

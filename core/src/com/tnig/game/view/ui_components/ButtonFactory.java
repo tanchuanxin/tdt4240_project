@@ -81,5 +81,24 @@ public class ButtonFactory {
         return button;
     }
 
+    public Button createCustomEventButton(final Event event, Button button, final boolean touchDown) {
+        if (touchDown) {
+            button.addListener(new ClickListener() {
+               @Override
+               public boolean touchDown(InputEvent inputEvent, float x, float y, int pointer, int button) {
+                   eventManager.pushEvent(event);
+                   return true;
+               };
+            });
+        } else {
+            button.addListener(new ClickListener() {
+                @Override
+                public void touchUp(InputEvent inputEvent, float x, float y, int pointer, int button) {
+                    eventManager.pushEvent(event);
+                }
+            });
+        }
 
+        return button;
+    }
 }

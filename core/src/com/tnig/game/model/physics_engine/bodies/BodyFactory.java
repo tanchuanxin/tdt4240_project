@@ -1,7 +1,7 @@
 package com.tnig.game.model.physics_engine.bodies;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.tnig.game.model.models.GameObject;
+import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.models.ObjectType;
 import com.tnig.game.model.physics_engine.bodies.blocks.NormalBlockBody;
 import com.tnig.game.model.physics_engine.bodies.obstacles.StaticTriangleBody;
@@ -38,6 +38,10 @@ public class BodyFactory {
             case OBSTACLE:
                 return StaticTriangleBody.getInstance().createBody(engine, x, y, object);
             case BLOCK:
+                return NormalBlockBody.getInstance().createBody(engine, x, y, object);
+            case COIN:
+                return NormalBlockBody.getInstance().createBody(engine, x, y, object);
+            case SENSOR:
                 return NormalBlockBody.getInstance().createBody(engine, x, y, object);
             default:
                 throw new IllegalArgumentException("Type doesnt exist: " + type);

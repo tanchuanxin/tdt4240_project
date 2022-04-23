@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tnig.game.model.networking.Network;
+import com.tnig.game.model.networking.NetworkService;
 import com.tnig.game.model.networking.PlayerData;
 
 
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class AndroidFirebaseInterface implements Network {
+public class AndroidFirebaseInterface implements NetworkService {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private DatabaseReference levelRef;
@@ -35,11 +35,6 @@ public class AndroidFirebaseInterface implements Network {
         myRef = database.getReference("highscore");
         playerMap = new HashMap<>();
         updateHighscore();
-    }
-
-    @Override
-    public void someFunction() {
-        System.out.println("Just som android function.");
     }
 
     /**

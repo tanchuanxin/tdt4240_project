@@ -1,9 +1,7 @@
 package com.tnig.game.view.model_views;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tnig.game.model.models.Model;
-import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.utilities.Constants;
+import com.tnig.game.model.models.interfaces.Model;
 
 public abstract class AbstractView implements View {
     private final Model model;
@@ -16,7 +14,7 @@ public abstract class AbstractView implements View {
 
     // A template method could be used here
     @Override
-    public void render(SpriteBatch batch, AssetLoader assetLoader) {
+    public void render(SpriteBatch batch) {
         float width = model.getWidth();
         float height = model.getHeight();
         float x = model.getX();

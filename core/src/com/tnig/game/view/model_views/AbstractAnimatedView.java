@@ -1,8 +1,7 @@
 package com.tnig.game.view.model_views;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tnig.game.model.models.Model;
-import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.utilities.Constants;
 
 public abstract class AbstractAnimatedView implements AnimatedView {
@@ -24,11 +23,14 @@ public abstract class AbstractAnimatedView implements AnimatedView {
 
     // A template method could be used here
     @Override
-    public void render(SpriteBatch batch, AssetLoader assetLoader) {
+    public void render(SpriteBatch batch) {
         float width = model.getWidth();
         float height = model.getHeight();
         float x = model.getX();
         float y = model.getY();
+
         renderModel(batch, x, y, width, height, time);
+
+
     }
 }

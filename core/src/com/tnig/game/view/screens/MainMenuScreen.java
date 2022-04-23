@@ -1,14 +1,12 @@
 package com.tnig.game.view.screens;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.tnig.game.controller.events.screen_events.NewGameEvent;
+import com.tnig.game.controller.events.screen_events.InitGameEvent;
 import com.tnig.game.controller.events.screen_events.QuitGameEvent;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
@@ -36,15 +34,13 @@ public class MainMenuScreen extends AbstractScreen {
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
         Button onePlayerBtn = buttonFactory.createSwitchScreenEventButton(
-                ScreenName.MAP_SELECT, new NewGameEvent(1), "1 Player", true);
+                ScreenName.MAP_SELECT, new InitGameEvent(1), "1 Player", true);
 
         Button twoPlayerBtn = buttonFactory.createSwitchScreenEventButton(
-                ScreenName.MAP_SELECT, new NewGameEvent(2), "2 Player", true);
-
-
+                ScreenName.MAP_SELECT, new InitGameEvent(2), "2 Player", true);
 
         Button leaderboardsBtn = buttonFactory
-                .createSwitchingScreenButton(ScreenName.LEADERBOARDS, "Leaderboards", true);
+                .createSwitchingScreenButton(ScreenName.LEADERBOARD_SELECTION, "Leaderboards", true);
 
         Button exitBtn = buttonFactory
                 .createEventButton(new QuitGameEvent(), "Exit", true);

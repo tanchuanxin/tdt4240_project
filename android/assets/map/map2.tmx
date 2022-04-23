@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="221">
+=======
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="32" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="148">
+>>>>>>> 148b6c5bfdc92130bb57a581dfd34714fd29dc45
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
- <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
-  <image source="spikes.png" width="64" height="16"/>
- </tileset>
- <layer id="1" name="background" width="128" height="13">
+ <layer id="1" name="background" width="32" height="13">
   <data encoding="base64" compression="zlib">
-   eJztwwEJAAAMA6Dx/oXWbj2Ogr2kqqqqqqqqvjmqmr+9
+   eJzbycTAsHMUj+JRPIpH8SimMwYANQIv8A==
   </data>
  </layer>
- <layer id="2" name="graphics" width="128" height="13">
+ <layer id="2" name="graphics" width="32" height="13">
   <data encoding="base64" compression="zlib">
+<<<<<<< HEAD
    eJztWAsKwjAM7bZL7CzeVfA8XkAFv+AZRAU/KaMQStslbbp2sAcPRNPl85JUVWrBgmlwaZW6Am9t6UgWzA0Ner2D/tkDD8Q+kuq7xmLtOEK+J+AZ5f0oF04ScL2fkM8L+J7RHuH2rAanz1y2H/D1Bf6Qz9UMGvdu1WjTjddBf74VzE161jk9y/XLsaXqP/VdHaq3T3+tt2Gq/jFnJftNI6bfuPa1zj91vjENKPuBEwe1ppKljNXdNxc+1KL/uhviNLs+FJZLcwxJ/TmQ8DnFzGPUoL8r59B+nyqWkCvdr4b4rITfmHNjNj5I6J9DE9d+x7WWgv3dkgpqz3KeletcyK7k/Idqb88hNVeOnqV/v8f41vlJ3hGx+tu7z/e+rUfumtf2X4yrRlhDLlLyM+eMRn0z6N8j+uYulZLgPD93LFSf9j2RqqFkXJh/z6pAEQ==
   </data>
  </layer>
@@ -28,10 +30,16 @@
   <object id="199" x="480.5" y="114" width="15.0041" height="13.5008" rotation="359.907"/>
   <object id="200" x="1936" y="178.013" width="30.0065" height="15.0016" rotation="359.907"/>
  </objectgroup>
+=======
+   eJxjYBgF9ATfBth+K8ZR+0ftHx72Ww2w/eSAgbBfghGBrRhR+SDnkIORAblmgDAA91MD9w==
+  </data>
+ </layer>
+>>>>>>> 148b6c5bfdc92130bb57a581dfd34714fd29dc45
  <objectgroup id="9" name="player">
-  <object id="217" x="64.9925" y="179.113" width="13.25" height="12.75"/>
+  <object id="147" x="66.231" y="179.938" width="11.625" height="12.125"/>
  </objectgroup>
  <objectgroup id="4" name="blocks">
+<<<<<<< HEAD
   <object id="124" x="0" y="192" width="336" height="16"/>
   <object id="125" x="336" y="192" width="16" height="16"/>
   <object id="126" x="0" y="192" width="352" height="16"/>
@@ -94,5 +102,22 @@
   <object id="214" x="819.031" y="66" width="10.0625" height="13.875"/>
   <object id="215" x="818.906" y="82.125" width="10.0625" height="13.875"/>
   <object id="216" x="1874.91" y="98" width="10.0625" height="13.875"/>
+=======
+  <object id="137" x="0" y="192" width="224" height="16"/>
+  <object id="138" x="272" y="192" width="240" height="16"/>
+  <object id="140" x="510.667" y="-113.333" height="0.666667"/>
+ </objectgroup>
+ <objectgroup id="7" name="spikes"/>
+ <objectgroup id="8" name="finishLine">
+  <object id="136" x="448" y="32" width="16" height="160"/>
+ </objectgroup>
+ <objectgroup id="10" name="deathSensor">
+  <object id="143" x="0" y="0" width="3" height="207.5"/>
+  <object id="144" x="508" y="0" width="4" height="209"/>
+  <object id="145" x="0" y="204.5" width="512.5" height="3.5"/>
+ </objectgroup>
+ <objectgroup id="6" name="coins">
+  <object id="139" x="240" y="144" width="16" height="16"/>
+>>>>>>> 148b6c5bfdc92130bb57a581dfd34714fd29dc45
  </objectgroup>
 </map>

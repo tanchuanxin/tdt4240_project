@@ -1,7 +1,7 @@
 package com.tnig.game.model.models.players;
 
 import com.tnig.game.model.models.ObjectType;
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.ModelType;
 
 public enum PlayerType implements ModelType {
     NORMALPLAYER, MOCK;

@@ -1,8 +1,9 @@
 package com.tnig.game.controller.game_objects.dynamic_objects;
 
-import com.tnig.game.model.models.Model;
+import com.tnig.game.controller.managers.EventManager;
+import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.ModelFactory;
-import com.tnig.game.model.models.ModelType;
+import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.model_views.AnimatedView;
@@ -13,15 +14,14 @@ public class AnimatedObjectController implements AnimatedController {
     private final Model model;
     private final AnimatedView view;
 
-
-    public AnimatedObjectController(Engine engine,
+    public AnimatedObjectController(EventManager eventManager,
+                                    Engine engine,
                                     AssetLoader assetLoader,
-                                    float x, float y, float width, float height,
+                                    float x, float y, float width, float height, float rotation,
                                     ModelType type) {
-        model = ModelFactory.createModel(engine, x, y, width, height, type);
+        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, rotation, type);
         view = ViewFactory.createView(model, assetLoader);
     }
-
 
     public boolean isDisposable(){
         return model.isDisposable();

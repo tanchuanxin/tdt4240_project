@@ -1,14 +1,16 @@
 package com.tnig.game.model.physics_engine.bodies;
 
-import static com.tnig.game.utilities.Constants.PPM;
 
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.tnig.game.model.models.GameObject;
+import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.physics_engine.Engine;
 
 /**
@@ -17,15 +19,7 @@ import com.tnig.game.model.physics_engine.Engine;
 public abstract class BodyBuilder {
 
     // Template methods
-
-    /**
-     * Gets the shape of the specific body
-     * @param object The object to create the shape from
-     * @return A Box2D shape
-     */
-    protected abstract Shape getShape(GameObject object);
-
-    /**
+     /**
      * Makes the necessary changes to the body definition to that specific body
      * @param bodyDef The body definition
      */
@@ -56,7 +50,7 @@ public abstract class BodyBuilder {
         bodyDef.fixedRotation = true;
 
         // World units = meters, from world to screen -> Divide by Pixel Per Meter
-        bodyDef.position.set(x / PPM, y / PPM);
+        bodyDef.position.set(x, y);
 
         addToBodyDef(bodyDef);
         //Puts the body in the Box2D world
@@ -67,9 +61,9 @@ public abstract class BodyBuilder {
         fixtureDef.shape = shape;
         fixtureDef.isSensor = object.isSensor();
 
-        fixtureDef.density = 1;
-        fixtureDef.friction = 0.5f;
-        //fixtureDef.restitution = 0.01f;
+        fixtureDef.density = 20;
+        fixtureDef.friction = 0f;
+        fixtureDef.restitution = 0f;
         addToFixtureDef(fixtureDef);
 
         // Sets the model as userdata for the contactlistener
@@ -78,4 +72,63 @@ public abstract class BodyBuilder {
 
         return body;
     }
+
+
+    /**
+     * Gets the shape of the specific body
+     * @param object The object to create the shape from
+     * @return A Box2D shape
+     */
+    private Shape getShape(GameObject object){
+        Shape shape;
+        switch (object.GetShapeType()){
+            case BOX:
+                shape = new PolygonShape();
+                ((PolygonShape) shape).setAsBox(object.getWidth() / 2 , object.getHeight() / 2);
+                break;
+            case CIRCLE:
+                shape = new CircleShape();
+                shape.setRadius(object.getWidth() / 2 );
+                break;
+            case EQUILATERAL_TRIANGLE:
+                shape = new PolygonShape();
+                Vector2[] vertices = new Vector2[3];
+                switch ((int) object.getRotation()) {
+                    case 0:
+                        vertices[0] = new Vector2(-object.getWidth() / 2, -object.getHeight() / 2);
+                        vertices[1] = new Vector2(object.getWidth() / 2, -object.getHeight() / 2);
+                        vertices[2] = new Vector2(0, object.getHeight() / 2);
+                        break;
+                    case 90:
+                        vertices[0] = new Vector2(-object.getHeight() / 2, object.getWidth() / 2);
+                        vertices[1] = new Vector2(object.getHeight() / 2, 0);
+                        vertices[2] = new Vector2(-object.getHeight() / 2, -object.getWidth() / 2);
+                        break;
+                    case 180:
+                        vertices[0] = new Vector2(-object.getWidth() / 2, object.getHeight() / 2);
+                        vertices[1] = new Vector2(object.getWidth() / 2, object.getHeight() / 2);
+                        vertices[2] = new Vector2(0, -object.getHeight() / 2);
+                        break;
+                    case 270:
+                        vertices[0] = new Vector2(object.getHeight() / 2, object.getWidth() / 2);
+                        vertices[1] = new Vector2(object.getHeight() / 2, -object.getWidth() / 2);
+                        vertices[2] = new Vector2(-object.getHeight() / 2, 0);
+                        break;
+                }
+                ((PolygonShape) shape).set(vertices);
+                break;
+            case POLYGON:
+                //TODO: Make possible for different polygons;
+                throw new UnsupportedOperationException("Not Implemented yet");
+                /*shape = new PolygonShape();
+                PolygonObject polygonObject = (PolygonObject) object;
+                ((PolygonShape) shape).set(polygonObject.getVertices());
+                break;*/
+            default:
+                throw new IllegalStateException("Unexpected value: " + object.GetShapeType());
+        }
+        return shape;
+    }
+
+
 }
