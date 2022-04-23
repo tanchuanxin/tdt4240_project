@@ -4,6 +4,7 @@ import static com.tnig.game.utilities.Constants.PPM;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -51,6 +52,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private Label scoreLabel;
     private final Table tableLeft;
     private final InputMultiplexer inputMultiplexer;
+    private final Music gameMusic;
 
     private boolean paused = false;
     private boolean gameOver = false;
@@ -78,6 +80,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         gameManager = new GameManager(eventManager, assetLoader, map, viewport, numberOfPlayers);
 
+        // Subscribe to events
         eventManager.subscribe(EventName.NEW_GAME, this);
         eventManager.subscribe(EventName.GAME_OVER, this);
 
@@ -90,9 +93,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
         Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
-
-
-
 
         tableRight = new Table();
         tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
@@ -133,6 +133,11 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         // Create debug renderer
         b2dr = new Box2DDebugRenderer();
+
+        // Play background music
+        this.gameMusic = assetLoader.get(AssetLoader.MUSIC_ADVENTURE);
+        gameMusic.setLooping(true);
+        gameMusic.play();
     }
 
     @Override
@@ -151,12 +156,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
                 break;
         }
     }
-
-    @Override
-    public void show () {
-
-    }
-
 
     private void update(float delta){
         // Update camera
@@ -232,6 +231,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     @Override
     public void hide() {
+        gameMusic.stop();
+
         // Dispose this screen and its scenes
         dispose();
     }
