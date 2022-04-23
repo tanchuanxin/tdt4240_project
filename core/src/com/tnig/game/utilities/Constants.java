@@ -3,8 +3,8 @@ package com.tnig.game.utilities;
 public class Constants {
     public static final float PPM = 60f;
     public static final int FPS = 60;
-    public static final float VIEWPORT_WIDTH = 1000f;
-    public static final float VIEWPORT_HEIGHT = 580f;
+    public static final float VIEWPORT_WIDTH = 1280f;
+    public static final float VIEWPORT_HEIGHT = 720f;
 
     public static final float WORLD_WIDTH = 320f;
     public static final float WORLD_HEIGHT = 180f;
