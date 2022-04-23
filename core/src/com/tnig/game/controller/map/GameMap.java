@@ -86,8 +86,10 @@ public class GameMap {
         y *= PPM;
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(Constants.graphicsLayer);
         TiledMapTileLayer.Cell cell = layer.getCell((int) x / tileWidth, (int) y / tileHeight);
-        cell.setTile(null);
 
+        if (cell != null) {
+            cell.setTile(null);
+        }
     }
 
 
