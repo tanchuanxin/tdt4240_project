@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="258">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="128" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="260">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" name="spikes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
   <image source="spikes.png" width="64" height="16"/>
@@ -12,15 +12,13 @@
  </layer>
  <layer id="2" name="graphics" width="128" height="13">
   <data encoding="base64" compression="zlib">
-   eJztV20KwjAM7bZL7Cy7q/+8kwp+gmcQFfxIGYVQ2i5p07WDPQiIpsvHe2mmUitWzINLq9QV7NaWzmTF0tCgzzvQzx7sQNSRlO4ay2rHEeo9gZ1R3Y9y6SQB9/sJ9bzA3gu6R7ia1eDozOX7gVhfsB+KOSxAuHdHj6bS1r8PgjlIzzpHs9y4HF8q/3Pv6lC/t11+/mPOSupNI0ZvXP9a5z+U1hT/FH1w8qD2VLKVsby7zoR0WQv/m27M09z1lPn2QZJ/DiRizjHzGDXw76q5VFrUPa/1agyflYgbc27KxwcJ/qX3nobZ38bsXkvB9W5JgaRmY+eXs5d8fiXnP9R7ew6ptXL4LP3/PSa2rk9yR8Ty75tH+3ubj9w99z03x91BgSsu5pCLlL6Zc4ajvhn575H55i7VJMF5fu5cqDHtPZHKoWRe2P7QCjFp
+   eJztV20KwjAM7bZL7Cyezav4zzup4Cd4BlHBj5RRCKXtkjZdO9iDgGi6fLyXZiq1YME0uLRKXcFubelMFswNDfq8A/3swQ5EHUnprrGsdhyh3hPYGdX9KJdOEnC/n1DPC+w9o3uEq1kNjs5cvh+I9QX7oZirGQj37ujRWNr697VgDtKzztEsNy7Hl8r/1Ls61O9tl5//mLOSetOI0RvXv9b5D6U1xj9FH5w8qD2VbGUs764zIV3Wwv+mG/I0dz1lvn2Q5J8DiZhTzDxGDfy7ai6VFnXPa70aw2cl4sacG/PxQYJ/6b2nYfa3MbvXUnC9W1IgqdnY+eXsJZ9fyfkP9d6eQ2qtHD5L/3+Pia3rk9wRsfz75tH+3uYjd899z81xd1Dgios55CKlb+ac4ahvBv57ZL65SzVJcJ6fOxdqTHtPpHIomRe2P7WsM/0=
   </data>
  </layer>
  <objectgroup id="9" name="player">
   <object id="252" x="50.375" y="179.938" width="11.625" height="12.125"/>
  </objectgroup>
  <objectgroup id="11" name="deathSensor">
-  <object id="233" x="0" y="0" width="4" height="208"/>
-  <object id="234" x="2041.33" y="0" width="6.66667" height="210.667"/>
   <object id="235" x="0" y="202" width="2052" height="6"/>
  </objectgroup>
  <objectgroup id="10" name="spikes">
@@ -105,6 +103,8 @@
   <object id="167" x="1888" y="144" width="16" height="32"/>
   <object id="168" x="1904" y="160" width="16" height="48"/>
   <object id="169" x="1920" y="192" width="128" height="16"/>
+  <object id="258" x="3.16667" y="0.666667" width="3" height="208"/>
+  <object id="259" x="2044.5" y="-3.33333" width="3" height="208"/>
  </objectgroup>
  <objectgroup id="8" name="finishLine">
   <object id="182" x="1984" y="4" width="16" height="188"/>
