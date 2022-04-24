@@ -49,7 +49,7 @@ public class GameOverScreen extends AbstractScreen{
         table.pad(30f);
         table.row().padBottom(30f);
 
-        Label titleLabel = new Label("Game Over", skin, "title");
+        Label titleLabel = new Label("Submit scores", skin, "title");
         titleLabel.setAlignment(Align.center);
         table.add(titleLabel).colspan(2).fillX().align(Align.center);
         table.row().padBottom(30f);
@@ -85,7 +85,7 @@ public class GameOverScreen extends AbstractScreen{
             table.add(subTable);
         }
 
-        Button saveScoreBtn = new Button(new Label("Upload scores", skin), skin);
+        Button saveScoreBtn = new Button(new Label("Submit", skin), skin);
         saveScoreBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
