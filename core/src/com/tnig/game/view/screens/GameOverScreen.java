@@ -47,7 +47,7 @@ public class GameOverScreen extends AbstractScreen{
         table.pad(30f);
         table.row().padBottom(30f);
 
-        Label titleLabel = new Label("Upload scores", skin);
+        Label titleLabel = new Label("Game Over", skin, "title");
         titleLabel.setAlignment(Align.center);
         table.add(titleLabel).colspan(2).fillX().align(Align.center);
         table.row().padBottom(30f);
@@ -87,7 +87,7 @@ public class GameOverScreen extends AbstractScreen{
             table.add(subTable);
         }
 
-        Button saveScoreBtn = new Button(new Label("Submit", skin), skin);
+        Button saveScoreBtn = new Button(new Label("Upload scores", skin), skin);
         saveScoreBtn.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
