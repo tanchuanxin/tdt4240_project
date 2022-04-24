@@ -3,9 +3,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.tnig.game.model.models.enums.Direction;
 import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.players.Player;
-import com.tnig.game.model.models.players.PlayerDirection;
 import com.tnig.game.model.models.players.PlayerState;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.model_views.AbstractAnimatedView;
@@ -80,10 +80,10 @@ public class PlayerView extends AbstractAnimatedView {
     }
 
     private void calculateSpriteDirection(TextureRegion currentFrame){
-        if ((player.getDirection() == PlayerDirection.LEFT || !isFacingRight) && !currentFrame.isFlipX()) {
+        if ((player.getDirection() == Direction.LEFT || !isFacingRight) && !currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
             isFacingRight = false;
-        } else if ((player.getDirection() == PlayerDirection.RIGHT || isFacingRight) && currentFrame.isFlipX()) {
+        } else if ((player.getDirection() == Direction.RIGHT || isFacingRight) && currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
             isFacingRight = true;
         }
