@@ -51,7 +51,7 @@ public class GameOverScreen extends AbstractScreen{
 
         Label titleLabel = new Label("Submit scores", skin, "title");
         titleLabel.setAlignment(Align.center);
-        table.add(titleLabel).colspan(2).fillX().align(Align.center);
+        table.add(titleLabel).colspan(gameStates.size()).fillX().align(Align.center);
         table.row().padBottom(30f);
 
         for (int playerNum = 1; playerNum <= gameStates.size(); playerNum++) {
@@ -66,21 +66,25 @@ public class GameOverScreen extends AbstractScreen{
 
             subTable.row().padBottom(15f);
 
-            Label scoreLabel = new Label("P" + String.valueOf(playerNum) + " Score: " + gameState.getScore(), skin);
-            scoreLabel.setAlignment(Align.center);
-            subTable.add(scoreLabel).colspan(2).fillX();
+            Label scoreFieldLabel = new Label("P" + String.valueOf(playerNum) + " Score: ", skin);
+            scoreFieldLabel.setAlignment(Align.left);
+            subTable.add(scoreFieldLabel).padRight(10f);
+
+            Label scoreLabel = new Label(String.valueOf(gameState.getScore()), skin);
+            scoreLabel.setAlignment(Align.left);
+            subTable.add(scoreLabel);
+
+            subTable.row().padBottom(5f);
 
             Label nameFieldLabel = new Label("Name: ", skin);
             nameFieldLabel.setAlignment(Align.left);
-
-            subTable.row();
 
             TextField textField = new TextField("", skin);
             textField.setAlignment(Align.left);
             textFields.add(textField);
 
-            subTable.add(nameFieldLabel).padRight(10f).fillX();
-            subTable.add(textField).fillX().setActorWidth(200f);
+            subTable.add(nameFieldLabel).padRight(10f);
+            subTable.add(textField).setActorWidth(200f);
 
             table.add(subTable);
         }
@@ -119,10 +123,10 @@ public class GameOverScreen extends AbstractScreen{
         });
 
         table.row().padBottom(20f);
-        table.add(saveScoreBtn).colspan(2).fillX();
+        table.add(saveScoreBtn).colspan(gameStates.size()).fillX();
 
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
-        table.row().colspan(2).padBottom(20f).expandX().fillX();
+        table.row().colspan(gameStates.size()).padBottom(20f).expandX().fillX();
         Button skipBtn = buttonFactory.createSwitchingScreenButton(ScreenName.MAIN_MENU, "Skip", true);
         table.add(skipBtn).expandX().center().fillX();
 

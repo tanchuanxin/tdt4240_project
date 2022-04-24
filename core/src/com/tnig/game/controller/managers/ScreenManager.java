@@ -101,7 +101,7 @@ public class ScreenManager implements EventListener {
                 }
                 Gdx.app.log("ScreenManager mapNum: ", String.valueOf(mapNumber));
                 Gdx.app.log("ScreenManager numOfPlayers: ", String.valueOf(numberOfPlayers));
-                game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, mapNumber, numberOfPlayers));
+                game.setScreen(new GameScreen(game, this, eventManager, camera, assetLoader, mapNumber, numberOfPlayers));
                 break;
             case MAP_SELECT:
                 game.setScreen(new MapSelectScreen(this, camera, assetLoader, eventManager));
