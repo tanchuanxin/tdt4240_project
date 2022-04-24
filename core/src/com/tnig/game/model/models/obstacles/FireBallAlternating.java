@@ -6,16 +6,17 @@ import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.AssetLoader;
 
 public class FireBallAlternating extends FireBall{
 
     private final float distanceToTravel;
     float startX, startY;
 
-    protected FireBallAlternating(EventManager eventManager, Engine engine,
+    protected FireBallAlternating(EventManager eventManager, Engine engine, AssetLoader assetLoader,
                                   float x, float y, float width, float height,
                                   ObjectProperties properties, ModelType type) {
-        super(eventManager, engine, x, y, width, height, properties, type);
+        super(eventManager, engine, assetLoader, x, y, width, height, properties, type);
         startX = x;
         startY = y;
         int tileBounds = properties.get("tileBounds", int.class);

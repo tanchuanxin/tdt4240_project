@@ -20,7 +20,7 @@ public class AnimatedObjectController implements AnimatedController {
                                     AssetLoader assetLoader,
                                     float x, float y, float width, float height,
                                     ObjectProperties properties, ModelType type) {
-        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, properties, type);
+        model = ModelFactory.createModel(eventManager, engine, assetLoader, x, y, width, height, properties, type);
         view = ViewFactory.createView(model, assetLoader);
     }
 

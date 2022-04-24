@@ -2,6 +2,7 @@ package com.tnig.game.model.models.players;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
@@ -16,6 +17,7 @@ import com.tnig.game.model.models.enums.ObjectShape;
 import com.tnig.game.model.models.coins.Coin;
 import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
 
 
@@ -34,16 +36,17 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     private PlayerState playerState;
     private Direction playerDirection = Direction.RIGHT;
 
+    private Sound winSound;
+    private Sound jumpSound;
+
     public Direction getDirection() {
         return playerDirection;
     }
 
-
-
     private float attackTimeout;
     private float winTimeout;
 
-    public NormalPlayer(EventManager eventManager, Engine engine,
+    public NormalPlayer(EventManager eventManager, Engine engine, AssetLoader assetLoader,
                         float x, float y, float width, float height,
                         ObjectProperties properties, ModelType type) {
         super(engine, x, y, width, height, properties, bodyType, isSensor, type);
@@ -56,6 +59,9 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         eventManager.subscribe(EventName.ATTACK, this);
         eventManager.subscribe(EventName.STOP_PLAYER, this);
         eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
+
+        this.winSound = assetLoader.get(AssetLoader.SOUND_WIN);
+        this.jumpSound = assetLoader.get(AssetLoader.SOUND_JUMP);
 
         attackTimeout = 5;
         winTimeout = 2;
@@ -135,6 +141,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 break;
             case JUMP:
                 if (playerState == PlayerState.RUNNING) {
+                    jumpSound.play();
                     jump();
                 }
                 break;
@@ -161,6 +168,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 }
                 break;
             case PLAYER_AT_GOAL:
+                winSound.play();
                 setPlayerState(PlayerState.WIN);
                 applyImpulseToCenter(0, jumpingForce);
                 break;
