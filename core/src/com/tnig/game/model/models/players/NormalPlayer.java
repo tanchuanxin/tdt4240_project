@@ -14,6 +14,7 @@ import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.enums.ObjectShape;
 import com.tnig.game.model.models.coins.Coin;
+import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.Constants;
 
@@ -75,6 +76,8 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                     setPlayerState(PlayerState.RUNNING);
                 }
                 break;
+
+
         }
     }
 

@@ -1,11 +1,14 @@
 package com.tnig.game.model.models.obstacles;
 
 import com.badlogic.gdx.Gdx;
+import com.tnig.game.controller.events.game_events.PlayerDead;
+import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
 import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.enums.BodyType;
 import com.tnig.game.model.models.enums.Direction;
 import com.tnig.game.model.models.enums.ObjectShape;
+import com.tnig.game.model.models.enums.ObjectType;
 import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
@@ -18,12 +21,13 @@ public class FireBall extends AbstractModel {
     private final float speed;
 
     private Direction direction;
+    private EventManager eventManager;
 
-
-    protected FireBall(Engine engine,
+    protected FireBall(EventManager eventManager, Engine engine,
                        float x, float y, float width, float height,
                        ObjectProperties properties, ModelType type) {
         super(engine, x, y, width, height, properties, bodyType, isSensor, type);
+        this.eventManager = eventManager;
         speed = properties.get("speed", float.class);
         String direction = properties.get("direction", String.class);
         setDirection(direction);
@@ -31,6 +35,10 @@ public class FireBall extends AbstractModel {
 
     @Override
     public void handleBeginContact(ContactObject object) {
+        if (object.getType().getObjectType() == ObjectType.PLAYER){
+            eventManager.pushEvent(new PlayerDead());
+            object.dispose();
+        }
         flipDirection();
 
     }
