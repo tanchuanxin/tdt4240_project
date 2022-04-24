@@ -207,7 +207,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         stage.draw();
 
         if (gameOver){
-            screenManager.setScreen(ScreenName.MAIN_MENU);
+            screenManager.setScreen(ScreenName.GAME_OVER);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.tnig.game.model.physics_engine.bodies;
+package com.tnig.game.model.physics_engine;
 
 
 

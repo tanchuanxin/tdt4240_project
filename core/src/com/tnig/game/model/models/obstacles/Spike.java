@@ -7,6 +7,7 @@ import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.ObjectShape;
 import com.tnig.game.model.models.ObjectType;
+import com.tnig.game.model.models.players.Player;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class Spike extends AbstractModel {
@@ -27,7 +28,7 @@ public class Spike extends AbstractModel {
     @Override
     public void handleBeginContact(ContactObject object) {
         if (object.getType().getObjectType() == ObjectType.PLAYER){
-            eventManager.pushEvent(new PlayerDead(this));
+            eventManager.pushEvent(new PlayerDead());
             object.dispose();
         }
 
