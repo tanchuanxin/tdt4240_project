@@ -91,6 +91,7 @@ public class NormalGame implements GameInitializer {
             float rotation = 0;
             if (object.getProperties().get("rotation", Float.class) != null) {
                 rotation = object.getProperties().get("rotation", Float.class);
+
             }
 
             Controller controller = new StaticObjectController(
@@ -113,6 +114,8 @@ public class NormalGame implements GameInitializer {
             float rotation = 0;
             if (object.getProperties().get("rotation", Float.class) != null) {
                 rotation = object.getProperties().get("rotation", Float.class);
+
+
             }
 
             animatedController = new AnimatedObjectController(

@@ -66,6 +66,6 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
 
     @Override
     public void receiveEvent(Event event) {
-        mapNum = (int) event.data.get("mapNum");
+        mapNum = event.getData("mapNum", int.class);
     }
 }
