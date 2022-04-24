@@ -10,6 +10,7 @@ import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventName;
 import com.tnig.game.view.screens.AppLoadingScreen;
+import com.tnig.game.view.screens.GameOverScreen;
 import com.tnig.game.view.screens.GameScreen;
 import com.tnig.game.view.screens.LeaderboardSelectScreen;
 import com.tnig.game.view.screens.LeaderboardsScreen;
@@ -102,7 +103,7 @@ public class ScreenManager implements EventListener {
                 game.setScreen(new LeaderboardsScreen(this, camera, assetLoader, eventManager, networkService, leaderboardMapNum));
                 break;
             case GAME_OVER:
-                throw new IllegalArgumentException("Not implemented yet");
+                game.setScreen(new GameOverScreen(camera, assetLoader, gameStates, networkService));
         }
     }
 
