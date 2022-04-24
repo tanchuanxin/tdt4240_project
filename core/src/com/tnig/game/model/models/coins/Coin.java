@@ -5,14 +5,15 @@ import com.tnig.game.controller.events.game_events.DisposeSprite;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
 import com.tnig.game.model.models.ObjectProperties;
+import com.tnig.game.model.models.enums.BodyType;
 import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
-import com.tnig.game.model.models.ObjectShape;
-import com.tnig.game.model.models.ObjectType;
+import com.tnig.game.model.models.enums.ObjectShape;
+import com.tnig.game.model.models.enums.ObjectType;
 import com.tnig.game.model.physics_engine.Engine;
 
 public class Coin extends AbstractModel {
-    private static final boolean isStatic = true;
+    private static final BodyType bodyType = BodyType.STATIC;
     private static final boolean isSensor = true;
     private static final ObjectShape shape = ObjectShape.BOX;
     private int value;
@@ -21,7 +22,7 @@ public class Coin extends AbstractModel {
     protected Coin(EventManager eventManager, Engine engine,
                    float x, float y, float width, float height,
                    ObjectProperties properties, ModelType type, int value) {
-        super(engine, x, y, width, height, properties, isStatic, isSensor, type);
+        super(engine, x, y, width, height, properties, bodyType, isSensor, type);
         this.eventManager = eventManager;
         this.value = value;
     }

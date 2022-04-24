@@ -14,7 +14,7 @@ import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.interfaces.ModelType;
-import com.tnig.game.model.models.ObjectType;
+import com.tnig.game.model.models.enums.ObjectType;
 import com.tnig.game.model.models.blocks.BlockType;
 import com.tnig.game.model.models.coins.CoinType;
 import com.tnig.game.model.models.obstacles.ObstacleType;
@@ -51,9 +51,10 @@ public class NormalGame implements GameInitializer {
     private void initGame(GameMap map) {
         Gdx.app.log("GameManager", "init Game");
         TiledMap tiledMap = map.getTiledMap();
-        // Static objects
+
         // Obstacles
         initStaticControllers(tiledMap, Constants.spikeLayer, ObstacleType.SPIKE);
+        initAnimatedControllers(tiledMap, Constants.fireBallLayer, ObstacleType.FIREBALL);
         // Blocks
         initStaticControllers(tiledMap, Constants.blockLayer, BlockType.NORMAL_BLOCK);
         // Coins
@@ -61,10 +62,11 @@ public class NormalGame implements GameInitializer {
         // Sensors
         initStaticControllers(tiledMap, Constants.deathSensorLayer, SensorType.DEATH_SENSOR);
         initStaticControllers(tiledMap, Constants.finishLineLayer, SensorType.FINISH_LINE);
-
-        // Animated objects
+        // Player
         initAnimatedControllers(tiledMap, Constants.playerLayer, PlayerType.NORMALPLAYER);
-        // TODO: ADD OTHER ANIMATED OBJECTS HERE
+
+
+
     }
 
     @Override
@@ -82,52 +84,54 @@ public class NormalGame implements GameInitializer {
     }
 
     private void initStaticControllers(TiledMap map, String layer, ModelType modelType){
-        for (RectangleMapObject object : map.getLayers()
-                .get(layer).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = object.getRectangle();
+        if (!(map.getLayers().get(layer) == null)){
+            for (RectangleMapObject object : map.getLayers()
+                    .get(layer).getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = object.getRectangle();
 
-            /*float rotation = 0;
-            if (object.getProperties().get("rotation", Float.class) != null) {
-                rotation = object.getProperties().get("rotation", Float.class);
+                ObjectProperties properties = new ObjectProperties(object.getProperties());
 
-            }*/
-            ObjectProperties properties = new ObjectProperties(object.getProperties());
+                Controller controller = new StaticObjectController(
+                        eventManager, engine, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
+                        rect.width / PPM, rect.height / PPM, properties, modelType);
 
-            Controller controller = new StaticObjectController(
-                    eventManager, engine, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
-                    rect.width / PPM, rect.height / PPM, properties, modelType);
-
-            controllers.add(controller);
+                controllers.add(controller);
+            }
         }
+
     }
 
     private void initAnimatedControllers(TiledMap map, String layer, ModelType modelType){
 
-        // Initialize map animated objects
-        for (RectangleMapObject object : map.getLayers()
-                .get(layer).getObjects().getByType(RectangleMapObject.class)) {
+        if (!(map.getLayers().get(layer) == null)){
+            // Initialize map animated objects
+            for (RectangleMapObject object : map.getLayers()
+                    .get(layer).getObjects().getByType(RectangleMapObject.class)) {
 
-            AnimatedController animatedController;
-            Rectangle rect = object.getRectangle();
+                AnimatedController animatedController;
+                Rectangle rect = object.getRectangle();
 
            /*float rotation = 0;
             if (object.getProperties().get("rotation", Float.class) != null) {
                 rotation = object.getProperties().get("rotation", Float.class);
 
             }*/
-            ObjectProperties properties = new ObjectProperties(object.getProperties());
+                ObjectProperties properties = new ObjectProperties(object.getProperties());
 
-            animatedController = new AnimatedObjectController(
-                    eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
-                    rect.width / PPM, rect.height / PPM, properties, modelType);
+                animatedController = new AnimatedObjectController(
+                        eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
+                        rect.width / PPM, rect.height / PPM, properties, modelType);
 
-            animatedControllers.add(animatedController);
+                animatedControllers.add(animatedController);
 
-            if (modelType.getObjectType().equals(ObjectType.PLAYER)){
-                player = animatedController;
+                if (modelType.getObjectType().equals(ObjectType.PLAYER)){
+                    player = animatedController;
+                }
+
             }
-
         }
+
+
     }
 
 

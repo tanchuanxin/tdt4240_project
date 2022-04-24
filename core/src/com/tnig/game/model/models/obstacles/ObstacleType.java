@@ -1,10 +1,10 @@
 package com.tnig.game.model.models.obstacles;
 
 import com.tnig.game.model.models.interfaces.ModelType;
-import com.tnig.game.model.models.ObjectType;
+import com.tnig.game.model.models.enums.ObjectType;
 
 public enum ObstacleType implements ModelType {
-    SPIKE, MOCK_TYPE;
+    SPIKE, FIREBALL, MOCK;
 
     @Override
     public ObjectType getObjectType() {

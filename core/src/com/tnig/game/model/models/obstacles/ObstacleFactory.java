@@ -15,8 +15,8 @@ public class ObstacleFactory {
         switch (type){
             case SPIKE:
                 return new Spike(eventManager, engine, x, y, width, height, properties, type);
-            case MOCK_TYPE:
-                throw new IllegalArgumentException("Not created model for Mock");
+            case FIREBALL:
+                return new FireBall(engine, x, y, width, height, properties, type);
             default:
                 throw new IllegalArgumentException("Not created model for type yet: " + type);
         }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.tnig.game.model.models.ObjectProperties;
+import com.tnig.game.model.models.enums.BodyType;
 import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.physics_engine.Engine;
 
@@ -43,12 +44,22 @@ public class BodyBuilder {
     public static Body createBody(Engine engine, float x, float y, GameObject object) {
         World world = engine.getWorld();
         Shape shape = getShape(object);
-        boolean isStatic = object.isStatic();
+        BodyType bodyType = object.getBodyType();
         ObjectProperties properties = object.getProperties();
 
         // Defines a Box2D body
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = isStatic ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
+        switch (bodyType){
+            case STATIC:
+                bodyDef.type = BodyDef.BodyType.StaticBody;
+                break;
+            case DYNAMIC:
+                bodyDef.type = BodyDef.BodyType.DynamicBody;
+                break;
+            case KINEMATIC:
+                bodyDef.type = BodyDef.BodyType.KinematicBody;
+                break;
+        }
         bodyDef.fixedRotation = true;
 
         // World units = meters, from world to screen -> Divide by Pixel Per Meter
