@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.GameState;
 import com.tnig.game.model.models.players.Player;
 import com.tnig.game.model.networking.NetworkService;
@@ -25,7 +26,8 @@ public class GameOverScreen extends AbstractScreen{
     private final Skin skin;
     private final Table table;
 
-    public GameOverScreen(OrthographicCamera camera, AssetLoader assetLoader,
+    public GameOverScreen(final ScreenManager screenManager,
+                          OrthographicCamera camera, AssetLoader assetLoader,
                           final List<GameState> gameStates, final NetworkService networkService) {
         super(camera, assetLoader);
         this.gameStates = gameStates;
@@ -81,7 +83,7 @@ public class GameOverScreen extends AbstractScreen{
                         e.printStackTrace();
                     }
 
-
+                    screenManager.setScreen(ScreenName.LEADERBOARDS);
 
 
                 }
