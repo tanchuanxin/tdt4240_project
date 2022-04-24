@@ -108,7 +108,7 @@ public class ScreenManager implements EventListener {
                 game.setScreen(new LeaderboardsScreen(this, camera, assetLoader, eventManager, networkService, leaderboardMapNum));
                 break;
             case GAME_OVER:
-                game.setScreen(new GameOverScreen(camera, assetLoader, gameStates, networkService));
+                game.setScreen(new GameOverScreen(this, camera, assetLoader, eventManager, gameStates, networkService));
         }
     }
 
