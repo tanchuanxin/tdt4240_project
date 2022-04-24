@@ -105,6 +105,7 @@ public class GameOverScreen extends AbstractScreen{
                     for (PlayerData player : players) {
                         networkService.pushHighscore(player);
                     }
+                    
                     // Sleep to let firebase get updated before pulling the data
                     try {
                         Thread.sleep(300);
