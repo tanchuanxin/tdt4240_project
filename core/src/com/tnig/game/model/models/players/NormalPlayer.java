@@ -52,7 +52,6 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         eventManager.subscribe(EventName.MOVE_RIGHT, this);
         eventManager.subscribe(EventName.ATTACK, this);
         eventManager.subscribe(EventName.STOP_PLAYER, this);
-        eventManager.subscribe(EventName.PLAYER_DEAD, this);
         eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
 
         attackTimeout = 5;
@@ -90,7 +89,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
             winTimeout -= delta;
         }
     }
-    
+
     @Override
     public int getScore() {
         return score;

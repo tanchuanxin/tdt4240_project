@@ -34,7 +34,7 @@ public class GameOverScreen extends AbstractScreen{
     private final Table table;
     private final List<TextField> textFields;
 
-    public GameOverScreen(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager,
+    public GameOverScreen(ScreenManager screenManager, OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager,
                           final List<GameState> gameStates, final NetworkService networkService) {
         super(camera, assetLoader);
         this.gameStates = gameStates;
@@ -120,6 +120,11 @@ public class GameOverScreen extends AbstractScreen{
 
         table.row().padBottom(20f);
         table.add(saveScoreBtn).colspan(2).fillX();
+
+        ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
+        table.row().colspan(2).padBottom(20f).expandX().fillX();
+        Button skipBtn = buttonFactory.createSwitchingScreenButton(ScreenName.MAIN_MENU, "Skip", true);
+        table.add(skipBtn).expandX().center().fillX();
 
         stage.addActor(table);
     }
