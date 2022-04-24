@@ -1,6 +1,6 @@
 package com.tnig.game.model.models.sensors;
 
-import com.tnig.game.controller.events.game_events.PlayerDead;
+import com.tnig.game.controller.events.game_events.PlayerAtGoal;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.enums.BodyType;
