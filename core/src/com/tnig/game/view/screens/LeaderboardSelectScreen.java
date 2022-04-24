@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -41,10 +42,12 @@ public class LeaderboardSelectScreen extends AbstractScreen {
         };
         int numMaps = dirHandle.list(mapFileFilter).length;
 
+        Skin skin = assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI);
+
         // Create actors
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
-        Label titleLabel = new Label("Select map leaderboard", assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
+        Label titleLabel = new Label("Select map leaderboard", skin);
         titleLabel.setAlignment(Align.center);
 
         List<Button> mapBtnList = new ArrayList<>();

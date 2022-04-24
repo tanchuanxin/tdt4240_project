@@ -4,11 +4,12 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.tnig.game.model.networking.NetworkService;
 
 
 public class AndroidLauncher extends AndroidApplication {
 
-	AndroidFirebaseInterface network;
+	NetworkService network;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		network = new AndroidFirebaseInterface();

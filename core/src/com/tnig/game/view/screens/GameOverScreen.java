@@ -13,10 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.game_events.UploadScore;
+import com.tnig.game.controller.events.screen_events.LeaderboardSelectedEvent;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.GameState;
 import com.tnig.game.model.networking.NetworkService;
+import com.tnig.game.model.networking.PlayerData;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.ui_components.ButtonFactory;
 
@@ -32,8 +34,8 @@ public class GameOverScreen extends AbstractScreen{
     private final Table table;
     private final List<TextField> textFields;
 
-    public GameOverScreen(ScreenManager screenManager, OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager,
-                          final List<GameState> gameStates, NetworkService networkService) {
+    public GameOverScreen(OrthographicCamera camera, AssetLoader assetLoader, final EventManager eventManager,
+                          final List<GameState> gameStates, final NetworkService networkService) {
         super(camera, assetLoader);
         this.gameStates = gameStates;
         this.networkService = networkService;
@@ -51,10 +53,6 @@ public class GameOverScreen extends AbstractScreen{
         titleLabel.setAlignment(Align.center);
         table.add(titleLabel).colspan(2).fillX().align(Align.center);
         table.row().padBottom(30f);
-
-        Gdx.app.log("Gamestates: ", String.valueOf(gameStates.size()));
-        Gdx.app.log("Stage width: ", String.valueOf(stage.getWidth()));
-        Gdx.app.log("Stage height: ", String.valueOf(stage.getHeight()));
 
         for (int playerNum = 1; playerNum <= gameStates.size(); playerNum++) {
             GameState gameState = gameStates.get(playerNum - 1);
@@ -88,31 +86,34 @@ public class GameOverScreen extends AbstractScreen{
         }
 
         Button saveScoreBtn = new Button(new Label("Upload scores", skin), skin);
-        saveScoreBtn.addListener(new ClickListener() {
+        saveScoreBtn.addListener(new ClickListener(){
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
+            public void clicked(InputEvent event, float x, float y){
+                List<PlayerData> players = new ArrayList<>();
+                boolean allNamesFilled = true;
 
-            @Override
-            public void touchUp(InputEvent inputEvent, float x, float y, int pointer, int button) {
-                HashMap<String, Object> scores = new HashMap<>();
+                for (int i = 0; i < textFields.size(); i++) {
+                    String name = textFields.get(i).getText();
+                    GameState gameState = gameStates.get(i);
 
-                for (int playerNum = 1; playerNum <= gameStates.size(); playerNum++) {
-                    TextField textField = textFields.get(playerNum - 1);
-
-                    Gdx.app.log("Player name: ", textField.getText());
-
-                    if (textField.getText().isEmpty()) {
-                        // TODO: Handle error of empty player name
-                        Gdx.app.log("No player name input: ", String.valueOf(textField));
-                        return;
-                    }
-
-                    scores.put(textField.getText(), gameStates.get(playerNum - 1));
+                    PlayerData playerData = new PlayerData(gameState, name);
+                    players.add(playerData);
+                    if (name.isEmpty()) allNamesFilled = false;
                 }
 
-                eventManager.pushEvent(new UploadScore(scores));
+                if (allNamesFilled){
+                    for (PlayerData player : players) {
+                        networkService.pushHighscore(player);
+                    }
+                    // Sleep to let firebase get updated before pulling the data
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    eventManager.pushEvent(new LeaderboardSelectedEvent(gameStates.get(0).getMapNumber()));
+                }
             }
         });
 

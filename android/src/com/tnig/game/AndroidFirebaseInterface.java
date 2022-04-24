@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 
+import com.badlogic.gdx.Gdx;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,14 +41,15 @@ public class AndroidFirebaseInterface implements NetworkService {
     /**
      * Creates a new user entity, with name and score, in the highscore database.
      *
-     * @param levelNum Decides which levels higscorelist one want to add the user to.
-     * @param firebasePlayer The player that one want to post to the database.
+     * @param data The PlayerData that one want to post to the database.
      */
     @Override
-    public void pushHighscore(int levelNum, PlayerData firebasePlayer) {
-        String name = firebasePlayer.getName();
-        int score = firebasePlayer.getScore();
-        levelRef = myRef.child("level" + levelNum); //Points at numbered levelnode.
+    public void pushHighscore(PlayerData data) {
+        String name = data.getName();
+        int mapNum = data.getMapNumber();
+        int score = data.getScore();
+        levelRef = myRef.child("level" + mapNum); // Points at numbered levelnode.
+
         //Create new user entity, with name and score.
         playerRef = levelRef.push();
         playerRef.child("name").setValue(name);
@@ -93,19 +95,33 @@ public class AndroidFirebaseInterface implements NetworkService {
     private void showData(DataSnapshot dataSnapshot){
         //Iterate over the levels.
         int count = 0;
+
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             count++;
             players = new ArrayList<>();
+
             // Iterate over the player records in the level.
             for (DataSnapshot user : ds.getChildren()) {
-                PlayerData player = new PlayerData();
-                player.setName(user.child("name").getValue(String.class));
-                player.setScore(user.child("score").getValue(Integer.class));
+                Gdx.app.log("Data snapshot: ", String.valueOf(user.child("name")));
+                Gdx.app.log("Data snapshot: ", String.valueOf(user.child("score")));
 
-                players.add(player);
+                if (user.child("name").getValue(String.class) != null && user.child("score").getValue(Integer.class) != null) {
+                    PlayerData player = new PlayerData();
+
+
+                    player.setName(user.child("name").getValue(String.class));
+                    player.setScore(user.child("score").getValue(Integer.class));
+
+                    players.add(player);
+                }
             }
-            if (playerMap.containsKey(count)) playerMap.replace(count, players);
-            else playerMap.put(count, players);
+
+            if (playerMap.containsKey(count)) {
+                playerMap.replace(count, players);
+            }
+            else {
+                playerMap.put(count, players);
+            }
         }
     }
 
