@@ -3,6 +3,7 @@ package com.tnig.game.view.screens;
 import static com.tnig.game.utilities.Constants.PPM;
 
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
@@ -14,14 +15,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tnig.game.controller.InputController;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
@@ -54,11 +59,16 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private Button attackBtn;
     private final InputMultiplexer inputMultiplexer;
     private final Music gameMusic;
+    private int playerNum;
+    private Game game;
+    private Stage readyStage;
+    private boolean showReady = false;
 
     private boolean paused = false;
     private boolean gameOver = false;
 
-    public GameScreen(ScreenManager screenManager,
+    public GameScreen(Game game,
+                      ScreenManager screenManager,
                       final EventManager eventManager,
                       OrthographicCamera camera,
                       AssetLoader assetLoader,
@@ -72,6 +82,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         Gdx.graphics.setContinuousRendering(false);
         Gdx.graphics.requestRendering();
 
+        this.game = game;
+        this.playerNum = 0;
 
         this.map = map;
         this.stage = new Stage();
@@ -89,6 +101,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         // Subscribe to events
         eventManager.subscribe(EventName.NEW_GAME, this);
         eventManager.subscribe(EventName.GAME_OVER, this);
+        eventManager.subscribe(EventName.PAUSE, this);
 
         // Get input processors
         this.inputMultiplexer.addProcessor(new InputController(eventManager));
@@ -108,7 +121,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.gameMusic.setLooping(true);
         this.gameMusic.play();
 
-        eventManager.subscribe(EventName.PAUSE, this);
+        // Show get ready screen
+        getReady();
     }
 
     @Override
@@ -120,14 +134,48 @@ public class GameScreen extends AbstractScreen implements EventListener {
                 this.map = gameManager.getMap();
                 this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / PPM);
                 this.mapRenderer.setView((OrthographicCamera) viewport.getCamera());
+                getReady();
                 break;
             case GAME_OVER:
                 gameOver = true;
                 break;
             case PAUSE:
                 break;
-
         }
+    }
+
+    // Shows a get ready
+    private void getReady() {
+        Skin skin = assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI);
+        readyStage = new Stage(new ScreenViewport());
+
+        Table readyTable = new Table();
+        readyTable.align(Align.center).setFillParent(true);
+        readyTable.row().padBottom(20f);
+
+        playerNum++;
+        Label readyLabel = new Label("Ready Player " + String.valueOf(playerNum) + "?", skin);
+        readyTable.add(readyLabel).fillX();
+
+        readyTable.row();
+        Button readyButton = new Button(new Label("Go!", skin), skin);
+        readyButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent inputEvent, float x, float y, int pointer, int button) {
+                showReady = false;
+                game.resume();
+            }
+        });
+        readyTable.add(readyButton).fillX();
+
+        readyStage.addActor(readyTable);
+
+        showReady = true;
     }
 
     private void update(float delta) {
@@ -169,7 +217,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     @Override
     public void render(float delta) {
-
+        Gdx.input.setInputProcessor(inputMultiplexer);
         viewport.apply(true);
 
         stage.act(delta);
@@ -195,6 +243,16 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         if (gameOver) {
             screenManager.setScreen(ScreenName.GAME_OVER);
+        }
+
+        if (showReady) {
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Gdx.input.setInputProcessor(readyStage);
+            readyStage.getViewport().apply();
+            readyStage.act(delta);
+            readyStage.draw();
+            game.pause();
         }
     }
 
@@ -222,6 +280,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         gameManager.dispose();
         batch.dispose();
         mapRenderer.dispose();
+        readyStage.dispose();
     }
 
 
@@ -397,6 +456,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     public void resize(int width, int height) {
         viewport.update(width, height);
         stage.getViewport().update(width, height, true);
+        readyStage.getViewport().update(width, height, true);
 
         Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
         attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 80, stage.getViewport().getScreenHeight() - 80, Align.center);
