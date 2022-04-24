@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
-import com.tnig.game.controller.events.game_events.PlayerAtGoal;
 import com.tnig.game.controller.events.game_events.PlayerDead;
 import com.tnig.game.controller.events.game_events.StopPlayer;
 import com.tnig.game.controller.events.screen_events.GameOverEvent;
