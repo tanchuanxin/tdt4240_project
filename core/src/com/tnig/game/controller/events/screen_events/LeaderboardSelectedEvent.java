@@ -9,7 +9,6 @@ public class LeaderboardSelectedEvent extends Event {
 
     public LeaderboardSelectedEvent(int mapNum) {
         this.name = EventName.VIEW_LEADERBOARDS;
-        this.data = new HashMap<>();
         this.data.put("mapNum", mapNum);
     }
 }

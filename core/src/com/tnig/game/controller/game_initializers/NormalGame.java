@@ -12,6 +12,7 @@ import com.tnig.game.controller.game_objects.static_objects.StaticObjectControll
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.map.GameMap;
+import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.ObjectType;
 import com.tnig.game.model.models.blocks.BlockType;
@@ -88,15 +89,16 @@ public class NormalGame implements GameInitializer {
                 .get(layer).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
 
-            float rotation = 0;
+            /*float rotation = 0;
             if (object.getProperties().get("rotation", Float.class) != null) {
                 rotation = object.getProperties().get("rotation", Float.class);
 
-            }
+            }*/
+            ObjectProperties properties = new ObjectProperties(object.getProperties());
 
             Controller controller = new StaticObjectController(
                     eventManager, engine, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
-                    rect.width / PPM, rect.height / PPM, rotation, modelType);
+                    rect.width / PPM, rect.height / PPM, properties, modelType);
 
             controllers.add(controller);
         }
@@ -111,16 +113,16 @@ public class NormalGame implements GameInitializer {
             AnimatedController animatedController;
             Rectangle rect = object.getRectangle();
 
-            float rotation = 0;
+           /*float rotation = 0;
             if (object.getProperties().get("rotation", Float.class) != null) {
                 rotation = object.getProperties().get("rotation", Float.class);
 
-
-            }
+            }*/
+            ObjectProperties properties = new ObjectProperties(object.getProperties());
 
             animatedController = new AnimatedObjectController(
                     eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
-                    rect.width / PPM, rect.height / PPM, rotation, modelType);
+                    rect.width / PPM, rect.height / PPM, properties, modelType);
 
             animatedControllers.add(animatedController);
 

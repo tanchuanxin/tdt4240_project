@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.physics_engine.Engine;
 
@@ -43,6 +44,7 @@ public class BodyBuilder {
         World world = engine.getWorld();
         Shape shape = getShape(object);
         boolean isStatic = object.isStatic();
+        ObjectProperties properties = object.getProperties();
 
         // Defines a Box2D body
         BodyDef bodyDef = new BodyDef();
@@ -51,7 +53,11 @@ public class BodyBuilder {
 
         // World units = meters, from world to screen -> Divide by Pixel Per Meter
         bodyDef.position.set(x, y);
-        bodyDef.angle = (float) Math.toRadians(object.getRotation());
+        if (properties.get("rotation", Float.class) != null) {
+            float rotation = properties.get("rotation", Float.class);
+            bodyDef.angle = (float) Math.toRadians(rotation);
+
+        }
 
         //addToBodyDef(bodyDef);
         //Puts the body in the Box2D world

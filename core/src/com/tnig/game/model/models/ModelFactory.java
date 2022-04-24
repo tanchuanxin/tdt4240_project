@@ -14,20 +14,20 @@ public class ModelFactory {
 
     public static Model createModel(EventManager eventManager,
                                     Engine engine,
-                                    float x, float y, float width, float height, float rotation,
-                                    ModelType modelType){
+                                    float x, float y, float width, float height,
+                                    ObjectProperties properties, ModelType modelType){
         ObjectType type = modelType.getObjectType();
         switch (type){
             case OBSTACLE:
-                return ObstacleFactory.createModel(eventManager, engine, x, y, width, height, rotation, modelType);
+                return ObstacleFactory.createModel(eventManager, engine, x, y, width, height, properties, modelType);
             case PLAYER:
-                return PlayerFactory.createModel(eventManager, engine, x, y, width, height, rotation, modelType);
+                return PlayerFactory.createModel(eventManager, engine, x, y, width, height, properties, modelType);
             case BLOCK:
-                return BlockFactory.createModel(engine, x, y, width, height, rotation, modelType);
+                return BlockFactory.createModel(engine, x, y, width, height, properties, modelType);
             case COIN:
-                return CoinFactory.createModel(eventManager, engine, x, y, width, height, rotation, modelType);
+                return CoinFactory.createModel(eventManager, engine, x, y, width, height, properties, modelType);
             case SENSOR:
-                return SensorFactory.createModel(eventManager, engine, x, y, width, height, rotation, modelType);
+                return SensorFactory.createModel(eventManager, engine, x, y, width, height, properties, modelType);
             default:
                 throw new IllegalArgumentException("Not created model for type yet: " + type);
         }

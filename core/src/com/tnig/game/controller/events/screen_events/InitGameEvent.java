@@ -7,7 +7,6 @@ import java.util.HashMap;
 public class InitGameEvent extends Event {
     public InitGameEvent(int numOfPlayers) {
         this.name = EventName.INIT_GAME;
-        this.data = new HashMap<String, Object>();
         this.data.put("numOfPlayers", numOfPlayers);
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.tnig.game.controller.events.game_events.DisposeSprite;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
+import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.ObjectShape;
@@ -18,9 +19,9 @@ public class Coin extends AbstractModel {
     private EventManager eventManager;
 
     protected Coin(EventManager eventManager, Engine engine,
-                   float x, float y, float width, float height, float rotation,
-                   ModelType type, int value) {
-        super(engine, x, y, width, height, rotation, isStatic, isSensor, type);
+                   float x, float y, float width, float height,
+                   ObjectProperties properties, ModelType type, int value) {
+        super(engine, x, y, width, height, properties, isStatic, isSensor, type);
         this.eventManager = eventManager;
         this.value = value;
     }
