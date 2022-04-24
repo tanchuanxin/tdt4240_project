@@ -56,9 +56,12 @@ public class GameManager implements EventListener {
         this.eventManager = eventManager;
         this.map = map;
         this.assetLoader = assetLoader;
-        engine = new GameWorld(viewport);
-        game = new NormalGame(eventManager, engine, assetLoader, map);
-        playersLeft = numberOfPlayers - 1;
+        this.engine = new GameWorld(viewport);
+        this.game = new NormalGame(eventManager, engine, assetLoader, map);
+        Gdx.app.log("=================================", "=================================");
+        this.playersLeft = numberOfPlayers - 1;
+        Gdx.app.log("this.playersLeft: ", String.valueOf(this.playersLeft));
+        Gdx.app.log("=================================", "=================================");
 
 
         eventManager.subscribe(EventName.PLAYER_DEAD, this);
@@ -67,9 +70,9 @@ public class GameManager implements EventListener {
     }
 
     public void newGame(){
-//        if (this.playersLeft <= 0){
-//            throw new IllegalStateException("Players left cant be 0");
-//        }
+        if (playersLeft == 0){
+            throw new IllegalStateException("Players left cant be 0");
+        }
         playersLeft -= 1;
         engine.initNewWorld();
 
@@ -180,12 +183,13 @@ public class GameManager implements EventListener {
         Player player = (Player) model;
         if (player.getWinTimeout() <= 0) {
             Gdx.app.log("playersLeft", String.valueOf(playersLeft));
-            if (playersLeft > 0){
-                eventManager.pushEvent(new NewGameEvent(createGameState()));
-            }
-            else {
-                eventManager.pushEvent(new GameOverEvent(createGameState()));
-            }
+            eventManager.pushEvent(new PlayerDead());
+//            if (playersLeft > 0){
+//                eventManager.pushEvent(new NewGameEvent(createGameState()));
+//            }
+//            else {
+//                eventManager.pushEvent(new GameOverEvent(createGameState()));
+//            }
         }
     }
 }

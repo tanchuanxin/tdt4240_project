@@ -87,7 +87,7 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
         }
 
         table.row().colspan(2).spaceBottom(20f).expandX().fillX();
-        Button backBtn = buttonFactory.createSwitchingScreenButton(ScreenName.LEADERBOARD_SELECTION, "Back", true);
+        Button backBtn = buttonFactory.createSwitchingScreenButton(ScreenName.MAIN_MENU, "Back", true);
         table.add(backBtn).expandX().center().fillX();
 
         // Add actors to stage

@@ -125,7 +125,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
                 gameOver = true;
                 break;
             case PAUSE:
-
+                break;
 
         }
     }
