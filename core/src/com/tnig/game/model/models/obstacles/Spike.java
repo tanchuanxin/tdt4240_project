@@ -32,7 +32,6 @@ public class Spike extends AbstractModel {
             eventManager.pushEvent(new PlayerDead());
             object.dispose();
         }
-
     }
 
 

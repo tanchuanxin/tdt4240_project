@@ -59,7 +59,6 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
 
         attackTimeout = 5;
         winTimeout = 2;
-
     }
 
     @Override

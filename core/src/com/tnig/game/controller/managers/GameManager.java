@@ -18,6 +18,7 @@ import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.GameState;
 import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.players.Player;
+import com.tnig.game.model.models.players.PlayerState;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
@@ -38,6 +39,7 @@ public class GameManager implements EventListener {
     private Engine engine;
     private AssetLoader assetLoader;
     private int playersLeft;
+    private boolean gameOver = false;
 
     public GameMap getMap() {
         return map;
@@ -58,7 +60,7 @@ public class GameManager implements EventListener {
         this.engine = new GameWorld(viewport);
         this.game = new NormalGame(eventManager, engine, assetLoader, map);
         Gdx.app.log("=================================", "=================================");
-        this.playersLeft = numberOfPlayers - 1;
+        this.playersLeft = numberOfPlayers;
         Gdx.app.log("this.playersLeft: ", String.valueOf(this.playersLeft));
         Gdx.app.log("=================================", "=================================");
 
@@ -69,7 +71,6 @@ public class GameManager implements EventListener {
     }
 
     public void newGame(){
-        Gdx.app.log("NEW GAME called!", "hey");
         if (playersLeft == 0){
             throw new IllegalStateException("Players left cant be 0");
         }
@@ -142,13 +143,16 @@ public class GameManager implements EventListener {
                 eventManager.pushEvent(new StopPlayer(Input.Keys.LEFT));
                 break;
             case PLAYER_DEAD:
+                playersLeft--;
                 if (playersLeft > 0){
                     eventManager.pushEvent(new NewGameEvent(createGameState()));
                 }
                 else {
-                    eventManager.pushEvent(new GameOverEvent(createGameState()));
+                    if (!gameOver) {
+                        gameOver = true;
+                        eventManager.pushEvent(new GameOverEvent(createGameState()));
+                    }
                 }
-                playersLeft--;
                 break;
             case DISPOSE_SPRITE:
                 Model model = event.getData("object", Model.class);
@@ -182,8 +186,7 @@ public class GameManager implements EventListener {
     private void triggerDeathAfterWin() {
         Model model = game.getPlayer().getModel();
         Player player = (Player) model;
-        if (player.getWinTimeout() <= 0) {
-            Gdx.app.log("playersLeft", String.valueOf(playersLeft));
+        if (player.getWinTimeout() <= 0 && player.getState() != PlayerState.DIE) {
             eventManager.pushEvent(new PlayerDead());
 //            if (playersLeft > 0){
 //                eventManager.pushEvent(new NewGameEvent(createGameState()));
