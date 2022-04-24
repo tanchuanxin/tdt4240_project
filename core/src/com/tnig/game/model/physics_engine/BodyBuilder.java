@@ -51,7 +51,7 @@ public class BodyBuilder {
 
         // World units = meters, from world to screen -> Divide by Pixel Per Meter
         bodyDef.position.set(x, y);
-        bodyDef.angle = -(float) Math.toRadians(object.getRotation());
+        bodyDef.angle = (float) Math.toRadians(object.getRotation());
 
         //addToBodyDef(bodyDef);
         //Puts the body in the Box2D world
