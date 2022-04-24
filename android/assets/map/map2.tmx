@@ -22,20 +22,7 @@
   <object id="149" x="0" y="0" width="16" height="192"/>
  </objectgroup>
  <objectgroup id="7" name="spikes"/>
- <objectgroup id="11" name="fireballs">
-  <object id="150" x="400" y="176" width="16" height="16">
-   <properties>
-    <property name="direction" value="left"/>
-    <property name="speed" type="float" value="2"/>
-   </properties>
-  </object>
-  <object id="151" x="400" y="144" width="16" height="16">
-   <properties>
-    <property name="direction" value="left"/>
-    <property name="speed" type="float" value="3"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup id="11" name="fireballs"/>
  <objectgroup id="8" name="finishLine">
   <object id="136" x="448" y="32" width="16" height="160"/>
  </objectgroup>

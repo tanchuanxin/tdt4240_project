@@ -9,10 +9,12 @@ import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
 import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.enums.BodyType;
+import com.tnig.game.model.models.enums.Direction;
 import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.enums.ObjectShape;
 import com.tnig.game.model.models.coins.Coin;
+import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.Constants;
 
@@ -30,12 +32,12 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     private float jumpingForce = 3.7f;
 
     private PlayerState playerState;
+    private Direction playerDirection = Direction.RIGHT;
 
-    public PlayerDirection getDirection() {
+    public Direction getDirection() {
         return playerDirection;
     }
 
-    private PlayerDirection playerDirection = PlayerDirection.RIGHT;
 
 
     private float attackTimeout;
@@ -74,6 +76,8 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                     setPlayerState(PlayerState.RUNNING);
                 }
                 break;
+
+
         }
     }
 
@@ -121,13 +125,13 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
             case MOVE_LEFT:
                 if (playerState != PlayerState.WIN && playerState != PlayerState.DIE) {
                     setLinearVelocityX(-speed);
-                    playerDirection = PlayerDirection.LEFT;
+                    playerDirection = Direction.LEFT;
                 }
                 break;
             case MOVE_RIGHT:
                 if (playerState != PlayerState.WIN && playerState != PlayerState.DIE) {
                     setLinearVelocityX(speed);
-                    playerDirection = PlayerDirection.RIGHT;
+                    playerDirection = Direction.RIGHT;
                 }
                 break;
             case JUMP:
@@ -171,9 +175,9 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                     attackTimeoutReset();
 
                     if (randomImpulseX > 0) {
-                        playerDirection = PlayerDirection.RIGHT;
+                        playerDirection = Direction.RIGHT;
                     } else {
-                        playerDirection = PlayerDirection.LEFT;
+                        playerDirection = Direction.LEFT;
                     }
                 }
                 break;
