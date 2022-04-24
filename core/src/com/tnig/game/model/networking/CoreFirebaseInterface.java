@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CoreFirebaseInterface  implements NetworkService {
     @Override
-    public void pushHighscore(int level, PlayerData firebasePlayer) {
+    public void pushHighscore(PlayerData data) {
 
     }
 

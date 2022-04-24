@@ -41,13 +41,14 @@ public class AndroidFirebaseInterface implements NetworkService {
      * Creates a new user entity, with name and score, in the highscore database.
      *
      * @param levelNum Decides which levels higscorelist one want to add the user to.
-     * @param firebasePlayer The player that one want to post to the database.
+     * @param data The player that one want to post to the database.
      */
     @Override
-    public void pushHighscore(int levelNum, PlayerData firebasePlayer) {
-        String name = firebasePlayer.getName();
-        int score = firebasePlayer.getScore();
-        levelRef = myRef.child("level" + levelNum); //Points at numbered levelnode.
+    public void pushHighscore(PlayerData data) {
+        String name = data.getName();
+        int mapNum = data.getMapNumber();
+        int score = data.getScore();
+        levelRef = myRef.child("level" + mapNum); //Points at numbered levelnode.
         //Create new user entity, with name and score.
         playerRef = levelRef.push();
         playerRef.child("name").setValue(name);

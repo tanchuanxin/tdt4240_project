@@ -4,7 +4,7 @@ package com.tnig.game.model.networking;
 import java.util.ArrayList;
 
 public interface NetworkService {
-    void pushHighscore(int level, PlayerData firebasePlayer);
+    void pushHighscore(PlayerData data);
 
     void updateHighscore();
 

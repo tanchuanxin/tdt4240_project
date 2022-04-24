@@ -1,5 +1,7 @@
 package com.tnig.game.model.networking;
 
+import com.tnig.game.model.GameState;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -7,9 +9,17 @@ public class PlayerData {
 
     private String name;
     private int score;
+    private int mapNumber;
     public static Map<String, Map<String, Integer>> scores = new LinkedHashMap<>();
 
     public PlayerData() {
+    }
+
+    public PlayerData(GameState gameState, String name){
+        this.name = name;
+        score = gameState.getScore();
+        mapNumber = gameState.getMapNumber();
+
     }
 
     public String getName() {
@@ -26,5 +36,9 @@ public class PlayerData {
 
     public int getScore() {
         return score;
+    }
+
+    public int getMapNumber() {
+        return mapNumber;
     }
 }
