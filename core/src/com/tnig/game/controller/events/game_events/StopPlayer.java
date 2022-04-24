@@ -9,7 +9,6 @@ import java.util.HashMap;
 public class StopPlayer extends Event {
     public StopPlayer(int key) {
         name = EventName.STOP_PLAYER;
-        data = new HashMap<>();
         data.put("key", key);
     }
 }

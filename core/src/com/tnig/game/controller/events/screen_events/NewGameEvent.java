@@ -9,7 +9,6 @@ import java.util.HashMap;
 public class NewGameEvent extends Event {
     public NewGameEvent(GameState gameState) {
         name = EventName.NEW_GAME;
-        data = new HashMap<>();
         data.put("gamestate", gameState);
 
     }

@@ -22,4 +22,8 @@ public class Constants {
     public static final String graphicsLayer = "graphics";
 
 
+    // Coin values
+    public static final int normalCoinValue = 9371;
+
+
 }

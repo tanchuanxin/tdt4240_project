@@ -7,6 +7,7 @@ import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
+import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.ObjectShape;
@@ -36,9 +37,9 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     private float attackTimeout;
 
     public NormalPlayer(EventManager eventManager, Engine engine,
-                        float x, float y, float width, float height, float rotation,
-                        ModelType type) {
-        super(engine, x, y, width, height, rotation, isStatic, isSensor, type);
+                        float x, float y, float width, float height,
+                        ObjectProperties properties, ModelType type) {
+        super(engine, x, y, width, height, properties, isStatic, isSensor, type);
         this.eventManager = eventManager;
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);

@@ -10,7 +10,6 @@ import java.util.List;
 public class GameOverEvent extends Event {
     public GameOverEvent(GameState gameState) {
         name = EventName.GAME_OVER;
-        data = new HashMap<>();
         data.put("gamestate", gameState);
 
     }
