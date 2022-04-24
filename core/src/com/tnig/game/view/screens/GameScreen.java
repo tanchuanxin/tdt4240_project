@@ -50,7 +50,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final Box2DDebugRenderer b2dr;
     private GameMap map;
     private Stage stage;
-    private final Button attackBtn;
+    private Button attackBtn;
     private final InputMultiplexer inputMultiplexer;
     private final Music gameMusic;
 
@@ -97,63 +97,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         // Create GUI for game
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
-        Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
+        createGUI(stage, buttonFactory, eventManager);
 
-        Table jumpButtonTable = new Table();
-        jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
-        jumpButtonTable.add(jumpBtn);
-        jumpButtonTable.setName("jumpButtonTable");
-        stage.addActor(jumpButtonTable);
-
-
-        Label scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabelText.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-35, Align.center);
-        scoreLabelText.setFontScale(2);
-        scoreLabelText.setName("scoreLabelText");
-        stage.addActor(scoreLabelText);
-
-        Label scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-70, Align.center);
-        scoreLabel.setFontScale(2);
-        scoreLabel.setName("scoreLabel");
-        stage.addActor(scoreLabel);
-
-
-        attackBtn = buttonFactory.createCustomEventButton(new Attack(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI_2), "arcade"), true);
-        attackBtn.setName("attackBtn");
-
-
-        Table attackBtnTable = new Table();
-        attackBtnTable.setPosition(Gdx.graphics.getWidth() - 70, Gdx.graphics.getHeight() - 70, Align.right);
-        attackBtnTable.add(attackBtn);
-        attackBtnTable.setName("attackBtnTable");
-        stage.addActor(attackBtnTable);
-
-
-        final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
-        touchpad.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                // Check move left or right
-                if (touchpad.getKnobPercentX() > 0.1) {
-                    eventManager.pushEvent(new MoveRight());
-                }
-                else if (touchpad.getKnobPercentX() < -0.1) {
-                    eventManager.pushEvent(new MoveLeft());
-                }
-                else {
-                    eventManager.pushEvent(new StopPlayer(0));
-                }
-            }
-        });
-        touchpad.setSize(30f, 30f);
-        touchpad.setName("touchpad");
-
-        Table touchpadTable = new Table();
-        touchpadTable.setPosition(90, 90);
-        touchpadTable.add(touchpad);
-        touchpadTable.setName("touchpadTable");
-        stage.addActor(touchpadTable);
 
         // Create debug renderer
         b2dr = new Box2DDebugRenderer();
@@ -175,13 +120,12 @@ public class GameScreen extends AbstractScreen implements EventListener {
                 this.map = gameManager.getMap();
                 this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
                 this.mapRenderer.setView((OrthographicCamera) viewport.getCamera());
-
                 break;
             case GAME_OVER:
                 gameOver = true;
                 break;
             case PAUSE:
-
+                break;
 
         }
     }
@@ -390,6 +334,64 @@ public class GameScreen extends AbstractScreen implements EventListener {
 //        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
     }
 
+    private void createGUI(Stage stage, ButtonFactory buttonFactory, final EventManager eventManager) {
+        Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
 
+        Table jumpButtonTable = new Table();
+        jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
+        jumpButtonTable.add(jumpBtn);
+        jumpButtonTable.setName("jumpButtonTable");
+        stage.addActor(jumpButtonTable);
+
+
+        Label scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabelText.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-35, Align.center);
+        scoreLabelText.setFontScale(2);
+        scoreLabelText.setName("scoreLabelText");
+        stage.addActor(scoreLabelText);
+
+        Label scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-70, Align.center);
+        scoreLabel.setFontScale(2);
+        scoreLabel.setName("scoreLabel");
+        stage.addActor(scoreLabel);
+
+
+        this.attackBtn = buttonFactory.createCustomEventButton(new Attack(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI_2), "arcade"), true);
+        this.attackBtn.setName("attackBtn");
+
+
+        Table attackBtnTable = new Table();
+        attackBtnTable.setPosition(Gdx.graphics.getWidth() - 70, Gdx.graphics.getHeight() - 70, Align.right);
+        attackBtnTable.add(attackBtn);
+        attackBtnTable.setName("attackBtnTable");
+        stage.addActor(attackBtnTable);
+
+
+        final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
+        touchpad.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                // Check move left or right
+                if (touchpad.getKnobPercentX() > 0.1) {
+                    eventManager.pushEvent(new MoveRight());
+                }
+                else if (touchpad.getKnobPercentX() < -0.1) {
+                    eventManager.pushEvent(new MoveLeft());
+                }
+                else {
+                    eventManager.pushEvent(new StopPlayer(0));
+                }
+            }
+        });
+        touchpad.setSize(30f, 30f);
+        touchpad.setName("touchpad");
+
+        Table touchpadTable = new Table();
+        touchpadTable.setPosition(90, 90);
+        touchpadTable.add(touchpad);
+        touchpadTable.setName("touchpadTable");
+        stage.addActor(touchpadTable);
+    }
 
 }

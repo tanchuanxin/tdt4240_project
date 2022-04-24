@@ -12,5 +12,4 @@ public interface Model {
     float getHeight();
     ModelType getType();
     float[] getLinearVelocity();
-
 }

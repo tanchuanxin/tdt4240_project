@@ -1,9 +1,14 @@
 package com.tnig.game.controller.managers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
+import com.tnig.game.controller.events.game_events.PlayerAtGoal;
+import com.tnig.game.controller.events.game_events.PlayerDead;
+import com.tnig.game.controller.events.game_events.StopPlayer;
 import com.tnig.game.controller.events.screen_events.GameOverEvent;
 import com.tnig.game.controller.events.screen_events.NewGameEvent;
 import com.tnig.game.controller.game_initializers.GameInitializer;
@@ -18,8 +23,11 @@ import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * Contains a list of all the controllers in the game, and contains the logic for updating and
@@ -48,9 +56,13 @@ public class GameManager implements EventListener {
         this.eventManager = eventManager;
         this.map = map;
         this.assetLoader = assetLoader;
-        engine = new GameWorld(viewport);
-        game = new NormalGame(eventManager, engine, assetLoader, map);
-        playersLeft = numberOfPlayers - 1;
+        this.engine = new GameWorld(viewport);
+        this.game = new NormalGame(eventManager, engine, assetLoader, map);
+        Gdx.app.log("=================================", "=================================");
+        this.playersLeft = numberOfPlayers - 1;
+        Gdx.app.log("this.playersLeft: ", String.valueOf(this.playersLeft));
+        Gdx.app.log("=================================", "=================================");
+
 
         eventManager.subscribe(EventName.PLAYER_DEAD, this);
         eventManager.subscribe(EventName.DISPOSE_SPRITE, this);
@@ -58,7 +70,7 @@ public class GameManager implements EventListener {
     }
 
     public void newGame(){
-        if (playersLeft <= 0){
+        if (playersLeft == 0){
             throw new IllegalStateException("Players left cant be 0");
         }
         playersLeft -= 1;
@@ -102,7 +114,7 @@ public class GameManager implements EventListener {
             }
         }
 
-
+        triggerDeathAfterWin();
     }
 
     private GameState createGameState(){
@@ -126,7 +138,8 @@ public class GameManager implements EventListener {
     public void receiveEvent(Event event) {
         switch (event.name){
             case PLAYER_AT_GOAL:
-                //TODO: FIX BUG
+                eventManager.pushEvent(new StopPlayer(Input.Keys.RIGHT));
+                eventManager.pushEvent(new StopPlayer(Input.Keys.LEFT));
                 break;
             case PLAYER_DEAD:
                 if (playersLeft > 0){
@@ -163,5 +176,20 @@ public class GameManager implements EventListener {
 
     public List<Controller> getControllers() {
         return game.getControllers();
+    }
+
+    private void triggerDeathAfterWin() {
+        Model model = game.getPlayer().getModel();
+        Player player = (Player) model;
+        if (player.getWinTimeout() <= 0) {
+            Gdx.app.log("playersLeft", String.valueOf(playersLeft));
+            eventManager.pushEvent(new PlayerDead());
+//            if (playersLeft > 0){
+//                eventManager.pushEvent(new NewGameEvent(createGameState()));
+//            }
+//            else {
+//                eventManager.pushEvent(new GameOverEvent(createGameState()));
+//            }
+        }
     }
 }
