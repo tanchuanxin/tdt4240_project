@@ -65,9 +65,6 @@ public class NormalGame implements GameInitializer {
         // Animated objects
         initAnimatedControllers(tiledMap, Constants.playerLayer, PlayerType.NORMALPLAYER);
         // TODO: ADD OTHER ANIMATED OBJECTS HERE
-
-
-
     }
 
     @Override

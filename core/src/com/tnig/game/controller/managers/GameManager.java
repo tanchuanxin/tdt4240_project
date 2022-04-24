@@ -70,10 +70,11 @@ public class GameManager implements EventListener {
     }
 
     public void newGame(){
+        Gdx.app.log("NEW GAME called!", "hey");
         if (playersLeft == 0){
             throw new IllegalStateException("Players left cant be 0");
         }
-        playersLeft -= 1;
+
         engine.initNewWorld();
 
         map = new GameMap(map.getMapNumber());
@@ -148,6 +149,7 @@ public class GameManager implements EventListener {
                 else {
                     eventManager.pushEvent(new GameOverEvent(createGameState()));
                 }
+                playersLeft--;
                 break;
             case DISPOSE_SPRITE:
                 Model model = event.getData("object", Model.class);
