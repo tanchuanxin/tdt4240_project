@@ -14,6 +14,7 @@ public class ObstacleViewFactory {
         ObstacleType type = (ObstacleType) model.getType();
         switch (type){
             case FIREBALL:
+            case FIREBALL_ALTERNATING:
                 return new FireballView(model, assetLoader);
             case MOCK:
                 throw new IllegalArgumentException("Not created view for Mock");

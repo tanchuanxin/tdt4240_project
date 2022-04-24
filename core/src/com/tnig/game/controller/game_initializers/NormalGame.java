@@ -55,6 +55,7 @@ public class NormalGame implements GameInitializer {
         // Obstacles
         initStaticControllers(tiledMap, Constants.spikeLayer, ObstacleType.SPIKE);
         initAnimatedControllers(tiledMap, Constants.fireBallLayer, ObstacleType.FIREBALL);
+        initAnimatedControllers(tiledMap, Constants.fireballsAlternatingLayer, ObstacleType.FIREBALL_ALTERNATING);
         // Blocks
         initStaticControllers(tiledMap, Constants.blockLayer, BlockType.NORMAL_BLOCK);
         // Coins
@@ -110,12 +111,6 @@ public class NormalGame implements GameInitializer {
 
                 AnimatedController animatedController;
                 Rectangle rect = object.getRectangle();
-
-           /*float rotation = 0;
-            if (object.getProperties().get("rotation", Float.class) != null) {
-                rotation = object.getProperties().get("rotation", Float.class);
-
-            }*/
                 ObjectProperties properties = new ObjectProperties(object.getProperties());
 
                 animatedController = new AnimatedObjectController(

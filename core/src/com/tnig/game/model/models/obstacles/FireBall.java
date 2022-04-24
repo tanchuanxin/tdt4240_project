@@ -1,5 +1,7 @@
 package com.tnig.game.model.models.obstacles;
 
+import static com.tnig.game.utilities.Constants.PPM;
+
 import com.badlogic.gdx.Gdx;
 import com.tnig.game.controller.events.game_events.PlayerDead;
 import com.tnig.game.controller.managers.EventManager;
@@ -19,6 +21,7 @@ public class FireBall extends AbstractModel {
     private static final boolean isSensor = true;
     private static final ObjectShape shape = ObjectShape.CIRCLE;
     private final float speed;
+
 
     private Direction direction;
     private EventManager eventManager;
@@ -74,7 +77,7 @@ public class FireBall extends AbstractModel {
         }
     }
 
-    private void flipDirection(){
+    protected void flipDirection(){
         switch (direction){
             case LEFT:
                 setLinearVelocityX(speed);
