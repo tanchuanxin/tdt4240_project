@@ -2,6 +2,7 @@ package com.tnig.game.view.screens;
 
 import static com.tnig.game.utilities.Constants.PPM;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.audio.Music;
@@ -80,7 +81,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
         viewport.apply(true);
 
-        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
+        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / PPM);
         mapRenderer.setView((OrthographicCamera) viewport.getCamera());
 
         gameManager = new GameManager(eventManager, assetLoader, map, viewport, numberOfPlayers);
@@ -99,7 +100,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         createGUI(stage, buttonFactory, eventManager);
 
-
         // Create debug renderer
         b2dr = new Box2DDebugRenderer();
 
@@ -113,12 +113,12 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     @Override
     public void receiveEvent(Event event) {
-        switch (event.name){
+        switch (event.name) {
             case NEW_GAME:
                 gameManager.newGame();
                 // refresh map
                 this.map = gameManager.getMap();
-                this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/PPM);
+                this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / PPM);
                 this.mapRenderer.setView((OrthographicCamera) viewport.getCamera());
                 break;
             case GAME_OVER:
@@ -130,11 +130,11 @@ public class GameScreen extends AbstractScreen implements EventListener {
         }
     }
 
-    private void update(float delta){
+    private void update(float delta) {
         // Update camera
         viewport.getCamera().update(); // Update our camera every frame
 //        viewport.getCamera().position.set(gameManager.getPlayerPosX(), gameManager.getPlayerPosY(), 0);
-        viewport.getCamera().position.set(gameManager.getPlayerPosX(), viewport.getWorldHeight()/2, 0);
+        viewport.getCamera().position.set(gameManager.getPlayerPosX(), viewport.getWorldHeight() / 2, 0);
 
 //        Gdx.app.log("gameManager.getPlayerPosX(): ", String.valueOf(gameManager.getPlayerPosX()));
 //        Gdx.app.log("gameManager.getPlayerPosY(): ", String.valueOf(gameManager.getPlayerPosY()));
@@ -144,8 +144,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         checkCameraBounds(); // Make sure camera doesn't leave the screen
         viewport.getCamera().update();
-
-
 
         // Make map and spritebatch only draw what the camera can see
         mapRenderer.setView((OrthographicCamera) viewport.getCamera());
@@ -176,7 +174,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         stage.act(delta);
 
-        if (!paused){
+        if (!paused) {
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -195,31 +193,19 @@ public class GameScreen extends AbstractScreen implements EventListener {
         stage.getViewport().apply();
         stage.draw();
 
-        if (gameOver){
+        if (gameOver) {
             screenManager.setScreen(ScreenName.GAME_OVER);
         }
     }
 
     @Override
-    public void pause(){
+    public void pause() {
         paused = true;
     }
 
     @Override
-    public void resume(){
+    public void resume() {
         paused = false;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-        stage.getViewport().update(width, height, true);
-
-        Table jumpButtonTable = stage.getRoot().findActor("jumpButtonTable");
-        jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
-
-        Table touchpadTable = stage.getRoot().findActor("touchpadTable");
-        touchpadTable.setPosition(90, 90);
     }
 
     @Override
@@ -246,7 +232,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private void renderAnimatedViews() {
         List<AnimatedController> controllers = gameManager.getAnimatedControllers();
 
-        for (AnimatedController controller: controllers) {
+        for (AnimatedController controller : controllers) {
             controller.getView().render(batch);
         }
     }
@@ -297,7 +283,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         // Check bounds on left right
         if (cameraLeft <= mapLeftBound) {
-            cam.position.x = mapLeftBound + cameraHalfWidth ;
+            cam.position.x = mapLeftBound + cameraHalfWidth;
         } else if (cameraRight >= mapRightBound) {
             cam.position.x = mapRightBound - cameraHalfWidth;
         }
@@ -335,63 +321,94 @@ public class GameScreen extends AbstractScreen implements EventListener {
     }
 
     private void createGUI(Stage stage, ButtonFactory buttonFactory, final EventManager eventManager) {
-        Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
 
-        Table jumpButtonTable = new Table();
-        jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
-        jumpButtonTable.add(jumpBtn);
-        jumpButtonTable.setName("jumpButtonTable");
-        stage.addActor(jumpButtonTable);
+        // Android specific GUI
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
 
+            Table jumpButtonTable = new Table();
+            jumpButtonTable.setDebug(true);
+            jumpButtonTable.setSize(180f, 180f);
+            jumpButtonTable.setPosition(stage.getViewport().getScreenWidth() - 140, 120, Align.center);
+            jumpButtonTable.row();
+            jumpButtonTable.add(jumpBtn).size(180f);
+            jumpButtonTable.setName("jumpButtonTable");
+            stage.addActor(jumpButtonTable);
+
+            final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
+            touchpad.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    // Check move left or right
+                    if (touchpad.getKnobPercentX() > 0.1) {
+                        eventManager.pushEvent(new MoveRight());
+                    } else if (touchpad.getKnobPercentX() < -0.1) {
+                        eventManager.pushEvent(new MoveLeft());
+                    } else {
+                        eventManager.pushEvent(new StopPlayer(0));
+                    }
+                }
+            });
+            touchpad.setName("touchpad");
+
+            Table touchpadTable = new Table();
+            touchpadTable.setSize(350f, 350f);
+            touchpadTable.setPosition(230, 210, Align.center);
+            touchpadTable.row().fill();
+            touchpadTable.add(touchpad).center().size(350f);
+            touchpadTable.setName("touchpadTable");
+            stage.addActor(touchpadTable);
+        }
+
+        this.attackBtn = buttonFactory.createCustomEventButton(new Attack(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI_2), "arcade"), true);
+        this.attackBtn.setName("attackBtn");
+
+        Table attackBtnTable = new Table();
+
+        attackBtnTable.setSize(100f, 100f);
+        attackBtnTable.row().fill();
+
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 100, stage.getViewport().getScreenHeight() - 100, Align.center);
+        } else {
+            attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 80, stage.getViewport().getScreenHeight() - 80, Align.center);
+        }
+        attackBtnTable.add(attackBtn);
+
+
+        attackBtnTable.setName("attackBtnTable");
+        stage.addActor(attackBtnTable);
 
         Label scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabelText.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-35, Align.center);
+        scoreLabelText.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 35, Align.center);
         scoreLabelText.setFontScale(2);
         scoreLabelText.setName("scoreLabelText");
         stage.addActor(scoreLabelText);
 
         Label scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-70, Align.center);
+        scoreLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 70, Align.center);
         scoreLabel.setFontScale(2);
         scoreLabel.setName("scoreLabel");
         stage.addActor(scoreLabel);
-
-
-        this.attackBtn = buttonFactory.createCustomEventButton(new Attack(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI_2), "arcade"), true);
-        this.attackBtn.setName("attackBtn");
-
-
-        Table attackBtnTable = new Table();
-        attackBtnTable.setPosition(Gdx.graphics.getWidth() - 70, Gdx.graphics.getHeight() - 70, Align.right);
-        attackBtnTable.add(attackBtn);
-        attackBtnTable.setName("attackBtnTable");
-        stage.addActor(attackBtnTable);
-
-
-        final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
-        touchpad.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                // Check move left or right
-                if (touchpad.getKnobPercentX() > 0.1) {
-                    eventManager.pushEvent(new MoveRight());
-                }
-                else if (touchpad.getKnobPercentX() < -0.1) {
-                    eventManager.pushEvent(new MoveLeft());
-                }
-                else {
-                    eventManager.pushEvent(new StopPlayer(0));
-                }
-            }
-        });
-        touchpad.setSize(30f, 30f);
-        touchpad.setName("touchpad");
-
-        Table touchpadTable = new Table();
-        touchpadTable.setPosition(90, 90);
-        touchpadTable.add(touchpad);
-        touchpadTable.setName("touchpadTable");
-        stage.addActor(touchpadTable);
     }
 
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
+        stage.getViewport().update(width, height, true);
+
+        Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
+        attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 80, stage.getViewport().getScreenHeight() - 80, Align.center);
+
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            Table jumpButtonTable = stage.getRoot().findActor("jumpButtonTable");
+            jumpButtonTable.setPosition(stage.getViewport().getScreenWidth() - 140, 120, Align.center);
+
+            Table touchpadTable = stage.getRoot().findActor("touchpadTable");
+            touchpadTable.setPosition(230, 210, Align.center);
+
+            attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 100, stage.getViewport().getScreenHeight() - 100, Align.center);
+        }
+    }
 }
