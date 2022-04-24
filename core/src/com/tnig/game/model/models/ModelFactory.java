@@ -1,6 +1,7 @@
 package com.tnig.game.model.models;
 
 import com.tnig.game.controller.managers.EventManager;
+import com.tnig.game.model.models.enums.ObjectType;
 import com.tnig.game.model.models.blocks.BlockFactory;
 import com.tnig.game.model.models.coins.CoinFactory;
 import com.tnig.game.model.models.interfaces.Model;

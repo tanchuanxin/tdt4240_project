@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.tnig.game.model.models.ObjectProperties;
+import com.tnig.game.model.models.enums.BodyType;
 import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.physics_engine.Engine;
 
@@ -43,7 +44,7 @@ public class BodyBuilder {
     public static Body createBody(Engine engine, float x, float y, GameObject object) {
         World world = engine.getWorld();
         Shape shape = getShape(object);
-        boolean isStatic = object.isStatic();
+        BodyType = object.getBodyType();
         ObjectProperties properties = object.getProperties();
 
         // Defines a Box2D body

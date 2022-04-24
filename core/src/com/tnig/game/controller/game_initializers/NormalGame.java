@@ -14,7 +14,7 @@ import com.tnig.game.controller.game_objects.dynamic_objects.AnimatedController;
 import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.interfaces.ModelType;
-import com.tnig.game.model.models.ObjectType;
+import com.tnig.game.model.models.enums.ObjectType;
 import com.tnig.game.model.models.blocks.BlockType;
 import com.tnig.game.model.models.coins.CoinType;
 import com.tnig.game.model.models.obstacles.ObstacleType;

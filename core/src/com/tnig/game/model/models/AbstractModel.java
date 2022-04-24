@@ -3,6 +3,7 @@ package com.tnig.game.model.models;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.tnig.game.model.models.enums.BodyType;
 import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.GameObject;
 import com.tnig.game.model.models.interfaces.Model;
@@ -13,20 +14,21 @@ import com.tnig.game.model.physics_engine.Engine;
 public abstract class AbstractModel implements ContactObject, Model, GameObject {
 
     private final float width, height;
-    private final boolean isStatic, isSensor;
+    private final boolean isSensor;
     private final Body body;
     private final ModelType type;
+    private final BodyType bodyType;
     protected final ObjectProperties properties;
     private boolean disposable = false;
 
 
     protected AbstractModel(Engine engine,
                             float x, float y, float width, float height, ObjectProperties properties,
-                            boolean isStatic, boolean isSensor, ModelType type) {
+                            BodyType bodyType, boolean isSensor, ModelType type) {
         this.width = width;
         this.height = height;
         this.properties = properties;
-        this.isStatic = isStatic;
+        this.bodyType = bodyType;
         this.isSensor = isSensor;
         this.type = type;
         body = BodyBuilder.createBody(engine, x, y, this);
@@ -54,6 +56,11 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     }
 
     @Override
+    public BodyType getBodyType() {
+        return bodyType;
+    }
+
+    @Override
     public ObjectProperties getProperties() {
         return properties;
     }
@@ -61,10 +68,6 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     @Override
     public ModelType getType() {
         return type;
-    }
-
-    public boolean isStatic() {
-        return isStatic;
     }
 
     public boolean isSensor() {
