@@ -61,7 +61,7 @@ public class AndroidFirebaseInterface implements NetworkService {
     }
 
     /**
-     * Updates the local highscorelist (getHighcore()) from the database.
+     * Updates the local highscorelist (getHighscores()) from the database.
      * The methods need to be called to update, it does NOT do this automatically.
      */
     @Override

@@ -70,6 +70,7 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
         table.add(nameTitle);
         table.add(scoreTitle);
 
+        networkService.updateHighscore();
         ArrayList<PlayerData> highscores = networkService.getHighScores(mapNum);
         int numTopPlayersCount = 0;
         for (int i = highscores.size() - 1; i >= 0; i--) {
