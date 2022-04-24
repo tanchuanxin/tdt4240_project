@@ -1,5 +1,6 @@
 package com.tnig.game.controller.managers;
 
+import com.badlogic.gdx.Gdx;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
@@ -61,12 +62,11 @@ public class EventManager {
      * @param event an Event with the event name and any supporting data
      */
     public void pushEvent(Event event) {
+        Gdx.app.log("Event pushed: ", String.valueOf(event));
         if (events.containsKey(event.name)) {
-
             for (EventListener subscriber : events.get(event.name)) {
                 subscriber.receiveEvent(event);
             }
-
         }
         System.out.println("Push Event: " + event.name);
     }

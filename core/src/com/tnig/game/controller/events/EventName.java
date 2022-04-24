@@ -18,4 +18,5 @@ public enum EventName {
     DISPOSE_SPRITE,
     STOP_PLAYER,
     PLAYER_AT_GOAL,
+    UPLOAD_SCORE
 }

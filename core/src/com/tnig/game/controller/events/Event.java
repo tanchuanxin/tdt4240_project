@@ -13,7 +13,6 @@ public abstract class Event {
 
     public Event() {}
 
-
     /** Returns the object for the given key, casting it to clazz.
      * @param key the key of the object
      * @param clazz the class of the object
