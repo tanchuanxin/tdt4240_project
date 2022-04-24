@@ -10,5 +10,5 @@ public interface NetworkService {
 
     public ArrayList<Integer> getLevels();
 
-    public ArrayList<ArrayList<String>> getHighScore(Integer level);
+    public ArrayList<PlayerData> getHighScores(Integer level);
 }

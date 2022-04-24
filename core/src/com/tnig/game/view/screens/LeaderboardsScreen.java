@@ -12,7 +12,9 @@ import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
+import com.tnig.game.model.models.players.Player;
 import com.tnig.game.model.networking.NetworkService;
+import com.tnig.game.model.networking.PlayerData;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.controller.events.EventName;
 import com.tnig.game.view.ui_components.ButtonFactory;
@@ -22,6 +24,11 @@ import java.util.ArrayList;
 public class LeaderboardsScreen extends AbstractScreen implements EventListener {
 
     private int mapNum = 1;
+    private int maxTopPlayersCount = 10; // Number of top scores to show in leaderboard
+
+    private final EventManager eventManager;
+    private final ScreenManager screenManager;
+    private final NetworkService networkService;
 
     public LeaderboardsScreen(final ScreenManager screenManager,
                               OrthographicCamera camera,
@@ -31,7 +38,17 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
         super(camera, assetLoader);
 
         this.mapNum = mapNum;
+        this.eventManager = eventManager;
+        this.screenManager = screenManager;
+        this.networkService = networkService;
+    }
 
+    @Override
+    public void show() {
+        showHighscores();
+    }
+
+    private void showHighscores() {
         Table table = new Table();
         Skin skin = assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI);
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
@@ -53,14 +70,19 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
         table.add(nameTitle);
         table.add(scoreTitle);
 
-        int counter = 0;
-        for (ArrayList<String> internalList : networkService.getHighScore(mapNum)) {
-            counter++;
-            table.row().spaceBottom(20f);
-            for (String user : internalList) {
-                table.add(new Label(user, skin));
+        ArrayList<PlayerData> highscores = networkService.getHighScores(mapNum);
+        int numTopPlayersCount = 0;
+        for (int i = highscores.size() - 1; i >= 0; i--) {
+            if (numTopPlayersCount == maxTopPlayersCount) {
+                break;
             }
-            if (counter >= 9) break;
+
+            PlayerData playerData = highscores.get(i);
+
+            table.row().spaceBottom(10f);
+            table.add(new Label(playerData.getName(), skin));
+            table.add(new Label(String.valueOf(playerData.getScore()), skin));
+            numTopPlayersCount++;
         }
 
         table.row().colspan(2).spaceBottom(20f).expandX().fillX();
@@ -68,6 +90,7 @@ public class LeaderboardsScreen extends AbstractScreen implements EventListener 
         table.add(backBtn).expandX().center().fillX();
 
         // Add actors to stage
+        stage.clear();
         stage.addActor(table);
     }
 
