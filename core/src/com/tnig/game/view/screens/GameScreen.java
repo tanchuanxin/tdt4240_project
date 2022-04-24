@@ -78,22 +78,22 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.inputMultiplexer = new InputMultiplexer();
 
         // Create viewport
-        viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
-        viewport.apply(true);
+        this.viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
+        this.viewport.apply(true);
 
-        mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / PPM);
-        mapRenderer.setView((OrthographicCamera) viewport.getCamera());
+        this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / PPM);
+        this.mapRenderer.setView((OrthographicCamera) viewport.getCamera());
 
-        gameManager = new GameManager(eventManager, assetLoader, map, viewport, numberOfPlayers);
+        this.gameManager = new GameManager(eventManager, assetLoader, map, viewport, numberOfPlayers);
 
         // Subscribe to events
         eventManager.subscribe(EventName.NEW_GAME, this);
         eventManager.subscribe(EventName.GAME_OVER, this);
 
         // Get input processors
-        inputMultiplexer.addProcessor(new InputController(eventManager));
-        inputMultiplexer.addProcessor(stage);
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        this.inputMultiplexer.addProcessor(new InputController(eventManager));
+        this.inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(this.inputMultiplexer);
 
         // Create GUI for game
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
@@ -105,8 +105,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         // Play background music
         this.gameMusic = assetLoader.get(AssetLoader.MUSIC_ADVENTURE);
-        gameMusic.setLooping(true);
-        gameMusic.play();
+        this.gameMusic.setLooping(true);
+        this.gameMusic.play();
 
         eventManager.subscribe(EventName.PAUSE, this);
     }

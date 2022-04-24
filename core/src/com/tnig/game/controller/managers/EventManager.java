@@ -62,15 +62,15 @@ public class EventManager {
      * @param event an Event with the event name and any supporting data
      */
     public void pushEvent(Event event) {
+        // TODO: Remove this logging thing
+        if (event.name != EventName.MOVE_LEFT && event.name != EventName.MOVE_RIGHT && event.name != EventName.STOP_PLAYER && event.name != EventName.JUMP) {
+            System.out.println("Push Event: " + event.name);
+        }
+
         if (events.containsKey(event.name)) {
             for (EventListener subscriber : events.get(event.name)) {
                 subscriber.receiveEvent(event);
             }
-        }
-
-        // TODO: Remove this logging thing
-        if (event.name != EventName.MOVE_LEFT && event.name != EventName.MOVE_RIGHT && event.name != EventName.STOP_PLAYER && event.name != EventName.JUMP) {
-            System.out.println("Push Event: " + event.name);
         }
     }
 

@@ -61,6 +61,8 @@ public class ScreenManager implements EventListener {
                 mapNumber = event.getData("mapNum", int.class);
                 break;
             case INIT_GAME:
+                mapNumber = -1;
+                numberOfPlayers = -1;
                 numberOfPlayers = event.getData("numOfPlayers", int.class);
                 gameStates.clear();
                 break;
@@ -94,9 +96,11 @@ public class ScreenManager implements EventListener {
                 game.setScreen(new MainMenuScreen(this, camera, assetLoader, eventManager));
                 break;
             case GAME:
-                if (mapNumber == -1){
-                    throw new IllegalStateException("Map hasnt been updated");
+                if (mapNumber == -1 || numberOfPlayers == -1){
+                    throw new IllegalStateException("Data not updated");
                 }
+                Gdx.app.log("ScreenManager mapNum: ", String.valueOf(mapNumber));
+                Gdx.app.log("ScreenManager numOfPlayers: ", String.valueOf(numberOfPlayers));
                 game.setScreen(new GameScreen(this, eventManager, camera, assetLoader, mapNumber, numberOfPlayers));
                 break;
             case MAP_SELECT:
