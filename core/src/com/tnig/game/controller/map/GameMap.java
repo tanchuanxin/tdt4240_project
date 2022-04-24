@@ -19,9 +19,9 @@ public class GameMap {
 
     private final TiledMap tiledMap;
 
-    public GameMap(int mapNUmber) {
-        this.mapNumber = mapNUmber;
-        String mapLocation = getMapLocation(mapNUmber);
+    public GameMap(int mapNumber) {
+        this.mapNumber = mapNumber;
+        String mapLocation = getMapLocation(mapNumber);
 
         tiledMap = new TmxMapLoader().load(mapLocation);
 
