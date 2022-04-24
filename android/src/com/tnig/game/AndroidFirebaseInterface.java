@@ -12,11 +12,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tnig.game.model.models.players.Player;
 import com.tnig.game.model.networking.NetworkService;
 import com.tnig.game.model.networking.PlayerData;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,14 +31,13 @@ public class AndroidFirebaseInterface implements NetworkService {
     private DatabaseReference levelRef;
     private DatabaseReference playerRef;
     private ArrayList<PlayerData> players;
-    private Map<Integer, ArrayList<PlayerData>> playerMap;
-    private ArrayList<ArrayList<String>> scores;
+    private Map<Integer, ArrayList<PlayerData>> mapScores;
     private ArrayList<Integer> levels;
 
     public AndroidFirebaseInterface() {
         database = FirebaseDatabase.getInstance("https://nearly-impossible-game-default-rtdb.europe-west1.firebasedatabase.app/"); // Rootnode.
         myRef = database.getReference("highscore");
-        playerMap = new HashMap<>();
+        mapScores = new HashMap<>();
         updateHighscore();
     }
 
@@ -71,7 +74,32 @@ public class AndroidFirebaseInterface implements NetworkService {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 if (dataSnapshot.exists()) {
-                    showData(dataSnapshot);
+                    //Iterate over the levels.
+                    int mapNum = 0;
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        mapNum++;
+                        players = new ArrayList<>();
+
+                        // Iterate over the player records in the level.
+                        for (DataSnapshot user : ds.getChildren()) {
+                            if (user.child("name").getValue(String.class) != null && user.child("score").getValue(Integer.class) != null) {
+                                PlayerData player = new PlayerData();
+
+                                player.setName(user.child("name").getValue(String.class));
+                                player.setScore(user.child("score").getValue(Integer.class));
+
+                                players.add(player);
+                            }
+                        }
+
+                        if (mapScores.containsKey(mapNum)) {
+                            mapScores.replace(mapNum, players);
+                        }
+                        else {
+                            mapScores.put(mapNum, players);
+                        }
+                    }
                 }
                 else Log.d("onDataChange", "not exist");
             }
@@ -86,43 +114,10 @@ public class AndroidFirebaseInterface implements NetworkService {
     @Override
     public ArrayList<Integer> getLevels() {
         levels = new ArrayList<>();
-        for (int key : playerMap.keySet()) {
+        for (int key : mapScores.keySet()) {
             levels.add(key);
         }
         return levels;
-    }
-
-    private void showData(DataSnapshot dataSnapshot){
-        //Iterate over the levels.
-        int count = 0;
-
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            count++;
-            players = new ArrayList<>();
-
-            // Iterate over the player records in the level.
-            for (DataSnapshot user : ds.getChildren()) {
-                Gdx.app.log("Data snapshot: ", String.valueOf(user.child("name")));
-                Gdx.app.log("Data snapshot: ", String.valueOf(user.child("score")));
-
-                if (user.child("name").getValue(String.class) != null && user.child("score").getValue(Integer.class) != null) {
-                    PlayerData player = new PlayerData();
-
-
-                    player.setName(user.child("name").getValue(String.class));
-                    player.setScore(user.child("score").getValue(Integer.class));
-
-                    players.add(player);
-                }
-            }
-
-            if (playerMap.containsKey(count)) {
-                playerMap.replace(count, players);
-            }
-            else {
-                playerMap.put(count, players);
-            }
-        }
     }
 
     /**
@@ -133,17 +128,12 @@ public class AndroidFirebaseInterface implements NetworkService {
      * @return scores
      */
     @Override
-    public ArrayList<ArrayList<String>> getHighScore(Integer levelNum) {
-        scores = new ArrayList<>();
-        ArrayList<String> internalScores;
-        if(playerMap.containsKey(levelNum)) {
-            for (PlayerData player : playerMap.get(levelNum)) {
-                internalScores = new ArrayList<>();
-                internalScores.add(player.getName());
-                internalScores.add("" + player.getScore());
-                scores.add(internalScores);
-            }
+    public ArrayList<PlayerData> getHighScores(Integer levelNum) {
+        if(mapScores.containsKey(levelNum)) {
+            // Sort the PlayerDatas by score
+            Collections.sort(mapScores.get(levelNum), Comparator.comparingInt(PlayerData::getScore));
+            return mapScores.get(levelNum);
         }
-        return scores;
+        return new ArrayList<>();
     }
 }

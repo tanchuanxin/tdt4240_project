@@ -21,7 +21,7 @@ public class CoreFirebaseInterface  implements NetworkService {
     }
 
     @Override
-    public ArrayList<ArrayList<String>> getHighScore(Integer level) {
+    public ArrayList<PlayerData> getHighScores(Integer level) {
         return null;
     }
 }

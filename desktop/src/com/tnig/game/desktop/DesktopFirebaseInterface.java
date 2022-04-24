@@ -22,7 +22,7 @@ public class DesktopFirebaseInterface implements NetworkService {
     }
 
     @Override
-    public ArrayList getHighScore(Integer level) {
+    public ArrayList<PlayerData> getHighScores(Integer level) {
         return null;
     }
 }
