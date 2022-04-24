@@ -10,7 +10,6 @@ public class DisposeSprite extends Event {
 
     public DisposeSprite(Model model) {
         name = EventName.DISPOSE_SPRITE;
-        data = new HashMap<>();
         data.put("object", model);
 
     }

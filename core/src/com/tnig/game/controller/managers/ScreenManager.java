@@ -3,6 +3,7 @@ package com.tnig.game.controller.managers;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.tnig.game.controller.game_initializers.NormalGame;
 import com.tnig.game.model.GameState;
 import com.tnig.game.model.networking.NetworkService;
 import com.tnig.game.utilities.AssetLoader;
@@ -56,20 +57,20 @@ public class ScreenManager implements EventListener {
     public void receiveEvent(Event event) {
         switch (event.name) {
             case MAP_SELECTED:
-                mapNumber = (int) event.data.get("mapNum");
+                mapNumber = event.getData("mapNum", int.class);
                 break;
             case INIT_GAME:
-                numberOfPlayers = (int) event.data.get("numOfPlayers");
+                numberOfPlayers = event.getData("numOfPlayers", int.class);
                 break;
             case NEW_GAME:
             case GAME_OVER:
-                gameStates.add((GameState) event.data.get("gamestate"));
+                gameStates.add(event.getData("gamestate", GameState.class));
                 break;
             case PAUSE:
                 game.pause();
                 break;
             case VIEW_LEADERBOARDS:
-                leaderboardMapNum = event.data.get("mapNum") != null ? (int) event.data.get("mapNum") : 1;
+                leaderboardMapNum = event.getData("mapNum", int.class) != null ? event.getData("mapNum", int.class) : 1;
                 setScreen(ScreenName.LEADERBOARDS);
                 break;
             case QUIT_GAME:

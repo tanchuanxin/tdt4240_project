@@ -130,7 +130,7 @@ public class GameManager implements EventListener {
                 }
                 break;
             case DISPOSE_SPRITE:
-                Model model = (Model) event.data.get("object");
+                Model model = event.getData("object", Model.class);
                 map.disposeGraphicOnTile(model.getX(), model.getY());
         }
     }

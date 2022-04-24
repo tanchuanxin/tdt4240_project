@@ -92,7 +92,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 }
                 break;
             case STOP_PLAYER:
-                switch ((int) event.data.get("key")) {
+                switch (event.getData("key", int.class)) {
                     case Input.Keys.LEFT:
                         if (getLinearVelocity()[0] < 0) {
                             setLinearVelocityX(0);
