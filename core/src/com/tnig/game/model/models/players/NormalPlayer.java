@@ -15,6 +15,7 @@ import com.tnig.game.model.models.coins.Coin;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.Constants;
 
+
 public class NormalPlayer extends AbstractModel implements EventListener, Player {
 
     private static final boolean isStatic = false;
@@ -26,29 +27,36 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     private final EventManager eventManager;
     private float speed = 2.2f;
     private float jumpingForce = 3.7f;
-    private State STATE = State.RUNNING;
 
-    public enum State {
-        JUMPING, RUNNING, WIN, DIE
+    private PlayerState playerState;
+
+    public PlayerDirection getDirection() {
+        return playerDirection;
     }
 
+    private PlayerDirection playerDirection = PlayerDirection.RIGHT;
 
 
     private float attackTimeout;
+    private float winTimeout;
 
     public NormalPlayer(EventManager eventManager, Engine engine,
                         float x, float y, float width, float height,
                         ObjectProperties properties, ModelType type) {
         super(engine, x, y, width, height, properties, isStatic, isSensor, type);
         this.eventManager = eventManager;
+
+        setPlayerState(PlayerState.RUNNING);
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);
         eventManager.subscribe(EventName.MOVE_RIGHT, this);
         eventManager.subscribe(EventName.ATTACK, this);
         eventManager.subscribe(EventName.STOP_PLAYER, this);
+        eventManager.subscribe(EventName.PLAYER_DEAD, this);
         eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
 
-        attackTimeoutReset();
+        attackTimeout = 5;
+        winTimeout = 2;
 
     }
 
@@ -62,8 +70,8 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 score += coin.getValue();
                 break;
             case BLOCK:
-                if (STATE == State.JUMPING) {
-                    STATE = State.RUNNING;
+                if (playerState == PlayerState.JUMPING) {
+                    setPlayerState(PlayerState.RUNNING);
                 }
                 break;
         }
@@ -77,6 +85,10 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     public void update(float delta) {
         score -= 1157 / Constants.FPS;
         attackTimeout -= delta;
+
+        if (playerState == PlayerState.WIN) {
+            winTimeout -= delta;
+        }
     }
     
     @Override
@@ -89,6 +101,16 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     }
 
     @Override
+    public float getWinTimeout() {
+        return winTimeout;
+    }
+
+    @Override
+    public PlayerState getState() {
+        return playerState;
+    }
+
+    @Override
     public ObjectShape GetShapeType() {
         return shape;
     }
@@ -97,13 +119,19 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     public void receiveEvent(Event event) {
         switch (event.name) {
             case MOVE_LEFT:
-                setLinearVelocityX(-speed);
+                if (playerState != PlayerState.WIN && playerState != PlayerState.DIE) {
+                    setLinearVelocityX(-speed);
+                    playerDirection = PlayerDirection.LEFT;
+                }
                 break;
             case MOVE_RIGHT:
-                setLinearVelocityX(speed);
+                if (playerState != PlayerState.WIN && playerState != PlayerState.DIE) {
+                    setLinearVelocityX(speed);
+                    playerDirection = PlayerDirection.RIGHT;
+                }
                 break;
             case JUMP:
-                if (STATE == State.RUNNING) {
+                if (playerState == PlayerState.RUNNING) {
                     jump();
                 }
                 break;
@@ -120,7 +148,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                         }
                         break;
                     case Input.Keys.DOWN:
-                        if (STATE == State.JUMPING) {
+                        if (playerState == PlayerState.JUMPING) {
                             setLinearVelocityY(0);
                             applyImpulseToCenter(0, -jumpingForce);
                         }
@@ -130,23 +158,38 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 }
                 break;
             case PLAYER_AT_GOAL:
-                Gdx.app.log("hi", "hi");
+                setPlayerState(PlayerState.WIN);
+                applyImpulseToCenter(0, jumpingForce);
                 break;
             case ATTACK:
-                float randomImpulseX = (float) ((float) Math.signum(Math.random()-0.5) *  (0.5 + Math.random() * 0.5)) * 2;
-                float randomImpulseY = (float) ((float) Math.signum(Math.random()-0.5) *  (1 + Math.random() * 1)) * 2;
-                setLinearVelocityX(0);
-                setLinearVelocityY(0);
-                applyImpulseToCenter(randomImpulseX, randomImpulseY);
-                attackTimeoutReset();
+                if (playerState != PlayerState.WIN && playerState != PlayerState.DIE) {
+                    float randomImpulseX = (float) ((float) Math.signum(Math.random() - 0.5) * (0.5 + Math.random() * 0.5)) * 2;
+                    float randomImpulseY = (float) ((float) Math.signum(Math.random() - 0.5) * (1 + Math.random() * 1)) * 2;
+                    setLinearVelocityX(0);
+                    setLinearVelocityY(0);
+                    applyImpulseToCenter(randomImpulseX, randomImpulseY);
+                    attackTimeoutReset();
+
+                    if (randomImpulseX > 0) {
+                        playerDirection = PlayerDirection.RIGHT;
+                    } else {
+                        playerDirection = PlayerDirection.LEFT;
+                    }
+                }
                 break;
         }
     }
 
     private void jump() {
-        if (STATE == State.RUNNING) {
+        if (playerState == PlayerState.RUNNING) {
             applyImpulseToCenter(0, jumpingForce);
-            STATE = State.JUMPING;
+            setPlayerState(PlayerState.JUMPING);
+        }
+    }
+
+    private void setPlayerState(PlayerState newState) {
+        if (playerState != PlayerState.WIN && playerState != PlayerState.DIE) {
+            playerState = newState;
         }
     }
 

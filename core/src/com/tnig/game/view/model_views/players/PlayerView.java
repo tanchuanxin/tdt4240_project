@@ -4,20 +4,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.tnig.game.model.models.interfaces.Model;
+import com.tnig.game.model.models.players.Player;
+import com.tnig.game.model.models.players.PlayerDirection;
+import com.tnig.game.model.models.players.PlayerState;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.model_views.AbstractAnimatedView;
 
 
 public class PlayerView extends AbstractAnimatedView {
-
-    private final Model model;
-    private final TextureRegion playerStanding;
+    private final Player player;
+    private final TextureRegion playerRunning;
     private final Animation<TextureRegion> playerJump;
     private final Animation<TextureRegion> playerWin;
     private float stateTimer;
-    private enum state {STANDING, JUMPING};
-    private state currentState;
-    private state previousState;
+    private PlayerState currentState;
+    private PlayerState previousState;
     private boolean isFacingRight;
 
     /**
@@ -26,7 +27,7 @@ public class PlayerView extends AbstractAnimatedView {
      */
     public PlayerView(Model model, AssetLoader assetLoader) {
         super(model);
-        this.model = model;
+        this.player = (Player) model;
 
         // Create animation texture
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -47,39 +48,42 @@ public class PlayerView extends AbstractAnimatedView {
         frames.clear();
 
         // Standing frame
-        playerStanding = new TextureRegion(assetLoader.get(AssetLoader.TEXTURE_ATLAS).findRegion("jellyJump28x28"), 0,0,28,28);
+        playerRunning = new TextureRegion(assetLoader.get(AssetLoader.TEXTURE_ATLAS).findRegion("jellyJump28x28"), 0,0,28,28);
 
         // facing left or right
         stateTimer = 0;
-        currentState = state.STANDING;
-        previousState = state.STANDING;
+        currentState = PlayerState.RUNNING;
+        previousState = PlayerState.RUNNING;
         isFacingRight = true;
     }
 
     private TextureRegion getCurrentFrame(){
         final TextureRegion currentFrame;
         // TODO need to add dying animation
-        if (model.getLinearVelocity()[1] > 0) {
-            currentState = state.JUMPING;
-        } else {
-            currentState = state.STANDING;
-        }
 
-        if (currentState == state.JUMPING) {
-            currentFrame = playerJump.getKeyFrame(stateTimer);
-        } else if (currentState == state.STANDING) {
-            currentFrame = playerStanding;
-        } else {
-            currentFrame = playerStanding;
+        currentState = player.getState();
+
+
+        switch (currentState) {
+            case JUMPING:
+                currentFrame = playerJump.getKeyFrame(stateTimer);
+                break;
+            case WIN:
+                currentFrame = playerWin.getKeyFrame(stateTimer);
+                break;
+            case RUNNING:
+            default:
+                currentFrame = playerRunning;
+                break;
         }
         return currentFrame;
     }
 
     private void calculateSpriteDirection(TextureRegion currentFrame){
-        if ((model.getLinearVelocity()[0] < 0 || !isFacingRight) && !currentFrame.isFlipX()) {
+        if ((player.getDirection() == PlayerDirection.LEFT || !isFacingRight) && !currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
             isFacingRight = false;
-        } else if ((model.getLinearVelocity()[0] > 0 || isFacingRight) && currentFrame.isFlipX()) {
+        } else if ((player.getDirection() == PlayerDirection.RIGHT || isFacingRight) && currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
             isFacingRight = true;
         }
