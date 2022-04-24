@@ -67,7 +67,6 @@ public class NormalGame implements GameInitializer {
 
 
 
-
     }
 
     @Override
