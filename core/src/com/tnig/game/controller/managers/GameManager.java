@@ -127,6 +127,7 @@ public class GameManager implements EventListener {
         switch (event.name){
             case PLAYER_AT_GOAL:
                 //TODO: FIX BUG
+                break;
             case PLAYER_DEAD:
                 if (playersLeft > 0){
                     eventManager.pushEvent(new NewGameEvent(createGameState()));
@@ -138,6 +139,7 @@ public class GameManager implements EventListener {
             case DISPOSE_SPRITE:
                 Model model = event.getData("object", Model.class);
                 map.disposeGraphicOnTile(model.getX(), model.getY());
+                break;
         }
     }
 

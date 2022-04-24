@@ -45,8 +45,8 @@ public class GameOverScreen extends AbstractScreen{
             textField.setAlignment(Align.center);
 
             table.add(scoreLabel, nameFieldLabel, textField).center();
-
         }
+
 
         TextButton saveScoreBtn = new TextButton("Save Score", skin, "default");
 

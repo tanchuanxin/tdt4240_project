@@ -8,6 +8,7 @@ import com.tnig.game.controller.events.game_events.MoveLeft;
 import com.tnig.game.controller.events.game_events.MoveRight;
 import com.tnig.game.controller.events.game_events.StopPlayer;
 import com.tnig.game.controller.events.screen_events.PauseEvent;
+import com.tnig.game.controller.events.screen_events.ResumeEvent;
 import com.tnig.game.controller.managers.EventManager;
 
 public class InputController implements InputProcessor {
@@ -37,8 +38,12 @@ public class InputController implements InputProcessor {
             case Input.Keys.P:
                 eventManager.pushEvent(new PauseEvent());
                 break;
+            case Input.Keys.R:
+                eventManager.pushEvent(new ResumeEvent());
+                break;
             case Input.Keys.A:
                 eventManager.pushEvent(new Attack());
+                break;
         }
         return false;
     }

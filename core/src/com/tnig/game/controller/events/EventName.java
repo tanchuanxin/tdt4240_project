@@ -7,6 +7,7 @@ public enum EventName {
     NEW_GAME,
     GAME_OVER,
     PAUSE,
+    RESUME,
 
     VIEW_LEADERBOARDS,
     SETTINGS_UPDATED,

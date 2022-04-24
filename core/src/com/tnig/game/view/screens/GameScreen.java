@@ -68,6 +68,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.batch = new SpriteBatch();
         GameMap map = new GameMap(mapNumber);
 
+        Gdx.graphics.setContinuousRendering(false);
+        Gdx.graphics.requestRendering();
+
+
         this.map = map;
         this.stage = new Stage();
         this.inputMultiplexer = new InputMultiplexer();
@@ -158,6 +162,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.gameMusic = assetLoader.get(AssetLoader.MUSIC_ADVENTURE);
         gameMusic.setLooping(true);
         gameMusic.play();
+
+        eventManager.subscribe(EventName.PAUSE, this);
     }
 
     @Override
@@ -174,6 +180,9 @@ public class GameScreen extends AbstractScreen implements EventListener {
             case GAME_OVER:
                 gameOver = true;
                 break;
+            case PAUSE:
+
+
         }
     }
 
@@ -218,14 +227,17 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         viewport.apply(true);
 
         stage.act(delta);
 
         if (!paused){
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            Gdx.graphics.requestRendering();
+
             update(delta);
 
             // Render game

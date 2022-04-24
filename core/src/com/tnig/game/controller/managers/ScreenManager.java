@@ -47,6 +47,7 @@ public class ScreenManager implements EventListener {
         eventManager.subscribe(EventName.GAME_OVER, this);
         eventManager.subscribe(EventName.NEW_GAME, this);
         eventManager.subscribe(EventName.PAUSE, this);
+        eventManager.subscribe(EventName.RESUME, this);
         eventManager.subscribe(EventName.QUIT_GAME, this);
     }
 
@@ -68,6 +69,9 @@ public class ScreenManager implements EventListener {
                 break;
             case PAUSE:
                 game.pause();
+                break;
+            case RESUME:
+                game.resume();
                 break;
             case VIEW_LEADERBOARDS:
                 leaderboardMapNum = event.getData("mapNum", int.class) != null ? event.getData("mapNum", int.class) : 1;
