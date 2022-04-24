@@ -62,7 +62,6 @@ public class EventManager {
      * @param event an Event with the event name and any supporting data
      */
     public void pushEvent(Event event) {
-        Gdx.app.log("Event pushed: ", String.valueOf(event));
         if (events.containsKey(event.name)) {
             for (EventListener subscriber : events.get(event.name)) {
                 subscriber.receiveEvent(event);
