@@ -54,6 +54,7 @@ public class GameManager implements EventListener {
 
         eventManager.subscribe(EventName.PLAYER_DEAD, this);
         eventManager.subscribe(EventName.DISPOSE_SPRITE, this);
+        eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
     }
 
     public void newGame(){
@@ -105,7 +106,6 @@ public class GameManager implements EventListener {
     }
 
     private GameState createGameState(){
-
         return new GameState(getScore(), map.getMapNumber());
     }
 
@@ -119,6 +119,8 @@ public class GameManager implements EventListener {
     @Override
     public void receiveEvent(Event event) {
         switch (event.name){
+            case PLAYER_AT_GOAL:
+                //TODO: FIX BUG
             case PLAYER_DEAD:
                 if (playersLeft > 0){
                     eventManager.pushEvent(new NewGameEvent(createGameState()));
