@@ -2,6 +2,7 @@ package com.tnig.game.controller;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.tnig.game.controller.events.game_events.Attack;
 import com.tnig.game.controller.events.game_events.Jump;
 import com.tnig.game.controller.events.game_events.MoveLeft;
 import com.tnig.game.controller.events.game_events.MoveRight;
@@ -35,6 +36,9 @@ public class InputController implements InputProcessor {
                 return true;
             case Input.Keys.P:
                 eventManager.pushEvent(new PauseEvent());
+                break;
+            case Input.Keys.A:
+                eventManager.pushEvent(new Attack());
         }
         return false;
     }

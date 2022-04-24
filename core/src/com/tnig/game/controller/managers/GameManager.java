@@ -116,6 +116,12 @@ public class GameManager implements EventListener {
         return score;
     }
 
+    public float getAttackTimeout() {
+        Model model = game.getPlayer().getModel();
+        Player player = (Player) model;
+        return player.getAttackTimeout();
+    }
+
     @Override
     public void receiveEvent(Event event) {
         switch (event.name){

@@ -47,6 +47,8 @@ public class AssetLoader {
 
     // Skins (For Scene2D UI)
     public static final AssetDescriptor<Skin> SKIN_PIXTHULHU_UI = new AssetDescriptor<>("skins/pixthulhu_ui/pixthulhu-ui.json", Skin.class);
+    public static final AssetDescriptor<Skin> SKIN_PIXTHULHU_UI_2 = new AssetDescriptor<>("skins/pixthulhu_ui_2/pixthulhu-ui-2.json", Skin.class);
+
 
     // Fonts
     public static final AssetDescriptor<FreeTypeFontGenerator> FONT_SOURCE_SANS_PRO_REGULAR = new AssetDescriptor<>("fonts/source_sans_pro_regular.ttf", FreeTypeFontGenerator.class);
@@ -79,6 +81,7 @@ public class AssetLoader {
 
         // Load skins
         manager.load(SKIN_PIXTHULHU_UI);
+        manager.load(SKIN_PIXTHULHU_UI_2);
 
         // Load fonts
         manager.load(FONT_SOURCE_SANS_PRO_REGULAR);

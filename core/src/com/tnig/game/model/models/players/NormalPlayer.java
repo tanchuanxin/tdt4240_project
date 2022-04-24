@@ -21,14 +21,19 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
     private static final ObjectShape shape = ObjectShape.BOX;
     private int score = 100000;
 
+
     private final EventManager eventManager;
     private float speed = 2.2f;
     private float jumpingForce = 3.7f;
     private State STATE = State.RUNNING;
 
     public enum State {
-        JUMPING, RUNNING
+        JUMPING, RUNNING, WIN, DIE
     }
+
+
+
+    private float attackTimeout;
 
     public NormalPlayer(EventManager eventManager, Engine engine,
                         float x, float y, float width, float height, float rotation,
@@ -38,8 +43,11 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);
         eventManager.subscribe(EventName.MOVE_RIGHT, this);
+        eventManager.subscribe(EventName.ATTACK, this);
         eventManager.subscribe(EventName.STOP_PLAYER, this);
         eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
+
+        attackTimeoutReset();
 
     }
 
@@ -60,10 +68,14 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         }
     }
 
+    private void attackTimeoutReset() {
+        attackTimeout = 5;
+    }
 
     @Override
     public void update(float delta) {
         score -= 1157 / Constants.FPS;
+        attackTimeout -= delta;
     }
     
     @Override
@@ -71,6 +83,9 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         return score;
     }
 
+    public float getAttackTimeout() {
+        return attackTimeout;
+    }
 
     @Override
     public ObjectShape GetShapeType() {
@@ -115,6 +130,14 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 break;
             case PLAYER_AT_GOAL:
                 Gdx.app.log("hi", "hi");
+                break;
+            case ATTACK:
+                float randomImpulseX = (float) ((float) Math.signum(Math.random()-0.5) *  (0.5 + Math.random() * 0.5)) * 2;
+                float randomImpulseY = (float) ((float) Math.signum(Math.random()-0.5) *  (1 + Math.random() * 1)) * 2;
+                setLinearVelocityX(0);
+                setLinearVelocityY(0);
+                applyImpulseToCenter(randomImpulseX, randomImpulseY);
+                attackTimeoutReset();
                 break;
         }
     }

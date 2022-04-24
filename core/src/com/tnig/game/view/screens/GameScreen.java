@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -24,6 +25,7 @@ import com.tnig.game.controller.InputController;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
+import com.tnig.game.controller.events.game_events.Attack;
 import com.tnig.game.controller.events.game_events.Jump;
 import com.tnig.game.controller.events.game_events.MoveLeft;
 import com.tnig.game.controller.events.game_events.MoveRight;
@@ -47,10 +49,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final FillViewport viewport;
     private final Box2DDebugRenderer b2dr;
     private GameMap map;
-    private final Table tableRight;
-    private Label scoreLabelText;
-    private Label scoreLabel;
-    private final Table tableLeft;
+    private Stage stage;
+    private final Button attackBtn;
     private final InputMultiplexer inputMultiplexer;
     private final Music gameMusic;
 
@@ -69,6 +69,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         GameMap map = new GameMap(mapNumber);
 
         this.map = map;
+        this.stage = new Stage();
         this.inputMultiplexer = new InputMultiplexer();
 
         // Create viewport
@@ -94,22 +95,37 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
 
-        tableRight = new Table();
-        tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
-        tableRight.add(jumpBtn);
-        stage.addActor(tableRight);
+        Table jumpButtonTable = new Table();
+        jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
+        jumpButtonTable.add(jumpBtn);
+        jumpButtonTable.setName("jumpButtonTable");
+        stage.addActor(jumpButtonTable);
 
-        scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        Label scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabelText.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-35, Align.center);
         scoreLabelText.setFontScale(2);
+        scoreLabelText.setName("scoreLabelText");
         stage.addActor(scoreLabelText);
 
-        scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()-70, Align.center);
         scoreLabel.setFontScale(2);
+        scoreLabel.setName("scoreLabel");
         stage.addActor(scoreLabel);
 
-        tableLeft = new Table();
+
+        attackBtn = buttonFactory.createCustomEventButton(new Attack(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI_2), "arcade"), true);
+        attackBtn.setName("attackBtn");
+
+
+        Table attackBtnTable = new Table();
+        attackBtnTable.setPosition(Gdx.graphics.getWidth() - 70, Gdx.graphics.getHeight() - 70, Align.right);
+        attackBtnTable.add(attackBtn);
+        attackBtnTable.setName("attackBtnTable");
+        stage.addActor(attackBtnTable);
+
+
         final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
         touchpad.addListener(new ChangeListener() {
             @Override
@@ -127,9 +143,13 @@ public class GameScreen extends AbstractScreen implements EventListener {
             }
         });
         touchpad.setSize(30f, 30f);
-        tableLeft.setPosition(90, 90);
-        tableLeft.add(touchpad);
-        stage.addActor(tableLeft);
+        touchpad.setName("touchpad");
+
+        Table touchpadTable = new Table();
+        touchpadTable.setPosition(90, 90);
+        touchpadTable.add(touchpad);
+        touchpadTable.setName("touchpadTable");
+        stage.addActor(touchpadTable);
 
         // Create debug renderer
         b2dr = new Box2DDebugRenderer();
@@ -179,8 +199,21 @@ public class GameScreen extends AbstractScreen implements EventListener {
         batch.setProjectionMatrix(viewport.getCamera().combined);
 
         // update score label
-//        this.scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.scoreLabel.setText(String.valueOf(this.gameManager.getScore()));
+        Label scoreLabel = stage.getRoot().findActor("scoreLabel");
+        scoreLabel.setText(String.valueOf(this.gameManager.getScore()));
+
+        Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
+
+        if (this.gameManager.getAttackTimeout() < 0) {
+            if (attackBtnTable.findActor("attackBtn") == null) {
+                attackBtnTable.add(attackBtn);
+            }
+        } else {
+            if (attackBtnTable.findActor("attackBtn") != null) {
+                attackBtnTable.removeActor(attackBtn);
+            }
+        }
+
     }
 
     @Override
@@ -225,8 +258,12 @@ public class GameScreen extends AbstractScreen implements EventListener {
     public void resize(int width, int height) {
         viewport.update(width, height);
         stage.getViewport().update(width, height, true);
-        tableRight.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
-        tableLeft.setPosition(90, 90);
+
+        Table jumpButtonTable = stage.getRoot().findActor("jumpButtonTable");
+        jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 70, 70, Align.right);
+
+        Table touchpadTable = stage.getRoot().findActor("touchpadTable");
+        touchpadTable.setPosition(90, 90);
     }
 
     @Override

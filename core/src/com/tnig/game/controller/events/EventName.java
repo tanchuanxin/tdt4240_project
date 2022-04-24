@@ -14,6 +14,7 @@ public enum EventName {
     MOVE_LEFT,
     MOVE_RIGHT,
     JUMP,
+    ATTACK,
     PLAYER_DEAD,
     DISPOSE_SPRITE,
     STOP_PLAYER,
