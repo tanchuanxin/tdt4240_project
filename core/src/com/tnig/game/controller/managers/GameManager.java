@@ -60,15 +60,16 @@ public class GameManager implements EventListener {
         game = new NormalGame(eventManager, engine, assetLoader, map);
         playersLeft = numberOfPlayers - 1;
 
+
         eventManager.subscribe(EventName.PLAYER_DEAD, this);
         eventManager.subscribe(EventName.DISPOSE_SPRITE, this);
         eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
     }
 
     public void newGame(){
-        if (playersLeft <= 0){
-            throw new IllegalStateException("Players left cant be 0");
-        }
+//        if (this.playersLeft <= 0){
+//            throw new IllegalStateException("Players left cant be 0");
+//        }
         playersLeft -= 1;
         engine.initNewWorld();
 

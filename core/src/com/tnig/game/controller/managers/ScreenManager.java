@@ -62,6 +62,7 @@ public class ScreenManager implements EventListener {
                 break;
             case INIT_GAME:
                 numberOfPlayers = event.getData("numOfPlayers", int.class);
+                gameStates.clear();
                 break;
             case NEW_GAME:
             case GAME_OVER:
