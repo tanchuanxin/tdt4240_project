@@ -44,6 +44,8 @@ public class AssetLoader {
     public static final AssetDescriptor<Sound> SOUND_JUMP = new AssetDescriptor<Sound>("audio/sounds/jump.ogg", Sound.class);
     public static final AssetDescriptor<Sound> SOUND_PUNCH = new AssetDescriptor<Sound>("audio/sounds/punch.mp3", Sound.class);
     public static final AssetDescriptor<Sound> SOUND_WIN = new AssetDescriptor<Sound>("audio/sounds/win.mp3", Sound.class);
+    public static final AssetDescriptor<Sound> SOUND_FIRE_BURST = new AssetDescriptor<Sound>("audio/sounds/fire_burst.wav", Sound.class);
+    public static final AssetDescriptor<Sound> SOUND_CLICK = new AssetDescriptor<Sound>("audio/sounds/click.wav", Sound.class);
 
     // Skins (For Scene2D UI)
     public static final AssetDescriptor<Skin> SKIN_PIXTHULHU_UI = new AssetDescriptor<>("skins/pixthulhu_ui/pixthulhu-ui.json", Skin.class);
@@ -75,6 +77,8 @@ public class AssetLoader {
         manager.load(SOUND_JUMP);
         manager.load(SOUND_PUNCH);
         manager.load(SOUND_WIN);
+        manager.load(SOUND_FIRE_BURST);
+        manager.load(SOUND_CLICK);
 
         // Load images
         manager.load(IMG_SPLASH_SCREEN_BG);

@@ -5,16 +5,17 @@ import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.AssetLoader;
 
 public class PlayerFactory {
     public static Model createModel(EventManager eventManager,
-                                    Engine engine,
+                                    Engine engine, AssetLoader assetLoader,
                                     float x, float y, float width, float height,
                                     ObjectProperties properties, ModelType modelType){
         PlayerType type = (PlayerType) modelType;
         switch (type){
             case NORMALPLAYER:
-                return new NormalPlayer(eventManager, engine, x, y, width, height, properties, type);
+                return new NormalPlayer(eventManager, engine, assetLoader, x, y, width, height, properties, type);
             case MOCK:
                 throw new IllegalArgumentException("Not created model for Mock");
             default:

@@ -7,15 +7,16 @@ import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.ModelFactory;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.AssetLoader;
 
 public class StaticObjectController implements Controller {
 
     private final Model model;
 
-    public StaticObjectController(EventManager eventManager, Engine engine,
+    public StaticObjectController(EventManager eventManager, Engine engine, AssetLoader assetLoader,
                                   float x, float y, float width, float height,
                                   ObjectProperties properties, ModelType type) {
-        model = ModelFactory.createModel(eventManager, engine, x, y, width, height, properties, type);
+        model = ModelFactory.createModel(eventManager, engine, assetLoader, x, y, width, height, properties, type);
     }
 
     public boolean isDisposable(){

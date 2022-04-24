@@ -93,7 +93,7 @@ public class NormalGame implements GameInitializer {
                 ObjectProperties properties = new ObjectProperties(object.getProperties());
 
                 Controller controller = new StaticObjectController(
-                        eventManager, engine, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
+                        eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
                         rect.width / PPM, rect.height / PPM, properties, modelType);
 
                 controllers.add(controller);

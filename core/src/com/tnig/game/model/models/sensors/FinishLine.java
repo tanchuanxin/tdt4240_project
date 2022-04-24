@@ -8,12 +8,13 @@ import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.enums.ObjectType;
 import com.tnig.game.model.physics_engine.Engine;
+import com.tnig.game.utilities.AssetLoader;
 
 public class FinishLine extends Sensor{
     private static final BodyType bodyType = BodyType.STATIC;
     private final EventManager eventManager;
 
-    protected FinishLine(EventManager eventManager, Engine engine,
+    protected FinishLine(EventManager eventManager, Engine engine, AssetLoader assetLoader,
                          float x, float y, float width, float height,
                          ObjectProperties properties, ModelType type) {
         super(engine, bodyType, x, y, width, height, properties, type);

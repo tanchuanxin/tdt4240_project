@@ -1,5 +1,6 @@
 package com.tnig.game.view.ui_components;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,11 +16,13 @@ public class ButtonFactory {
     private final EventManager eventManager;
     private final ScreenManager screenManager;
     private final Skin skin;
+    private Sound clickSound;
 
     public ButtonFactory(EventManager eventManager, ScreenManager screenManager, AssetLoader assetLoader) {
         this.eventManager = eventManager;
         this.screenManager = screenManager;
-        skin = assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI);
+        this.clickSound = assetLoader.get(AssetLoader.SOUND_CLICK);
+        this.skin = assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI);
     }
 
     public Button createSwitchScreenEventButton(final ScreenName screenName,
@@ -31,6 +34,7 @@ public class ButtonFactory {
         button.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                clickSound.play();
                 return touchDown;
             }
 
@@ -51,6 +55,7 @@ public class ButtonFactory {
         button.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                clickSound.play();
                 return touchDown;
             }
 
@@ -70,6 +75,7 @@ public class ButtonFactory {
         button.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                clickSound.play();
                 return touchDown;
             }
 
@@ -86,6 +92,7 @@ public class ButtonFactory {
             button.addListener(new ClickListener() {
                @Override
                public boolean touchDown(InputEvent inputEvent, float x, float y, int pointer, int button) {
+                   clickSound.play();
                    eventManager.pushEvent(event);
                    return true;
                };
