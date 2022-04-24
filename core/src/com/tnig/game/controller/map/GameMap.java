@@ -35,13 +35,13 @@ public class GameMap {
         mapWidthInUnits = mapWidthInPixels / PPM;
         mapHeightInUnits = mapHeightInPixels / PPM;
 
-        Gdx.app.log("tileWidth: ", String.valueOf(tileWidth));
-        Gdx.app.log("mapWidthInTiles: ", String.valueOf(mapWidthInTiles));
-        Gdx.app.log("mapWidthInPixels: ", String.valueOf(mapWidthInPixels));
-        Gdx.app.log("tileHeight: ", String.valueOf(tileHeight));
-        Gdx.app.log("mapHeightInTiles: ", String.valueOf(mapHeightInTiles));
-        Gdx.app.log("mapHeightInPixels: ", String.valueOf(mapHeightInPixels));
-        Gdx.app.log("ppm: ", String.valueOf(Constants.PPM));
+//        Gdx.app.log("tileWidth: ", String.valueOf(tileWidth));
+//        Gdx.app.log("mapWidthInTiles: ", String.valueOf(mapWidthInTiles));
+//        Gdx.app.log("mapWidthInPixels: ", String.valueOf(mapWidthInPixels));
+//        Gdx.app.log("tileHeight: ", String.valueOf(tileHeight));
+//        Gdx.app.log("mapHeightInTiles: ", String.valueOf(mapHeightInTiles));
+//        Gdx.app.log("mapHeightInPixels: ", String.valueOf(mapHeightInPixels));
+//        Gdx.app.log("ppm: ", String.valueOf(Constants.PPM));
     }
 
     public int getMapNumber() {

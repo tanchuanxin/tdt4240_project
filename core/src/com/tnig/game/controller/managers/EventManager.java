@@ -67,7 +67,11 @@ public class EventManager {
                 subscriber.receiveEvent(event);
             }
         }
-        System.out.println("Push Event: " + event.name);
+
+        // TODO: Remove this logging thing
+        if (event.name != EventName.MOVE_LEFT && event.name != EventName.MOVE_RIGHT && event.name != EventName.STOP_PLAYER && event.name != EventName.JUMP) {
+            System.out.println("Push Event: " + event.name);
+        }
     }
 
     /**
