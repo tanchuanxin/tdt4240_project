@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="500" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="201">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="500" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="204">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <tileset firstgid="925" source="spikes.tsx"/>
  <layer id="1" name="background" width="500" height="13">
@@ -95,11 +95,8 @@
   <object id="49" x="720.545" y="143.818" width="16" height="16"/>
   <object id="50" x="736.909" y="143.818" width="16" height="16"/>
   <object id="51" x="975.25" y="160.75" width="16" height="16"/>
-  <object id="52" x="1247.75" y="79.75" width="16" height="16" rotation="180"/>
-  <object id="53" x="1263.88" y="80" width="16" height="16" rotation="180"/>
-  <object id="54" x="1280" y="80.125" width="16" height="16" rotation="180"/>
-  <object id="55" x="1776.09" y="96.1818" width="16" height="16" rotation="180"/>
-  <object id="56" x="1792.18" y="96.3636" width="16" height="16" rotation="180"/>
+  <object id="55" x="1760.09" y="80" width="16" height="16" rotation="180"/>
+  <object id="56" x="1776.54" y="79.6363" width="16" height="16" rotation="180"/>
   <object id="57" x="2784.27" y="48.1818" width="16" height="16"/>
   <object id="58" x="2800.55" y="48.2727" width="16" height="16"/>
   <object id="59" x="2816.27" y="48.1818" width="16" height="16"/>
@@ -124,6 +121,9 @@
   <object id="78" x="7039.88" y="144.375" width="16" height="16"/>
   <object id="79" x="7056.13" y="144.375" width="16" height="16"/>
   <object id="80" x="7072.25" y="144.375" width="16" height="16"/>
+  <object id="201" x="1264" y="63.4545" width="16" height="16" rotation="180"/>
+  <object id="202" x="1247.82" y="63.6364" width="16" height="16" rotation="180"/>
+  <object id="203" x="1231.64" y="63.2727" width="16" height="16" rotation="180"/>
  </objectgroup>
  <objectgroup id="6" name="finishLine">
   <object id="81" x="7956" y="2.66667" width="8" height="188.667"/>
