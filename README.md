@@ -55,7 +55,21 @@ git clone https://github.com/tanchuanxin/tdt4240_project.git
 
 
 
+## How to play
 
+When the game launches, you will be shown the menu. Here you can
+select game mode(1 or 2 players), or go check the leaderboards, or exit the game.
+To start a game against a friend, click 2 Player.
+
+Then you will be directed to a map select menu. To begin the game,
+click the map you wish to play.
+
+### Controls on Desktop
+UP - Jump/Walljump
+LEFT - Move left
+RIGHT - Move Right
+DOWN - Stomp if in the air
+SPACE - Jump/Walljump
 
 
 
