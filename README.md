@@ -18,15 +18,14 @@ order to try to stop him from getting a good score.
 
 
 
-<p align="center">
-  <img src="https://im2.ezgif.com/tmp/ezgif-2-829d8e13c3.gif">
-</p>
+ <img src="https://im2.ezgif.com/tmp/ezgif-2-829d8e13c3.gif">
+
 
 ## Project overview
 
-<p align="center">
-  <img src="https://github.com/tanchuanxin/tdt4240_project/blob/main/android/assets/ProjectStructure.png?raw=true">
-</p>
+
+<img src="https://github.com/tanchuanxin/tdt4240_project/blob/main/android/assets/ProjectStructure.png?raw=true">
+
 
 
 ## User Manual
