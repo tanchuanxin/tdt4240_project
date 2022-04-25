@@ -145,24 +145,29 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 if (playerState == PlayerState.RUNNING) {
                     jumpSound.play();
                     jump();
-                } else if (playerState == PlayerState.JUMPING && Gdx.app.getType() == Application.ApplicationType.Android) {
+                } else if (playerState == PlayerState.JUMPING) {
                     // perform stomp on jump button only on android
-                    eventManager.pushEvent(new StopPlayer(Input.Keys.DOWN));
+                    if (Gdx.app.getType() == Application.ApplicationType.Android) {
+                        eventManager.pushEvent(new StopPlayer(Input.Keys.DOWN));
+                    }
                 }
                 break;
             case STOP_PLAYER:
                 switch (event.getData("key", int.class)) {
                     case Input.Keys.LEFT:
+                    case Input.Keys.A:
                         if (getLinearVelocity()[0] < 0) {
                             setLinearVelocityX(0);
                         }
                         break;
                     case Input.Keys.RIGHT:
+                    case Input.Keys.D:
                         if (getLinearVelocity()[0] > 0) {
                             setLinearVelocityX(0);
                         }
                         break;
                     case Input.Keys.DOWN:
+                    case Input.Keys.S:
                         if (playerState == PlayerState.JUMPING) {
                             setLinearVelocityY(0);
                             applyImpulseToCenter(0, -jumpingForce);
