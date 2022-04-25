@@ -208,21 +208,17 @@ public class GameScreen extends AbstractScreen implements EventListener {
         mapRenderer.setView(cam);
         batch.setProjectionMatrix(cam.combined);
 
-//        // update score label
-//        Label scoreLabel = stage.getRoot().findActor("scoreLabel");
-//        scoreLabel.setText(String.valueOf(this.gameManager.getScore()));
-//
-//        Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
-//
-//        if (this.gameManager.getAttackTimeout() < 0) {
-//            if (attackBtnTable.findActor("attackBtn") == null) {
-//                attackBtnTable.add(attackBtn);
-//            }
-//        } else {
-//            if (attackBtnTable.findActor("attackBtn") != null) {
-//                attackBtnTable.removeActor(attackBtn);
-//            }
-//        }
+        // update score label
+        Label scoreLabel = stage.getRoot().findActor("scoreLabel");
+        scoreLabel.setText(String.valueOf(this.gameManager.getScore()));
+
+        Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
+
+        if (this.gameManager.getAttackTimeout() < 0) {
+            attackBtnTable.findActor("attackBtn").setVisible(true);
+        } else {
+            attackBtnTable.findActor("attackBtn").setVisible(false);
+        }
 
     }
 
@@ -370,19 +366,55 @@ public class GameScreen extends AbstractScreen implements EventListener {
     }
 
     private void createGUI(Stage stage, ButtonFactory buttonFactory, final EventManager eventManager) {
+        // add attack button to private variable
+        this.attackBtn = buttonFactory.createCustomEventButton(new Attack(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI_2), "arcade"), true);
+        this.attackBtn.setName("attackBtn");
+
+        Table attackBtnTable = new Table();
+        attackBtnTable.setName("attackBtnTable");
+        attackBtnTable.setSize(140f, 140f);
+        attackBtnTable.row().fill();
+        attackBtnTable.add(attackBtn).size(140f);
+
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight() - 150, Align.center);
+        } else {
+            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 80, Align.center);
+        }
+
+        stage.addActor(attackBtnTable);
+
+
+        // add score label text that says "SCORE"
+        Label scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabelText.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 50, Align.center);
+        scoreLabelText.setFontScale(3);
+        scoreLabelText.setName("scoreLabelText");
+        stage.addActor(scoreLabelText);
+
+
+        // add score label with live score
+        Label scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 100, Align.center);
+        scoreLabel.setFontScale(3);
+        scoreLabel.setName("scoreLabel");
+        stage.addActor(scoreLabel);
+
         // Android specific GUI
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            // add jump button
             Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
 
             Table jumpButtonTable = new Table();
             jumpButtonTable.setDebug(true);
             jumpButtonTable.setSize(180f, 180f);
-            jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 140, 120, Align.center);
+            jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 140, 80, Align.center);
             jumpButtonTable.row();
             jumpButtonTable.add(jumpBtn).size(180f);
             jumpButtonTable.setName("jumpButtonTable");
             stage.addActor(jumpButtonTable);
 
+            // add touchpad
             final Touchpad touchpad = new Touchpad(0.1f, assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI));
             touchpad.addListener(new ChangeListener() {
                 @Override
@@ -407,35 +439,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
             touchpadTable.setName("touchpadTable");
             stage.addActor(touchpadTable);
         }
-
-        this.attackBtn = buttonFactory.createCustomEventButton(new Attack(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI_2), "arcade"), true);
-        this.attackBtn.setName("attackBtn");
-
-        Table attackBtnTable = new Table();
-        attackBtnTable.setName("attackBtnTable");
-        attackBtnTable.setSize(140f, 140f);
-        attackBtnTable.row().fill();
-        attackBtnTable.add(attackBtn).size(140f);
-
-        if (Gdx.app.getType() == Application.ApplicationType.Android) {
-            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 120, Align.center);
-        } else {
-            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 80, Align.center);
-        }
-        stage.addActor(attackBtnTable);
-
-
-        Label scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabelText.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 50, Align.center);
-        scoreLabelText.setFontScale(3);
-        scoreLabelText.setName("scoreLabelText");
-        stage.addActor(scoreLabelText);
-
-        Label scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 100, Align.center);
-        scoreLabel.setFontScale(3);
-        scoreLabel.setName("scoreLabel");
-        stage.addActor(scoreLabel);
     }
 
 
@@ -445,17 +448,23 @@ public class GameScreen extends AbstractScreen implements EventListener {
         stage.getViewport().update(width, height, true);
         readyStage.getViewport().update(width, height, true);
 
+
+        // attack button
         Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
-        attackBtnTable.setPosition(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 80, Align.center);
 
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight() - 150, Align.center);
+        } else {
+            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 80, Align.center);
+        }
+
+        // jump button and touchpad
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
             Table jumpButtonTable = stage.getRoot().findActor("jumpButtonTable");
-            jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 140, 300, Align.center);
+            jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 140, 200, Align.center);
 
             Table touchpadTable = stage.getRoot().findActor("touchpadTable");
             touchpadTable.setPosition(230, 300, Align.center);
-
-            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 120, Align.center);
         }
     }
 }

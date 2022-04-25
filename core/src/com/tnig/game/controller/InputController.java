@@ -44,9 +44,9 @@ public class InputController implements InputProcessor {
 //            case Input.Keys.R:
 //                eventManager.pushEvent(new ResumeEvent());
 //                break;
-            case Input.Keys.SPACE:
-                eventManager.pushEvent(new Attack());
-                break;
+//            case Input.Keys.SPACE:
+//                eventManager.pushEvent(new Attack());
+//                break;
         }
         return false;
     }

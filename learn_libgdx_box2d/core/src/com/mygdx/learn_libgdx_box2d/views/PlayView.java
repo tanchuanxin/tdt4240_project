@@ -57,9 +57,9 @@ public class PlayView implements Disposable {
                     case Input.Keys.D:
                         rightPressed = true;
                         break;
-                    case Input.Keys.SPACE:
-                        attackPressed = true;
-                        break;
+//                    case Input.Keys.SPACE:
+//                        attackPressed = true;
+//                        break;
                 }
                 return true;
             }
@@ -79,9 +79,9 @@ public class PlayView implements Disposable {
                     case Input.Keys.D:
                         rightPressed = false;
                         break;
-                    case Input.Keys.SPACE:
-                        attackPressed = false;
-                        break;
+//                    case Input.Keys.SPACE:
+//                        attackPressed = false;
+//                        break;
                 }
                 return true;
             }
