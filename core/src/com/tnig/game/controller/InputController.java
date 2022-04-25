@@ -23,25 +23,28 @@ public class InputController implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch (keycode){
             case Input.Keys.LEFT:
+            case Input.Keys.A:
                 eventManager.pushEvent(new MoveLeft());
                 return true;
             case Input.Keys.RIGHT:
+            case Input.Keys.D:
                 eventManager.pushEvent(new MoveRight());
                 return true;
             case Input.Keys.UP:
-            case Input.Keys.SPACE:
+            case Input.Keys.W:
                 eventManager.pushEvent(new Jump());
                 return true;
             case Input.Keys.DOWN:
+            case Input.Keys.S:
                 eventManager.pushEvent(new StopPlayer(keycode));
                 return true;
-            case Input.Keys.P:
-                eventManager.pushEvent(new PauseEvent());
-                break;
-            case Input.Keys.R:
-                eventManager.pushEvent(new ResumeEvent());
-                break;
-            case Input.Keys.A:
+//            case Input.Keys.P:
+//                eventManager.pushEvent(new PauseEvent());
+//                break;
+//            case Input.Keys.R:
+//                eventManager.pushEvent(new ResumeEvent());
+//                break;
+            case Input.Keys.SPACE:
                 eventManager.pushEvent(new Attack());
                 break;
         }

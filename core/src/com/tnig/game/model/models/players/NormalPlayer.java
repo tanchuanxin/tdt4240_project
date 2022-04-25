@@ -1,11 +1,13 @@
 package com.tnig.game.model.models.players;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;
+import com.tnig.game.controller.events.game_events.StopPlayer;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.model.models.AbstractModel;
 import com.tnig.game.model.models.ObjectProperties;
@@ -143,6 +145,9 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                 if (playerState == PlayerState.RUNNING) {
                     jumpSound.play();
                     jump();
+                } else if (playerState == PlayerState.JUMPING && Gdx.app.getType() == Application.ApplicationType.Android) {
+                    // perform stomp on jump button only on android
+                    eventManager.pushEvent(new StopPlayer(Input.Keys.DOWN));
                 }
                 break;
             case STOP_PLAYER:
