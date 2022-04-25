@@ -3,10 +3,10 @@ package com.tnig.game.view.model_views.obstacles;
 import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.model_views.View;
+import com.tnig.game.view.model_views.AnimatedView;
 
 public class ObstacleViewFactory {
-    public static View createView(Model model, AssetLoader assetLoader){
+    public static AnimatedView createView(Model model, AssetLoader assetLoader){
 
         ObstacleType type = (ObstacleType) model.getType();
         switch (type){

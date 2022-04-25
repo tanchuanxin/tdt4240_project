@@ -3,7 +3,7 @@ package com.tnig.game.view.model_views;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.model.models.interfaces.Model;
 
-public abstract class AbstractView implements View {
+public abstract class AbstractView implements AnimatedView {
     private float time = 0;
     private final Model model;
 

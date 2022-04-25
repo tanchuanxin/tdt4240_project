@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * Interface for views, providing a reference for drawing animations to the screen.
  */
-public interface View {
+public interface AnimatedView {
     /**
      * Update function to track the frame of animation of a view according to time.
      *
