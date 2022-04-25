@@ -17,6 +17,10 @@ in the top right hand corner, shoving the active player in a random direction in
 order to try to stop him from getting a good score.
 
 
+![](https://im2.ezgif.com/tmp/ezgif-2-829d8e13c3.gif)
+
+
+
 ## User Manual
 
 To run this game you will need an Android device with API level 30 or later, or
