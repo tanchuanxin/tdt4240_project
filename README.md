@@ -33,7 +33,7 @@ the Android Studio IDE(if you don’t have it, just google it and download).
 1. Make sure your device has an Android API version 30 or more
 2. Make sure that the browser you will be using for the download of the APK-file from has enabled downloads from unknown sources (Settings — Security
 — Install from unknown sources — Enable browser).
-3. Click this link: 
+3. Click this link: https://drive.google.com/file/d/1fKjBXbZBmYt4hdGbiVmrmn3dPx12aUFP/view?usp=sharing
 4. Install the APK file on your Android device
 5. Open the app you have installled to play the game
 
