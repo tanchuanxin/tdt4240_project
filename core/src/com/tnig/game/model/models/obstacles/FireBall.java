@@ -49,7 +49,6 @@ public class FireBall extends AbstractModel {
             eventManager.pushEvent(new PlayerDead());
             object.dispose();
         }
-        flipDirection();
 
     }
 
