@@ -23,8 +23,9 @@ order to try to stop him from getting a good score.
 ## Project overview
 
 <p align="center">
- ![](https://github.com/tanchuanxin/tdt4240_project/blob/main/android/assets/ProjectStructure.png?raw=true)
+  <img src="https://github.com/tanchuanxin/tdt4240_project/blob/main/android/assets/ProjectStructure.png?raw=true">
 </p>
+
 
 ## User Manual
 
