@@ -44,6 +44,7 @@ import com.tnig.game.controller.managers.GameManager;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.controller.map.GameMap;
 import com.tnig.game.utilities.AssetLoader;
+import com.tnig.game.utilities.Constants;
 import com.tnig.game.view.ui_components.ButtonFactory;
 
 import java.util.List;
@@ -110,8 +111,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         eventManager.subscribe(EventName.PAUSE, this);
 
         // Get input processors
-        this.stage = new Stage();
-        stage.setViewport(viewport);
+        this.stage = new Stage(new ScreenViewport());
+//        stage.setViewport(viewport);
         this.inputMultiplexer.addProcessor(new InputController(eventManager));
         this.inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(this.inputMultiplexer);
@@ -119,7 +120,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
         // Create GUI for game
 
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
-
         createGUI(stage, buttonFactory, eventManager);
 
         // Create debug renderer
@@ -208,29 +208,27 @@ public class GameScreen extends AbstractScreen implements EventListener {
         mapRenderer.setView(cam);
         batch.setProjectionMatrix(cam.combined);
 
-        // update score label
-        Label scoreLabel = stage.getRoot().findActor("scoreLabel");
-        scoreLabel.setText(String.valueOf(this.gameManager.getScore()));
-
-        Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
-
-        if (this.gameManager.getAttackTimeout() < 0) {
-            if (attackBtnTable.findActor("attackBtn") == null) {
-                attackBtnTable.add(attackBtn);
-            }
-        } else {
-            if (attackBtnTable.findActor("attackBtn") != null) {
-                attackBtnTable.removeActor(attackBtn);
-            }
-        }
+//        // update score label
+//        Label scoreLabel = stage.getRoot().findActor("scoreLabel");
+//        scoreLabel.setText(String.valueOf(this.gameManager.getScore()));
+//
+//        Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
+//
+//        if (this.gameManager.getAttackTimeout() < 0) {
+//            if (attackBtnTable.findActor("attackBtn") == null) {
+//                attackBtnTable.add(attackBtn);
+//            }
+//        } else {
+//            if (attackBtnTable.findActor("attackBtn") != null) {
+//                attackBtnTable.removeActor(attackBtn);
+//            }
+//        }
 
     }
 
     @Override
     public void render(float delta) {
         Gdx.input.setInputProcessor(inputMultiplexer);
-
-        stage.act(delta);
 
         if (!paused) {
             update(delta);
@@ -244,16 +242,15 @@ public class GameScreen extends AbstractScreen implements EventListener {
             mapRenderer.render();
             b2dr.render(gameManager.getEngine().getWorld(), cam.combined);
 
-
+            // draw sprites
             batch.setProjectionMatrix(cam.combined);
             batch.begin();
             renderAnimatedViews();
             batch.end();
         }
 
-
-//        stage.getViewport().apply();
-//        batch.setProjectionMatrix(stage.getCamera().combined);
+        stage.getViewport().apply();
+        stage.act(delta);
         stage.draw();
 
         if (gameOver) {
@@ -296,6 +293,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         batch.dispose();
         mapRenderer.dispose();
         readyStage.dispose();
+        stage.dispose();
     }
 
 
@@ -328,23 +326,23 @@ public class GameScreen extends AbstractScreen implements EventListener {
         float cameraBtm = cam.position.y - cameraHalfHeight;
         float cameraTop = cam.position.y + cameraHalfHeight;
 
-        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
-
-        Gdx.app.log("mapLeftBound: ", String.valueOf(mapLeftBound));
-        Gdx.app.log("mapRightBound: ", String.valueOf(mapRightBound));
-        Gdx.app.log("mapBtmBound: ", String.valueOf(mapBtmBound));
-        Gdx.app.log("mapTopBound: ", String.valueOf(mapTopBound));
-
-        Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
-        Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
-
-        Gdx.app.log("cameraLeft: ", String.valueOf(cameraLeft));
-        Gdx.app.log("cameraRight: ", String.valueOf(cameraRight));
-        Gdx.app.log("cameraBtm: ", String.valueOf(cameraBtm));
-        Gdx.app.log("cameraTop: ", String.valueOf(cameraTop));
-
-        Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
-        Gdx.app.log("Gdx.graphics.getHeight(): ", String.valueOf(Gdx.graphics.getHeight()));
+//        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
+//
+//        Gdx.app.log("mapLeftBound: ", String.valueOf(mapLeftBound));
+//        Gdx.app.log("mapRightBound: ", String.valueOf(mapRightBound));
+//        Gdx.app.log("mapBtmBound: ", String.valueOf(mapBtmBound));
+//        Gdx.app.log("mapTopBound: ", String.valueOf(mapTopBound));
+//
+//        Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
+//        Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
+//
+//        Gdx.app.log("cameraLeft: ", String.valueOf(cameraLeft));
+//        Gdx.app.log("cameraRight: ", String.valueOf(cameraRight));
+//        Gdx.app.log("cameraBtm: ", String.valueOf(cameraBtm));
+//        Gdx.app.log("cameraTop: ", String.valueOf(cameraTop));
+//
+//        Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
+//        Gdx.app.log("Gdx.graphics.getHeight(): ", String.valueOf(Gdx.graphics.getHeight()));
 
         // Check bounds on left right
         if (VIEWPORT_WIDTH < cam.viewportWidth) {
@@ -368,40 +366,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
             }
         }
 
-
-//        viewport.setCamera(cam);
-
-
-//        // Check bounds on btm top
-//        if (cameraBtm <= mapBtmBound) {
-//            cam.position.y = mapBtmBound + cameraHalfHeight ;
-//        } else if (cameraTop >= mapRightBound) {
-//            cam.position.y = mapTopBound - cameraHalfHeight;
-//        }
-
-        // Horizontal axis
-//        if (Constants.VIEWPORT_WIDTH < cam.viewportWidth) {
-//            cam.position.x = mapRightBound / 2;
-//        } else {
-//            if (cameraLeft <= mapLeftBound) {
-//                cam.position.x = mapLeftBound + cameraHalfWidth;
-//            } else if (cameraRight >= mapRightBound) {
-//                cam.position.x = mapRightBound - cameraHalfWidth;
-//            }
-//        }
-//
-//        // Check bounds on top down
-//        if (cameraBtm <= mapBtmBound) {
-//            cam.position.y = mapBtmBound + cam.viewportHeight /2 ;
-//        } else if (cameraTop >= mapTopBound) {
-//            cam.position.y = mapTopBound - cam.viewportHeight /2 ;
-//        }
-//
-        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
+//        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
     }
 
     private void createGUI(Stage stage, ButtonFactory buttonFactory, final EventManager eventManager) {
-
         // Android specific GUI
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
             Button jumpBtn = buttonFactory.createCustomEventButton(new Jump(), new Button(assetLoader.get(AssetLoader.SKIN_PIXTHULHU_UI), "arcade"), true);
@@ -409,7 +377,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
             Table jumpButtonTable = new Table();
             jumpButtonTable.setDebug(true);
             jumpButtonTable.setSize(180f, 180f);
-            jumpButtonTable.setPosition(stage.getViewport().getScreenWidth() - 140, 120, Align.center);
+            jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 140, 120, Align.center);
             jumpButtonTable.row();
             jumpButtonTable.add(jumpBtn).size(180f);
             jumpButtonTable.setName("jumpButtonTable");
@@ -444,37 +412,28 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.attackBtn.setName("attackBtn");
 
         Table attackBtnTable = new Table();
-
-        attackBtnTable.setSize(100f, 100f);
+        attackBtnTable.setName("attackBtnTable");
+        attackBtnTable.setSize(140f, 140f);
         attackBtnTable.row().fill();
+        attackBtnTable.add(attackBtn).size(140f);
 
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
-            attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 100, stage.getViewport().getScreenHeight() - 100, Align.center);
+            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 120, Align.center);
         } else {
-            attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 80, stage.getViewport().getScreenHeight() - 80, Align.center);
+            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 80, Align.center);
         }
-        attackBtnTable.add(attackBtn);
-
-
-        attackBtnTable.setName("attackBtnTable");
         stage.addActor(attackBtnTable);
-
-        Gdx.app.log("stage.getCamera().viewportWidth: ", String.valueOf(stage.getCamera().viewportWidth));
-        Gdx.app.log("stage.getViewport().getScreenWidth(): ", String.valueOf(stage.getViewport().getScreenWidth()));
-        Gdx.app.log("stage.getWidth(): ", String.valueOf(stage.getWidth()));
-        Gdx.app.log("stage.getViewport().getWorldWidth(): ", String.valueOf(stage.getViewport().getWorldWidth()));
-        // Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
 
 
         Label scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabelText.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 35, Align.center);
-        scoreLabelText.setFontScale(2);
+        scoreLabelText.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 50, Align.center);
+        scoreLabelText.setFontScale(3);
         scoreLabelText.setName("scoreLabelText");
         stage.addActor(scoreLabelText);
 
         Label scoreLabel = new Label(String.valueOf(this.gameManager.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 70, Align.center);
-        scoreLabel.setFontScale(2);
+        scoreLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 100, Align.center);
+        scoreLabel.setFontScale(3);
         scoreLabel.setName("scoreLabel");
         stage.addActor(scoreLabel);
     }
@@ -487,16 +446,16 @@ public class GameScreen extends AbstractScreen implements EventListener {
         readyStage.getViewport().update(width, height, true);
 
         Table attackBtnTable = stage.getRoot().findActor("attackBtnTable");
-        attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 80, stage.getViewport().getScreenHeight() - 80, Align.center);
+        attackBtnTable.setPosition(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 80, Align.center);
 
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
             Table jumpButtonTable = stage.getRoot().findActor("jumpButtonTable");
-            jumpButtonTable.setPosition(stage.getViewport().getScreenWidth() - 140, 120, Align.center);
+            jumpButtonTable.setPosition(Gdx.graphics.getWidth() - 140, 300, Align.center);
 
             Table touchpadTable = stage.getRoot().findActor("touchpadTable");
-            touchpadTable.setPosition(230, 210, Align.center);
+            touchpadTable.setPosition(230, 300, Align.center);
 
-            attackBtnTable.setPosition(stage.getViewport().getScreenWidth() - 100, stage.getViewport().getScreenHeight() - 100, Align.center);
+            attackBtnTable.setPosition(Gdx.graphics.getWidth() - 140, Gdx.graphics.getHeight() - 120, Align.center);
         }
     }
 }
