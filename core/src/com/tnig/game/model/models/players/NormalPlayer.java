@@ -40,6 +40,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
 
     private Sound winSound;
     private Sound jumpSound;
+    private Sound attackSound;
 
     public Direction getDirection() {
         return playerDirection;
@@ -64,6 +65,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
 
         this.winSound = assetLoader.get(AssetLoader.SOUND_WIN);
         this.jumpSound = assetLoader.get(AssetLoader.SOUND_JUMP);
+        this.attackSound = assetLoader.get(AssetLoader.SOUND_PUNCH);
 
         attackTimeout = 5;
         winTimeout = 2;
@@ -196,6 +198,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                     } else {
                         playerDirection = Direction.LEFT;
                     }
+                    attackSound.play();
                 }
                 break;
         }
