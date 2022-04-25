@@ -42,8 +42,13 @@ the Android Studio IDE(if you don’t have it, just google it and download).
 ### On computer
 1. Clone the repo using:
  ```bash 
-git clone <https://github.com/>
+git clone git@github.com:tanchuanxin/tdt4240_project.git
 ```
+or 
+ ```bash 
+git clone https://github.com/tanchuanxin/tdt4240_project.git
+```
+
 2. Open the project in Android Studio
 3. Run the project with an Android emulator, an Android device connected to your computer, or in DesktopLauncher.
 
