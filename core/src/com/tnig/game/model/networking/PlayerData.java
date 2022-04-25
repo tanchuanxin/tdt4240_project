@@ -6,11 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PlayerData {
-
     private String name;
     private int score;
     private int mapNumber;
-    public static Map<String, Map<String, Integer>> scores = new LinkedHashMap<>();
 
     public PlayerData() {
 

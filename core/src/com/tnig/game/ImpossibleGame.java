@@ -38,6 +38,4 @@ public class ImpossibleGame extends Game {
     public void dispose() {
         super.dispose();
     }
-
-
 }

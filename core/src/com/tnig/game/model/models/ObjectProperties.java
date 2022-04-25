@@ -11,8 +11,6 @@ public class ObjectProperties {
         this.properties = properties;
     }
 
-
-
     /** Returns the object for the given key, casting it to clazz.
      * @param key the key of the object
      * @param clazz the class of the object

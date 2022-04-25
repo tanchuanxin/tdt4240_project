@@ -8,7 +8,6 @@ import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 
 public class SensorFactory {
-
     public static Model createModel(EventManager eventManager, Engine engine, AssetLoader assetLoader,
                                     float x, float y, float width, float height,
                                     ObjectProperties properties, ModelType modelType){

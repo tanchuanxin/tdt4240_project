@@ -1,6 +1,5 @@
 package com.tnig.game.model.models;
 
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.tnig.game.model.models.enums.BodyType;
@@ -12,7 +11,6 @@ import com.tnig.game.model.physics_engine.BodyBuilder;
 import com.tnig.game.model.physics_engine.Engine;
 
 public abstract class AbstractModel implements ContactObject, Model, GameObject {
-
     private final float width, height;
     private final boolean isSensor;
     private final Body body;
@@ -20,7 +18,6 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     private final BodyType bodyType;
     protected final ObjectProperties properties;
     private boolean disposable = false;
-
 
     protected AbstractModel(Engine engine,
                             float x, float y, float width, float height, ObjectProperties properties,
@@ -108,7 +105,6 @@ public abstract class AbstractModel implements ContactObject, Model, GameObject 
     protected void setLinearVelocityY(float velocityY){
         body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, velocityY));
     }
-
 
     protected void applyImpulseToCenter(float forceX, float forceY){
         body.applyLinearImpulse(new Vector2(forceX, forceY), body.getWorldCenter(), true);

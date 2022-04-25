@@ -11,10 +11,8 @@ import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 
 public class DeathSensor extends Sensor {
-
     private static final BodyType bodyType = BodyType.STATIC;
     private final EventManager eventManager;
-
 
     protected DeathSensor(EventManager eventManager, Engine engine, AssetLoader assetLoader,
                           float x, float y, float width, float height,

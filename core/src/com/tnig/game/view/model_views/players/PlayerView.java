@@ -96,8 +96,6 @@ public class PlayerView extends AbstractAnimatedView {
       */
     @Override
     protected void renderModel(SpriteBatch batch, float x, float y, float width, float height, float time) {
-
-
         TextureRegion currentFrame = getCurrentFrame();
 
         calculateSpriteDirection(currentFrame);

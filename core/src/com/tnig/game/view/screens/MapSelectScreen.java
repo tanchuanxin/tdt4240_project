@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapSelectScreen extends AbstractScreen {
-    private int numMaps = 0;
+    private int numMaps;
 
     public MapSelectScreen(final ScreenManager screenManager,
                            OrthographicCamera camera,

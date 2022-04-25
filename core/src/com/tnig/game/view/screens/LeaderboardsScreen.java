@@ -1,29 +1,24 @@
 package com.tnig.game.view.screens;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
-import com.tnig.game.model.models.players.Player;
 import com.tnig.game.model.networking.NetworkService;
 import com.tnig.game.model.networking.PlayerData;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.controller.events.EventName;
 import com.tnig.game.view.ui_components.ButtonFactory;
 
 import java.util.ArrayList;
 
 public class LeaderboardsScreen extends AbstractScreen implements EventListener {
-
-    private int mapNum = 1;
+    private int mapNum;
     private int maxTopPlayersCount = 10; // Number of top scores to show in leaderboard
 
     private final EventManager eventManager;

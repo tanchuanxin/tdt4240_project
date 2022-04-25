@@ -10,16 +10,12 @@ import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.obstacles.FireBall;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.model_views.AbstractAnimatedView;
-import com.tnig.game.view.model_views.players.PlayerView;
 
 public class FireballView extends AbstractAnimatedView {
-
-
     private final Animation<TextureRegion> animation;
     private float stateTimer = 0f;
     private final FireBall fireBall;
     private Direction direction;
-
 
     public FireballView(Model model, AssetLoader assetLoader) {
         super(model);
@@ -44,7 +40,6 @@ public class FireballView extends AbstractAnimatedView {
         calculateSpriteDirection(currentFrame);
 
         batch.draw(currentFrame,x-width/2, y-height/2, width, height);
-
     }
 
     private void calculateSpriteDirection(TextureRegion currentFrame) {
@@ -73,7 +68,6 @@ public class FireballView extends AbstractAnimatedView {
                     currentFrame.flip(false, true);
                     this.direction = direction;
                     break;
-
                 }
         }
     }

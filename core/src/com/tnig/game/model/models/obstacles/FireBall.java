@@ -1,8 +1,5 @@
 package com.tnig.game.model.models.obstacles;
 
-import static com.tnig.game.utilities.Constants.PPM;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.tnig.game.controller.events.game_events.PlayerDead;
 import com.tnig.game.controller.managers.EventManager;
@@ -18,7 +15,6 @@ import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 
 public class FireBall extends AbstractModel {
-
     private static final BodyType bodyType = BodyType.KINEMATIC;
     private static final boolean isSensor = true;
     private static final ObjectShape shape = ObjectShape.CIRCLE;

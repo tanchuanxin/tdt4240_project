@@ -99,12 +99,7 @@ public class AppLoadingScreen extends AbstractScreen {
         if (assetLoader.loadingComplete()) {
             screenManager.setScreen(ScreenName.MAIN_MENU);
         }
-
-
-
-
     }
-
 
     @Override
     public void hide() {
@@ -116,7 +111,6 @@ public class AppLoadingScreen extends AbstractScreen {
     public void dispose() {
         // Unload splash screen assets as we won't use them again
         assetLoader.unload(AssetLoader.IMG_SPLASH_SCREEN_BG);
-
     }
 
     private void initLoadingTexts(){
@@ -136,5 +130,4 @@ public class AppLoadingScreen extends AbstractScreen {
         loadingTexts.add("What is the airspeed velocity of an unladen swallow?");
         loadingTexts.add("To win or not to lose, that is the question.");
     }
-
 }

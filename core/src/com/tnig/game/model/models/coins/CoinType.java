@@ -5,7 +5,7 @@ import com.tnig.game.model.models.enums.ObjectType;
 
 public enum CoinType implements ModelType {
     NORMAL_COIN,
-    MOCK
+    MOCK_COIN
     ;
 
     @Override

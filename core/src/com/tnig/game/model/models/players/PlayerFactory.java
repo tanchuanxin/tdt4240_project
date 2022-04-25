@@ -14,9 +14,9 @@ public class PlayerFactory {
                                     ObjectProperties properties, ModelType modelType){
         PlayerType type = (PlayerType) modelType;
         switch (type){
-            case NORMALPLAYER:
+            case NORMAL_PLAYER:
                 return new NormalPlayer(eventManager, engine, assetLoader, x, y, width, height, properties, type);
-            case MOCK:
+            case MOCK_PLAYER:
                 throw new IllegalArgumentException("Not created model for Mock");
             default:
                 throw new IllegalArgumentException("Not created model for type yet: " + type);

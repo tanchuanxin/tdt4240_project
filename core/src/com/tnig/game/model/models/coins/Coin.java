@@ -42,6 +42,9 @@ public class Coin extends AbstractModel {
         Gdx.app.log("Coin", "Contact with " + object.getType().getObjectType());
     }
 
+    /**
+     * coin can be initialized with different values
+     */
     public int getValue() {
         return value;
     }

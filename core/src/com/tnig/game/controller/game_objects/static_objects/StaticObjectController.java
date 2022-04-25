@@ -10,7 +10,6 @@ import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 
 public class StaticObjectController implements Controller {
-
     private final Model model;
 
     public StaticObjectController(EventManager eventManager, Engine engine, AssetLoader assetLoader,
@@ -27,7 +26,6 @@ public class StaticObjectController implements Controller {
     public Model getModel() {
         return model;
     }
-
 
     @Override
     public void update(float delta) {

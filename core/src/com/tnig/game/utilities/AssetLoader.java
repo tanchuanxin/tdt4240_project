@@ -25,7 +25,6 @@ public class AssetLoader {
     }
 
     // Textures (Assets)
-//    public static final AssetDescriptor<Texture> TEX_PLAYER_SPRITE = new AssetDescriptor<>("images/playerSprite.png", Texture.class);
     public static final AssetDescriptor<TextureAtlas> TEXTURE_ATLAS = new AssetDescriptor<TextureAtlas>("textures/game_textures.pack", TextureAtlas.class);
 
     // Images (Splash screen, etc)
@@ -51,7 +50,6 @@ public class AssetLoader {
     public static final AssetDescriptor<Skin> SKIN_PIXTHULHU_UI = new AssetDescriptor<>("skins/pixthulhu_ui/pixthulhu-ui.json", Skin.class);
     public static final AssetDescriptor<Skin> SKIN_PIXTHULHU_UI_2 = new AssetDescriptor<>("skins/pixthulhu_ui_2/pixthulhu-ui-2.json", Skin.class);
 
-
     // Fonts
     public static final AssetDescriptor<FreeTypeFontGenerator> FONT_SOURCE_SANS_PRO_REGULAR = new AssetDescriptor<>("fonts/source_sans_pro_regular.ttf", FreeTypeFontGenerator.class);
     public static final AssetDescriptor<FreeTypeFontGenerator> FONT_SOURCE_SANS_PRO_REGULAR_ITALIC = new AssetDescriptor<>("fonts/source_sans_pro_regular_italic.ttf", FreeTypeFontGenerator.class);
@@ -61,7 +59,6 @@ public class AssetLoader {
     // Loads all assets
     public void loadAll() {
         // Load textures
-//        manager.load(TEX_PLAYER_SPRITE);
         manager.load(TEXTURE_ATLAS);
 
         // Load music

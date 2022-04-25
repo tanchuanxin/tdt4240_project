@@ -7,8 +7,5 @@ import com.tnig.game.view.model_views.AnimatedView;
  * Interface for the controllers which contains animated views
  */
 public interface AnimatedController extends Controller {
-
-
     AnimatedView getView();
-
 }

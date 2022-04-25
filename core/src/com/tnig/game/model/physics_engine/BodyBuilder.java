@@ -1,7 +1,5 @@
 package com.tnig.game.model.physics_engine;
 
-
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -13,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.tnig.game.model.models.ObjectProperties;
 import com.tnig.game.model.models.enums.BodyType;
 import com.tnig.game.model.models.interfaces.GameObject;
-import com.tnig.game.model.physics_engine.Engine;
 
 /**
  * A template class for creating different types of bodies in the box2D world
@@ -67,11 +64,9 @@ public class BodyBuilder {
         if (properties.get("rotation", Float.class) != null) {
             float rotation = properties.get("rotation", Float.class);
             bodyDef.angle = (float) Math.toRadians(rotation);
-
         }
 
-        //addToBodyDef(bodyDef);
-        //Puts the body in the Box2D world
+        // Puts the body in the Box2D world
         Body body = world.createBody(bodyDef);
 
         // A body is composed of fixtures => defines a fixture to put in the body
@@ -82,7 +77,6 @@ public class BodyBuilder {
         fixtureDef.density = 20;
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 0f;
-        //addToFixtureDef(fixtureDef);
 
         // Sets the model as userdata for the contactlistener
         body.createFixture(fixtureDef).setUserData(object);
@@ -121,6 +115,4 @@ public class BodyBuilder {
         }
         return shape;
     }
-
-
 }

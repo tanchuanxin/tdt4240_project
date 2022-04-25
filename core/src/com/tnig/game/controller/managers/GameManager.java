@@ -23,31 +23,25 @@ import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.model.physics_engine.GameWorld;
 import com.tnig.game.utilities.AssetLoader;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * Contains a list of all the controllers in the game, and contains the logic for updating and
  * removing controllers, while rendering the game.
  */
 public class GameManager implements EventListener {
-
     private final EventManager eventManager;
     private Engine engine;
     private AssetLoader assetLoader;
-    private int playersLeft;
-    private boolean gameOver = false;
-
-    public GameMap getMap() {
-        return map;
-    }
-
     private GameMap map;
     private GameInitializer game;
 
+    // used to control the next screen/game to be initialized
+    private int playersLeft;
+
+    // used to indicate that the game is over
+    private boolean gameOver = false;
 
     public GameManager(EventManager eventManager,
                        AssetLoader assetLoader,
@@ -59,24 +53,22 @@ public class GameManager implements EventListener {
         this.assetLoader = assetLoader;
         this.engine = new GameWorld(viewport);
         this.game = new NormalGame(eventManager, engine, assetLoader, map);
-        Gdx.app.log("=================================", "=================================");
         this.playersLeft = numberOfPlayers;
-        Gdx.app.log("this.playersLeft: ", String.valueOf(this.playersLeft));
-        Gdx.app.log("=================================", "=================================");
 
-
+        // subscribe to events that the gamemanager is watching that effect the whole game state
         eventManager.subscribe(EventName.PLAYER_DEAD, this);
         eventManager.subscribe(EventName.DISPOSE_SPRITE, this);
         eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
     }
 
+    /**
+     * sets up a new game if there are more than 0 players remaining
+     */
     public void newGame(){
         if (playersLeft == 0){
             throw new IllegalStateException("Players left cant be 0");
         }
-
         engine.initNewWorld();
-
         map = new GameMap(map.getMapNumber());
         game = new NormalGame(eventManager, engine, assetLoader, map);
     }
@@ -90,6 +82,7 @@ public class GameManager implements EventListener {
         // While iterating
         engine.update(delta);
 
+        // go through all static controllers to update them
         Iterator<Controller> iterator = game.getControllers().iterator();
         while(iterator.hasNext()){
             Controller controller = iterator.next();
@@ -102,7 +95,7 @@ public class GameManager implements EventListener {
             }
         }
 
-        // Update animated controllers
+        // go through all animated controllers to update them
         Iterator<AnimatedController> iterator2 = game.getAnimatedControllers().iterator();
         while(iterator2.hasNext()){
             AnimatedController controller = iterator2.next();
@@ -115,6 +108,7 @@ public class GameManager implements EventListener {
             }
         }
 
+        // after the player wins, we will trigger a death state to advance the game
         triggerDeathAfterWin();
     }
 
@@ -122,6 +116,9 @@ public class GameManager implements EventListener {
         return new GameState(getScore(), map.getMapNumber());
     }
 
+    /**
+     * returns the players' score
+     */
     public int getScore() {
         Model model = game.getPlayer().getModel();
         Player player = (Player) model;
@@ -129,6 +126,9 @@ public class GameManager implements EventListener {
         return score;
     }
 
+    /**
+     * timeout set on the attack event, to make the game balanced
+     */
     public float getAttackTimeout() {
         Model model = game.getPlayer().getModel();
         Player player = (Player) model;
@@ -139,10 +139,12 @@ public class GameManager implements EventListener {
     public void receiveEvent(Event event) {
         switch (event.name){
             case PLAYER_AT_GOAL:
+                // stop movement of player once at the goal
                 eventManager.pushEvent(new StopPlayer(Input.Keys.RIGHT));
                 eventManager.pushEvent(new StopPlayer(Input.Keys.LEFT));
                 break;
             case PLAYER_DEAD:
+                // advance the game by removing a player and pushing the right event based on players remaining
                 playersLeft--;
                 if (playersLeft > 0){
                     eventManager.pushEvent(new NewGameEvent(createGameState()));
@@ -155,9 +157,21 @@ public class GameManager implements EventListener {
                 }
                 break;
             case DISPOSE_SPRITE:
+                // remove graphics from the game, based on relevant collision events
                 Model model = event.getData("object", Model.class);
                 map.disposeGraphicOnTile(model.getX(), model.getY());
                 break;
+        }
+    }
+
+    /**
+     * triggers death to advance game
+     */
+    private void triggerDeathAfterWin() {
+        Model model = game.getPlayer().getModel();
+        Player player = (Player) model;
+        if (player.getWinTimeout() <= 0 && player.getState() != PlayerState.DIE) {
+            eventManager.pushEvent(new PlayerDead());
         }
     }
 
@@ -179,15 +193,9 @@ public class GameManager implements EventListener {
 
     public Engine getEngine() { return engine; }
 
-    public List<Controller> getControllers() {
-        return game.getControllers();
+    public GameMap getMap() {
+        return map;
     }
 
-    private void triggerDeathAfterWin() {
-        Model model = game.getPlayer().getModel();
-        Player player = (Player) model;
-        if (player.getWinTimeout() <= 0 && player.getState() != PlayerState.DIE) {
-            eventManager.pushEvent(new PlayerDead());
-        }
-    }
+
 }

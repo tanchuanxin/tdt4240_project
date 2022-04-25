@@ -50,7 +50,11 @@ public class NormalGame implements GameInitializer {
 
     private void initGame(GameMap map) {
         Gdx.app.log("GameManager", "init Game");
+
+        // obtain the map
         TiledMap tiledMap = map.getTiledMap();
+
+        // initialize everything else needed for the game
 
         // Obstacles
         initStaticControllers(tiledMap, Constants.spikeLayer, ObstacleType.SPIKE);
@@ -64,10 +68,7 @@ public class NormalGame implements GameInitializer {
         initStaticControllers(tiledMap, Constants.deathSensorLayer, SensorType.DEATH_SENSOR);
         initStaticControllers(tiledMap, Constants.finishLineLayer, SensorType.FINISH_LINE);
         // Player
-        initAnimatedControllers(tiledMap, Constants.playerLayer, PlayerType.NORMALPLAYER);
-
-
-
+        initAnimatedControllers(tiledMap, Constants.playerLayer, PlayerType.NORMAL_PLAYER);
     }
 
     @Override
@@ -84,14 +85,17 @@ public class NormalGame implements GameInitializer {
         return player;
     }
 
+    // controllers for static objects
     private void initStaticControllers(TiledMap map, String layer, ModelType modelType){
         if (!(map.getLayers().get(layer) == null)){
             for (RectangleMapObject object : map.getLayers()
                     .get(layer).getObjects().getByType(RectangleMapObject.class)) {
-                Rectangle rect = object.getRectangle();
 
+                // obtain the rectangle representing the object location
+                Rectangle rect = object.getRectangle();
                 ObjectProperties properties = new ObjectProperties(object.getProperties());
 
+                // initialize the controller for the object
                 Controller controller = new StaticObjectController(
                         eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
                         rect.width / PPM, rect.height / PPM, properties, modelType);
@@ -99,34 +103,32 @@ public class NormalGame implements GameInitializer {
                 controllers.add(controller);
             }
         }
-
     }
 
+    // controllers for animated objects
     private void initAnimatedControllers(TiledMap map, String layer, ModelType modelType){
-
         if (!(map.getLayers().get(layer) == null)){
             // Initialize map animated objects
             for (RectangleMapObject object : map.getLayers()
                     .get(layer).getObjects().getByType(RectangleMapObject.class)) {
 
-                AnimatedController animatedController;
+                // obtain the rectangle representing the object location
                 Rectangle rect = object.getRectangle();
                 ObjectProperties properties = new ObjectProperties(object.getProperties());
 
-                animatedController = new AnimatedObjectController(
+                // initialize the controller for the object
+                AnimatedController animatedController = new AnimatedObjectController(
                         eventManager, engine, assetLoader, (rect.x + (rect.width / 2)) / PPM, (rect.y + (rect.height / 2)) / PPM,
                         rect.width / PPM, rect.height / PPM, properties, modelType);
 
                 animatedControllers.add(animatedController);
 
+                // special case for player
                 if (modelType.getObjectType().equals(ObjectType.PLAYER)){
                     player = animatedController;
                 }
-
             }
         }
-
-
     }
 
 

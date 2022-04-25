@@ -9,7 +9,6 @@ import java.util.List;
  * Initializes the game and returns a GameManager for that game
  */
 public interface GameInitializer {
-
     List<AnimatedController> getAnimatedControllers();
     List<Controller> getControllers();
     AnimatedController getPlayer();

@@ -16,8 +16,8 @@ public class CoinFactory {
         switch (type){
             case NORMAL_COIN:
                 return new Coin(eventManager, engine, assetLoader, x, y, width, height, properties, type, Constants.normalCoinValue);
-            case MOCK:
-                throw new IllegalArgumentException("Not created model for Mock");
+            case MOCK_COIN:
+                throw new IllegalArgumentException("Not created model for mock coin");
             default:
                 throw new IllegalArgumentException("Not created model for type yet: " + type);
         }

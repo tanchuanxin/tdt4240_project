@@ -7,17 +7,13 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.tnig.game.model.models.interfaces.ContactObject;
 
 public class WorldContactListener implements ContactListener {
-
-
     @Override
     public void beginContact(Contact contact) {
-
         ContactObject objectA = (ContactObject) contact.getFixtureA().getUserData();
         ContactObject objectB = (ContactObject) contact.getFixtureB().getUserData();
 
         objectA.handleBeginContact(objectB);
         objectB.handleBeginContact(objectA);
-
     }
 
     @Override
@@ -34,7 +30,4 @@ public class WorldContactListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
-
-
-
 }

@@ -2,17 +2,16 @@ package com.tnig.game.controller;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.tnig.game.controller.events.game_events.Attack;
 import com.tnig.game.controller.events.game_events.Jump;
 import com.tnig.game.controller.events.game_events.MoveLeft;
 import com.tnig.game.controller.events.game_events.MoveRight;
 import com.tnig.game.controller.events.game_events.StopPlayer;
-import com.tnig.game.controller.events.screen_events.PauseEvent;
-import com.tnig.game.controller.events.screen_events.ResumeEvent;
 import com.tnig.game.controller.managers.EventManager;
 
+/**
+ * keyboard input controller, which fires events based on keys received
+ */
 public class InputController implements InputProcessor {
-
     private final EventManager eventManager;
 
     public InputController(EventManager eventManager) {
@@ -39,15 +38,6 @@ public class InputController implements InputProcessor {
             case Input.Keys.S:
                 eventManager.pushEvent(new StopPlayer(keycode));
                 return true;
-//            case Input.Keys.P:
-//                eventManager.pushEvent(new PauseEvent());
-//                break;
-//            case Input.Keys.R:
-//                eventManager.pushEvent(new ResumeEvent());
-//                break;
-//            case Input.Keys.Z:
-//                eventManager.pushEvent(new Attack());
-//                break;
         }
         return false;
     }

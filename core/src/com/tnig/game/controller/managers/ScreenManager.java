@@ -3,7 +3,6 @@ package com.tnig.game.controller.managers;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.tnig.game.controller.game_initializers.NormalGame;
 import com.tnig.game.model.GameState;
 import com.tnig.game.model.networking.NetworkService;
 import com.tnig.game.utilities.AssetLoader;
@@ -40,7 +39,6 @@ public class ScreenManager implements EventListener {
         this.networkService = networkService;
 
         // Subscribe to events
-
         eventManager.subscribe(EventName.MAP_SELECTED, this);
         eventManager.subscribe(EventName.VIEW_LEADERBOARDS, this);
         eventManager.subscribe(EventName.INIT_GAME, this);
@@ -86,7 +84,9 @@ public class ScreenManager implements EventListener {
         }
     }
 
-    // Switch screens
+    /**
+     * switch screens based on the screen name
+     */
     public void setScreen(ScreenName screenName) {
         switch (screenName) {
             case LOADING:
@@ -99,8 +99,6 @@ public class ScreenManager implements EventListener {
                 if (mapNumber == -1 || numberOfPlayers == -1){
                     throw new IllegalStateException("Data not updated");
                 }
-                Gdx.app.log("ScreenManager mapNum: ", String.valueOf(mapNumber));
-                Gdx.app.log("ScreenManager numOfPlayers: ", String.valueOf(numberOfPlayers));
                 game.setScreen(new GameScreen(game, this, eventManager, camera, assetLoader, mapNumber, numberOfPlayers));
                 break;
             case MAP_SELECT:
@@ -117,6 +115,9 @@ public class ScreenManager implements EventListener {
         }
     }
 
+    /**
+     * exit the whole game
+     */
     private void quitGame() {
         assetLoader.dispose();
         Gdx.app.exit();

@@ -1,10 +1,6 @@
 package com.tnig.game.model.physics_engine;
 
-import static com.tnig.game.utilities.Constants.PPM;
-
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tnig.game.model.models.interfaces.Model;
@@ -21,11 +17,9 @@ public class GameWorld implements Engine{
         // Initialize Box2D World
         initNewWorld();
 
-        this.viewport = viewport;
-
         // Set up game camera and viewport
+        this.viewport = viewport;
     }
-
 
     @Override
     public void update(float delta) {
@@ -41,7 +35,6 @@ public class GameWorld implements Engine{
     @Override
     public void dispose() {
         world.dispose();
-
     }
 
     @Override

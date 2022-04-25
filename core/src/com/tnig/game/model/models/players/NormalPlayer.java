@@ -17,35 +17,28 @@ import com.tnig.game.model.models.interfaces.ContactObject;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.models.enums.ObjectShape;
 import com.tnig.game.model.models.coins.Coin;
-import com.tnig.game.model.models.obstacles.ObstacleType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.utilities.Constants;
 
 
 public class NormalPlayer extends AbstractModel implements EventListener, Player {
+    private final EventManager eventManager;
 
     private static final BodyType bodyType = BodyType.DYNAMIC;
     private static final boolean isSensor = false;
     private static final ObjectShape shape = ObjectShape.BOX;
-    private int score = 100000;
-
-
-    private final EventManager eventManager;
-    private float speed = 2.2f;
-    private float jumpingForce = 3.7f;
 
     private PlayerState playerState;
-    private Direction playerDirection = Direction.RIGHT;
+    private Direction playerDirection;
 
     private Sound winSound;
     private Sound jumpSound;
     private Sound attackSound;
 
-    public Direction getDirection() {
-        return playerDirection;
-    }
-
+    private int score = 100000;
+    private float speed = 2.2f;
+    private float jumpingForce = 3.7f;
     private float attackTimeout;
     private float winTimeout;
 
@@ -55,7 +48,7 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         super(engine, x, y, width, height, properties, bodyType, isSensor, type);
         this.eventManager = eventManager;
 
-        setPlayerState(PlayerState.RUNNING);
+        // subscribe to player relevant events
         eventManager.subscribe(EventName.JUMP, this);
         eventManager.subscribe(EventName.MOVE_LEFT, this);
         eventManager.subscribe(EventName.MOVE_RIGHT, this);
@@ -63,10 +56,16 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         eventManager.subscribe(EventName.STOP_PLAYER, this);
         eventManager.subscribe(EventName.PLAYER_AT_GOAL, this);
 
+        // set animation related variables
+        setPlayerState(PlayerState.RUNNING);
+        playerDirection = Direction.RIGHT;
+
+        // load in sounds
         this.winSound = assetLoader.get(AssetLoader.SOUND_WIN);
         this.jumpSound = assetLoader.get(AssetLoader.SOUND_JUMP);
         this.attackSound = assetLoader.get(AssetLoader.SOUND_PUNCH);
 
+        // time outs for the player
         attackTimeout = 5;
         winTimeout = 2;
     }
@@ -85,20 +84,18 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
                     setPlayerState(PlayerState.RUNNING);
                 }
                 break;
-
-
         }
-    }
-
-    private void attackTimeoutReset() {
-        attackTimeout = 5;
     }
 
     @Override
     public void update(float delta) {
+        // reduce the score with passing time
         score -= 1157 / Constants.FPS;
+
+        // reduce the attack timer to allow for attacks
         attackTimeout -= delta;
 
+        // reduce the win timer to advance game state
         if (playerState == PlayerState.WIN) {
             winTimeout -= delta;
         }
@@ -215,6 +212,14 @@ public class NormalPlayer extends AbstractModel implements EventListener, Player
         if (playerState != PlayerState.WIN && playerState != PlayerState.DIE) {
             playerState = newState;
         }
+    }
+
+    public Direction getDirection() {
+        return playerDirection;
+    }
+
+    private void attackTimeoutReset() {
+        attackTimeout = 5;
     }
 
 }

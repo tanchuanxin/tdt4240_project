@@ -1,18 +1,14 @@
 package com.tnig.game.view.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.tnig.game.controller.events.Event;
-import com.tnig.game.controller.events.game_events.UploadScore;
 import com.tnig.game.controller.events.screen_events.LeaderboardSelectedEvent;
 import com.tnig.game.controller.managers.EventManager;
 import com.tnig.game.controller.managers.ScreenManager;
@@ -23,11 +19,9 @@ import com.tnig.game.utilities.AssetLoader;
 import com.tnig.game.view.ui_components.ButtonFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class GameOverScreen extends AbstractScreen{
-
     private final List<GameState> gameStates;
     private final NetworkService networkService;
     private final Skin skin;
@@ -49,6 +43,7 @@ public class GameOverScreen extends AbstractScreen{
         table.pad(30f);
         table.row().padBottom(30f);
 
+        // add the score elements
         Label titleLabel = new Label("Submit scores", skin, "title");
         titleLabel.setAlignment(Align.center);
         table.add(titleLabel).colspan(gameStates.size()).fillX().align(Align.center);

@@ -7,7 +7,7 @@ public enum ObstacleType implements ModelType {
     SPIKE,
     FIREBALL,
     FIREBALL_ALTERNATING,
-    MOCK;
+    MOCK_OBSTACLE;
 
     @Override
     public ObjectType getObjectType() {

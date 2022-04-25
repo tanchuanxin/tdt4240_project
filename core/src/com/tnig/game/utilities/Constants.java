@@ -6,11 +6,7 @@ public class Constants {
     public static final float VIEWPORT_WIDTH = 400f;
     public static final float VIEWPORT_HEIGHT = 208f;
 
-    public static final float WORLD_WIDTH = 320f;
-    public static final float WORLD_HEIGHT = 180f;
-
     public static final String MAP_ASSET_LOCATION = "map/";
-
 
     // Layers on the map
     public static final String blockLayer = "blocks";
@@ -23,9 +19,6 @@ public class Constants {
     public static final String finishLineLayer = "finishLine";
     public static final String graphicsLayer = "graphics";
 
-
     // Coin values
     public static final int normalCoinValue = 9371;
-
-
 }

@@ -11,10 +11,10 @@ public class PlayerViewFactory {
 
         PlayerType type = (PlayerType) model.getType();
         switch (type){
-            case NORMALPLAYER:
+            case NORMAL_PLAYER:
                 return new PlayerView(model, assetLoader);
-            case MOCK:
-                throw new IllegalArgumentException("Not created view for Mock");
+            case MOCK_PLAYER:
+                throw new IllegalArgumentException("Not created view for MOCK_OBSTACLE");
             default:
                 throw new IllegalArgumentException("Not created view for type yet: " + type);
         }

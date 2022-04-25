@@ -1,6 +1,5 @@
 package com.tnig.game.model.networking;
 
-
 import java.util.ArrayList;
 
 public interface NetworkService {
@@ -8,7 +7,7 @@ public interface NetworkService {
 
     void updateHighscore();
 
-    public ArrayList<Integer> getLevels();
+    ArrayList<Integer> getLevels();
 
-    public ArrayList<PlayerData> getHighScores(Integer level);
+    ArrayList<PlayerData> getHighScores(Integer level);
 }

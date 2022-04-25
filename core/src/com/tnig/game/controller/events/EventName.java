@@ -10,7 +10,6 @@ public enum EventName {
     RESUME,
 
     VIEW_LEADERBOARDS,
-    SETTINGS_UPDATED,
 
     MOVE_LEFT,
     MOVE_RIGHT,

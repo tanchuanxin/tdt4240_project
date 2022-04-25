@@ -1,6 +1,5 @@
 package com.tnig.game.controller.managers;
 
-import com.badlogic.gdx.Gdx;
 import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventListener;
 import com.tnig.game.controller.events.EventName;

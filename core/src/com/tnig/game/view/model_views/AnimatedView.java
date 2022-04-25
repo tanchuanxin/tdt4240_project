@@ -1,6 +1,5 @@
 package com.tnig.game.view.model_views;
 
-
 /**
  * Interface for animated views, providing a reference for drawing animations to the screen. Extends IView.
  */

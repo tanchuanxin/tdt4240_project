@@ -7,8 +7,10 @@ import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
 
+/**
+ * Factory to create obstacles generically
+ */
 public class ObstacleFactory {
-
     public static Model createModel(EventManager eventManager, Engine engine, AssetLoader assetLoader,
                                     float x, float y, float width, float height,
                                     ObjectProperties properties, ModelType modelType){

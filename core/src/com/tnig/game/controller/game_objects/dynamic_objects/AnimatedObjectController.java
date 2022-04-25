@@ -11,7 +11,6 @@ import com.tnig.game.view.model_views.AnimatedView;
 import com.tnig.game.view.model_views.ViewFactory;
 
 public class AnimatedObjectController implements AnimatedController {
-
     private final Model model;
     private final AnimatedView view;
 
@@ -32,7 +31,6 @@ public class AnimatedObjectController implements AnimatedController {
     public Model getModel() {
         return model;
     }
-
 
     @Override
     public void update(float delta) {

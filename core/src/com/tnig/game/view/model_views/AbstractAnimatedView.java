@@ -2,11 +2,8 @@ package com.tnig.game.view.model_views;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tnig.game.model.models.interfaces.Model;
-import com.tnig.game.utilities.Constants;
 
 public abstract class AbstractAnimatedView implements AnimatedView {
-
-    protected final float FRAME_DURATION = 1f / Constants.FPS;
     private float time = 0;
     private final Model model;
 
@@ -30,7 +27,5 @@ public abstract class AbstractAnimatedView implements AnimatedView {
         float y = model.getY();
 
         renderModel(batch, x, y, width, height, time);
-
-
     }
 }

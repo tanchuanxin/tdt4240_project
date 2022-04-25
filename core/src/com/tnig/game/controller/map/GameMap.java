@@ -2,7 +2,6 @@ package com.tnig.game.controller.map;
 
 import static com.tnig.game.utilities.Constants.PPM;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -11,7 +10,6 @@ import com.tnig.game.utilities.Constants;
 
 public class GameMap {
 
-    private final int mapWidthInPixels, mapHeightInPixels;
     private final int tileWidth, tileHeight;
     private final int mapWidthInTiles, mapHeightInTiles;
     private final float mapWidthInUnits, mapHeightInUnits;
@@ -25,35 +23,18 @@ public class GameMap {
 
         tiledMap = new TmxMapLoader().load(mapLocation);
 
+        // these map properties are needed for correct screen size settings
         MapProperties properties = tiledMap.getProperties();
         tileWidth         = properties.get("tilewidth", Integer.class);
         tileHeight        = properties.get("tileheight", Integer.class);
         mapWidthInTiles   = properties.get("width", Integer.class);
         mapHeightInTiles  = properties.get("height", Integer.class);
-        mapWidthInPixels  = mapWidthInTiles  * tileWidth;
-        mapHeightInPixels = mapHeightInTiles * tileHeight;
-        mapWidthInUnits = mapWidthInPixels / PPM;
-        mapHeightInUnits = mapHeightInPixels / PPM;
-
-//        Gdx.app.log("tileWidth: ", String.valueOf(tileWidth));
-//        Gdx.app.log("mapWidthInTiles: ", String.valueOf(mapWidthInTiles));
-//        Gdx.app.log("mapWidthInPixels: ", String.valueOf(mapWidthInPixels));
-//        Gdx.app.log("tileHeight: ", String.valueOf(tileHeight));
-//        Gdx.app.log("mapHeightInTiles: ", String.valueOf(mapHeightInTiles));
-//        Gdx.app.log("mapHeightInPixels: ", String.valueOf(mapHeightInPixels));
-//        Gdx.app.log("ppm: ", String.valueOf(Constants.PPM));
+        mapWidthInUnits = mapWidthInTiles  * tileWidth / PPM;
+        mapHeightInUnits = mapHeightInTiles * tileHeight / PPM;
     }
 
     public int getMapNumber() {
         return mapNumber;
-    }
-
-    public int getMapHeightInPixels() {
-        return mapHeightInPixels;
-    }
-
-    public int getMapWidthInPixels() {
-        return mapWidthInPixels;
     }
 
     public float getMapWidthInUnits(){
@@ -91,7 +72,9 @@ public class GameMap {
         }
     }
 
-
+    /**
+     * used to locate the map file base on map number
+     */
     private String getMapLocation(int mapNumber){
         return(Constants.MAP_ASSET_LOCATION + "map" + String.valueOf(mapNumber) + ".tmx");
 

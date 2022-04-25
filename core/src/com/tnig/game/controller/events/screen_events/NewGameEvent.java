@@ -4,12 +4,9 @@ import com.tnig.game.controller.events.Event;
 import com.tnig.game.controller.events.EventName;
 import com.tnig.game.model.GameState;
 
-import java.util.HashMap;
-
 public class NewGameEvent extends Event {
     public NewGameEvent(GameState gameState) {
         name = EventName.NEW_GAME;
         data.put("gamestate", gameState);
-
     }
 }
