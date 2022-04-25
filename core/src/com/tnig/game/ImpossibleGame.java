@@ -1,6 +1,7 @@
 package com.tnig.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tnig.game.controller.managers.ScreenManager;
 import com.tnig.game.model.networking.NetworkService;
@@ -20,11 +21,15 @@ public class ImpossibleGame extends Game {
 
     @Override
     public void create() {
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+
         // Initialize screen manager and set it to loading screen while we load assets
         camera.setToOrtho(false);
         ScreenManager screenManager = new ScreenManager(this, camera, assetLoader, networkService);
 
+        // Firebase, for high scores and leaderboards
         networkService.updateHighscore();
+
         // Fire off event to load assets and display loading screen
         screenManager.setScreen(ScreenName.LOADING);
     }

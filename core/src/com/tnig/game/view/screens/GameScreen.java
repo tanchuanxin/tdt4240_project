@@ -1,6 +1,8 @@
 package com.tnig.game.view.screens;
 
 import static com.tnig.game.utilities.Constants.PPM;
+import static com.tnig.game.utilities.Constants.VIEWPORT_HEIGHT;
+import static com.tnig.game.utilities.Constants.VIEWPORT_WIDTH;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
@@ -25,7 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.tnig.game.controller.InputController;
 import com.tnig.game.controller.events.Event;
@@ -52,7 +54,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private final SpriteBatch batch;
     private final GameManager gameManager;
     private OrthogonalTiledMapRenderer mapRenderer;
-    private final FillViewport viewport;
+    private final OrthographicCamera cam;
+    private final FitViewport viewport;
     private final Box2DDebugRenderer b2dr;
     private GameMap map;
     private Stage stage;
@@ -86,15 +89,18 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.playerNum = 0;
 
         this.map = map;
-        this.stage = new Stage();
+
         this.inputMultiplexer = new InputMultiplexer();
 
         // Create viewport
-        this.viewport = new FillViewport(map.getMapWidthInUnits(), map.getMapHeightInUnits());
-        this.viewport.apply(true);
+        this.cam = new OrthographicCamera();
+        this.viewport = new FitViewport(VIEWPORT_WIDTH/PPM, VIEWPORT_HEIGHT/PPM, cam);
 
         this.mapRenderer = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / PPM);
-        this.mapRenderer.setView((OrthographicCamera) viewport.getCamera());
+        //        this.mapRenderer.setView((OrthographicCamera) viewport.getCamera());
+
+        this.cam.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
+
 
         this.gameManager = new GameManager(eventManager, assetLoader, map, viewport, numberOfPlayers);
 
@@ -104,11 +110,14 @@ public class GameScreen extends AbstractScreen implements EventListener {
         eventManager.subscribe(EventName.PAUSE, this);
 
         // Get input processors
+        this.stage = new Stage();
+        stage.setViewport(viewport);
         this.inputMultiplexer.addProcessor(new InputController(eventManager));
         this.inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(this.inputMultiplexer);
 
         // Create GUI for game
+
         ButtonFactory buttonFactory = new ButtonFactory(eventManager, screenManager, assetLoader);
 
         createGUI(stage, buttonFactory, eventManager);
@@ -180,9 +189,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     private void update(float delta) {
         // Update camera
-        viewport.getCamera().update(); // Update our camera every frame
-//        viewport.getCamera().position.set(gameManager.getPlayerPosX(), gameManager.getPlayerPosY(), 0);
-        viewport.getCamera().position.set(gameManager.getPlayerPosX(), viewport.getWorldHeight() / 2, 0);
+//        viewport.getCamera().update(); // Update our camera every frame
+//        viewport.getCamera().position.set(gameManager.getPlayerPosX(), viewport.getWorldHeight() / 2, 0);
 
 //        Gdx.app.log("gameManager.getPlayerPosX(): ", String.valueOf(gameManager.getPlayerPosX()));
 //        Gdx.app.log("gameManager.getPlayerPosY(): ", String.valueOf(gameManager.getPlayerPosY()));
@@ -190,12 +198,15 @@ public class GameScreen extends AbstractScreen implements EventListener {
         // Update game
         gameManager.update(delta);
 
+
+        cam.position.x = gameManager.getPlayerPosX();
+        cam.position.y = gameManager.getPlayerPosY();
         checkCameraBounds(); // Make sure camera doesn't leave the screen
-        viewport.getCamera().update();
+        cam.update();
 
         // Make map and spritebatch only draw what the camera can see
-        mapRenderer.setView((OrthographicCamera) viewport.getCamera());
-        batch.setProjectionMatrix(viewport.getCamera().combined);
+        mapRenderer.setView(cam);
+        batch.setProjectionMatrix(cam.combined);
 
         // update score label
         Label scoreLabel = stage.getRoot().findActor("scoreLabel");
@@ -218,27 +229,31 @@ public class GameScreen extends AbstractScreen implements EventListener {
     @Override
     public void render(float delta) {
         Gdx.input.setInputProcessor(inputMultiplexer);
-        viewport.apply(true);
 
         stage.act(delta);
 
         if (!paused) {
+            update(delta);
+
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
             Gdx.graphics.requestRendering();
 
-            update(delta);
-
             // Render game
             mapRenderer.render();
+            b2dr.render(gameManager.getEngine().getWorld(), cam.combined);
+
+
+            batch.setProjectionMatrix(cam.combined);
             batch.begin();
             renderAnimatedViews();
             batch.end();
-            b2dr.render(gameManager.getEngine().getWorld(), viewport.getCamera().combined);
         }
 
-        stage.getViewport().apply();
+
+//        stage.getViewport().apply();
+//        batch.setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
 
         if (gameOver) {
@@ -305,46 +320,52 @@ public class GameScreen extends AbstractScreen implements EventListener {
         float mapBtmBound = 0;
         float mapTopBound = this.map.getMapHeightInUnits();
 
-//        Gdx.app.log("mapLeftBound: ", String.valueOf(mapLeftBound));
-//        Gdx.app.log("mapRightBound: ", String.valueOf(mapRightBound));
-//        Gdx.app.log("mapBtmBound: ", String.valueOf(mapBtmBound));
-//        Gdx.app.log("mapTopBound: ", String.valueOf(mapTopBound));
-
-        OrthographicCamera cam = (OrthographicCamera) viewport.getCamera();
-
-//        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
-
-        // Check camera bounds
-//        float cameraHalfWidth = viewport.getScreenWidth() / PPM / map.getTileWidth() ;
-//        float cameraHalfHeight = viewport.getScreenHeight() / PPM / map.getTileHeight();
-        float cameraHalfWidth = cam.viewportWidth / PPM * .5f;
-        float cameraHalfHeight = cam.viewportHeight / PPM * .5f;
-//        Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
-//        Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
-
+        float cameraHalfWidth = cam.viewportWidth * .5f;
+        float cameraHalfHeight = cam.viewportHeight * .5f;
 
         float cameraLeft = cam.position.x - cameraHalfWidth;
         float cameraRight = cam.position.x + cameraHalfWidth;
         float cameraBtm = cam.position.y - cameraHalfHeight;
         float cameraTop = cam.position.y + cameraHalfHeight;
-//        Gdx.app.log("cam.viewportWidth: ", String.valueOf(cam.viewportWidth));
-//        Gdx.app.log("cam.viewportHeight: ", String.valueOf(cam.viewportHeight));
-//        Gdx.app.log("viewport.getScreenWidth(): ", String.valueOf(viewport.getScreenWidth()));
-//        Gdx.app.log("viewport.getScreenHeight(): ", String.valueOf(viewport.getScreenHeight()));
-//
-//        Gdx.app.log("cameraLeft: ", String.valueOf(cameraLeft));
-//        Gdx.app.log("cameraRight: ", String.valueOf(cameraRight));
-//        Gdx.app.log("cameraBtm: ", String.valueOf(cameraBtm));
-//        Gdx.app.log("cameraTop: ", String.valueOf(cameraTop));
-//
-//        Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
 
+        Gdx.app.log("Camera position: ", String.valueOf(cam.position));
+
+        Gdx.app.log("mapLeftBound: ", String.valueOf(mapLeftBound));
+        Gdx.app.log("mapRightBound: ", String.valueOf(mapRightBound));
+        Gdx.app.log("mapBtmBound: ", String.valueOf(mapBtmBound));
+        Gdx.app.log("mapTopBound: ", String.valueOf(mapTopBound));
+
+        Gdx.app.log("cameraHalfWidth: ", String.valueOf(cameraHalfWidth));
+        Gdx.app.log("cameraHalfHeight: ", String.valueOf(cameraHalfHeight));
+
+        Gdx.app.log("cameraLeft: ", String.valueOf(cameraLeft));
+        Gdx.app.log("cameraRight: ", String.valueOf(cameraRight));
+        Gdx.app.log("cameraBtm: ", String.valueOf(cameraBtm));
+        Gdx.app.log("cameraTop: ", String.valueOf(cameraTop));
+
+        Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
+        Gdx.app.log("Gdx.graphics.getHeight(): ", String.valueOf(Gdx.graphics.getHeight()));
 
         // Check bounds on left right
-        if (cameraLeft <= mapLeftBound) {
-            cam.position.x = mapLeftBound + cameraHalfWidth;
-        } else if (cameraRight >= mapRightBound) {
-            cam.position.x = mapRightBound - cameraHalfWidth;
+        if (VIEWPORT_WIDTH < cam.viewportWidth) {
+            cam.position.x = mapRightBound/2;
+        } else {
+            if (cameraLeft <= mapLeftBound) {
+                cam.position.x = mapLeftBound + cameraHalfWidth;
+            } else if (cameraRight >= mapRightBound) {
+                cam.position.x = mapRightBound - cameraHalfWidth;
+            }
+        }
+
+        // Check bounds on btm top
+        if (VIEWPORT_HEIGHT < cam.viewportHeight) {
+            cam.position.y = mapTopBound/2;
+        } else {
+            if (cameraBtm <= mapBtmBound) {
+                cam.position.y = mapBtmBound + cameraHalfHeight;
+            } else if (cameraTop >= mapTopBound) {
+                cam.position.y = mapTopBound - cameraHalfHeight;
+            }
         }
 
 
@@ -376,7 +397,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 //            cam.position.y = mapTopBound - cam.viewportHeight /2 ;
 //        }
 //
-//        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
+        Gdx.app.log("Camera position fixed: ", String.valueOf(cam.position));
     }
 
     private void createGUI(Stage stage, ButtonFactory buttonFactory, final EventManager eventManager) {
@@ -437,6 +458,13 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         attackBtnTable.setName("attackBtnTable");
         stage.addActor(attackBtnTable);
+
+        Gdx.app.log("stage.getCamera().viewportWidth: ", String.valueOf(stage.getCamera().viewportWidth));
+        Gdx.app.log("stage.getViewport().getScreenWidth(): ", String.valueOf(stage.getViewport().getScreenWidth()));
+        Gdx.app.log("stage.getWidth(): ", String.valueOf(stage.getWidth()));
+        Gdx.app.log("stage.getViewport().getWorldWidth(): ", String.valueOf(stage.getViewport().getWorldWidth()));
+        // Gdx.app.log("Gdx.graphics.getWidth(): ", String.valueOf(Gdx.graphics.getWidth()));
+
 
         Label scoreLabelText = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabelText.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 35, Align.center);

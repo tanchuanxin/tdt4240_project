@@ -188,12 +188,6 @@ public class GameManager implements EventListener {
         Player player = (Player) model;
         if (player.getWinTimeout() <= 0 && player.getState() != PlayerState.DIE) {
             eventManager.pushEvent(new PlayerDead());
-//            if (playersLeft > 0){
-//                eventManager.pushEvent(new NewGameEvent(createGameState()));
-//            }
-//            else {
-//                eventManager.pushEvent(new GameOverEvent(createGameState()));
-//            }
         }
     }
 }
