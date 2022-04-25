@@ -66,9 +66,13 @@ click the map you wish to play.
 
 ### Controls on Desktop
 UP - Jump/Walljump
+
 LEFT - Move left
+
 RIGHT - Move Right
+
 DOWN - Stomp if in the air
+
 SPACE - Jump/Walljump
 
 
