@@ -17,7 +17,7 @@ in the top right hand corner, shoving the active player in a random direction in
 order to try to stop him from getting a good score.
 
 
-![](https://im2.ezgif.com/tmp/ezgif-2-829d8e13c3.gif)
+
 ![](https://i.imgur.com/wskp7Si.mp4)
 
 
