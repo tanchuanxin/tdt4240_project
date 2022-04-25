@@ -8,10 +8,10 @@ import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.players.Player;
 import com.tnig.game.model.models.players.PlayerState;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.model_views.AbstractAnimatedView;
+import com.tnig.game.view.model_views.AbstractView;
 
 
-public class PlayerView extends AbstractAnimatedView {
+public class PlayerView extends AbstractView {
     private final Player player;
     private final TextureRegion playerRunning;
     private final Animation<TextureRegion> playerJump;

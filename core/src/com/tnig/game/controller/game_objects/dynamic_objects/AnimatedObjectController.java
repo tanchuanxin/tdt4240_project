@@ -7,12 +7,12 @@ import com.tnig.game.model.models.ModelFactory;
 import com.tnig.game.model.models.interfaces.ModelType;
 import com.tnig.game.model.physics_engine.Engine;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.model_views.AnimatedView;
+import com.tnig.game.view.model_views.View;
 import com.tnig.game.view.model_views.ViewFactory;
 
 public class AnimatedObjectController implements AnimatedController {
     private final Model model;
-    private final AnimatedView view;
+    private final View view;
 
     public AnimatedObjectController(EventManager eventManager,
                                     Engine engine,
@@ -39,7 +39,7 @@ public class AnimatedObjectController implements AnimatedController {
     }
 
     @Override
-    public AnimatedView getView() {
+    public View getView() {
         return view;
     }
 }

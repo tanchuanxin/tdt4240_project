@@ -9,9 +9,9 @@ import com.tnig.game.model.models.enums.Direction;
 import com.tnig.game.model.models.interfaces.Model;
 import com.tnig.game.model.models.obstacles.FireBall;
 import com.tnig.game.utilities.AssetLoader;
-import com.tnig.game.view.model_views.AbstractAnimatedView;
+import com.tnig.game.view.model_views.AbstractView;
 
-public class FireballView extends AbstractAnimatedView {
+public class FireballView extends AbstractView {
     private final Animation<TextureRegion> animation;
     private float stateTimer = 0f;
     private final FireBall fireBall;

@@ -8,7 +8,7 @@ import com.tnig.game.view.model_views.players.PlayerViewFactory;
 
 public class ViewFactory {
 
-    public static AnimatedView createView(Model model, AssetLoader assetLoader){
+    public static View createView(Model model, AssetLoader assetLoader){
         ObjectType type = model.getType().getObjectType();
         switch (type){
             case PLAYER:
