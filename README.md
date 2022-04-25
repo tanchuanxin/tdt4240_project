@@ -77,6 +77,16 @@ RIGHT | D - Move Right
 
 DOWN | S - Stomp if in the air
 
+LEFTMOUSE - Attack (click punch icon)
+
+### Controls on Mobile
+JUMPBUTTON - Jump/Walljump
+
+JUMPBUTTON - Stomp if in the air
+
+TOUCHPAD - Move left, right
+
+LEFTMOUSE - Attack (click punch icon)
 
 
 
