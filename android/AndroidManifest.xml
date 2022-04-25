@@ -13,7 +13,7 @@
         tools:targetApi="o">
         <activity
             android:name="com.tnig.game.AndroidLauncher"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
             android:exported="true">
             <intent-filter>
