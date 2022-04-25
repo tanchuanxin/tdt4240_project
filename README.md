@@ -69,15 +69,15 @@ Then you will be directed to a map select menu. To begin the game,
 click the map you wish to play.
 
 ### Controls on Desktop
-UP - Jump/Walljump
+UP | W | SPACE - Jump/Walljump
 
-LEFT - Move left
+LEFT | A - Move left
 
-RIGHT - Move Right
+RIGHT | D - Move Right
 
-DOWN - Stomp if in the air
+DOWN | S - Stomp if in the air
 
-SPACE - Jump/Walljump
+
 
 
 
