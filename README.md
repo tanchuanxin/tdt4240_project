@@ -101,5 +101,9 @@ Trailer video on Youtube
 [![TRAILER](https://img.youtube.com/vi/HLZb8V3Nm3s/0.jpg)](https://www.youtube.com/watch?v=HLZb8V3Nm3s)
 
 
+# To TDT4240 staff
+
+You can find a copy of our deliverables (report, apk file etc.) under the folder titled **SUBMISSION**
+
 
 
