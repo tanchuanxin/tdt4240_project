@@ -18,7 +18,7 @@ order to try to stop him from getting a good score.
 
 
 
-![](https://imgur.com/MCSkLUW)
+<img src="https://imgur.com/MCSkLUW">
 
 
 ## Project overview
