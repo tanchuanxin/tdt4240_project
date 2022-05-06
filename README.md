@@ -18,7 +18,7 @@ order to try to stop him from getting a good score.
 
 
 
- <img src="https://im2.ezgif.com/tmp/ezgif-2-829d8e13c3.gif">
+ <img src="https://imgur.com/Petn5NC">
 
 
 ## Project overview
