@@ -18,7 +18,7 @@ order to try to stop him from getting a good score.
 
 
 
- <img src="https://i.imgur.com/Petn5NC.mp4">
+![](https://i.imgur.com/Petn5NC.mp4)
 
 
 ## Project overview
