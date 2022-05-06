@@ -18,7 +18,7 @@ order to try to stop him from getting a good score.
 
 
 
-![GIF](https://i.imgur.com/MCSkLUW.mp4)
+![GIF](https://media2.giphy.com/media/WjQDY0MRmkqqUxeptF/giphy.gif?cid=790b76111904db800d58a8176eff48f08b54a0629a9bd84e&rid=giphy.gif&ct=g)
 
 
 ## Project overview
